@@ -14,6 +14,7 @@ use App\Http\Controllers\UserSignatureController;
 
 use Illuminate\Support\Facades\Broadcast;
 
+
 use App\Http\Controllers\LoanProgress\SanctionLetterController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Log;
@@ -521,8 +522,12 @@ Route::get('/challengeform', function () {
 Route::get('/semester_fee', function () {
     return view('ums.studentfees.semester_fee');
 });
-Route::get('/semesterfee_edit', function () {
-    return view('ums.studentfees.semesterfee_edit');
+Route::get('/add_semesterfee', function () {
+    return view('ums.studentfees.add_semesterfee');
+});
+
+Route::get('/edit_semesterfee', function () {
+    return view('ums.studentfees.edit_semesterfee');
 });
 
 

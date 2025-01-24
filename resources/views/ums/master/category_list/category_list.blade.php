@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
     <!-- END: Main Menu-->
 @section('content')
     <!-- BEGIN: Content-->
