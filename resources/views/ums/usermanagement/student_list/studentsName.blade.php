@@ -1,5 +1,5 @@
-@extends('admin.admin-meta')
-
+@extends('ums.admin.admin-meta')
+{{-- {{dd($students)}} --}}
 @section('content')
 
     <!-- BEGIN: Content-->
@@ -50,18 +50,19 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td class="fw-bolder text-dark">24</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                   
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td class="fw-bolder text-dark">26</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>                                                    
-        
-                                                </tr>
+                                                @if(count($students) > 0)
+                                                @foreach($students as $index=>$student)
+                                                    <tr onclick="save_names($(this),1)" class="save_names">  
+                                                        <td>{{++$index}}</td>
+                                                        <td class="roll_number" data-rollno="{{$student->roll_number}}">{{$student->roll_number}}</td>
+                                                        <td class="hindi_name">{{$student->full_name}}</td>
+                                                    </tr>
+                                                @endforeach
+                                                @else
+                                                    <tr>
+                                                        <td colspan="6" class="text-center">NO DATA FOUND</td>
+                                                    </tr>
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>

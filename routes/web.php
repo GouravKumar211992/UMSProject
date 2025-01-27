@@ -1,6 +1,8 @@
 <?php
 
 use App\Helpers\Helper;
+
+use App\Http\Controllers\ums\Admin\StudentController as AdminStudentController;
 use App\Http\Controllers\DPRTemplateController;
 use App\Http\Controllers\DocumentDriveController;
 use App\Http\Controllers\ErpDprMasterController;
@@ -13,6 +15,7 @@ use App\Http\Controllers\LoanProgress\ProcessingFeeController;
 use App\Http\Controllers\UserSignatureController;
 
 use Illuminate\Support\Facades\Broadcast;
+
 
 use App\Http\Controllers\LoanProgress\SanctionLetterController;
 use App\Http\Controllers\ServiceController;
@@ -34,7 +37,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CityController;
-use App\Http\Controllers\HomeController;
+
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LandController;
 use App\Http\Controllers\LoanController;
@@ -110,7 +113,21 @@ use App\Http\Controllers\PurchaseOrder\PurchaseOrderReportController;
 use App\Http\Controllers\PurchaseBillController;
 use App\Http\Controllers\DiscountMasterController;
 use App\Http\Controllers\ExpenseMasterController;
+
 use App\Http\Controllers\PurchaseReturnController;
+// ums controllers 
+
+use App\Http\Controllers\ums\Admin\GrievanceController;
+use App\Http\Controllers\ums\Admin\UserController;
+use App\Http\Controllers\ums\Admin\StudentController;
+use App\Http\Controllers\ums\HomeController as UmsHomeController;
+use App\Http\Controllers\ums\User\HomeController as UserHomeController;
+
+
+
+
+
+
 
 
 
@@ -181,39 +198,68 @@ Route::get('/practical_marks_filling', function () {
 
 
 //usermanagement
-Route::get('/admin_list', function () {
-    return view('ums.usermanagement.admin_list.admin_list');
-});
+// Route::get('/admin_list', function () {
+//     return view('ums.usermanagement.admin_list.admin_list');
+// });
+Route::get('/admins', [UserController::class,'admins'])->name('get-admin');
 Route::get('/admin_list_edit', function () {
-    return view('ums.usermanagement.admin_list.admin_list_edit');
+    return view('ums.usermanagement.admins.admin_list_edit');
 });
 Route::get('/admin_list_add', function () {
-    return view('ums.usermanagement.admin_list.admin_list_add');
+    return view('ums.usermanagement.admins.admin_list_add');
 });
 
-Route::get('/email_template', function () {
-    return view('ums.usermanagement.email_list.email_template');
-});
+Route::get('admin/user/delete-model-trim/{slug}', [UserController::class,'softDelete']);
+Route::post('/user/edit-user-form', [UserController::class,'editUser'])->name('edit-user-form');
+Route::get('admin/user/edit-user/{slug}', [UserController::class,'editusers']);
+Route::get('admin/email/delete-model-trim/{slug}', [UserController::class,'EmailsoftDelete']);
+
+Route::post('/user/submit-user-form', [UserController::class,'addUser'])->name('add-user');
+Route::get('user-secret-login/{id}', [UmsHomeController::class,'secretLogin'])->name('user-secret-login');
+
+// Route::get('/email_template', function () {
+//     return view('ums.usermanagement.email_list.email_template');
+// });
+Route::get('/email-template', [UserController::class,'getTemplate'])->name('/email-template');
+
 Route::get('/email_template_add', function () {
     return view('ums.usermanagement.email_list.email_template_add');
 });
+Route::post('/email/save-email-template', [UserController::class,'addEmailTemplate'])->name('save-email-template');
+Route::post('/student/save-email', [StudentController::class,'updateEmail']);
 Route::get('/email_template_edit', function () {
     return view('ums.usermanagement.email_list.email_template_edit');
 });
+Route::get('/email-template/edit', [UserController::class, 'EditEmailTemplate'])->name('email-template');
+Route::get('/email-template/edit/{slug}', [UserController::class,'editEmailTemplates']);
 
-Route::get('/studentsName', function () {
-    return view('ums.usermanagement.student_list.studentsName');
-});
-Route::get('/studentlist', function () {
-    return view('ums.usermanagement.student_list.students');
-});
 
-Route::get('/user_list', function () {
-    return view('ums.usermanagement.user_list.user_list');
-});
-Route::get('/user_dashboard', function () {
-    return view('ums.usermanagement.user_list.user_dashboard');
-});
+// Route::get('/studentsName', function () {
+//     return view('ums.usermanagement.student_list.studentsName');
+// });
+Route::get('/student-hindi-name', [StudentController::class,'studentHindiName']);
+
+// Route::get('/studentlist', function () {
+//     return view('ums.usermanagement.student_list.students');
+// });
+
+
+
+Route::get('/students', [StudentController::class,'index'])->name('admin.student.list');
+
+
+Route::post('/user/edit-user-form', [UserController::class,'editUser'])->name('edit-user-form');
+Route::get('/user/edit-user/{slug}', [UserController::class,'editUsers']);
+
+Route::get('/users', [UserController::class,'index'])->name('get-user');
+
+//userdashboard routes
+
+// Route::get('/user_dashboard', function () {
+//     return view('ums.usermanagement.users.user_dashboard');
+// })->name('user-dashboard');
+Route::get('user_dashboard', [UserHomeController::class, 'Userdashboard'])->name('user-dashboard');
+
 // Route::get('/application_form', function () {
 //     return view('ums.usermanagement.user_list.application_form');
 // });
@@ -521,8 +567,12 @@ Route::get('/challengeform', function () {
 Route::get('/semester_fee', function () {
     return view('ums.studentfees.semester_fee');
 });
-Route::get('/semesterfee_edit', function () {
-    return view('ums.studentfees.semesterfee_edit');
+Route::get('/add_semesterfee', function () {
+    return view('ums.studentfees.add_semesterfee');
+});
+
+Route::get('/edit_semesterfee', function () {
+    return view('ums.studentfees.edit_semesterfee');
 });
 
 
@@ -684,15 +734,20 @@ Route::get('/affiliate_information_view', function () {
 });
 
 //grievance
-Route::get('/grievance', function () {
-    return view('ums.grievance.grievance');
-});
-Route::get('/grievance_complaint_list', function () {
-    return view('ums.grievance.grievance_complaint_list');
-});
-Route::get('/grievance_complaint_details', function () {
-    return view('ums.grievance.grievance_complaint_details');
-});
+// Route::get('/grievance', function () {
+//     return view('ums.grievance.grievance');
+// });
+Route::get('grievance',[GrievanceController::class,'complaints']);
+// Route::get('/grievance_complaint_list', function () {
+    //     return view('ums.grievance.grievance_complaint_list');
+    // });
+    Route::get('grievance_complaint_list',[GrievanceController::class,'complaintList']);
+    
+    
+    // Route::get('/grievance_complaint_details', function () {
+        //     return view('ums.grievance.grievance_complaint_details');
+        // });
+        Route::get('grievance_complaint_details',[GrievanceController::class,'complaintDetails']);
 
 
 
