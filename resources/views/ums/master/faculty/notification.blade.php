@@ -2,7 +2,7 @@
 @section("content") --}}
 
 
-@extends('master.faculty.faculty-meta')
+@extends('ums.master.faculty.faculty-meta')
 <!-- END: Head-->
 
 <!-- BEGIN: Body-->

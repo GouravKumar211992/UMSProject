@@ -1,7 +1,7 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
-
+{{-- {{dd($selected_user)}} --}}
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
@@ -26,9 +26,13 @@
 						</div>
 					</div>
 					<div class="content-header-right text-sm-end col-md-6 mb-50 mb-sm-0">
+                        <form id="edit_email_form" type="POST" action="{{route('email-template')}}">
+                            @csrf
+                                <input type="hidden" name="user_id" value="{{$selected_user->id}}">
+                                <input type="hidden" name="user_status" id="user_status" value="">
 						<div class="form-group breadcrumb-right">   
 							<button onClick="javascript: history.go(-1)" class="btn btn-secondary btn-sm mb-50 mb-sm-0"><i data-feather="arrow-left-circle"></i>Go Back</button>    
-							<button onClick="javascript: history.go(-1)" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle"></i>Update</button> 
+							<button onclick="submitCat();"  class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle"></i>Update</button> 
 						</div>
 					</div>
 				</div>
@@ -38,298 +42,91 @@
                 
 				
 				<section id="basic-datatable">
+                   
                     <div class="row">
-                        <div class="col-12">  
-							
+                        <div class="col-12">
+
                             <div class="card">
-								 <div class="card-body customernewsection-form"> 
-											 
-											<div class="row">
-												<div class="col-md-12">
-                                                    <div class="newheader border-bottom mb-2 pb-25 d-flex flex-wrap justify-content-between"> 
-														<div>
-                                                            <h4 class="card-title text-theme">Basic Information</h4>
-														    <p class="card-text">Fill the details</p>
-                                                        </div> 
-													</div>
-                                                    
-                                                </div> 
-                                                
-                                                
-                                                <div class="col-md-8"> 
-                                                      
-                              
-                                                    <div class="row align-items-center mb-1">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label"> Name <span class="text-danger">*</span></label>  
-                                                        </div>  
+                                <div class="card-body customernewsection-form">
 
-                                                        <div class="col-md-5"> 
-                                                            <input type="text" class="form-control">
-                                                        </div> 
-                                                    
-                                                     </div> 
-                                                    
-                                                    <div class="row align-items-center mb-1">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label">Email</label>  
-                                                        </div>  
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div
+                                                class="newheader border-bottom mb-2 pb-25 d-flex flex-wrap justify-content-between">
+                                                <div>
+                                                    <h4 class="card-title text-theme">Basic Information</h4>
+                                                    <p class="card-text">Fill the details</p>
+                                                </div>
+                                            </div>
 
-                                                        <div class="col-md-5"> 
-                                                            <input type="email" class="form-control">
-                                                        </div> 
-                                                   
-                                                     </div>
+                                        </div>
 
-                                                     <div class="row align-items-center mb-1">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label">Mobile*</label>  
-                                                        </div>  
 
-                                                        <div class="col-md-5"> 
-                                                            <input type="number" class="form-control">
-                                                        </div> 
-                                                   
-                                                     </div>
-                  
-                                                    
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-3"> 
-                                                                <label class="form-label">Role* <span class="text-danger">*</span></label>  
-                                                            </div>  
+                                        <div class="col-md-8">
 
-                                                            <div class="col-md-5"> 
-                                                                <input type="text" class="form-control">
-                                                            </div> 
-                                                         </div>
-                                                    
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-3"> 
-                                                                <label class="form-label">Date of Birth <span class="text-danger">*</span></label>  
-                                                            </div>  
 
-                                                            <div class="col-md-5"> 
-                                                                <input type="date" class="form-control">
-                                                            </div> 
-                                                         </div>
-                                                        
-                                                    
-                                                    
-                                                    <div class="row align-items-center mb-1">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label">Gender<span class="text-danger">*</span></label>  
-                                                        </div>  
-
-                                                        <div class="col-md-5">  
-                                                            <select class="form-select">
-                                                                <option>male</option> 
-                                                                <option>female</option> 
-                                                                <option>other</option> 
-                                                            </select>
-                                                        </div>
-                                                     </div>
-                                                    
-                                                     <div class="row align-items-center mb-1">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label">Marital Status<span class="text-danger">*</span></label>  
-                                                        </div>  
-
-                                                        <div class="col-md-5">  
-                                                            <select class="form-select">
-                                                                <option>Married</option> 
-                                                                <option>Unmarried</option> 
-                                                                <option>other</option> 
-                                                            </select>
-                                                        </div>
-                                                     </div>
-
-                                                    <div class="row align-items-center mb-2">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label">Status</label> 
-                                                        </div>  
-
-                                                        <div class="col-md-5"> 
-                                                            <div class="demo-inline-spacing">
-                                                                <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio3" name="customColorRadio3" class="form-check-input" checked="">
-                                                                    <label class="form-check-label fw-bolder" for="customColorRadio3">Open</label>
-                                                                </div> 
-                                                                <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio4" name="customColorRadio3" class="form-check-input">
-                                                                    <label class="form-check-label fw-bolder" for="customColorRadio4">Close</label>
-                                                                </div> 
-                                                            </div>  
-                                                        </div> 
-                                                        
-
-                                                    </div> 
-
-                                                  
-                                                
-                                                  
- 
-                                                  
-											</div>
-                                     
-                                     
-                                             {{-- <div class="mt-2">
-                                                <div class="step-custhomapp bg-light mb-0">
-                                                    <ul class="nav nav-tabs my-25 custapploannav" role="tablist"> 
-                                                        <li class="nav-item">
-                                                            <a class="nav-link active" data-bs-toggle="tab" href="#Invoice">Invoice & Order Detail</a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a class="nav-link" data-bs-toggle="tab" href="#Assigned">Assigned Person Detail</a>
-                                                        </li> 
-                                                    </ul> 
+                                            <div class="row align-items-center mb-1">
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Aliase* <span
+                                                            class="text-danger">*</span></label>
                                                 </div>
 
-												 <div class="tab-content pt-2 pb-1 px-1 rounded-3 border">
-                                                    <div class="tab-pane active" id="Invoice"> 
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Invoice No. <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <input type="text" class="form-control"  />
-                                                            </div> 
-                                                         </div>
-
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Invoice Date <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <input type="date" value="2024-09-10" disabled class="form-control"  />
-                                                            </div> 
-                                                            <div class="col-md-3">
-                                                                <a href="#" class="btn btn-sm btn-outline-primary waves-effect">
-                                                                <i data-feather="file-text"></i> View Invoice</a>
-                                                            </div>
-                                                         </div>
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Sales Order Number <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <input type="text" class="form-control"  />
-                                                            </div> 
-                                                         </div>
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Sales Order Date <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <input type="date" value="2024-09-08" disabled class="form-control"  />
-                                                            </div> 
-                                                         </div>
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Customer Ref. No. <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <input type="text" class="form-control"  />
-                                                            </div> 
-                                                         </div>
-                                                    </div>
-                                                     <div class="tab-pane" id="Assigned"> 
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Error Category <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <select class="form-control select2">
-                                                                    <option>Select</option>
-                                                                </select>
-                                                            </div> 
-                                                         </div>
-
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Sub Category 1</label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <select class="form-control select2">
-                                                                    <option>Select</option>
-                                                                </select>
-                                                            </div> 
-                                                         </div>
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Sub Category 2</label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <select class="form-control select2">
-                                                                    <option>Select</option>
-                                                                </select>
-                                                            </div> 
-                                                         </div>
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Responsible Dept. <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <select class="form-control select2">
-                                                                    <option>Select</option>
-                                                                </select>
-                                                            </div> 
-                                                         </div>
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Assigned To <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <select class="form-control select2">
-                                                                    <option>Select</option>
-                                                                </select>
-                                                            </div> 
-                                                         </div>
-                                                    </div>
-                                                 </div>
-											  
- 
-											 
-											
-											
-											 
- 
-								
-								</div> --}}
-                                     
-                                     
-                                         {{-- <div class="row mt-2"> 
-                                            <div class="col-md-12">
-                                                 <div class="col-md-4">
-                                                    <div class="mb-1">
-                                                        <label class="form-label">Upload Document</label>
-                                                        <input type="file" class="form-control">
-                                                    </div>
-                                                </div> 
-                                             </div> 
-                                            <div class="col-md-12">
-                                                <div class="mb-1">  
-                                                    <label class="form-label">Incident Description</label> 
-                                                    <textarea type="text" rows="4" class="form-control" placeholder="Enter Remarks here..."></textarea> 
-
+                                                <div class="col-md-5">
+                                                    <input type="text" class="form-control" name="alias" value="{{$selected_user->alias}}">
                                                 </div>
-                                            </div> 
-                                        </div>  --}}
+
+                                            </div>
+
+                                            <div class="row align-items-center mb-1">
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Subject*</label>
+                                                </div>
+
+                                                <div class="col-md-5">
+                                                    <input type="text" class="form-control" name="subject" value="{{$selected_user->subject}}">
+                                                </div>
+
+                                            </div>
+                                            <div class="row align-items-center mb-2">
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Status</label>
+                                                </div>
+
+                                                <div class="col-md-5">
+                                                    <div class="demo-inline-spacing">
+                                                        <div class="form-check form-check-primary mt-25">
+                                                            <input type="radio" id="status" name="user_status" class="form-check-input" value="Active"
+                                                                {{ $selected_user->status == 'Active' ? 'checked' : '' }}>
+                                                            <label class="form-check-label fw-bolder" for="status">Active</label>
+                                                        </div>
+                                                        <div class="form-check form-check-primary mt-25">
+                                                            <input type="radio" id="customColorRadio4" name="user_status" class="form-check-input" value="Inactive"
+                                                                {{ $selected_user->status == 'Inactive' ? 'checked' : '' }}>
+                                                            <label class="form-check-label fw-bolder" for="customColorRadio4">Inactive</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">Description</label>
+                                                <textarea type="text" rows="4" class="form-control" placeholder="Enter Remarks here..." name="message" >{{$selected_user->message}}</textarea>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
+
                     </div>
                 </section>
+              
                  
 
             </div>
@@ -496,3 +293,38 @@
     <!-- BEGIN: Vendor JS-->
     
     @endsection
+    <script>
+        $(document).ready(function(){
+    
+            var selected_user = {!! json_encode($selected_user) !!};
+    
+            if(selected_user['status'] == 'active') {
+                $('#active').prop('checked', true);
+                $('#inactive').prop('checked', false);
+            }
+            else {
+                $('#active').prop('checked', false);
+                $('#inactive').prop('checked', true);
+            }
+            $('.numbersOnly').keyup(function() {
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+            });
+            $('.alphaOnly').keyup(function() {
+                this.value = this.value.replace(/[^a-z|A-Z\.]/g, '');
+            });
+        });
+    </script>
+    
+    <script>
+        function submitCat(form) {
+            if(document.getElementById('active').checked) {
+                document.getElementById('user_status').value = 'active';
+            }
+            else {
+                document.getElementById('user_status').value = 'inactive';
+            }
+    
+            document.getElementById('edit_email_form').submit();
+        }
+    </script>
+   

@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 @section('content')
 
 {{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col=""> --}}
@@ -119,156 +119,35 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach($admissionSetting as $index=>$data)  
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td class="fw-bolder text-dark">Description will come here</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Shivangi</span></td>
-                                                    <td>05-Sep-2024</td>
-                                                    <td>05-Sep-2024</td> 
-                                                    <td><span class="badge rounded-pill badge-light-danger badgeborder-radius">Description will come here</span></td> 
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                   <a class="dropdown-item" href="#">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span onclick="return confirm('Are you sure?');">Delete</span>                                                                </a>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>
+                                                <td>{{++$index}}</td>
+                                                <td>{{($data->campus)?$data->campus->name:'All'}}</td>
+                                                <td>{{($data->category)?$data->category->name:'All'}}</td>
+                                                <td>{{($data->course)?$data->course->name:'All'}}</td>
+                                                @if(Request()->type==2)
+                                                    <td>{{$data->session}}</td>
+                                                @endif
+                                                <td>{{date('d-m-Y',strtotime($data->from_date))}}</td>
+                                                <td>{{date('d-m-Y',strtotime($data->to_date))}}</td>
+                                                <td>{{$data->message}}</td>
+                                                <td class="tableactionnew">  
+                                                    <div class="dropdown">
+                                                        <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
+                                                            <i data-feather="more-vertical"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu dropdown-menu-end">
+                                                            <a class="dropdown-item" href="{{url('delete-from-setting',[$data->id])}}">
+                                                                <i data-feather="trash-2" class="me-50"></i>
+                                                                <span onclick="return confirm('Are you sure?');">Delete</span>                                                                </a>
+                                                            </a>
+
+                                                        </div>
+                                                    </div> 
+                                                </td>                                                
+                                            </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td class="fw-bolder text-dark">05-Sep-2024</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Shivangi</span></td>
-                                                    <td>VMM Pvt Ltd</td>
-                                                    <td>Description will come here</td> 
-                                                    <td><span class="badge rounded-pill badge-light-warning badgeborder-radius">Open</span></td> 
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                {{-- <a class="dropdown-item" >
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a>  --}}
-                                                                <a class="dropdown-item" href="incident-view.html">
-                                                                    <i data-feather="eye" class="me-50"></i>
-                                                                    <span>View Detail</span>
-                                                                </a> <a class="dropdown-item" data-bs-toggle="modal" href="#reallocate">
-                                                                    <i data-feather="copy" class="me-50"></i>
-                                                                    <span>Re-Allocate</span>
-                                                                </a> <a class="dropdown-item" href="#">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span onclick="return confirm('Are you sure?');">Delete</span>                                                                </a>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>
-                                                </tr>
-                                                  <tr>
-                                                    <td>3</td>
-                                                    <td class="fw-bolder text-dark">05-Sep-2024</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Shivangi</span></td>
-                                                    <td>VMM Pvt Ltd</td>
-                                                    <td>Description will come here</td> 
-                                                    <td><span class="badge rounded-pill badge-light-success badgeborder-radius">Close</span></td> 
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                {{-- <a class="dropdown-item">
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a>  --}}
-                                                                <a class="dropdown-item" href="incident-view.html">
-                                                                    <i data-feather="eye" class="me-50"></i>
-                                                                    <span>View Detail</span>
-                                                                </a> <a class="dropdown-item" data-bs-toggle="modal" href="#reallocate">
-                                                                    <i data-feather="copy" class="me-50"></i>
-                                                                    <span>Re-Allocate</span>
-                                                                </a> <a class="dropdown-item" href="#">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span onclick="return confirm('Are you sure?');">Delete</span>                                                                </a>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>
-                                                </tr>
-                                                 <tr>
-                                                    <td>4</td>
-                                                    <td class="fw-bolder text-dark">05-Sep-2024</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Shivangi</span></td>
-                                                    <td>VMM Pvt Ltd</td>
-                                                    <td>Description will come here</td> 
-                                                    <td><span class="badge rounded-pill badge-light-danger badgeborder-radius">Re-Allocatted</span></td> 
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                {{-- <a class="dropdown-item" >
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a>  --}}
-                                                                <a class="dropdown-item" href="incident-view.html">
-                                                                    <i data-feather="eye" class="me-50"></i>
-                                                                    <span>View Detail</span>
-                                                                </a> <a class="dropdown-item" data-bs-toggle="modal" href="#reallocate">
-                                                                    <i data-feather="copy" class="me-50"></i>
-                                                                    <span>Re-Allocate</span>
-                                                                </a> <a class="dropdown-item" href="#">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span onclick="return confirm('Are you sure?');">Delete</span>                                                                </a>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td class="fw-bolder text-dark">05-Sep-2024</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Shivangi</span></td>
-                                                    <td>VMM Pvt Ltd</td>
-                                                    <td>Description will come here</td> 
-                                                    <td><span class="badge rounded-pill badge-light-warning badgeborder-radius">Open</span></td>  
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                {{-- <a class="dropdown-item">
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a>  --}}
-                                                                <a class="dropdown-item" href="incident-view.html">
-                                                                    <i data-feather="eye" class="me-50"></i>
-                                                                    <span>View Detail</span>
-                                                                </a> <a class="dropdown-item" data-bs-toggle="modal" href="#reallocate">
-                                                                    <i data-feather="copy" class="me-50"></i>
-                                                                    <span>Re-Allocate</span>
-                                                                </a> <a class="dropdown-item" href="#">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span onclick="return confirm('Are you sure?');">Delete</span>                                                                </a>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>
-                                                </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

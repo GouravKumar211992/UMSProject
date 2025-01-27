@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
     
@@ -57,14 +57,13 @@
                                         </thead>
                                         <tbody>
 
-
+                                            @foreach($grades as $index=>$grade)
                                             <tr>
-                                                <td>1</td>
-                                                <td>Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                <td>B.Com. LL.B. (Hons.)	</td>
-                                                <td>FOURTH SEMESTER</td>
-                                                <td>2018-2019</td>
-                                                
+                                                <td>{{++$index}}</td>
+                                                <td>{{$grade->semester->course->campuse->name}}</td>
+                                                <td>{{$grade->semester->course->name}}</td>
+                                                <td>{{$grade->semester->name}}</td>
+                                                <td>{{$grade->academic_session}}</td>
                                                 <td class="tableactionnew">
                                                     <div class="dropdown">
                                                         <button type="button"
@@ -74,18 +73,16 @@
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-end">
                                                             
-                                                            
-
-                                                            <a class="dropdown-item" href="#">
+                                                            <a class="dropdown-item" href="{{route('oldgrade_delete',[$grade->id])}}">
                                                                 <i data-feather="trash-2" class="me-50"></i>
-                                                                <span onclick="return confirm('Are you sure?');">Delete</span>                                                                </a>
-                                                            </a>
+                                                                <span onclick="return confirm('Are you sure?');">Delete</span>                                                               
+                                                             </a>
+
                                                         </div>
                                                     </div>
                                                 </td>
                                             </tr>
-                                           
-
+                                            @endforeach
                                         </tbody>
 
 

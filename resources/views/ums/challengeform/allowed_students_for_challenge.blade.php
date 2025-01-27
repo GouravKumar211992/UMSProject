@@ -92,33 +92,49 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
+                                
                                         <tbody>
-                                            <td>1</td>
-                                            <td>2331</td>
-                                            <td>John</td>
-                                            <td>first</td>
-                                            <td class="tableactionnew">
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-                                                        <i data-feather="more-vertical"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        {{-- <a class="dropdown-item" href="#">
-                                                            <i data-feather="edit" class="me-50"></i>
-                                                            <span>View Detail</span>
-                                                        </a> --}}
-                                                        <a class="dropdown-item" href="{{url('challengeform_edit')}}">
-                                                            <i data-feather="edit-3" class="me-50"></i>
-                                                            <span>Edit</span>
-                                                        </a>
-                                                       
-                                                        <a class="dropdown-item" href="#" onclick="window.confirm('Are you sure ? delere this data')">
-                                                            <i data-feather="trash-2" class="me-50"></i>
-                                                            <span>Delete</span>
-                                                        </a> 
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            @if($challenges->count()>0)
+                                            @foreach($challenges as $index=>$challenge)
+                                            <tr>
+                                                <td>{{++$index}}</td>
+                                                <td><input type="hidden" name="roll_no" value="{{$challenge->roll_no}}">{{$challenge->roll_no}}</td>
+                                                <td>{{$challenge->student->full_name}}</td>
+                                                <td>
+                                                    <select class="form-control" onchange="$(this).closest('tr').find('.step_selection').val($(this).val());">
+                                                        <option value="1"  @if($challenge->step==1) selected @endif>First Step</option>
+                                                        <option value="2"  @if($challenge->step==2) selected @endif>Second Step</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <form style="display: inline;margin-right: 15px;float: left;" action="{{route('challenge_allowed_edit',[$challenge->roll_no])}}" method="post">
+                                                    @csrf
+                                                        <input type="hidden" name="step_value" class="step_selection" value="{{$challenge->step}}">
+                                                        <button type="submit" class="btn-sm btn-info">Save</button>
+                                                    </form>
+                                                    <td class="tableactionnew">
+                                                        <div class="dropdown">
+                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
+                                                                <i data-feather="more-vertical"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                               
+                                                                <a class="dropdown-item" href="{{url('challengeform_edit')}}">
+                                                                    <i data-feather="edit-3" class="me-50"></i>
+                                                                    <span>Edit</span>
+                                                                </a>
+                                                               
+                                                                <a class="dropdown-item" href="{{url('challenge-allowed-delete')}}/{{$challenge->roll_no}}" onclick="window.confirm('Are you sure ? delere this data')">
+                                                                    <i data-feather="trash-2" class="me-50"></i>
+                                                                    <span>Delete</span>
+                                                                </a> 
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
