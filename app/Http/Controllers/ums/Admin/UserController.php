@@ -15,7 +15,7 @@ use App\Models\ums\Admin;
 
 use App\Models\Application;
 use App\models\ums\EmailTemplate as UmsEmailTemplate;
-use App\Models\User;
+use App\Models\ums\User;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
