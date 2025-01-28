@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
     
@@ -38,12 +38,19 @@
         <div class="col-md-12">
         <div class="row align-items-center mb-1">
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3"> Campus Name<span class="text-danger ">*</span></label>
-                <input type="text" class="form-control"> 
-                    </div>
+                <label class="form-label mb-0 me-2 col-3">Campus Name <span class="text-danger">*</span></label>
+                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
+                    <option value="7">2024-2025</option>
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="75">75</option>
+                    <option value="100">100</option>
+                </select>
+                </div>
 
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Program Name <span class="text-danger">*</span></label>
+                <label class="form-label mb-0 me-2 col-3">Program <span class="text-danger">*</span></label>
                 <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
                     <option value="7">2024-2025</option>
                     <option value="10">10</option>
@@ -56,7 +63,7 @@
                 
 
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Course Name <span class="text-danger">*</span></label>
+                <label class="form-label mb-0 me-2 col-3">Course <span class="text-danger">*</span></label>
                 <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
                     <option value="7">2024-2025</option>
                     <option value="10">10</option>
@@ -68,7 +75,7 @@
               </div>
 
               <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Php Title <span class="text-danger">*</span></label>
+                <label class="form-label mb-0 me-2 col-3">Branch <span class="text-danger">*</span></label>
                 <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
                     <option value="7">1</option>
                     <option value="10">10</option>
@@ -84,12 +91,12 @@
         <div class="col-md-12">
         <div class="row align-items-center mb-1">
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3"> Semester Name<span class="text-danger ">*</span></label>
+                <label class="form-label mb-0 me-2 col-3"> Semester<span class="text-danger ">*</span></label>
                 <input type="text" class="form-control"> 
                     </div>
 
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Paper Name <span class="text-danger">*</span></label>
+                <label class="form-label mb-0 me-2 col-3">Subject Code <span class="text-danger">*</span></label>
                 <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
                     <option value="7">2024-2025</option>
                     <option value="10">10</option>
@@ -114,79 +121,19 @@
               </div>
 
               <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Question Bank <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">300</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
-              </div>
+                <label class="form-label mb-0 me-2 col-3"> File <span class="text-danger">*</span></label>
+                <input type="file" name="question_bank_file" class="form-control" required>
+            </div>
         </div>
     </div>
-
-        <div class="col-md-12">
-        <div class="row align-items-center mb-1">
-            <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3"> Synopsis<span class="text-danger ">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">500</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
-                 </div>
-
-            <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Thesis<span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">1000</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
-                </div>
-                
-
-            <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Journal Paper <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">2000</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
-              </div>
-
-              <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3"> Seminar<span class="text-danger ">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">500</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
-                 </div>
-        </div>
-    </div>
+   </div>
+ </div>
 
 				
 				<section id="basic-datatable">
                     <div class="row">
                         <div class="col-12">
-                            <div class="card">
-											   
-									
+                            <div class="card">	
                             </div>
                         </div>
                     </div>

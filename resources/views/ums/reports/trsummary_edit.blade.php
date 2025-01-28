@@ -297,23 +297,12 @@
      
     <!-- END: Header-->
 
+   @extends('ums.admin.admin-meta')
 
-    <!-- BEGIN: Main Menu-->
-    <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow erpnewsidemenu" data-scroll-to-active="true">
-        
-        <div class="shadow-bottom"></div>
-        <div class="main-menu-content newmodulleftmenu">
-            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class="nav-item"><a class="d-flex align-items-center" href="dashboard.html"><i data-feather="database"></i><span class="menu-title text-truncate">CRM</span></a>
-                </li>
-                <li class="active nav-item"><a class="d-flex align-items-center" href="incident.html"><i data-feather="alert-triangle"></i><span class="menu-title text-truncate">Incident</span></a>
-                </li>
-            </ul>
-        </div>
-		
-    </div>
-    <!-- END: Main Menu-->
 
+   @section('content')
+       
+  
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
@@ -831,38 +820,5 @@
 	<script src="../../../app-assets/js/scripts/forms/form-select2.js"></script>
     <!-- END: Page JS--> --}}
 
-    <script>
-        $(window).on('load', function() {
-            if (feather) {
-                feather.replace({
-                    width: 14,
-                    height: 14
-                });
-            }
-        })
-        
-         $(function() {
-           $("input[name='goodsservice']").click(function() {
-             if ($("#service").is(":checked")) {
-               $(".hsn").hide();
-               $(".sac").show();
-             } else {
-               $(".hsn").show();
-               $(".sac").hide();
-             }
-           });
-         });
-        
-         $(".select2").select2({
-            placeholder: "Select", 
-        });
-		 
-		 
-		
-    </script>
-{{-- </body>
-<!-- END: Body-->
-
-</html> --}}
-
+    
 @endsection
