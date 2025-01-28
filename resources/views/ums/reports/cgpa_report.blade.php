@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
 
@@ -142,28 +142,38 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                           
+                                            @foreach($results as $index=>$result)
+                                            @if(!$result->student)
+                                            {{dd($result)}}
+                                            @endif
                                             <tr>
+                                                <td>{{++$index}}</td>
+                                                <td>{{$result->student->enrollment_no}}</td>
+                                                <td>{{$result->roll_no}}</td>
+                                                <td>{{$result->student->full_name}}</td>
+                                                <td>{{$result->student->category}}</td>
+                                                <td>{{$result->student->disabilty_category}}</td>
+                                                <td>{{$result->student->gender}}</td>
+                                                <td>{{$result->student->mobile}}</td>
+                                                <td>{{$result->student->address}}</td>
+                                                <td>{{$result->course_name()}}</td>
+                                                <td>{{Request()->academic_session}}</td>
+                                                @if($result->get_semester_result_single()->total_obtained_marks==0 || $result->get_semester_result_single()->total_required_marks==0)
                                                 <td></td>
-                                                <td class="fw-bolder text-dark"></td>
                                                 <td></td>
-                                                <td></td> 
-                                                <td></td> 
-                                                <td></td> 
-                                                <td></td> 
-                                                <td></td> 
-                                                <td></td> 
-                                                <td></td> 
-                                                
-                                                <td></td> 
-                                                <td></td> 
-                                                <td></td> 
-                                                <td></td> 
-                                                <td></td> 
-                                                
-                                                
+                                                <td></td>
+                                                @else
+                                                <td>{{$result->get_semester_result_single()->total_obtained_marks}}</td>
+                                                <td>{{$result->get_semester_result_single()->total_required_marks}}</td>
+                                                <td>
+                                                    @php $percentage = (($result->get_semester_result_single()->total_obtained_marks * 100) / $result->get_semester_result_single()->total_required_marks); @endphp
+                                                    {{number_format((float)$percentage, 2, '.', '')}}
+                                                </td>
+                                                @endif
+                                                <td>{{$result->get_semester_result_single()->cgpa}}</td>
+                                                <td>@if($result->eligible_for_medal()) Eligible @endif</td>
                                             </tr>
-                                            
+                                            @endforeach
                                         </tbody>
 
 

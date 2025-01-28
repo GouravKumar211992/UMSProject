@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 @section("content")
 <!-- END: Head-->
 
@@ -122,6 +122,81 @@
 
                                         </thead>
                                         <tbody>
+                                            <tbody>
+                                                @foreach($results as $index=>$result)
+                                                <?php
+                                                $campus_id = $result->course->campus_id;
+                                                $course_id = $result->course_id;
+                                                $semester_id = $result->semester;
+                                                $academic_session = Request()->exam_session;
+                                                $form_type = Request()->form_type;
+                                                $unfreez_url = "?course_id=$course_id&semester=$semester_id&academic_session=$academic_session&form_type=$form_type";
+                                                $show_students_url = "?course_id=$course_id&semester=$semester_id&academic_session=$academic_session&form_type=$form_type&status=$result->status";
+                                                $regular_tr_show_url = "?campus_id=$campus_id&course=$course_id&semester=$semester_id&academic_session=$academic_session&form_type=$form_type&page_index=1&showdata=Get+Data";
+                                                $regular_generate_tr_url = "?campus_id=$campus_id&course=$course_id&semester=$semester_id&academic_session=$academic_session&form_type=$form_type";
+                                                ?>
+                                                <tr class="{{($result->status==2)?'success':'danger'}}">
+                                                    <td>{{++$index}}</td>
+                                                    <td>{{$result->course->campuse->name}}</td>
+                                                    <td>{{$result->course_name()}}</td>
+                                                    <td>{{$result->semester_details->name}}</td>
+                                                    <td>{{($result->status==2)?'Freezed':'Not Freezed'}} ({{$result->getTrAllStudent($form_type)}}/{{$result->getStatusWiseStudent($form_type)}})</td>
+                                                    <td>
+                                                        @if($result->status==2)
+                                                        <a href="{{url('admin/unfreez-regular-tr')}}{{$unfreez_url}}" class="btn-sm btn-danger" onClick="return confirm('Are you sure?\nYou want to Re-Fresh TR')">Un-Freez the TR</a>
+                                                        @else
+            
+            
+            
+                                                        @if($form_type=='regular')
+                                                        <a target="_blank" href="{{url('admin/university-tr')}}{{$regular_generate_tr_url}}" class="btn-sm btn-dark" onClick="return confirm('Are you sure?\nYou want to Generate TR')">Generate TR</a>
+                                                        @elseif($form_type=='back_paper')
+                                                        <a target="_blank" href="{{url('admin/back-university-tr')}}{{$regular_generate_tr_url}}" class="btn-sm btn-dark" onClick="return confirm('Are you sure?\nYou want to Generate TR')">Generate TR</a>
+                                                        @elseif($form_type=='special_back' || $form_type=='final_back_paper')
+                                                        <a target="_blank" href="{{url('admin/final-back-tr-generate')}}{{$regular_generate_tr_url}}" class="btn-sm btn-dark" onClick="return confirm('Are you sure?\nYou want to Generate TR')">Generate TR</a>
+                                                        @endif
+            
+            
+            
+                                                        <a class="btn-sm btn-info" data-toggle="modal" data-target="#myModal{{$index}}">Freez the TR</a>
+                                                        <div id="myModal{{$index}}" class="modal fade" role="dialog">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-body">
+                                                                        <form action="{{url('admin/freez-regular-tr')}}">
+                                                                            <div class="com-md-6 form-group">
+                                                                                <label for="">Enter Tr Approval Date</label>
+                                                                                <input type="date" name="approval_date" class="form-control" required style="border:1px solid #c0c0c0;">
+                                                                                <input type="hidden" value="{{$campus_id}}" name="campus_id" class="form-control" required>
+                                                                                <input type="hidden" value="{{$course_id}}" name="course_id" class="form-control" required>
+                                                                                <input type="hidden" value="{{$semester_id}}" name="semester" class="form-control" required>
+                                                                                <input type="hidden" value="{{$academic_session}}" name="academic_session" class="form-control" required>
+                                                                                <input type="hidden" value="{{Request()->form_type}}" name="form_type" class="form-control" required>
+                                                                            </div>
+                                                                            <div class="com-md-6 form-group">
+                                                                                <input type="submit" class="btn btn-success" value="Click here to approve the TR">
+                                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @endif
+                                                        <br/>
+                                                        <br/>
+                                                        @if($form_type=='regular')
+                                                        <a target="_blank" href="{{url('admin/university-tr-view')}}{{$regular_tr_show_url}}" class="btn-sm btn-success" onClick="return confirm('Are you sure?\nYou want to Show TR')">Show TR</a>
+                                                        @elseif($form_type=='back_paper')
+                                                        <a target="_blank" href="{{url('admin/back-university-tr-view')}}{{$regular_tr_show_url}}" class="btn-sm btn-success" onClick="return confirm('Are you sure?\nYou want to Show TR')">Show TR</a>
+                                                        @elseif($form_type=='special_back' || $form_type=='final_back_paper')
+                                                        <a target="_blank" href="{{url('admin/final-back-tr-view')}}{{$regular_tr_show_url}}" class="btn-sm btn-success" onClick="return confirm('Are you sure?\nYou want to Show TR')">Show TR</a>
+                                                        @endif
+                                                        <a target="_blank" href="{{url('admin/tr-summary-show-students')}}{{$show_students_url}}" class="btn-sm btn-info">Show Students</a>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
 
 
                                             <tr>

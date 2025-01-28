@@ -1,4 +1,4 @@
-@extends("admin.admin-meta")
+@extends("ums.admin.admin-meta")
 @section("content")
 
 
@@ -134,7 +134,7 @@
                                             </tr>
 
                                         </thead>
-                                        <tbody>
+                                        {{-- <tbody>
 
 
                                             <tr>
@@ -165,8 +165,64 @@
                                             </tr>
                                            
 
-                                        </tbody>
-
+                                        {{-- </tbody> --}} --}}
+                                        @php 
+                                        $serial_no = 0; 
+                                    @endphp
+                                
+                                    @foreach($results as $result)
+                                    @php
+                                    $subjectSuggetions = $result->subjectSuggetions(Request()->semester_id);
+                                    $serial_no = $serial_no + 1;
+                                    @endphp
+                                        <tr class="main-tr">
+                                            <td>
+                                                <span class="position_show">{{$serial_no}}</span>
+                                                <input type="hidden" name="subject_position[]" class="position position_style" value="{{$result->subject_position}}">
+                                                <input type="hidden" name="subject_code[]" class="subject_code" value="{{$result->subject_code}}">
+                                            </td>
+                                            <td>
+                                                {{$result->subject_code}}
+                                            </td>
+                                            <td>
+                                                <input type="text" name="subject_name[]" class="subject_name position_style form-control text-left" style="width: 100%;" value="{{$result->subject_name}}">
+                                                <hr>
+                                                <span class="text-info fa fa-eye" style="cursor: pointer;" data-toggle="modal" data-target="#myModal{{$serial_no}}"> Suggetions</span>
+                                                        <!-- Modal -->
+                                                        <div id="myModal{{$serial_no}}" class="modal fade" role="dialog">
+                                                        <div class="modal-dialog">
+                                
+                                                            <!-- Modal content-->
+                                                            <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Subject Suggetions</h4>
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <table class="table table-hover">
+                                                                    @foreach($subjectSuggetions as $subjectSuggetion)
+                                                                    <tr>
+                                                                        <td>{{$result->subject_code}}</td>
+                                                                        <td>{{$subjectSuggetion}}</td>
+                                                                        <td><input type="button" data-subject="{{$subjectSuggetion}}" onclick="setSubjectSuggetion($(this))" value="User This" class="btn btn-sm btn-success"  data-dismiss="modal"></td>
+                                                                    </tr>
+                                                                    @endforeach
+                                                                </table>
+                                                            </div>
+                                                            <!-- <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div> -->
+                                                            </div>
+                                
+                                                        </div>
+                                                        </div>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="brn btn-sm btn-info" onclick="marksheetSubjectNameUpdate($(this))">Update Subject Name Batch Wise</button>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
 
                                     </table>
                                 </div>

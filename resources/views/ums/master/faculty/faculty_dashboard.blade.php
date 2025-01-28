@@ -1,4 +1,4 @@
-@extends('master.faculty.faculty-meta')
+@extends('ums.master.faculty.faculty-meta')
      <!-- BEGIN: Content-->
      @section('content')
   
@@ -48,11 +48,11 @@
                
             
                 <!-- ChartJS section start -->
-                <section id="chartjs-chart">
-                    <div class="row">
-                        <div class="col-md-4 col-12">
-                            <div class="holiday-box p-4">
-                                <div><span>Papers</span></div>
+                <section id="chartjs-chart " class="text-center">
+                    <div class="row ">
+                        <div class="col-md-6 col-12">
+                            <div class="holiday-box p-5" style=" border-left: 10px solid #A0BC8B;">
+                                <div><span style="background: rgba(160, 188, 139, 0.2); color: #A0BC8B;">Papers</span></div>
                                 <div>
                                     <h3 class="fw-lighter">1</h3>
                                     <h5>Alloted</h5>
@@ -60,9 +60,9 @@
                             </div>
                         </div>
             
-                        <div class="col-md-4 col-12">
-                            <div class="holiday-box p-4">
-                                <div><span>Students</span></div>
+                        <div class="col-md-6 col-12">
+                            <div class="holiday-box p-5" style="border-left: 10px solid #62C3C0;">
+                                <div><span style="background: rgba(110, 230, 226, 0.2); color: #62C3C0;">Students</span></div>
                                 <div>
                                     <h3 class="fw-lighter">1</h3>
                                     <h5>Total</h5>
@@ -70,9 +70,9 @@
                             </div>
                         </div>
             
-                        <div class="col-md-4 col-12">
-                            <div class="holiday-box p-4">
-                                <div><span>Marks Filled</span></div>
+                        <div class="col-md-6 col-12">
+                            <div class="holiday-box p-5">
+                                <div><span style="background: rgba(168, 139, 151, 0.2); color: #A88B97;">Marks Filled</span></div>
                                 <div>
                                     <h3 class="fw-lighter">100</h3>
                                     <h5>Total</h5>
@@ -80,9 +80,9 @@
                             </div>
                         </div>
             
-                        <div class="col-md-4 col-12">
-                            <div class="holiday-box p-4">
-                                <div><span>Mark Filling</span></div>
+                        <div class="col-md-6 col-12">
+                            <div class="holiday-box p-5" style="border-left: 10px solid #E3C852;">
+                                <div><span style="background: rgba(227, 200, 82, 0.2); color: #E3C852;">Mark Filling</span></div>
                                 <div>
                                     <h3 class="fw-lighter">2408</h3>
                                     <h5>Pending</h5>

@@ -108,142 +108,46 @@
 											  </tr>
 											</thead>
 											<tbody>
-												 <tr>
-													<td>#SU1700000843</td>
-													<td class="fw-bolder text-dark">SURENDRA KUMAR</td>
-													<td>surendradsmnru@gmail.com</td>
-													<td>9695799682</td>
-													<td>Aug 01st, 2022</td>
-													<td><span class="badge rounded-pill badge-light-success badgeborder-radius">Active</span></td>
-													<td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Offline</span></td>
-													<td class="tableactionnew">
-														<div class="dropdown">
-															<button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-																<i data-feather="more-vertical"></i>
-															</button>
-															<div class="dropdown-menu dropdown-menu-end">
-                              <a class="dropdown-item" href="single_icard">
-    <i data-feather="edit" class="me-50"></i>
-    <span>View Icard</span>
-</a>
-																 
-																<a class="dropdown-item" href="#" onclick="window.confirm('Are you sure ? delete this data')">
-																	<i data-feather="trash-2" class="me-50"></i>
-																	<span>Delete</span>
-																</a>
-															</div>
-														</div>
-													</td>
-												  </tr>
-												  <tr>
-													<td>#SU1600000162</td>
-													<td class="fw-bolder text-dark">KUMARI MAUSHMI</td>
-													<td>komalkumari41730@gmail.com</td>
-													<td>9116211485</td>
-													<td>Jul 27th, 2022</td>
-													<td><span class="badge rounded-pill badge-light-danger badgeborder-radius">Inactive</span></td>
-													<td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Online</span></td>
-													<td class="tableactionnew">
-														<div class="dropdown">
-															<button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-																<i data-feather="more-vertical"></i>
-															</button>
-															<div class="dropdown-menu dropdown-menu-end">
-                              <a class="dropdown-item" href="{{ url('/single_icard') }}">
-    <i data-feather="edit" class="me-50"></i>
-    <span>View Icard</span>
-</a>
-																 
-																<a class="dropdown-item" href="#" onclick="window.confirm('Are you sure ? delete this data')">
-																	<i data-feather="trash-2" class="me-50"></i>
-																	<span>Delete</span>
-																</a>
-															</div>
-														</div>
-													</td>
-												  </tr>
-												  <tr>
-													<td>#DSMNRU21A02223030</td>
-													<td class="fw-bolder text-dark">MANISHA MANI CHAUHAN</td>
-													<td>manishachauhan1196@gmail.com</td>
-													<td>8860197401</td>
-													<td>Jul 09th, 2022</td>
-													<td><span class="badge rounded-pill badge-light-danger badgeborder-radius">Inactive</span></td>
-													<td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">online</span></td>
-													<td class="tableactionnew">
-														<div class="dropdown">
-															<button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-																<i data-feather="more-vertical"></i>
-															</button>
-															<div class="dropdown-menu dropdown-menu-end">
-                              <a class="dropdown-item" href="{{ url('/single_icard') }}">
-    <i data-feather="edit" class="me-50"></i>
-    <span>View Icard</span>
-</a>
-																 
-																<a class="dropdown-item" href="#" onclick="window.confirm('Are you sure ? delete this data')">
-																	<i data-feather="trash-2" class="me-50"></i>
-																	<span>Delete</span>
-																</a>
-															</div>
-														</div>
-													</td>
-												  </tr>
-												  <tr>
-													<td>#DSMNRU21A02223030</td>
-													<td class="fw-bolder text-dark">Jasveer</td>
-													<td>jassuug@gmail.com</td>
-													<td>9694778430</td>
-													<td>Jul 09th, 2022</td>
-													<td><span class="badge rounded-pill badge-light-success badgeborder-radius">Active</span></td>
-													<td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Online</span></td>
-													<td class="tableactionnew">
-														<div class="dropdown">
-															<button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-																<i data-feather="more-vertical"></i>
-															</button>
-															<div class="dropdown-menu dropdown-menu-end">
-                              <a class="dropdown-item" href="{{ url('/single_icard') }}">
-    <i data-feather="edit" class="me-50"></i>
-    <span>View Icard</span>
-</a>
-																 
-																<a class="dropdown-item" href="#" onclick="window.confirm('Are you sure ? delete this data')">
-																	<i data-feather="trash-2" class="me-50"></i>
-																	<span>Delete</span>
-																</a>
-															</div>
-														</div>
-													</td>
-												  </tr>
-												  <tr>
-													<td>#DSMNRU21A02223026</td>
-													<td class="fw-bolder text-dark">Kanchan Poonia</td>
-													<td>pooniarajender76@gmail.com</td>
-													<td>9829922443</td>
-													<td>Jul 09th, 2022</td>
-													<td><span class="badge rounded-pill badge-light-success badgeborder-radius">Active</span></td>
-													<td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Online</span></td>
-													<td class="tableactionnew">
-														<div class="dropdown">
-															<button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-																<i data-feather="more-vertical"></i>
-															</button>
-															<div class="dropdown-menu dropdown-menu-end">
-                              <a class="dropdown-item" href="{{ url('/single_icard') }}">
-    <i data-feather="edit" class="me-50"></i>
-    <span>View Icard</span>
-</a>
-																 
-																<a class="dropdown-item" href="#" onclick="window.confirm('Are you sure ? delete this data')">
-																	<i data-feather="trash-2" class="me-50"></i>
-																	<span>Delete</span>
-																</a> 
-															</div>
-														</div>
-													</td>
-												  </tr>
-											   </tbody>
+
+                        @foreach($students as $student)
+                        <tbody>
+          <tr>  
+            <td>#{{$student->enrolment_number}}</td>
+            <td>{{$student->student_name}}</td>
+            <td>{{$student->email}}</td>
+            <td>{{$student->student_mobile}}</td>
+            <!--td>{{ucfirst($student->gender)}}</td>
+                                <td>{{ucfirst($student->marital_status)}}</td>
+            <td class="text-right">
+                                    @if($student->date_of_birth != '')
+                                    {{date('M dS, Y', strtotime($student->date_of_birth))}} @endif</td--->
+            <td>{{date('M dS, Y', strtotime($student->created_at))}}</td>
+                                <td><div class="admin-status progStat"><span></span>{{ucfirst($student->status)}}</div></td>
+                                <td><div class="admin-status progStat"><span></span>{{ucfirst($student->type)}}</div></td>
+                                  <td class="tableactionnew">
+                                    <div class="dropdown">
+                                      <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
+                                        <i data-feather="more-vertical"></i>
+                                      </button>
+                                      <div class="dropdown-menu dropdown-menu-end">
+                                      {{-- <a  target="_new" class="dropdown-item"href="{{route('single-icard',[$student->id])}}"> --}}
+                                  <i data-feather="edit" class="me-50"></i>
+                                         <span>View Icard</span>
+                                             </a>
+                                         
+                                        <a class="dropdown-item" href="{{route('single-icard-delete',[$student->id])}}" onclick="window.confirm('Are you sure ? delete this data')">
+                                          <i data-feather="trash-2" class="me-50"></i>
+                                          <span>Delete</span>
+                                        </a>
+                                      </div>
+                                    </div>
+                                  </td>
+          </tr>
+        </tbody>
+                       
+        @endforeach
+
+
 
 
 									</table>

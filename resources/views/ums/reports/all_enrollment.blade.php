@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
     
@@ -57,19 +57,26 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @if(count($enrollments) > 0)
+                                                @foreach($enrollments as $index => $enrollment)
+                                                <tbody>
+                                                    <tr>  
+                                                        <td>{{++$index}}</td>
+                                                        <td>{{$enrollment->enrollment->enrollment_no}}</td>
+                                                        <td>{{$enrollment->enrollment->roll_number}}</td>
+                                                        <td>{{$enrollment->first_Name}}</td>
+                                                        <td>{{$enrollment->email}}</td>
+                                                        <td>{{$enrollment->mobile}}</td>
+                                                        <td>{{$enrollment->course->name}}</td>
+                                                    </tr>
+                                                </tbody>
+                                                @endforeach
+                                                @else
+                                                    <tr>
+                                                        <td colspan="8" class="text-center">NO DATA FOUND</td>
+                                                    </tr>
+                                                @endif
                                                
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td class="fw-bolder text-dark">B.Com/2016-17/22</td>
-                                                    <td >162090077</td>
-                                                    <td>KM. RUBI GAUTAM</td>
-                                                    <td>nafesahmad8874@gmail.com</td>
-                                                    <td>6392263165</td>
-                                                    <td>B.Com.</td>
-                                                    
-                                                    
-                                                </tr>
-                                                
                                             </tbody>
                                         </table>
                                     </div>

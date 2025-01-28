@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 @section("content")
 <!-- BEGIN: Body-->
 
@@ -89,42 +89,46 @@
                                                       </tr>
                                                   </thead>
                                                   <tbody>                                                                                                                                                                  
-                                                      <tr>
-                                                          <td>1</td>
-                                                          <td class="fw-bolder text-dark">123456</td>
-                                                          <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">123456</span></td>
-                                                          <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">coding</span></td>
-                                                          <td>First</td>
-                                                          <td>2021-2022</td> 
-                                                          <td>John</td> 
-                                                          <td>7878787878</td> 
-                                                          <td>nothing</td> 
-                                                          <td>dfgh</td> 
-                                                          <td><span class="badge rounded-pill badge-light-warning badgeborder-radius">Open</span></td>  
-                                                          <td class="tableactionnew">  
-                                                              <div class="dropdown">
-                                                                  <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                      <i data-feather="more-vertical"></i>
-                                                                  </button>
-                                                                  <div class="dropdown-menu dropdown-menu-end">
-                                                                      <a class="dropdown-item" href="edit">
-                                                                          <i data-feather="edit" class="me-50"></i>
-                                                                          <span>Edit</span>
-                                                                      </a> 
-                                                                      <a class="dropdown-item" href="incident-view.html">
-                                                                          {{-- <i data-feather="eye" class="me-50"></i> --}}
-                                                                          {{-- <span>View Detail</span> --}}
-                                                                      </a> <a class="dropdown-item" data-bs-toggle="modal" href="#reallocate">
-                                                                          {{-- <i data-feather="copy" class="me-50"></i>
-                                                                          <span>Re-Allocate</span>
-                                                                      </a> <a class="dropdown-item" href="#"> --}}
-                                                                          <i data-feather="trash-2" class="me-50"></i>
-                                                                          <span>Delete</span>
-                                                                      </a>
-                                                                  </div>
-                                                              </div> 
-                                                          </td>
-                                                      </tr>
+                                     
+                                                    @foreach($results as $index=>$result)
+                                                    <tr>  
+                                                        <td>{{++$index}}</td>
+                                                        <td>{{$result->enrollment_no}}</td>
+                                                        <td>{{$result->roll_no}}</td>
+                                                        <td>{{($result->semester_details && $result->semester_details->course)?$result->semester_details->course->name:'-'}}</td>
+                                                        <td>{{($result->semester_details)?$result->semester_details->name:'-'}}</td>
+                                                        <td>{{$result->exam_session}}</td>
+                                                        <td>{{($result->student)?$result->student->full_name:'-'}}</td>
+                                                        <td>{{($result->student)?$result->student->mobile:'-'}}</td>
+                                                        <td>{{$result->status_text}}</td>
+                                                        <td>{{$result->back_status_text}}</td>
+                                                        <td style="width: 200px;">
+                                                            <a target="_blank" href="{{url('admin/view-results/?id='.@$result->semester_details->id)}}&roll_number={{base64_encode($result->roll_no)}}" class="btn-sm btn-success">View</a>
+                                                            @if($result->course_id==64 || $result->course_id==96 || $result->course_id==95)
+                                                            <br/>
+                                                            <br/>
+                                                            <a target="_blank" href="{{url('admin/view-bsc-nursing-result/?id='.@$result->semester_details->id)}}&roll_number={{base64_encode($result->roll_no)}}" class="btn-sm btn-success">BPT/BMLT/Bsc Nursing</a>
+                                                            @endif
+                                                            <br/>
+                                                            <br/>
+                                                            {{-- @if(Auth::guard('admin')->user()->role==1 || Auth::guard('admin')->user()->role==4)
+                                                            @if(Auth::guard('admin')->user()->role==1) --}}
+                                                            <a target="_blank" href="{{url('one-view-result')}}/{{base64_encode($result->roll_no)}}" class="btn-sm btn-info" style="margin-top:10px;">One View</a>
+                                                            <br/>
+                                                            <br/>
+                                                            <a target="_blank" href="{{url('admin/get-single-result')}}/{{$result->roll_no}}?semester={{$result->semester}}" class="btn-sm btn-warning">Edit Record</a>
+                                                            <br/>
+                                                            {{-- @endif --}}
+                                                            <br/>
+                                                            <a target="_blank" href="{{url('cgpa-update')}}?roll_no={{$result->roll_no}}" class="btn-sm btn-dark">Update CGPA</a>
+                                                            <br/>
+                                                            <br/>
+                                                            <a target="_blank" href="{{url('ResultSerialNoUpdate')}}?roll_no={{$result->roll_no}}" class="btn-sm btn-dark">Update Serial Number</a>
+                                                            {{-- @endif --}}
+                                                        </td>
+                                                  </tr>
+                                                  @endforeach
+{{-- 
                                                       <tr>
                                                           <td>2</td>
                                                           <td class="fw-bolder text-dark">123456</td>
@@ -148,12 +152,6 @@
                                                                           <span>Edit</span>
                                                                       </a> 
                                                                       <a class="dropdown-item" href="#" onclick="window.confirm('Are you sure ? delete this data')">
-                                                                          {{-- <i data-feather="eye" class="me-50"></i> --}}
-                                                                          {{-- <span>View Detail</span> --}}
-                                                                      {{-- </a> <a class="dropdown-item" data-bs-toggle="modal" href="#reallocate"> --}}
-                                                                          {{-- <i data-feather="copy" class="me-50"></i>
-                                                                          <span>Re-Allocate</span>
-                                                                      </a> <a class="dropdown-item" href="#"> --}}
                                                                           <i data-feather="trash-2" class="me-50"></i>
                                                                           <span>Delete</span>
                                                                           
@@ -161,7 +159,7 @@
                                                                   </div>
                                                               </div> 
                                                           </td>
-                                                      </tr>
+                                                      </tr> --}}
                                                   </tbody>
                                               </table>
                                           </div>

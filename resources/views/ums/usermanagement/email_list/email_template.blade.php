@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
  
@@ -51,26 +51,26 @@
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td class="fw-bolder text-dark">05-Sep-2024</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                    <!-- <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Shivangi</span></td> -->
-                                                    <td>Shivangi</td>
-                                                    <td>VMM Pvt Ltd</td>
+                                            @if(count($all_users) > 0)
+                                @foreach($all_users as $key=> $user)
+                                <tbody>
+									<tr>  
+										<td>#{{$key+1}}</td>
+										<td>{{ucfirst($user->alias)}}</td>
+                                        <td>{{ucfirst($user->subject)}}</td>
+                                        <td>{{ucfirst($user->message)}}</td>
+                                        <td>{{ucfirst($user->status)}}</td>
                                                     <td class="tableactionnew">  
                                                         <div class="dropdown">
                                                             <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
                                                                 <i data-feather="more-vertical"></i>
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" href="{{ url('email_template_edit') }}">
+                                                                <a class="dropdown-item" onclick="editCat('{{$user->id}}')">
                                                                     <i data-feather="edit" class="me-50"></i>
                                                                     <span>Edit</span>
                                                                 </a> 
-                                                                <a class="dropdown-item" href="#" onclick="window.confirm('Are you sure ? delere this data')">
+                                                                <a class="dropdown-item" href="#" onclick="deleteCat('{{$user->id}}')">
                                                                     <i data-feather="trash-2" class="me-50"></i>
                                                                     <span>Delete</span>
                                                                 </a>
@@ -78,8 +78,14 @@
                                                         </div> 
                                                     </td>
                                                 </tr>
-                                                 
                                             </tbody>
+                                            @endforeach
+                                            @else
+                                                <tr>
+                                                    <td colspan="10" class="text-center">NO DATA FOUND</td>
+                                                </tr>
+                                            @endif
+                                          
                                         </table>
                                     </div>
 								
@@ -243,3 +249,21 @@
 		</div>
 	</div>
 @endsection
+<script>
+    function exportdata() {
+        var url = "{{url('admin/user/admin-export')}}";
+        window.location.href = url;
+    }
+	function editCat(slug) {
+		var url = "{{url('/email-template/edit')}}"+"/"+slug;
+		window.location.href = url;
+	}
+	function deleteCat(slug) {
+        var testalert = "Are you sure?\n Press OK or Cancel";
+        if(confirm(testalert)==false){
+            return false;
+        }
+        var url = "{{url('admin/email/delete-model-trim')}}"+"/"+slug;
+        window.location.href = url;
+    }
+</script>

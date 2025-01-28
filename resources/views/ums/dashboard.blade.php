@@ -38,8 +38,8 @@
                     <div class="row">
                         
                         <div class="col-md-4 col-12 cursor-pointer"  data-bs-toggle="modal" data-bs-target="#myModal">
-                            <div class="holiday-box p-4">
-                                <div><span>Applications</span></div>
+                            <div class="holiday-box p-4" style=" border-left: 10px solid #A0BC8B;">
+                                <div><span style="background: rgba(160, 188, 139, 0.2); color: #A0BC8B;">Applications</span></div>
                                 <div>
                                     <h3 class="fw-lighter">4631</h3>
                                     <h5>Total</h5>
@@ -49,8 +49,8 @@
                         
                         
                         <div class="col-md-4 col-12  cursor-pointer" data-bs-toggle="modal" data-bs-target="#myModal">
-                            <div class="holiday-box p-4">
-                                <div><span>P.hD. Applications</span></div>
+                            <div class="holiday-box p-4" style="border-left: 10px solid #62C3C0;">
+                                <div><span style="background: rgba(110, 230, 226, 0.2); color: #62C3C0;">P.hD Applications</span></div>
                                 <div>
                                     <h3 class="fw-lighter">1</h3>
                                     <h5>Total</h5>
@@ -59,7 +59,7 @@
                         </div>
                         <div class="col-md-4 col-12 cursor-pointer" >
                             <div class="holiday-box p-4">
-                                <div><span>Enrolled Students</span></div>
+                                <div><span style="background: rgba(168, 139, 151, 0.2); color: #A88B97;">Enrolled Students</span></div>
                                 <div>
                                     <h3 class="fw-lighter">100</h3>
                                     <h5>Total</h5>
@@ -67,8 +67,8 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-12 cursor-pointer">
-                            <div class="holiday-box p-4">
-                                <div><span>Total Students</span></div>
+                            <div class="holiday-box p-4" style="border-left: 10px solid #E3C852;">
+                                <div><span style="background: rgba(227, 200, 82, 0.2); color: #E3C852;">Total Students</span></div>
                                 <div>
                                     <h3 class="fw-lighter">2408</h3>
                                     <h5>Total</h5>
@@ -76,8 +76,8 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-12 cursor-pointer">
-                            <div class="holiday-box p-4">
-                                <div><span >Pending
+                            <div class="holiday-box p-4"style="border-left: 10px solid #eb6623;" >
+                                <div><span style="background: rgba(190, 136, 55, 0.2); color: #eb6623;" >Pending
                                     Applications</span></div>
                                 <div>
                                     <h3 class="fw-lighter">0</h3>
