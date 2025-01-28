@@ -1,5 +1,7 @@
 @extends('ums.admin.admin-meta')
+
 @section('content')
+    
 
     <!-- BEGIN: Content-->
     <div class="app-content content ">
@@ -10,23 +12,21 @@
                 <div class="content-header-left col-md-5 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">Student Name</h2>
+                            <h2 class="content-header-title float-start mb-0">Students</h2>
                             <div class="breadcrumb-wrapper">
                                 <ol class="breadcrumb">
-                                  <li class="breadcrumb-item"><a href="index.html">Home</a></li>  
-                                   <li class="breadcrumb-item active">(Hindi/English)</li>
+                                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>  
+                                    <li class="breadcrumb-item active">List of Students</li>
                                 </ol>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
-                    
                     <div class="form-group breadcrumb-right"> 
-                    					<button class="btn btn-primary btn-sm mb-50 mb-sm-0" data-bs-target="#filter" data-bs-toggle="modal"><i data-feather="filter"></i> Filter</button> 
-                              <button class="btn btn-warning box-shadow-2 btn-sm me-1 waves-effect waves-float waves-light" onClick="window.location.reload()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>Reset</button>		
-
+							<button class="btn btn-primary btn-sm mb-50 mb-sm-0" data-bs-target="#filter" data-bs-toggle="modal"><i data-feather="filter"></i> Filter</button> 
 							<!-- <button class="btn btn-success btn-sm mb-50 mb-sm-0" data-bs-target="#approved" data-bs-toggle="modal"><i data-feather="check-circle" ></i> Assign Team</button> -->
+                            <button class="btn btn-warning box-shadow-2 btn-sm me-1 mb-sm-0 mb-50" onClick="window.location.reload()"><i data-feather="refresh-cw"></i> Reset</button> 
                     </div>
                 </div>
             </div>
@@ -41,27 +41,20 @@
                                 <div class="table-responsive">
                                         <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
                                             <thead>
-                                                <tr>
-                                                    <th>No.</th>
-                                                    <th>Role No</th>
-                                                    <th>student Name(English)</th>
-                                                    
-                                                </tr>
+                                              <tr>
+                                                <th>SN#</th>
+                                                <th>Roll No</th>
+                                                <th>Course</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Mobile</th>
+                                                <th>DOB</th>
+                                                <th>Action</th>
+                                            </tr>
                                             </thead>
                                             <tbody>
-                                                @if(count($students) > 0)
-                                                @foreach($students as $index=>$student)
-                                                    <tr onclick="save_names($(this),1)" class="save_names">  
-                                                        <td>{{++$index}}</td>
-                                                        <td class="roll_number" data-rollno="{{$student->roll_number}}">{{$student->roll_number}}</td>
-                                                        <td class="hindi_name">{{$student->full_name}}</td>
-                                                    </tr>
-                                                @endforeach
-                                                @else
-                                                    <tr>
-                                                        <td colspan="6" class="text-center">NO DATA FOUND</td>
-                                                    </tr>
-                                                @endif
+                                               
+                                                
                                             </tbody>
                                         </table>
                                     </div>
@@ -116,7 +109,9 @@
     <div class="sidenav-overlay"></div>
     <div class="drag-target"></div>
 
-    
+    <!-- BEGIN: Footer-->
+    {{-- @include('footer') --}}
+    <!-- END: Footer-->
 	
      
     

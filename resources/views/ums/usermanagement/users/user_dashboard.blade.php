@@ -122,7 +122,7 @@
                             <h4 class="heading  "><img src="images/icon/db3.png" alt=""> Course Application Status</h4>
                             
                                     <b>	You have not applied any Course!!!! Please Apply First<br></b><br>
-                                        <a href="/affiliate_college_application_form"> <span class="blink_me">👉</span><b>Click Here To Apply</b></a><br>
+                                        <a href="/application_form"> <span class="blink_me">👉</span><b>Click Here To Apply</b></a><br>
                                         
                         </div>
                     
