@@ -1,6 +1,5 @@
 <?php
 
-<<<<<<< HEAD
 namespace App\Http\Controllers\ums\Admin;
 
 use App\Http\Controllers\Controller;
@@ -32,38 +31,6 @@ class ResultController extends Controller
 {
 //  use ResultsTrait;
 
-=======
-namespace App\Http\Controllers\Admin;
-
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\ExamType;
-use App\Models\ExamFee;
-use App\Models\AdmitCard;
-use App\Models\Subject;
-use App\Models\Student;
-use App\Models\Icard;
-use App\Models\Campuse;
-use App\Models\Semester;
-use App\Models\Stream;
-use App\Models\Course;
-use App\Models\Result;
-use App\Models\Category;
-use App\Models\ExternalMark;
-use App\Models\InternalMark;
-use App\Models\AcademicSession;
-use App\Models\ResultBackupScrutiny;
-use App\Models\PracticalMark;
-use Carbon\Carbon;
-use Auth;
-use DB;
-use App\Http\Traits\ResultsTrait;
-use App\Models\Grade;
-
-class ResultController extends Controller
-{
-  use ResultsTrait;
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 
   public function index()
     {
@@ -172,11 +139,7 @@ class ResultController extends Controller
         $data['campuselist']=$campuse;
         $data['semesterlist']=$semester;
 
-<<<<<<< HEAD
       return view('ums.result.Result_list',$data);
-=======
-      return view('admin.result.all-results',$data);
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
     }
 
     public function getSingleResult(Request $request,$roll_no)

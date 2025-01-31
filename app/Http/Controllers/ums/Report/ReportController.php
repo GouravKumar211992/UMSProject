@@ -1,16 +1,11 @@
 <?php
 
-<<<<<<< HEAD
 namespace App\Http\Controllers\ums\Report;
-=======
-namespace App\Http\Controllers\Report;
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 
 use Illuminate\Support\Facades\Log;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-<<<<<<< HEAD
 use App\Models\ums\Enrollment;
 use App\Models\ums\ExamFee;
 use App\Models\ums\Subject;
@@ -33,30 +28,6 @@ use App\Exports\ums\ExportUser;
 use App\Exports\ums\EnrollmentListExport;
 use App\Models\ums\ExamType;
 use Illuminate\Support\Facades\DB;
-=======
-use App\Models\Enrollment;
-use App\Models\ExamFee;
-use App\Models\Subject;
-use App\Models\Student;
-use App\Models\Phd2023EntranceTest;
-use App\Models\ExamForm;
-use App\Models\Campuse;
-use App\Models\Semester;
-use App\Scrutiny;
-use App\Models\Course;
-use App\Models\Result;
-use App\Models\Category;
-use App\Models\AcademicSession;
-use App\Models\StudentAllFromOldAgency;
-use App\Models\StudentSubject;
-use App\Models\InternalMark;
-use App\Models\Application;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\ExportUser;
-use App\Exports\EnrollmentListExport;
-use App\Models\ExamType;
-use DB;
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 
 class ReportController extends Controller
 {
@@ -69,11 +40,7 @@ class ReportController extends Controller
     }
     $data['campuses'] = Campuse::all();
     $data['enrollments'] = $applications->paginate(10);
-<<<<<<< HEAD
     return view('ums.reports.all_enrollment', $data);
-=======
-    return view('report.all-enrollment-list', $data);
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
   }
   public function enrollmentListExport(Request $request)
   {
@@ -167,11 +134,7 @@ class ReportController extends Controller
     if ($request->page) {
       $current_page = $request->page;
     }
-<<<<<<< HEAD
     return view('ums.reports.Application_Report', [
-=======
-    return view('report.application-report-list', [
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       'page_title' => "Campuse",
       'sub_title' => "records",
       'applications' => $Application,
@@ -204,13 +167,8 @@ class ReportController extends Controller
         ->Where('enrollments.roll_number', 'LIKE', $request->year . '%')
         ->distinct()
         ->get();
-<<<<<<< HEAD
       }
     return view('ums.reports.digi_shakti_report', [
-=======
-    }
-    return view('report.digi_shakti_report', [
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       'page_title' => "Digi Shakti Report",
       'sub_title' => "records",
       'campuses' => $campuses,
@@ -231,11 +189,7 @@ class ReportController extends Controller
     $semesters = Semester::withoutTrashed()->where('course_id', $request->course_id)->orderBy('id', 'asc')->get();
     $course = Course::find($request->course_id);
     $sessions = AcademicSession::all();
-<<<<<<< HEAD
     $subjects = Subject::limit(10)->get();
-=======
-    $subjects = [];
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
     $subjects_query = Subject::select('subjects.*', 'semester_number')
       ->where('subjects.course_id', $request->course_id)
       ->join('semesters', 'semesters.id', 'subjects.semester_id');
@@ -254,11 +208,7 @@ class ReportController extends Controller
     if ($request->course_id && $request->academic_session && $request->semester_type && $request->semester_id == null) {
       $subjects = $subjects_clone->get();
     }
-<<<<<<< HEAD
     return view('ums.reports.Mark_Filling_Report', compact(
-=======
-    return view('report.mark-filling-report', compact(
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       'campuses',
       'courses',
       'semesters',
@@ -284,11 +234,7 @@ class ReportController extends Controller
       ->distinct()
       ->orderBy('subject_position', 'ASC')
       ->get();
-<<<<<<< HEAD
     return view('ums.reports.mark_sheet_position', compact(
-=======
-    return view('report.marksheet-position-update', compact(
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       'campuses',
       'courses',
       'semesters',
@@ -340,12 +286,8 @@ class ReportController extends Controller
       ->distinct()
       ->orderBy('roll_no')
       ->get();
-<<<<<<< HEAD
       
     return view('ums.reports.cgpa_report', compact(
-=======
-    return view('report.cgpa-report', compact(
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       'campuses',
       'courses',
       'semesters',
@@ -359,29 +301,18 @@ class ReportController extends Controller
 
   public function medalListCgpa(Request $request)
   {
-<<<<<<< HEAD
     return redirect('cgpa_report');
-=======
-    return redirect('report/cgpa-report');
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
   }
 
   public function trSummary(Request $request)
   {
-<<<<<<< HEAD
     $examType = ExamType::where('exam_type','back_paper')->first();
-=======
-    $examType = ExamType::where('exam_type', $request->form_type)->first();
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
     if ($examType) {
       $back_status_text = $examType->result_exam_type;
     } else {
       $back_status_text = null;
     }
-<<<<<<< HEAD
     
-=======
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
     $results = Result::select('results.course_id', 'results.semester', 'exam_session', 'status', 'back_status_text')
       ->join('student_subjects', function ($query) use ($request) {
         $query->on('student_subjects.roll_number', 'results.roll_no')
@@ -390,7 +321,6 @@ class ReportController extends Controller
           ->on('student_subjects.session', 'results.exam_session')
           ->where('student_subjects.type', $request->form_type);
       })
-<<<<<<< HEAD
 
     //   ->groupBy('course_id', 'semester', 'status')      //  updated line//
 
@@ -405,17 +335,6 @@ class ReportController extends Controller
 
     return view('ums.reports.tr_summary', compact('results'));
 
-=======
-      ->groupBy('course_id', 'semester', 'status')
-      ->where('result_type', 'new')
-      ->where('exam_session', $request->exam_session)
-      ->where('back_status_text', $back_status_text)
-      ->orderBy('course_id')
-      ->orderBy('semester_number')
-      ->orderBy('status')
-      ->get();
-    return view('report.tr-summary', compact('results'));
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
   }
 
   public function scrutinyReport(Request $request)
@@ -446,11 +365,7 @@ class ReportController extends Controller
       ->orderBy('roll_no')
       ->distinct('roll_no', 'enrollment_no', 'course_id')
       ->get();
-<<<<<<< HEAD
     return view('ums.reports.scholarship_report', compact(
-=======
-    return view('report.scholarship-report', compact(
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       'campuses',
       'courses',
       'sessions',
@@ -473,11 +388,7 @@ class ReportController extends Controller
       ->orderBy('roll_no')
       ->distinct('roll_no', 'enrollment_no', 'course_id')
       ->get();
-<<<<<<< HEAD
     return view('ums.reports.scholarship_report', compact(
-=======
-    return view('report.scholarship-report1', compact(
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       'campuses',
       'courses',
       'sessions',
@@ -489,7 +400,6 @@ class ReportController extends Controller
   public function disabilityReport(Request $request)
   {
     $campuses = Campuse::get();
-<<<<<<< HEAD
     // $students = ExamForm::groupBy('rollno')        //new updated query//
 
     $students = ExamForm::groupBy('rollno', 'exam_forms.name', 'disabilty_category', 'courses.campus_id', 'exam_forms.course_id')
@@ -499,22 +409,11 @@ class ReportController extends Controller
       ->get();
 
     return view('ums.reports.disability_report_list', compact(
-=======
-    $students = ExamForm::groupBy('rollno')->withTrashed()->join('courses', 'courses.id', 'exam_forms.course_id')
-      ->select('rollno', 'exam_forms.name', 'disabilty_category', 'courses.campus_id', 'exam_forms.course_id')
-      ->where('courses.campus_id', $request->campus_id)
-      ->get();
-    return view('report.disability-report', compact(
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       'campuses',
       'students',
     ));
   }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
   public function meritListReport(Request $request)
   {
     $sessions = Result::select('exam_session')->distinct('exam_session')->orderByDesc('exam_session')->get();
@@ -574,10 +473,7 @@ class ReportController extends Controller
       ->orderBy('roll_no', 'ASC')
       ->get();
 
-<<<<<<< HEAD
       $sessions = ['2020-2021', '2021-2022', '2022-2023', '2023-2024' ,'2024-2025']; //added for sessions //
-=======
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       // custome data
 
 
@@ -591,19 +487,12 @@ class ReportController extends Controller
     // ->distinct()
     // ->orderBy('total_obtained_marks','DESC')
     // ->get();
-<<<<<<< HEAD
     return view('ums.reports.degree_report_list', compact(
-=======
-    return view('report.degree_list_report', compact(
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       'campuses',
       'courses',
       'results',
       'semesters',
-<<<<<<< HEAD
       'sessions'
-=======
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
     ));
   }
   public function tabulationChart(Request $request){
@@ -679,11 +568,8 @@ class ReportController extends Controller
       ->distinct()
       ->orderBy('total_obtained_marks', 'DESC')
       ->get();
-<<<<<<< HEAD
       // $sessions = ['2020-2021', '2021-2022', '2022-2023', '2023-2024' ,'2024-2025']; //added for sessions //
 
-=======
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
     // for MMBS
     // $results = Result::select('roll_no','enrollment_no','semester','course_id','exam_session')
     // ->whereIn('roll_no',['1601247001','1601247010','1601247011','1601247013','1601247016','1601247019','1601247020','1601247022','1601247029','1601247030','1601247031','1601247033','1601247042','1601247044','1601247048','1601247050','1601247057','1601247063','1601247065','1601247068','1601247078','1601247080','1601247088','1601247106','1601247115','1601247117','1601247118','1601247119','1601247128','1601247124','1601247126','1601247131','1601247132','1601247135','1601247140'])
@@ -695,11 +581,7 @@ class ReportController extends Controller
     // ->distinct()
     // ->orderBy('roll_no','ASC')
     // ->get();
-<<<<<<< HEAD
     return view('ums.reports.digilocker_list', compact(
-=======
-    return view('report.digilocker-list', compact(
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       'campuses',
       'courses',
       'sessions',
@@ -804,11 +686,7 @@ class ReportController extends Controller
     $sessions = AcademicSession::all();
     $campuses = Campuse::orderBy('id')->get();
     $courses = Course::where('campus_id', $request->campus_id)->orderBy('name', 'ASC')->get();
-<<<<<<< HEAD
     return view('ums.reports.chart_for_maximum_marks', compact(
-=======
-    return view('report.chart-for-max-marks', compact(
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       'campuses',
       'courses',
       'sessions',
@@ -821,10 +699,6 @@ class ReportController extends Controller
 
   public function passedStudentReport(Request $request)
   {
-<<<<<<< HEAD
-
-=======
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
     $sessions = AcademicSession::all();
     $campuses = Campuse::all();
     $results = null;
@@ -858,15 +732,10 @@ class ReportController extends Controller
         ->distinct()
         ->union($results_semester)
         ->get();
-<<<<<<< HEAD
 
       // dd($results);
     }
     return view('ums.reports.passed_student_report', compact(
-=======
-    }
-    return view('report.passed-student-report', compact(
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       'sessions',
       'results',
       'campuses',
@@ -875,25 +744,16 @@ class ReportController extends Controller
   public function studyingStudents(Request $request)
   {
     $campuses = Campuse::get();
-<<<<<<< HEAD
     $batch = ['2014-2015', '2015-2016', '2016-2017', '2017-2018', '2018-2019', '2019-2020', '2020-2021', '2021-2022', '2022-2023', '2023-2024'];
 
-=======
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
     $courses = Course::where('campus_id', $request->campus)
     ->whereNull('course_group')
     ->orderBy('name')
     ->get();
-<<<<<<< HEAD
     return view('ums.reports.student_studying', compact(
       'courses',
       'campuses',
       'batch'
-=======
-    return view('report.studying-students', compact(
-      'courses',
-      'campuses',
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
     ));
   }
   public function allstudyingStudents(Request $request)
@@ -905,11 +765,7 @@ class ReportController extends Controller
     ->orderBy('name')
     // ->where('id',1)
     ->get();
-<<<<<<< HEAD
     return view('ums.reports.all_studying_student', compact(
-=======
-    return view('report.all-studying-students', compact(
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       'academic_session',
       'courses',
       'campuses',
@@ -968,11 +824,7 @@ class ReportController extends Controller
         ->distinct();
       $results = $results->get();
     }
-<<<<<<< HEAD
     return view('ums.reports.reqular_exam_form_list', compact(
-=======
-    return view('report.regular-form-report', compact(
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       'sessions',
       'results',
       'campuses',
@@ -1021,31 +873,20 @@ class ReportController extends Controller
 
   public function passOutStudentReport(Request $request)
   {
-<<<<<<< HEAD
     // dd($request->all());
 
     $sessions = AcademicSession::all();
     if ($request->submit_form && $request->submit_form == 'true' && $request->academic_session) {
-=======
-    $results = null;
-    $sessions = AcademicSession::all();
-    if ($request->submit_form == 'true' && $request->academic_session) {
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       $results = Result::select('roll_no', 'course_id', 'semester', 'enrollment_no')->where('exam_session', $request->academic_session)
         ->Where('result_overall', 'PASS')
         ->where('semester_final', 1)
         ->distinct('roll_no')
         ->get();
-<<<<<<< HEAD
         dd($results);
     }
     $results = null;
 
     return view('ums.reports.pass_out_student_report', compact(
-=======
-    }
-    return view('report.passout-student-report', compact(
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       'sessions',
       'results',
     ));
@@ -1057,18 +898,13 @@ class ReportController extends Controller
     $results = null;
     $counts = null;
     $courses = Course::where('campus_id', $request->campus)->orderBy('name', 'ASC')->get();
-<<<<<<< HEAD
     return view('ums.reports.Enrollment_Summary', compact(
-=======
-    return view('report.count-enrolled-report', compact(
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       'sessions',
       'campuses',
       'courses',
     ));
   }
 
-<<<<<<< HEAD
   public function batchPrefixByBatch($batch)
 	{
 		$batchPrefix = [];
@@ -1095,41 +931,24 @@ class ReportController extends Controller
   public function allenrollreport(Request $request)
   {
     // dd($request);
-=======
-  //all enrollment report
-  public function allenrollreport(Request $request)
-  {
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
     $campuses = Campuse::get();
     $courses = Course::where('campus_id',$request->campus)->get();
     $selected_course = Course::whereId($request->course_id)->first();
     $students = null;
-<<<<<<< HEAD
     $sessions = ['2020-2021', '2021-2022', '2022-2023', '2023-2024' ,'2024-2025']; //added for sessions //
 
     if ($request->campus && $request->course_id && $request->batch && $request->submit_form == 'true') {
       $batchPrefixByBatch = $this->batchPrefixByBatch($request->batch);
-=======
-    if ($request->campus && $request->course_id && $request->batch && $request->submit_form == 'true') {
-      $batchPrefixByBatch = batchPrefixByBatch($request->batch);
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       $students = Enrollment::where('course_id', $request->course_id)
       ->where('roll_number','LIKE', $batchPrefixByBatch.'%')
       ->get();
     }
-<<<<<<< HEAD
     return view('ums.reports.Enrollment_report', [
-=======
-    return view('report.all-enroll-report', [
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       'campuses' => $campuses,
       'courses' => $courses,
       'selected_course' => $selected_course,
       'students' => $students,
-<<<<<<< HEAD
       'sessions' => $sessions,
-=======
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
     ]);
   }
 
@@ -1169,11 +988,8 @@ class ReportController extends Controller
     $semesters = Semester::withoutTrashed()->where('course_id', $request->course_id)->orderBy('id', 'asc')->get();
     $subjects = Subject::withoutTrashed()->where('semester_id', $request->semester_id)->orderBy('id', 'asc')->get();
     $exam_types = ExamType::get();
-<<<<<<< HEAD
     $batch = ['2014-2015','2015-2016','2016-2017','2017-2018','2018-2019','2019-2020','2020-2021','2021-2022','2022-2023','2023-2024'];
     //add batch() not work//
-=======
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
     $batchs = $request->batch;
     $duplicate_roll_no = InternalMark::where('session', $request->academic_session)
       ->where('sub_code', $request->sub_code)
@@ -1206,11 +1022,7 @@ class ReportController extends Controller
     $exams_query->distinct('student_subjects.enrollment_number', 'student_subjects.roll_number', 'student_subjects.session', 'student_subjects.program_id', 'student_subjects.course_id', 'student_subjects.semester_id', 'student_subjects.sub_code', 'student_subjects.sub_name')
       ->orderBy('student_subjects.roll_number', 'asc');
     $exams = $exams_query->get();
-<<<<<<< HEAD
     return view('ums.reports.award_sheet_for_all', compact(
-=======
-    return view('report.awardsheet', compact(
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       'campuses',
       'courses',
       'semesters',
@@ -1221,10 +1033,7 @@ class ReportController extends Controller
       'selected_campus',
       'selected_course',
       'selected_semester',
-<<<<<<< HEAD
       'batch'
-=======
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
     ));
   }
 

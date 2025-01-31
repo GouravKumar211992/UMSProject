@@ -34,10 +34,6 @@ class OldGradeController extends AdminController
             $grade->academic_session = $request->academic_session;
             $grade->save();
             return redirect('ums.master.grading.old_grading')->with('success','Added Successfully');
-<<<<<<< HEAD
-
-=======
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
         }
     }
 
@@ -55,11 +51,7 @@ class OldGradeController extends AdminController
     $grade = GradeOldAllowedSemester::find($request->id);
     if($grade){
         $grade->delete();
-<<<<<<< HEAD
         return redirect('ums.master.grading.old_grading')->with('success','Deleted Successfully');
-=======
-        return redirect('old_grading')->with('success','Deleted Successfully');
->>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
     }
  }
 
