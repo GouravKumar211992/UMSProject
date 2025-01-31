@@ -11,16 +11,14 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class QuestionBank extends Model implements HasMedia
 {
     use SoftDeletes, InteractsWithMedia;
-
-     protected $fillable = [
-        'campus_id',  
-        'program_id',   
-        'course_id', 
-        'phd_title', 
-        'branch_id',  
-        'semester_id',      
-        'sub_code',      
-        'session',      
+    protected $fillable = [
+        'campus_id',
+        'program_id',
+        'course_id',
+        'branch_id',
+        'semester_id',
+        'sub_code',
+        'session',
     ];
 
     protected $appends = [
@@ -44,6 +42,8 @@ class QuestionBank extends Model implements HasMedia
         $this->addMediaCollection('domicile_cirtificate')
             ->singleFile();
      }
+
+    
 
 
     public function Campuse() {

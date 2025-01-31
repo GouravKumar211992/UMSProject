@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Broadcast;
 
 use App\Http\Controllers\ums\Admin\Master\QuestionBankController;
 use App\Http\Controllers\ums\Admin\HolidayCalenderController;
+use App\Http\Controllers\ums\Report\ReportController;
 
 use App\Http\Controllers\LoanProgress\SanctionLetterController;
 use App\Http\Controllers\ServiceController;
@@ -419,20 +420,46 @@ Route::get('/affiliate_circular_add', function () {
     return view('ums.master.affiliate.affiliate_circular_add');
 });
 
-// Route::get('/question_bank', function () {
-//     return view('ums.master.question_bank.question_bank');
-// });
-Route::get('question_bank',[QuestionBankController::class,'index'])->name('questionbankdownload');
+
+// Display the question bank list
+Route::get('question_bank', [QuestionBankController::class, 'index'])->name('questionbankdownload');
+
+// Display the form to add a question bank (GET request)
+Route::get('/add_question_bank', [QuestionBankController::class, 'add'])->name('add_question_bank');
+
+// Handle form submission for adding a question bank (POST request)
+Route::post('/add_question_bank', [QuestionBankController::class, 'addQuestionBank'])->name('add_question_bank');
+
+// Dynamic dropdowns for Semester and Subject
+Route::get('/get_semester', [QuestionBankController::class, 'get_Semester'])->name('get_semester');
+Route::get('/get_subject', [QuestionBankController::class, 'get_Subject'])->name('get_subject');
+
+// routes/web.php
+Route::post('/get-courses', [QuestionBankController::class, 'getCourses'])->name('get-courses');
+// routes/web.php
+
+Route::post('/get-questionbank-semester', [QuestionBankController::class, 'getQuestionBankSemester'])->name('get-questionbank-semester');
+// routes/web.php
+
+Route::post('/get-questionbank-subject', [YourController::class, 'getQuestionBankSubject'])->name('get-questionbank-subject');
 
 
-Route::get('/add_question_bank', function () {
-    return view('ums.master.question_bank.add_question_bank');
-});
 
 // Route::get('/holiday_calender', function () {
 //     return view('ums.master.holiday_calender.holiday_calender');
 // });
+
+// Route to view holiday calendar (GET method)
 Route::get('/holiday_calender', [HolidayCalenderController::class, 'holidayCalender'])->name('holiday_calender');
+
+// Route to save holiday data (POST method)
+Route::post('/holiday_calender/save', [HolidayCalenderController::class, 'holidayCalenderSave'])->name('holidayCalenderSave');
+
+Route::get('/holiday_calender/delete/{id}', [HolidayCalenderController::class, 'holidayCalenderDelete'])->name('holidayCalenderDelete');
+
+
+
+
 
 
 Route::get('/add_holiday_calender', function () {
@@ -520,9 +547,13 @@ Route::get('/pass_out_student_report', function () {
 Route::get('/nirf_report', function () {
     return view('ums.reports.nirf_report');
 });
-Route::get('/mbbs_security_report', function () {
-    return view('ums.reports.mbbs_security_report');
-});
+// Route::get('/mbbs_security_report', function () {
+//     return view('ums.reports.mbbs_security_report');
+// });
+
+Route::get('/mbbs_security_report', [ReportController::class, 'scrutinyReport'])->name('mbbs_security_report');
+
+
 Route::get('/Mark_Filling_Report', function () {
     return view('ums.reports.Mark_Filling_Report');
 });

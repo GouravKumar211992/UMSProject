@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Report;
+namespace App\Http\Controllers\ums\Report;
 
 use Illuminate\Support\Facades\Log;
-
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Enrollment;
@@ -14,7 +14,7 @@ use App\Models\Phd2023EntranceTest;
 use App\Models\ExamForm;
 use App\Models\Campuse;
 use App\Models\Semester;
-use App\Scrutiny;
+use App\Models\ums\Scrutiny;
 use App\Models\Course;
 use App\Models\Result;
 use App\Models\Category;
@@ -334,14 +334,20 @@ class ReportController extends Controller
   {
     $from = $request->from;
     $to = $request->to;
-    $data = Scrutiny::whereBetween('created_at', [$from, $to])
-      ->whereNotNull('bank_name')
-      ->where('form_type', 2)
-      ->get();
-    return view('report.scrutiny-report', compact(
+    $data = Scrutiny::withTrashed() // i have added this function
+    ->whereBetween('created_at', [$from, $to])
+    ->whereNotNull('bank_name')
+    ->where('form_type', 2)
+    ->get();
+    return view('ums.reports.mbbs_security_report', compact(
       'data',
     ));
   }
+
+  
+
+
+
 
   public function scholarshipReport(Request $request)
   {

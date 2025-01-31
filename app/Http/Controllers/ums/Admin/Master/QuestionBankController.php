@@ -27,7 +27,7 @@ use Auth;
 
 class QuestionBankController extends Controller
 {
-    //  public function __construct()
+     //  public function __construct()
     // {
     //     parent::__construct();
     // }
@@ -64,13 +64,13 @@ class QuestionBankController extends Controller
         $campuses = Campuse::all();
         $sessions=AcademicSession::all();
         $semester = Semester::select('name')->distinct()->get();
-        // Auth::guard('student')->check()
-        if(true){
-            $data['quesBankData'] = $quesBankData;
-            return view('ums.master.question_bank.question_bank',$data);
-        }
+        
+        // if(Auth::guard('student')->check()){
+        //     $data['quesBankData'] = $quesBankData;
+        //     return view('student/questionbank/view',$data);
+        // }
 
-        return view('admin.master.question-bank.index', [
+        return view('ums.master.question_bank', [
             'page_title' => "Internal Mark Mapping",
             'sub_title' => "records",
             'quesBankData'  => $quesBankData,
@@ -86,20 +86,18 @@ class QuestionBankController extends Controller
         $campuses=Campuse::all();
         $programs = Category::all();
         $sessions=AcademicSession::all();
-        
-        return view('admin.master.question-bank.add',[
+           
+        return view('ums.master.question_bank.add_question_bank',[
             'page_title' => "Internal Mark Mapping",
             'sub_title' => "Add",
             'campuses'  => $campuses,
             'sessions'  => $sessions,
-            'programs'  => $programs
+            'programs'  => $programs,
            
-            
+           
+
         ]);
     }
-
-
-
     public function addQuestionBank(Request $request)
     {
         // dd($request->all());

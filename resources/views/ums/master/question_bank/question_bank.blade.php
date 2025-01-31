@@ -90,8 +90,6 @@
                                                                 target="_blank">Download</a></td>
                                                         <td><a href="{{ $internal->seminar_file }}"
                                                                 target="_blank">Download</a></td>
-                                                <tbody>
-                                                    <tr>
                                                         <td class="tableactionnew">
                                                             <div class="dropdown">
                                                                 <button type="button"
@@ -100,20 +98,17 @@
                                                                     <i data-feather="more-vertical"></i>
                                                                 </button>
                                                                 <div class="dropdown-menu dropdown-menu-end">
-                                                                    <a class="dropdown-item">
+                                                                    <a href="" class="dropdown-item">
                                                                         <i data-feather="edit" class="me-50"></i>
                                                                         <span>Edit</span>
                                                                     </a>
-                                                                    <a class="dropdown-item" href="#">
+                                                                    <a href="" class="dropdown-item">
                                                                         <i data-feather="trash-2" class="me-50"></i>
                                                                         <span>Delete</span>
                                                                     </a>
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                    </tr>
-
-                                                </tbody>
                                             @endforeach
                                         @else
                                             <tr>
@@ -126,6 +121,8 @@
                             </div>
                         </div>
                     </div>
+                    {{-- {{route('edit-question-bank',[$internal->id])}} --}}
+                    {{-- {{route('delete-question-bank',[$internal->id])}} --}}
                     <!-- Modal to add new record -->
                     <div class="modal modal-slide-in fade" id="modals-slide-in">
                         <div class="modal-dialog sidebar-sm">
