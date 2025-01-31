@@ -1,4 +1,4 @@
-@extends("admin.admin-meta")
+@extends("ums.admin.admin-meta")
 @section('content')
 {{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col=""> --}}
   
@@ -10,20 +10,15 @@
         <div class="col-md-3">
             <span style="color: black;">Select Course :</span>
             <select data-live-search="true" name="course" id="course" style="border-color: #c0c0c0;" class="form-control js-example-basic-single ">
-               <option value="">--Choose Course--</option>
-                                         
-                      <option value="49">MBBS</option>
-                                             
-                      <option value="64">B.Sc. (Nursing)</option>
-                                             
-                      <option value="95">BPT</option>
-                                             
-                      <option value="96">BMLT</option>
-                                             
-                      <option value="131">M.D.-PATHOLOGY</option>
-                                             
-                      <option value="132">M.D.-COMMUNITY MEDICINE</option>
-                                            </select>
+    <option value="">--Choose Course--</option>
+    <option value="49" {{ request()->get('course') == 49 ? 'selected' : '' }}>MBBS</option>
+    <option value="64" {{ request()->get('course') == 64 ? 'selected' : '' }}>B.Sc. (Nursing)</option>
+    <option value="95" {{ request()->get('course') == 95 ? 'selected' : '' }}>BPT</option>
+    <option value="96" {{ request()->get('course') == 96 ? 'selected' : '' }}>BMLT</option>
+    <option value="131" {{ request()->get('course') == 131 ? 'selected' : '' }}>M.D.-PATHOLOGY</option>
+    <option value="132" {{ request()->get('course') == 132 ? 'selected' : '' }}>M.D.-COMMUNITY MEDICINE</option>
+</select>
+
                     <span class="text-danger"></span>
             </div>
            
@@ -102,84 +97,56 @@
                         <div class="col-12">
                             <div class="card">
 								   
-                                <div class="table-responsive mb-3">
-                                        <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
-                                            <thead>
-                                                <tr>
-                                                    <th>Sr.No.</th>
-                                                    <th>Roll No.</th>
-                                                    <th>Mobile No.</th>
-                                                    <th>DOB</th>
-                                                    <th>Regular </th>
-                                                    <th>Supplementary </th>
-                                                    <th>Challenge</th>
-                                                    <th>Scrutiny</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td class="fw-bolder text-dark">Description will come here</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Shivangi</span></td>
-                                                    <td>05-Sep-2024</td>
-                                                    <td>05-Sep-2024</td> 
-                                                    <td>05-Sep-2024</td> 
-                                                    <td>Description will come here</td> 
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" href="edit">
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a> 
-                                                                <a class="dropdown-item" href="#" onclick="window.confirm('Are you sure ? you want to delete this data')">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span>Delete</span>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td class="fw-bolder text-dark">05-Sep-2024</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Shivangi</span></td>
-                                                    <td>VMM Pvt Ltd</td>
-                                                    <td>Description will come here</td> 
-                                                    <td>Description will come here</td> 
-                                                    <td>Open</td> 
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" >
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a> 
-                                                                <a class="dropdown-item" href="#" onclick="window.confirm('Are you sure ? you want to delete this data')">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span>Delete</span>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>
-                                                </tr>
-                                                 
-                                               
-                                               
-                                            </tbody>
-                                        </table>
-                                    </div>
-								
-                            </div>
+                            <div class="table-responsive mb-3">
+    <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
+        <thead>
+            <tr>
+                <th>Sr.No.</th>
+                <th>Roll No.</th>
+                <th>Mobile No.</th>
+                <th>DOB</th>
+                <th>Regular</th>
+                <th>Supplementary</th>
+                <th>Challenge</th>
+                <th>Scrutiny</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach($mbbs_allowed_students as $index => $student)
+<tr>
+    <td>{{ $index + 1 }}</td>
+    <td class="fw-bolder text-dark">{{ $student->roll_no }}</td>
+    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">{{ $student->mobile }}</span></td>
+    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">{{ $student->date_of_birth }}</span></td>
+    <td>{{ $student->regular_permission }}</td>
+    <td>{{ $student->supplementary_permission }}</td>
+    <td>{{ $student->challenge_permission }}</td>
+    <td>{{ $student->scrutiny_permission }}</td>
+    <td class="tableactionnew">
+        <div class="dropdown">
+            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown">
+                <i data-feather="more-vertical"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end">
+                <a class="dropdown-item" href="{{ route('edit-student', ['id' => $student->id]) }}">
+                    <i data-feather="edit" class="me-50"></i>
+                    <span>Edit</span>
+                </a>
+                <a class="dropdown-item" href="#" onclick="return confirm('Are you sure? You want to delete this student data?')">
+                    <i data-feather="trash-2" class="me-50"></i>
+                    <span>Delete</span>
+                </a>
+            </div>
+        </div>
+    </td>
+</tr>
+@endforeach
+
+        </tbody>
+    </table>
+</div>
+
 
                             
                         </div>

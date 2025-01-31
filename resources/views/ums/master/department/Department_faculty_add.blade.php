@@ -1,4 +1,4 @@
- @extends('admin.admin-meta')
+ @extends('ums.admin.admin-meta')
 <!-- BEGIN: Body-->
  @section('content')
      
@@ -30,10 +30,11 @@
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
-                        <button class="btn btn-dark btn-sm mb-50 mb-sm-0" onclick="location.href='{{url('/department_faculty')}}'"> <i data-feather="arrow-left-circle"></i> GO BACK
+                        <button class="btn btn-dark btn-sm mb-50 mb-sm-0" onclick="location.href='{{url('/department_faculty')}}'"  href="javascript:history.back()"> <i data-feather="arrow-left-circle" ></i> GO BACK
                             </button>
-                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0" > <i data-feather="check-circle" style="font-size: 40px;"></i>
-                            Submit</button>
+                            <button type="submit" form="department_faculty_add" class="btn btn-primary btn-sm mb-50 mb-sm-0">
+    <i data-feather="check-circle" style="font-size: 40px;"></i> Submit
+</button>
 
 
                     </div>
@@ -41,7 +42,8 @@
             </div>
             <div class="content-body bg-white py-2 mb-4  shadow">
                 <div class="row g-0  mt-3 mb-3 text-center ">
-
+                <form id="department_faculty_add" method="POST" action="{{ Route('department_facultyadd') }}" >
+                @csrf
 
                     <div class="col-md-12 text-center ">
 
@@ -52,7 +54,7 @@
                             </div>
 
                             <div class="col-md-8">
-                                <input type="text" class="form-control">
+                                <input type="text" name="name" class="form-control">
                                 
                             </div>
                         </div>
@@ -62,8 +64,9 @@
 
 
                     </div>
-                
+                    </form>              
             </div>
+
             </div>
 
         </div>

@@ -1,7 +1,7 @@
 
 
 
-@extends('master.faculty.faculty-meta')
+@extends('ums.master.faculty.faculty-meta')
   @section('content')
       
 

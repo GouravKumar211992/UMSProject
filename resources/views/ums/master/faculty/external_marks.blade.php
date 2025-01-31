@@ -1,5 +1,5 @@
 
-@extends('master.faculty.faculty-meta')
+@extends('ums.master.faculty.faculty-meta')
 <!-- BEGIN: Body-->
 
  @section('content')
