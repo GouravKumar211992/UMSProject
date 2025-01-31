@@ -400,17 +400,18 @@ class Helper
         return $document_status;
     }
 
-    public static function userCheck()
-    {
-        $authUser = Auth::guard('web')->user();
-        if ($authUser) {
-            $data = ['user_id' => Auth::guard('web')->user()->id, 'user_type' => 'App\Models\User', 'type' => 'user'];
-            return $data;
-        } else {
-            $data = ['user_id' => Auth::guard('web2')->user()->id, 'user_type' => 'App\Models\Employee', 'type' => 'employee'];
-            return $data;
-        }
-    }
+    // public static function userCheck()
+    // {
+    //     $authUser = Auth::guard('web')->user();
+    //     if ($authUser) {
+    //         $data = ['user_id' => Auth::guard('web')->user()->id, 'user_type' => 'App\Models\User', 'type' => 'user'];
+    //         return $data;
+    //     }
+    //      else {
+    //         $data = ['user_id' => Auth::guard('web2')->user()->id, 'user_type' => 'App\Models\Employee', 'type' => 'employee'];
+    //         return $data;
+    //     }
+    // }
 
     public static function checkCount($data)
     {

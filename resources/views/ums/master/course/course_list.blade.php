@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
 {{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col=""> --}}
@@ -62,19 +62,19 @@
 											</thead>
 											<tbody>
 												
-                                           
+                                           @foreach ($all_courses as $item)
+                                               
+                                       
 												  <tr>
 													<td>#6</td>
-													<td >B.Ed. S.E. (VI)</td>
-													<td>24</td>
-													<td>
-                                                        Professional	
-                                                     </td>
-                                                     <td>SOCIETY FOR INSTITUTE OF PSYCHOLOGICAL RESEARCH & HEALTH</td>
-                                                     <td>	Visible</td>
-                                                     <td>	Oct 28th, 2024</td>
+													<td >{{$item->name}}</td>
+													<td>{{$item->color_code}}</td>
+													<td>{{isset($item->category->name) ? $item->category->name:''}}</td>
+                                                     <td>{{isset($item->campuse->name) ? $item->campuse->name :''}}</td>
+                                                     <td>{{($item->visible_in_application)?'Visible':'Not Visible'}}</td>
+                                                     <td>{{date('M dS, Y', strtotime($item->created_at))}}</td>
                                                    
-                                                    <td>Oct 28th, 2024 05:24:59 AM</td>
+                                                    <td>{{date('M dS, Y h:i:s A', strtotime($item->updated_at))}}</td>
 													<td class="tableactionnew">
 														<div class="dropdown">
 															<button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
@@ -82,15 +82,15 @@
 															</button>
 															<div class="dropdown-menu dropdown-menu-end">
 
-																<a class="dropdown-item" href="course_edit">
+																<a class="dropdown-item"  onclick="editCourse('{{$item->id}}')">
 																	<i data-feather="edit-3" class="me-50"></i>
 																	<span>Edit</span>
 																</a>
                                                                
-																<a class="dropdown-item" href="#">
-																	<i data-feather="trash-2" class="me-50"></i>
-                                  <span onclick="return confirm('Are you sure?');">Delete</span>
-																</a> 
+                                                                <a class="dropdown-item" href="#" onclick="deleteCourse('{{$item->id}}')" >
+                                                                    <i data-feather="trash-2" class="me-50"></i>
+                                                                    <span onclick="window.confirm('Are you sure ? delere this data')">Delete</span>
+                                                                </a> 
                                 <a class="dropdown-item" href="course_fee">
                                   <i data-feather="dollar-sign" class="me-50"></i>
                                   <span>Course Fee</span>
@@ -99,79 +99,8 @@
 														</div>
 													</td>
 												  </tr>
-												  <tr>
-													<td>#7</td>
-													<td >BA. S.E. (VI)</td>
-													<td>30</td>
-													<td>
-                                                        Professional	
-                                                     </td>
-                                                     <td>SOCIETY FOR INSTITUTE OF PSYCHOLOGICAL RESEARCH & HEALTH</td>
-                                                     <td>	Visible</td>
-                                                     <td>	Oct 28th, 2024</td>
-                                                   
-                                                    <td>Oct 28th, 2024 05:24:59 AM</td>
-													<td class="tableactionnew">
-														<div class="dropdown">
-															<button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-																<i data-feather="more-vertical"></i>
-															</button>
-															<div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="course_edit">
-                                  <i data-feather="edit-3" class="me-50"></i>
-																	<span>Edit</span>
-																</a>
-                                
-																<a class="dropdown-item" href="#">
-                                  <i data-feather="trash-2" class="me-50"></i>
-                                  <span onclick="return confirm('Are you sure?');">Delete</span>
-																</a> 
-
-                                <a class="dropdown-item" href="course_fee">
-                                  <i data-feather="dollar-sign" class="me-50"></i>
-                                  <span>Course Fee</span>
-                                </a>
-															</div>
-														</div>
-													</td>
-												  </tr>
-												  <tr>
-													<td>#8</td>
-													<td >B.Ed. S.E. (VI)</td>
-													<td>29</td>
-													<td>
-                                                        Professional	
-                                                     </td>
-                                                     <td>SOCIETY FOR INSTITUTE OF PSYCHOLOGICAL RESEARCH & HEALTH</td>
-                                                     <td>	Visible</td>
-                                                     <td>	Oct 28th, 2024</td>
-                                                   
-                                                    <td>Oct 28th, 2024 05:24:59 AM</td>
-													<td class="tableactionnew">
-														<div class="dropdown">
-															<button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-																<i data-feather="more-vertical"></i>
-															</button>
-															<div class="dropdown-menu dropdown-menu-end">
-				
-																<a class="dropdown-item" href="course_edit">
-																	<i data-feather="edit-3" class="me-50"></i>
-																	<span>Edit</span>
-																</a>
-                                                               
-																<a class="dropdown-item" href="#">
-																	<i data-feather="trash-2" class="me-50"></i>
-                                  <span onclick="return confirm('Are you sure?');">Delete</span>
-																</a> 
-                                
-                                <a class="dropdown-item" href="course_fee">
-                                  <i data-feather="dollar-sign" class="me-50"></i>
-                                  <span>Course Fee</span>
-                                </a>
-															</div>
-														</div>
-													</td>
-												  </tr>
+                                                  @endforeach
+											
 												 
 											   </tbody>
 
@@ -293,3 +222,33 @@
    
 {{-- </body> --}}
 @endsection
+<script>
+    function exportdata() {
+       var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
+        var fullUrl = "{{url()->full()}}";
+        if(fullUrl_count>1){
+            fullUrl = fullUrl.split('?')[1];
+            fullUrl = fullUrl.replace(/&amp;/g, '&');
+            fullUrl = '?'+fullUrl;
+       }else{
+           fullUrl = '';
+       }
+       var url = "{{url('admin/master/course/course-export')}}"+fullUrl;
+       window.location.href = url;
+   }
+   function orderCourse(slug) {
+       var url = "{{url('admin/master/course/order-course')}}"+"/"+slug;
+       window.location.href = url;
+   }
+   function editCourse(slug) {
+       var url = "{{url('course_list_edit')}}"+"/"+slug;
+       window.location.href = url;
+   }
+   function deleteCourse(slug) {
+       var url = "{{url('course_list_delete')}}"+"/"+slug;
+       window.location.href = url;
+   }
+   $('.alphaOnly').keyup(function() {
+           this.value = this.value.replace(/[^a-z|A-Z\.]/g, '');
+       });
+</script>

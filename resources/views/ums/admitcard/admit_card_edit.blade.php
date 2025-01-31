@@ -29,6 +29,7 @@
                 </div>
             </div>
         </div>
+        <form  method="POST" action="">
         <div class="customernewsection-form poreportlistview bg-white shadow p-5">
             <div class="row ">
                                                 <!-- Candidate Information Section -->
@@ -107,6 +108,7 @@
     
             </div>
         </div>
+    </form>
         <hr class="bold">
         <div class="col-md-3 p-1">
             <label class="form-label mb-sm-1">Exam Center Address <span class="text-danger">*</span></label>  

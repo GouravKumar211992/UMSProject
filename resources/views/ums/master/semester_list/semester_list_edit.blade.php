@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
 
@@ -27,16 +27,22 @@
 							</div>
 						</div>
 					</div>
-					<div class="content-header-right text-sm-end col-md-6 mb-50 mb-sm-0">
+
+ 
+                        <div class="content-header-right text-sm-end col-md-6 mb-50 mb-sm-0">
 						<div class="form-group breadcrumb-right">
                             <button onClick="javascript: history.go(-1)" class="btn btn-secondary btn-sm mb-50 mb-sm-0"><i data-feather="arrow-left-circle"></i>Cancel</button>    
    
 							<button onClick="javascript: history.go(-1)" class="btn btn-secondary btn-sm mb-50 mb-sm-0"><i data-feather="arrow-left-circle"></i>Go Back</button>    
-							<button onClick="javascript: history.go(-1)" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle"></i>Update</button> 
+							<button form="edit_semester_form" type="submit" onClick="javascript: history.go(-1)" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle"></i>Update</button> 
 						</div>
 					</div>
 				</div>
 			</div>
+            <form id="edit_semester_form" method="POST" action="{{ route('semester_list_update', ['slug' => $selected_semester->id]) }}">
+                @csrf
+                @method('PUT') 
+                <input type="hidden" name="semester_id" value="{{ $selected_semester->id }}">
             <div class="content-body">
                  
                 
@@ -68,11 +74,11 @@
                                                         </div>  
 
                                                         <div class="col-md-5">  
-                                                            <select class="form-select">
+                                                            <select class="form-select" name="university">
                                                                 <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
+                                                                @foreach ($campuselist as $campus)
+                                                                <option value="{{$campus->id}} " {{ $selected_semester->course->campuse->id == $campus->id ? 'selected':'' }}>{{ ucfirst($campus->name) }}</option>
+                                                            @endforeach 
                                                             </select>
                                                         </div>
                                                      </div>
@@ -84,11 +90,13 @@
                                                         </div>  
 
                                                         <div class="col-md-5">  
-                                                            <select class="form-select">
+                                                            <select class="form-select" name="category_id">
                                                                 <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
+                                                                @foreach ($categorylist as $category)
+                                                                <option value="{{$category->id}}" {{ $selected_semester->program_id == $category->id ? 'selected':'' }}>{{ ucfirst($category->name) }}</option>
+                            
+                            
+                                                            @endforeach
                                                             </select>
                                                         </div>
                                                      </div>
@@ -99,11 +107,12 @@
                                                         </div>  
 
                                                         <div class="col-md-5">  
-                                                            <select class="form-select">
+                                                            <select class="form-select" name="course_id">
                                                                 <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
+                                                                
+                                                                 <option value="{{$selected_semester->course_id}}" selected>{{$selected_semester->course->name}}</option>
+                                                                    
+                                                            </select>
                                                             </select>
                                                         </div>
                                                      </div>
@@ -115,12 +124,7 @@
                                                         </div>  
 
                                                         <div class="col-md-5">  
-                                                            <select class="form-select">
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                            </select>
+                                                            <input type="text" name="semester_name"  value="{{$selected_semester->name}}" class="form-control" placeholder="Enter Semester Name" required>
                                                         </div>
                                                      </div>
                                      
@@ -130,12 +134,7 @@
                                                         </div>  
 
                                                         <div class="col-md-5">  
-                                                            <select class="form-select">
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                            </select>
+                                                            <input type="text" name="semester_number" value="{{$selected_semester->semester_number}}" class="form-control" placeholder="Enter Semester Name" required>
                                                         </div>
                                                      </div>
                             </div>
@@ -147,6 +146,7 @@
                  
 
             </div>
+        </form>
         </div>
     </div>
     <!-- END: Content-->
@@ -301,3 +301,27 @@
 	</div>
 
     @endsection
+    
+<script>
+    
+	function UpdateSemester() {
+		document.getElementById('edit_semester_form').submit();
+	}
+$(document).ready(function(){
+	$('#category_id').change(function() {
+	var university=$('#university').val();
+	var id = $('#category_id').val();
+	$("#course_id").find('option').remove().end();
+	$.ajax({
+        url: "/admin/master/stream/get-course-list",
+        data: {"_token": "{{ csrf_token() }}",university:university ,id: id},
+        type: 'POST',
+        success: function(data,textStatus, jqXHR) {
+        	$('#course_id').append(data);
+        		
+        	
+        }
+    });
+});	
+});		
+</script>

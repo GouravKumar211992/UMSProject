@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
 {{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col=""> --}}
@@ -23,17 +23,20 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right"> 
                         
                         <!-- <button class="btn btn-success btn-sm mb-50 mb-sm-0" data-bs-target="#approved" data-bs-toggle="modal"><i data-feather="check-circle" ></i> Assign Team</button> -->
-                        <a class="btn  btn-primary  btn-sm mb-50 mb-sm-0" href="#">
+                        <button form="cat_form"  type="submit" class="btn  btn-primary  btn-sm mb-50 mb-sm-0" href="#">
                             <i data-feather="user-plus"></i>Submit
-                        </a>  
+                        </button>  
                     </div>
                 </div>
                 
             </div>
+            <form id="cat_form" method="POST" action="{{ route('phd-entrance-exam_add') }}" onsubmit='disableButton()'>
+                @csrf
             <div class="content-body mt-3">
                 <div class="col-md-12 bg-white p-4 rounded shadow-sm">
                     <div class="row align-items-center mb-3">
@@ -41,82 +44,78 @@
                         <!-- Course Name -->
                         <div class="col-md-4 d-flex align-items-center mb-2">
                             <label class="form-label mb-0 me-2 col-3">Course Name: <span class="text-danger">*</span></label>
-                            <input type="text" name="course_name" class="form-control" placeholder="Enter course name">
+                            <input type="text" name="name" class="form-control" placeholder="Enter course name">
                         </div>
             
                         <!-- Course Code -->
                         <div class="col-md-4 d-flex align-items-center mb-2">
                             <label class="form-label mb-0 me-2 col-3">Course Code: <span class="text-danger">*</span></label>
-                            <input type="text" name="course_code" class="form-control" placeholder="Enter course code">
+                            <input type="text" name="color_code" class="form-control" placeholder="Enter course code">
                         </div>
             
                         <!-- Category -->
                         <div class="col-md-4 d-flex align-items-center mb-2">
                             <label class="form-label mb-0 me-2 col-3">Category: <span class="text-danger">*</span></label>
-                            <select name="category" class="form-select">
+                            <select  class="form-select" name="category_id">
                                 <option value="" disabled selected>-----Select-----</option>
-                                <option value="10">Category 1</option>
-                                <option value="25">Category 2</option>
-                                <option value="50">Category 3</option>
-                                <option value="75">Category 4</option>
-                                <option value="100">Category 5</option>
+                                @foreach ($categorylist as $category)
+												<option value="{{$category->id}}">{{ ucfirst($category->name) }}</option>
+											@endforeach
                             </select>
                         </div>
             
                         <!-- Campus -->
                         <div class="col-md-4 d-flex align-items-center mb-2">
                             <label class="form-label mb-0 me-2 col-3">Campus: <span class="text-danger">*</span></label>
-                            <select name="campus" class="form-select">
-                                <option value="" disabled selected>-----Select-----</option>
-                                <option value="10">Campus 1</option>
-                                <option value="25">Campus 2</option>
-                                <option value="50">Campus 3</option>
-                                <option value="75">Campus 4</option>
-                                <option value="100">Campus 5</option>
+                            <select  class="form-select" name="campus_id">
+                                <option value="">Select</option>
+											@foreach ($campuslist as $campus)
+												<option value="{{$campus->id}}">{{ ucfirst($campus->name) }}</option>
+											@endforeach
                             </select>
                         </div>
             
                         <!-- Semester Type -->
                         <div class="col-md-4 d-flex align-items-center mb-2">
                             <label class="form-label mb-0 me-2 col-3">Semester Type: <span class="text-danger">*</span></label>
-                            <select name="semester_type" class="form-select">
-                                <option value="" disabled selected>-----Select-----</option>
-                                <option value="10">2023-2024AUG</option>
-                                <option value="25">2023-2024SEP</option>
-                                <option value="50">2023-2024OCT</option>
+                            <select  class="form-select" name="semester_type">
+                                <option value="">--Select Semester Type--</option>
+											<option value="semester">Semester Wise</option>
+											<option value="year">Yearly</option>
                             </select>
                         </div>
             
                         <!-- Description -->
                         <div class="col-md-4 d-flex align-items-center mb-2">
                             <label class="form-label mb-0 me-2 col-3">Description: <span class="text-danger">*</span></label>
-                            <textarea name="description" class="form-control" rows="3" placeholder="Enter course description"></textarea>
+                            <textarea  class="form-control" name="course_description" rows="3" placeholder="Enter course description"></textarea>
                         </div>
             
                         <!-- Total Number of Semesters -->
                         <div class="col-md-4 d-flex align-items-center mb-2">
                             <label class="form-label mb-0 me-2 col-3">Total Number of Semesters: <span class="text-danger">*</span></label>
-                            <input type="number" name="total_semesters" class="form-control" min="1" step="1" placeholder="Enter number of semesters">
+                            <input type="number" name="total_semester_number" class="form-control" min="1" step="1" placeholder="Enter number of semesters">
                         </div>
             
                         <!-- Required Qualification -->
                         <div class="col-md-4 d-flex align-items-center mb-2">
                             <label class="form-label mb-0 me-2 col-3">Required Qualification: <span class="text-danger">*</span></label>
-                            <select name="qualification" class="form-select">
+                            <select class="form-select"  name="required_qualification_data[]">
                                 <option value="" disabled selected>-----Select-----</option>
-                                <option value="10">Qualification 1</option>
-                                <option value="25">Qualification 2</option>
-                                <option value="50">Qualification 3</option>
+                                @foreach($required_qualification as $rq)
+										<option value="{{$rq->id}}">{{$rq->name}}</option>
+										@endforeach
                             </select>
                         </div>
             
                         <!-- CUET Required -->
                         <div class="col-md-4 d-flex align-items-center mb-2">
                             <label class="form-label mb-0 me-2 col-3">CUET Required: <span class="text-danger">*</span></label>
-                            <select name="cuet_required" class="form-select">
+                            <select  class="form-select" name="cuet_status">
                                 <option value="" disabled selected>-----Select-----</option>
-                                <option value="yes">Yes</option>
-                                <option value="no">No</option>
+                               
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
                             </select>
                         </div>
                         
@@ -124,7 +123,7 @@
                 </div>
             </div>
             
-            
+        </form>
  </div>
 </div>
     <!-- END: Content-->
@@ -250,3 +249,32 @@
 {{-- </body> --}}
 @endsection
 
+<script>
+	function submitCourse(form) {
+		document.getElementById('cat_form').submit();
+	}
+	$('.numberOnly').keyup(function() {
+		this.value = this.value.replace(/[^0-9\.]/g, '');
+	});
+	function disableButton() {
+        var btn = document.getElementById('btn');
+        btn.disabled = true;
+        btn.innerText = 'Submitting...'
+    }
+// 	$(document).ready(function(){
+// 	$('#campus_id').change(function() {
+// 		var campus_id=$('#campus_id').val();
+// 		if(campus_id==''){
+// 			return false;
+// 		}
+// 		$("#course_id").find('option').remove().end();
+// 		$.ajax({
+// 			url: "/admin/master/stream-list/"+campus_id,
+// 			type: 'GET',
+// 			success: function(data,textStatus, jqXHR) {
+// 				$('#course_id').append(data);
+// 			}
+// 		});
+// 	});	
+// });	
+</script>

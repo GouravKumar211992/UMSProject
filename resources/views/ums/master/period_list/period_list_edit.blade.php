@@ -1,5 +1,5 @@
 
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
 
@@ -52,67 +52,77 @@
 											<div class="row">
 												<div class="col-md-12">
                                                     <div class="newheader border-bottom mb-2 pb-25 d-flex flex-wrap justify-content-between"> 
-														<div>
+                                                        <div>
                                                             <h4 class="card-title text-theme">Basic Information</h4>
-														    <p class="card-text">Fill the details</p>
+                                                            <p class="card-text">Fill the details</p>
                                                         </div> 
-													</div>
-                                                    
+                                                    </div>
                                                 </div> 
                                                 
+                                                <form action="{{ route('update_period') }}" method="POST">
+                                                    @csrf
                                                 
-                                                <div class="col-md-8"> 
-                                                      
-                              
-                                                    <div class="row align-items-center mb-1">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label">Category Name <span class="text-danger">*</span></label>  
-                                                        </div>  
-
-                                                        <div class="col-md-5"> 
-                                                            <input type="text" class="form-control">
-                                                        </div> 
-                                                    
-                                                     </div> 
-                                                     <div class="row align-items-center mb-1">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label">start time <span class="text-danger">*</span></label>  
-                                                        </div>  
-
-                                                        <div class="col-md-5"> 
-                                                            <input type="time" class="form-control">
-                                                        </div> 
-                                                    
-                                                     </div> 
-                                                     <div class="row align-items-center mb-1">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label">End Time<span class="text-danger">*</span></label>  
-                                                        </div>  
-
-                                                        <div class="col-md-5"> 
-                                                            <input type="time" class="form-control">
-                                                        </div> 
-                                                    
-                                                     </div> 
-                                                    
-                                                     <div class="row align-items-center mb-2">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label">Status</label> 
-                                                        </div>  
-
-                                                        <div class="col-md-5"> 
-                                                            <div class="demo-inline-spacing">
-                                                                <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio3" name="customColorRadio3" class="form-check-input" checked="">
-                                                                    <label class="form-check-label fw-bolder" for="customColorRadio3">Active</label>
-                                                                </div> 
-                                                                <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio4" name="customColorRadio3" class="form-check-input">
-                                                                    <label class="form-check-label fw-bolder" for="customColorRadio4">Inactive</label>
-                                                                </div> 
+                                                    <!-- Hidden input for the period ID -->
+                                                    <input type="hidden" name="period_id" value="{{ $selected_period->id }}">
+                                                
+                                                    <div class="col-md-8">
+                                                        <div class="row align-items-center mb-1">
+                                                            <div class="col-md-3"> 
+                                                                <label class="form-label">Category Name <span class="text-danger">*</span></label>  
                                                             </div>  
+                                                            <div class="col-md-5"> 
+                                                                <!-- Pre-fill with the current name -->
+                                                                <input type="text" class="form-control" name="name" value="{{ $selected_period->name }}" required>
+                                                            </div> 
                                                         </div> 
-                                                        
+                                                
+                                                        <div class="row align-items-center mb-1">
+                                                            <div class="col-md-3"> 
+                                                                <label class="form-label">Start Time <span class="text-danger">*</span></label>  
+                                                            </div>  
+                                                            <div class="col-md-5"> 
+                                                                <!-- Pre-fill with the current start time -->
+                                                                <input type="time" class="form-control" name="start_time" value="{{ $selected_period->start_time }}" required>
+                                                            </div> 
+                                                        </div> 
+                                                
+                                                        <div class="row align-items-center mb-1">
+                                                            <div class="col-md-3"> 
+                                                                <label class="form-label">End Time <span class="text-danger">*</span></label>  
+                                                            </div>  
+                                                            <div class="col-md-5"> 
+                                                                <!-- Pre-fill with the current end time -->
+                                                                <input type="time" class="form-control" name="end_time" value="{{ $selected_period->end_time }}" required>
+                                                            </div> 
+                                                        </div> 
+                                                
+                                                        <div class="row align-items-center mb-2">
+                                                            <div class="col-md-3"> 
+                                                                <label class="form-label">Status</label> 
+                                                            </div>  
+                                                            <div class="col-md-5"> 
+                                                                <div class="demo-inline-spacing">
+                                                                    <!-- Pre-select the correct status -->
+                                                                    <div class="form-check form-check-primary mt-25">
+                                                                        <input type="radio" id="customColorRadio3" name="period_status" class="form-check-input" value="active" {{ $selected_period->status == 1 ? 'checked' : '' }}>
+                                                                        <label class="form-check-label fw-bolder" for="customColorRadio3">Active</label>
+                                                                    </div> 
+                                                
+                                                                    <div class="form-check form-check-primary mt-25">
+                                                                        <input type="radio" id="customColorRadio4" name="period_status" class="form-check-input" value="inactive" {{ $selected_period->status == 0 ? 'checked' : '' }}>
+                                                                        <label class="form-check-label fw-bolder" for="customColorRadio4">Inactive</label>
+                                                                    </div> 
+                                                                </div>  
+                                                            </div> 
+                                                        </div> 
+                                                
+                                                        <div class="col-md-12">
+                                                            <button type="submit" class="btn btn-primary">Update Period</button>
+                                                        </div>
+                                                    </div> 
+                                                </form>
+                                                
+                                                
 
                                                     </div>
                                      

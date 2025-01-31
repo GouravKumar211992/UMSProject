@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
     
@@ -33,6 +33,12 @@
                     </div>
                 </div>
             </div>
+            <!-- Success message will show here -->
+             @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+             @endif
             <div class="content-body">
                  
 				<section id="basic-datatable">
@@ -42,51 +48,59 @@
 								
 								   
                                 <div class="table-responsive">
-                                        <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
-                                            <thead>
+                                    <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
+                                        <thead>
+                                            <tr>
+                                                <th>ID#</th>
+                                                <th>Period</th>
+                                                <th>Time</th>
+                                                <th>Created On</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if(count($all_periods) > 0)
+                                                @foreach($all_periods as $period)
+                                                    <tr>
+                                                        <td>#{{$period->id}}</td>
+                                                        <td>{{$period->name}}</td>
+                                                        <td>{{$period->time_rang}}</td>
+                                                        <td>{{date('M dS, Y', strtotime($period->created_at))}}</td>
+                                                        @if($period->status == '1')
+                                                            <td><div class="admin-status progStat"><span></span> Active</div></td>
+                                                        @else
+                                                            <td><div class="admin-status compStat"><span></span> Inactive</div></td>
+                                                        @endif
+                                                        <td class="tableactionnew">   
+                                                            <div class="dropdown">
+                                                                <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown">
+                                                                    <i data-feather="more-vertical"></i>
+                                                                </button>
+                                                                <div class="dropdown-menu dropdown-menu-end">
+                                                                    <a class="dropdown-item" href="#" onclick="editPeriod({{ $period->id }})">
+                                                                        <i data-feather="edit" class="me-50"></i>
+                                                                        <span>Edit</span>
+                                                                    </a>
+                                                                    
+                                                                    <a class="dropdown-item" href="#" onclick="softDelete({{ $period->id }})">
+                                                                        <i data-feather="trash-2" class="me-50"></i>
+                                                                        <span>Delete</span>
+                                                                    </a>
+                                                                </div>
+                                                            </div> 
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                @endforeach
+                                            @else
                                                 <tr>
-                                                   
-                                                    <th>ID#</th>
-                                                    <th>Period</th>
-                                                    <th>Time</th>
-                                                    
-                                                    <th>Created On</th>
-                                                    <th>Status</th>
-                                                     <th>Action</th>
+                                                    <td colspan="6" class="text-center">NO DATA FOUND</td>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
-                                               
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td class="fw-bolder text-dark">2</td>
-                                                    <td >sd</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">ddff</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">drrd	</span></td>
-                                                    
-                                                    
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" href="{{ url('period_list_edit') }}">
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a> 
-                                                                
-                                                                </a> <a class="dropdown-item" href="#" onclick="window.confirm('Are you sure ? delere this data')">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span>Delete</span>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>
-                                                </tr>
-                                                
-                                            </tbody>
-                                        </table>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                    
                                     </div>
 								
                             </div>

@@ -3,7 +3,7 @@
                 <div class="navbar-container d-flex content">
                     <div class="bookmark-wrapper d-flex align-items-center"> 
                         <ul class="nav navbar-nav headerlogo">
-                            <li><img src="{{asset('logo.jpeg')}}" /></li>
+                            <li><img src="../../../assets/css/logo.svg"  /></li>
                         </ul>
                         <ul class="nav navbar-nav left-baricontop"> 
                             <li class="nav-item">
@@ -152,7 +152,7 @@
                         
                         <li class="nav-item dropdown dropdown-notification">
                             <a class="nav-link d-inline-block drivebtnsect" href="#" data-bs-toggle="dropdown">
-                                <img src="{{ asset('menuiconlist.png') }}" alt="Menu Icon">
+                                <img src="{{ asset('img/menuiconlist.png') }}" alt="Menu Icon">
                             </a>
                                 <ul class="dropdown-menu dropdown-menu-media dropdown-menu-end worksdrivebox">
                                     <li class="dropdown-menu-header">

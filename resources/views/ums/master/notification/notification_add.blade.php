@@ -1,4 +1,4 @@
- @extends('admin.admin-meta')
+ @extends('ums.admin.admin-meta')
 <!-- END: Head-->
 
 <!-- BEGIN: Body-->
@@ -33,13 +33,15 @@
                     <div class="form-group breadcrumb-right">
                         <button class="btn btn-dark btn-sm mb-50 mb-sm-0" onclick="location.href='{{url('/notification')}}'"> <i data-feather="x"></i> Cancel
                             </button>
-                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0" > <i data-feather="check-circle" style="font-size: 40px;"></i>
+                        <button type="submit" form="cat_form" class="btn btn-primary btn-sm mb-50 mb-sm-0" > <i data-feather="check-circle" style="font-size: 40px;"></i>
                             Submit</button>
 
 
                     </div>
                 </div>
             </div>
+            <form method="post" id="cat_form" action="{{ route('notification_post') }}">
+                @csrf
             <div class="content-body bg-white py-4 mb-4 shadow">
                 <div class="row g-0  mt-3 mb-3 text-center ">
 
@@ -52,7 +54,7 @@
                             </div>
 
                             <div class="col-md-8">
-                                <input type="text" class="form-control" placeholder="Enter notification description
+                                <input type="text" name="notification_description"  class="form-control" placeholder="Enter notification description
 ">
                                 
                             </div>
@@ -63,7 +65,7 @@
                             </div>
 
                             <div class="col-md-8">
-                              <input type="date" class="form-control">                        </div>
+                              <input type="date"   name="notification_start" class="form-control">                        </div>
                         </div>
                         <div class="row align-items-center mb-1">
                             <div class="col-md-3">
@@ -71,7 +73,7 @@
                             </div>
 
                             <div class="col-md-8">
-                              <input type="date" class="form-control">                        </div>
+                              <input type="date" name="notification_end" class="form-control">                        </div>
                         </div>
 
                        
@@ -80,10 +82,11 @@
                     </div>
                 
             </div>
+        </form>
             </div>
 
 
-               
+          
 
            
           

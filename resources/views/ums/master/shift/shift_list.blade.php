@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
     
@@ -8,7 +8,7 @@
   
    
     <!-- END: Main Menu-->
-
+ 
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
@@ -60,13 +60,16 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                               @foreach ($all_shifts as $item)
+                                                   
                                                
                                                 <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td class="fw-bolder text-dark"></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td>{{$item->id}} </td>
+                                                    <td>{{$item->name}} </td>
+                                                    <td>{{$item->start_time}}</td>
+                                                    <td class="fw-bolder text-dark">{{$item->end_time}}</td>
+                                                    <td>{{$item->created_at}}</td>
+                                                    {{-- <td></td> --}}
                                                     
                                                     <td class="tableactionnew">  
                                                         <div class="dropdown">
@@ -86,7 +89,7 @@
                                                         </div> 
                                                     </td>
                                                 </tr>
-                                                
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

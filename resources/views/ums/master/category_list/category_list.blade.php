@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
     <!-- END: Main Menu-->
 @section('content')
     <!-- BEGIN: Content-->
@@ -51,13 +51,24 @@
                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
+                                            @foreach ($all_categories as $item)
+                                                
+                                           
                                             <tbody>
                                                
                                                 <tr>
                                                     <td>1</td>
-                                                    <td class="fw-bolder text-dark">Professional</td>
-                                                    <td >Jul 29th, 2020</td>
-                                                    <td>Active</td>
+                                                    <td class="fw-bolder text-dark">{{$item->name}}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($item->created_at)->format('F j, Y') }}</td>
+
+                                                    <td>
+                                                        @if($item->status == 0)
+                                                            Active
+                                                        @else
+                                                            Inactive
+                                                        @endif
+                                                    </td>
+                                                    
                                                     
                                                     <td class="tableactionnew">  
                                                         <div class="dropdown">
@@ -65,13 +76,13 @@
                                                                 <i data-feather="more-vertical"></i>
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" href="{{ url('category_list_edit') }}">
+                                                                <a class="dropdown-item"  onclick="editCat('{{$item->id}}')">
                                                                     <i data-feather="edit" class="me-50"></i>
                                                                     <span>Edit</span>
                                                                 </a> 
-                                                                <a class="dropdown-item" href="#" onclick="window.confirm('Are you sure ? delere this data')">
+                                                                <a class="dropdown-item" href="#" onclick="deleteCat('{{$item->id}}')" >
                                                                     <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span>Delete</span>
+                                                                    <span onclick="window.confirm('Are you sure ? delere this data')">Delete</span>
                                                                 </a>
                                                             </div>
                                                         </div> 
@@ -79,6 +90,7 @@
                                                 </tr>
                                                 
                                             </tbody>
+                                            @endforeach
                                         </table>
                                     </div>
 								
@@ -243,3 +255,26 @@
 	</div>
 
    @endSection
+   <script>
+    function exportdata() {
+        var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
+		 var fullUrl = "{{url()->full()}}";
+		 if(fullUrl_count>1){
+			 fullUrl = fullUrl.split('?')[1];
+			 fullUrl = fullUrl.replace(/&amp;/g, '&');
+			 fullUrl = '?'+fullUrl;
+		}else{
+            fullUrl = '';
+        }
+        var url = "{{url('admin/master/category/category-export')}}"+fullUrl;
+        window.location.href = url;
+    }
+	function editCat(slug) {
+		var url = "{{url('category_list_edit')}}"+"/"+slug;
+		window.location.href = url;
+	}
+	function deleteCat(slug) {
+        var url = "{{url('category_list_delete')}}"+"/"+slug;
+        window.location.href = url;
+    }
+</script>

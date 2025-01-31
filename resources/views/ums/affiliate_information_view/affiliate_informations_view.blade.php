@@ -45,16 +45,16 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                               
+                                                @foreach($files as $key=>$affiliateInformations)
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td class="fw-bolder text-dark">B.Com/2016-17/22</td>
-                                                    <td >162090077</td>
+                                                    <td>{{$affiliateInformations->id}}</td>
+                                                    <td class="fw-bolder text-dark">{{ucwords($affiliateInformations->name)}}</td>
+                                                    <td><a href="{{$affiliateInformations->upload_document_url}}"></a>view</td>
                                                     
                                                     
                                                     
                                                 </tr>
-                                                
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

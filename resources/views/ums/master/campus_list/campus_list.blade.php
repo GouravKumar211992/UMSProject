@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
 
@@ -57,17 +57,20 @@
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
+                                            @foreach ($campuses as $item)
+                                                
+                                           
                                             <tbody>
                                                
                                                 <tr>
                                                     <td>1</td>
-                                                    <td>028</td>
-                                                    <td class="fw-bolder text-dark">SOCIETY FOR INSTITUTE OF PSYCHOLOGICAL RESEARCH & HEALTH</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">AFFILIATED</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">SIPRH</span></td>
-                                                    <td>siprhamroha@gmail.com</td>
-                                                    <td>1234567098</td> 
-                                                    <td>Oct 28th, 2024</td> 
+                                                    <td>{{$item->campus_code}}</td>
+                                                    <td class="fw-bolder text-dark">{{$item->name}}</td>
+                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">{{$item->is_affiliated}}</span></td>
+                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">{{$item->short_name}}</span></td>
+                                                    <td>{{$item->email}}</td>
+                                                    <td>{{$item->contact}}</td> 
+                                                    <td>{{$item->created_at}}</td> 
                                                     
                                                     <td class="tableactionnew">  
                                                         <div class="dropdown">
@@ -75,11 +78,11 @@
                                                                 <i data-feather="more-vertical"></i>
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" href="{{url('campus_list_edit')}}">
+                                                                <button class="dropdown-item"  onclick="editCourse('{{$item->id}}')">
                                                                     <i data-feather="edit" class="me-50"></i>
                                                                     <span>Edit</span>
-                                                                </a> 
-                                                                <a class="dropdown-item" href="#" onclick="window.confirm('Are you sure ? delere this data')">
+                                                                </button> 
+                                                                <a class="dropdown-item" href="#" onclick="if(window.confirm('Are you sure you want to delete this data?')) { deleteCourse('{{$item->id}}'); }">
                                                                     <i data-feather="trash-2" class="me-50"></i>
                                                                     <span>Delete</span>
                                                                 </a>
@@ -89,6 +92,7 @@
                                                 </tr>
                                                 
                                             </tbody>
+                                            @endforeach
                                         </table>
                                     </div>
 								
@@ -253,3 +257,31 @@
 	</div>
 
     @endsection
+    <script>
+        // function exportdata() {
+        //      var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
+        //      var fullUrl = "{{url()->full()}}";
+        //      if(fullUrl_count>1){
+        //          fullUrl = fullUrl.split('?')[1];
+        //          fullUrl = fullUrl.replace(/&amp;/g, '&');
+        //          fullUrl = '?'+fullUrl;
+        //     }else{
+        //         fullUrl = '';
+        //     }
+        //     var url = "{{url('admin/master/campus/campus-export')}}"+fullUrl;
+        //     window.location.href = url;
+        // }
+        function editCourse(slug) {
+            var url = "{{url('campus_list_edit')}}"+"/"+slug;
+            window.location.href = url;
+        }
+        function deleteCourse(slug) {
+            var url = "{{url('campus_list_delete')}}"+"/"+slug;
+            window.location.href = url;
+        }
+        $(document).ready(function() {
+        $('.alphaOnly').keyup(function() {
+                this.value = this.value.replace(/[^a-z|^A-Z\.]/g, '');
+            });
+                });
+    </script>

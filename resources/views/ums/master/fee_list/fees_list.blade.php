@@ -1,5 +1,5 @@
 
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
     
@@ -62,24 +62,25 @@
                                                 <th>Action</th>
 											  </tr>
 											</thead>
+                                            @if(count($all_fee) > 0)
+                                            @foreach($all_fee as $fee)
 											<tbody>
 												
                                            
 												  <tr>
-													<td>#5</td>
-													<td>	Dr. Shakuntala Misra National Rehabilitation University</td>
-													<td>B.B.A.</td>
-													<td>
-                                                        2021-2022
-                                                     </td>
-                                                     <td> 60</td>
-                                                     <td>10+2 OR EQUIVALENT</td>
-                                                     <td>Online</td>
-                                                     <td>3</td>
-                                                     <td>	0</td>
-                                                     <td>19000</td>
-                                                     <td>21315</td>
-                                                     <td>135615</td>
+										<td>#{{$fee->id}}</td>
+										<td>{{$fee->course->campuse->name}}</td>
+										<td>{{$fee->course->name}}</td>
+										<td>{{$fee->academic_session}}</td>
+										<td>{{$fee->seat}}</td>
+										<td>{{$fee->basic_eligibility}}</td>
+										<td>{{$fee->mode_of_admission}}</td>
+										<td>{{$fee->course_duration}}</td>
+										<td>{{$fee->tuition_fee_for_divyang_per_sem}}</td>
+										<td>{{$fee->tuition_fee_for_other_per_sem}}</td>
+										<td>{{$fee->payable_fee_for_divyang_per_sem}}</td>
+										<td>{{$fee->payable_fee_for_other_per_sem}}</td>
+                                        <td>
                                                     
 													<td class="tableactionnew">
 														<div class="dropdown">
@@ -92,7 +93,7 @@
 																	<span>Edit</span>
 																</a>
                                                                
-																<a class="dropdown-item" href="#">
+																<a class="dropdown-item" href="{{route('delete_fee',$fee->id)}}">
 																	<i data-feather="trash-2" class="me-50"></i>
                                                           <span onclick="return confirm('Are you sure?');">Delete</span>                                                                </a>
 																</a> 
@@ -100,81 +101,14 @@
 														</div>
 													</td>
 												  </tr>
-												  <tr>
-													<td>#5</td>
-													<td >	Dr. Shakuntala Misra National Rehabilitation University</td>
-													<td>B.B.A.</td>
-													<td>
-                                                        2021-2022
-                                                     </td>
-                                                     <td> 60</td>
-                                                     <td>10+2 OR EQUIVALENT</td>
-                                                     <td>Online</td>
-                                                     <td>3</td>
-                                                     <td>	0</td>
-                                                     <td>19000</td>
-                                                     <td>21315</td>
-                                                     <td>135615</td>
-                                                    
-													<td class="tableactionnew">
-														<div class="dropdown">
-															<button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-																<i data-feather="more-vertical"></i>
-															</button>
-															<div class="dropdown-menu dropdown-menu-end">
-																<a class="dropdown-item" href="#">
-																	<i data-feather="edit-3" class="me-50"></i>
-																	<span>Edit</span>
-																</a>
-                                                               
-																<a class="dropdown-item" href="#">
-																	<i data-feather="trash-2" class="me-50"></i>
-                                                         <span onclick="return confirm('Are you sure?');">Delete</span>                                                                </a>
-																</a> 
-															</div>
-														</div>
-													</td>
-												  </tr>
-												  <tr>
-													<td>#5</td>
-													<td >	Dr. Shakuntala Misra National Rehabilitation University</td>
-													<td>B.B.A.</td>
-													<td>
-                                                        2021-2022
-                                                     </td>
-                                                     <td> 60</td>
-                                                     <td>10+2 OR EQUIVALENT</td>
-                                                     <td>Online</td>
-                                                     <td>3</td>
-                                                     <td>	0</td>
-                                                     <td>19000</td>
-                                                     <td>21315</td>
-                                                     <td>135615</td>
-                                                    
-													<td class="tableactionnew">
-														<div class="dropdown">
-															<button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-																<i data-feather="more-vertical"></i>
-															</button>
-															<div class="dropdown-menu dropdown-menu-end">
-																
-																<a class="dropdown-item" href="#">
-																	<i data-feather="edit-3" class="me-50"></i>
-																	<span>Edit</span>
-																</a>
-                                                               
-																<a class="dropdown-item" href="#">
-																	<i data-feather="trash-2" class="me-50"></i>
-                                                         <span onclick="return confirm('Are you sure?');">Delete</span>                                                                </a>
-																</a> 
-															</div>
-														</div>
-													</td>
-												  </tr>
 												
-												 
 											   </tbody>
-
+                                               @endforeach
+                                               @else
+                                                   <tr>
+                                                       <td colspan="12" class="text-center">NO DATA FOUND</td>
+                                                   </tr>
+                                               @endif
 
 									</table>
 								</div>

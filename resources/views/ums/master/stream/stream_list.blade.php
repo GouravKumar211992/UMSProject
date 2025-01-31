@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
     
@@ -26,7 +26,7 @@
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
-                      <a class="btn  btn-dark  btn-sm mb-50 mb-sm-0" href="add_stream_list"><i data-feather="plus-circle"></i> Add Stream</a> 
+                      <a href="{{ route('add_stream') }}" class="btn  btn-dark  btn-sm mb-50 mb-sm-0" ><i data-feather="plus-circle"></i> Add Stream</a> 
                         <button class="btn  btn-primary btn-sm mb-50 mb-sm-0" data-bs-target="#filter" data-bs-toggle="modal"><i data-feather="filter"></i> Filter</button> 
                         <button class="btn btn-warning btn-sm mb-50 mb-sm-0" onclick="window.location.reload();" ><i data-feather="refresh-cw"></i>
                             Reset</button> 
@@ -60,95 +60,38 @@
 											  </tr>
 											</thead>
 											<tbody>
+												@foreach ($all_stream as $item)
+													
 												
                                            
 												  <tr>
 													<td>#5</td>
-													<td class="fw-bolder text-dark">	B.Sc.</td>
-													<td>	69</td>
-													<td>
-                                                        Non Professional
-                                                     </td>
-                                                     <td> Professional	B.Sc.</td>
-                                                     <td>		Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                     <td>Dec 30th, 2024</td>
+													<td class="fw-bolder text-dark">{{$item->name}}</td>
+													<td>{{$item->stream_code}}</td>
+													<td>{{isset($item->category->name) ? $item->category->name : ''}}</td>
+                                                     <td>{{isset($item->course->name) ? $item->course->name :''}}</td>
+                                                     <td>{{isset($item->course->campuse) ? $item->course->campuse->name :''}}</td>
+                                                     <td>{{$item->created_at}}</td>
 													<td class="tableactionnew">
 														<div class="dropdown">
 															<button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
 																<i data-feather="more-vertical"></i>
 															</button>
 															<div class="dropdown-menu dropdown-menu-end">
-																<a class="dropdown-item" href="stream_list_edit">
+																<button class="dropdown-item"   onclick="editStream('{{$item->id}}')">
 																	<i data-feather="edit-3" class="me-50"></i>
 																	<span>Edit</span>
-																</a>
+																</button>
                                                                
-																<a class="dropdown-item" href="#">
+																<button class="dropdown-item" href="#" onclick="deleteStream('{{$item->id}}')">
 																	<i data-feather="trash-2" class="me-50"></i>
-                                                              <span onclick="return confirm('Are you sure?');">Delete</span>                                                                </a>
-																</a> 
+                                                              <span onclick="window.confirm('Are you sure ? delere this data')">Delete</span>                                                                </button>
+                                                                </button> 
 															</div>
 														</div>
 													</td>
 												  </tr>
-												  <tr>
-													<td>#5</td>
-													<td class="fw-bolder text-dark">	B.Sc.</td>
-													<td>	69</td>
-													<td>
-                                                        Non Professional
-                                                     </td>
-                                                     <td> Professional	B.Sc.</td>
-                                                     <td>		Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                     <td>Dec 30th, 2024</td>
-													<td class="tableactionnew">
-														<div class="dropdown">
-															<button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-																<i data-feather="more-vertical"></i>
-															</button>
-															<div class="dropdown-menu dropdown-menu-end">
-																<a class="dropdown-item" href="stream_list_edit">
-																	<i data-feather="edit-3" class="me-50"></i>
-																	<span>Edit</span>
-																</a>
-                                                               
-																<a class="dropdown-item" href="#">
-																	<i data-feather="trash-2" class="me-50"></i>
-                                                            <span onclick="return confirm('Are you sure?');">Delete</span>                                                                </a>
-																</a> 
-															</div>
-														</div>
-													</td>
-												  </tr>
-												  <tr>
-													<td>#5</td>
-													<td class="fw-bolder text-dark">	B.Sc.</td>
-													<td>	69</td>
-													<td>
-                                                        Non Professional
-                                                     </td>
-                                                     <td> Professional	B.Sc.</td>
-                                                     <td>		Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                     <td>Dec 30th, 2024</td>
-													<td class="tableactionnew">
-														<div class="dropdown">
-															<button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-																<i data-feather="more-vertical"></i>
-															</button>
-															<div class="dropdown-menu dropdown-menu-end">
-																<a class="dropdown-item" href="stream_list_edit">
-																	<i data-feather="edit-3" class="me-50"></i>
-																	<span>Edit</span>
-																</a>
-                                                               
-																<a class="dropdown-item" href="#">
-																	<i data-feather="trash-2" class="me-50"></i>
-                                                              <span onclick="return confirm('Are you sure?');">Delete</span>                                                                </a>
-																</a> 
-															</div>
-														</div>
-													</td>
-												  </tr>
+												  @endforeach
 												 
 											   </tbody>
 
@@ -268,3 +211,27 @@
 
 {{-- </body> --}}
 @endsection
+<script>
+    function exportdata() {
+         var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
+         var fullUrl = "{{url()->full()}}";
+         if(fullUrl_count>1){
+             fullUrl = fullUrl.split('?')[1];
+             fullUrl = fullUrl.replace(/&amp;/g, '&');
+             fullUrl = '?'+fullUrl;
+        }else{
+            fullUrl = '';
+        }
+        var url = "{{url('admin/master/stream/stream-export')}}"+fullUrl;
+        window.location.href = url;
+    }
+	function editStream(slug) {
+		var url = "{{url('stream_list_edit')}}"+"/"+slug;
+        // alert(url);
+		window.location.href = url;
+	}
+    function deleteStream(slug) {
+        var url = "{{url('stream_list_delete')}}"+"/"+slug;
+        window.location.href = url;
+    }
+</script>
