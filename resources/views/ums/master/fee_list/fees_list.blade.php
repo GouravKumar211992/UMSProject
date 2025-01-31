@@ -88,7 +88,7 @@
 																<i data-feather="more-vertical"></i>
 															</button>
 															<div class="dropdown-menu dropdown-menu-end">
-																<a class="dropdown-item" href="fee_list_edit">
+																<a class="dropdown-item" href="{{route('fee_list_edit',$fee->id)}}">
 																	<i data-feather="edit-3" class="me-50"></i>
 																	<span>Edit</span>
 																</a>

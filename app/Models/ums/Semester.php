@@ -1,9 +1,9 @@
 <?php
 namespace App\models\ums;
-use App\Models\Subject;
+use App\Models\ums\Subject;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Result;
+use App\Models\ums\Result;
 
 class Semester extends Model
 {

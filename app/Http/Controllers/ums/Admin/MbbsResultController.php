@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\ums\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\AcademicSession;
-use App\Models\Result;
-use App\Models\Course;
-use App\Models\Campuse;
-use App\Models\Category;
-use App\Models\Semester;
-use Auth;
-
+use App\Models\ums\AcademicSession;
+use App\Models\ums\Result;
+use App\Models\ums\Course;
+use App\Models\ums\Campuse;
+use App\Models\ums\Category;
+use App\Models\ums\Semester;
+use Illuminate\Support\Facades\Auth;
 class MbbsResultController extends Controller
 {
     /**
@@ -43,11 +42,12 @@ class MbbsResultController extends Controller
         ->where('course_id',$course_id)
         ->orderBy('semester_number')
         ->get();
-		if(Auth::guard('admin')->check()==false){
-			return back()->with('error','Not Allowed');
-		}
+		// if(Auth::guard('admin')->check()==false){
+		// 	return back()->with('error','Not Allowed');
+		// }
         $students = array();
-        $batchPrefix = batchPrefixByBatch($batch);
+        $batchPrefix = ['2020-2021','2021-2022','2022-2023','2023-2024']; //updated code//
+        // $batchPrefix = batchPrefixByBatch($batch);
         if($course_id!='' && $semester_id!='' && $batch!=''){
             
         // $array_roll_no = [
@@ -59,16 +59,22 @@ class MbbsResultController extends Controller
 
             $students_query = Result::select('roll_no','course_id','semester')
 //            ->where('exam_session',$batch)
-            ->where('roll_no','LIKE',$batchPrefix.'%')
+            // ->where('roll_no','LIKE',$batchPrefix.'%')  //
             // ->whereIn('roll_no',$array_roll_no)
+            ->where(function($query) use ($batchPrefix) {
+                foreach ($batchPrefix as $prefix) {
+                    $query->orWhere('roll_no', 'LIKE', $prefix.'%');
+                } 
+            })    //updated//
             ->where('course_id',$course_id)
             ->where('semester',$semester_id)
             ->where('status',2);
-            if(Auth::guard('admin')->check()==true){
-                $students_query->whereIn('result_type',['new','old']);
-            }else{
-                $students_query->where('result_type','new');
-            }
+            // if(Auth::guard('admin')->check()==true){
+            //     $students_query->whereIn('result_type',['new','old']);
+            // }
+            // else{
+            //     $students_query->where('result_type','new');
+            // }
             if($roll_no!=''){
                 $students_query->where('roll_no',$roll_no);
             }
@@ -98,7 +104,7 @@ class MbbsResultController extends Controller
                 $student->results = $results;
             }   
 		}
-		return view('admin.result.mbbs-result-view',compact('students','campuses','courses','semesters','batch','batchPrefix'));
+		return view('ums.mbbsparanursing.bulk_result',compact('students','campuses','courses','semesters','batch','batchPrefix'));
 	}
 	
 	
@@ -173,6 +179,7 @@ class MbbsResultController extends Controller
     }
     public function mbbs_all_result(Request $request)
     {
+        // dd($request->all());
       $results = Result::where('course_id','49')
       ->groupby('enrollment_no','semester')
       ->orderBy('id', 'DESC');
@@ -217,7 +224,61 @@ class MbbsResultController extends Controller
         $data['campuselist']=$campuse;
         $data['semesterlist']=$semester;
 
-      return view('admin.result.mbbs-results',$data);
+      return view('ums.reports.mbbs_result',$data);
     }
+
+// public function mbbs_all_result(Request $request)
+// {
+//     $results = Result::selectRaw('MAX(id) as id, enrollment_no, semester, MAX(roll_no) as roll_no')
+//         ->where('course_id', 49)
+//         ->groupBy('enrollment_no', 'semester') // Group by enrollment_no and semester
+//         ->orderBy('id', 'DESC'); // Order by id (to get the latest result per enrollment_no and semester)
+
+//     if ($request->search) {
+//         $keyword = $request->search;
+//         $results->where(function ($q) use ($keyword) {
+//             $q->where('roll_no', 'LIKE', '%' . $keyword . '%');
+//         });
+//     }
+
+//     if (!empty($request->name)) {
+//         $results->where('roll_no', 'LIKE', '%' . $request->name . '%');
+//     }
+
+//     if (!empty($request->course_id)) {
+//         $results->where('course_id', $request->course_id);
+//     }
+
+//     if (!empty($request->campus)) {
+//         $campus = Campuse::find($request->campus);
+
+//         if ($campus) {
+//             $enrollment = Result::whereHas('campus', function ($query) use ($campus) {
+//                 $query->where('campus_code', $campus->campus_code);
+//             })->pluck('enrollment_no');
+
+//             $results->whereIn('enrollment_no', $enrollment);
+//         }
+//     }
+
+//     if (!empty($request->semester)) {
+//         $semester_ids = Semester::where('name', $request->semester)->pluck('id')->toArray();
+//         $results->whereIn('semester', $semester_ids);
+//     }
+
+//     $category = Category::all();
+//     $course = Course::all();
+//     $campus = Campuse::all();
+//     $semester = Semester::select('name')->distinct()->get();
+
+//     $data['results'] = $results->paginate(100);
+//     $data['categories'] = $category;
+//     $data['courses'] = $course;
+//     $data['campuselist'] = $campus;
+//     $data['semesterlist'] = $semester;
+
+//     return view('ums.reports.mbbs_result', $data);
+// }
+   //updated function previous not working//
 
 }

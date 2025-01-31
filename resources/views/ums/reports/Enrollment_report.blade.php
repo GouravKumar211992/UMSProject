@@ -27,6 +27,8 @@
                     </div>
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
+                    <form method="get" id="form_data">
+
                     <div class="form-group breadcrumb-right">
                         <button class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="clipboard"></i> GET
                             REPORT</button>
@@ -48,12 +50,11 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Select Session---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select name="campus" id="campus" class="form-control" onchange="$('#form_data').submit()">
+                                    <option value="">--Select Campus--</option>
+                                    @foreach($campuses as $campus)
+                                        <option value="{{ $campus->id }}" @if(Request()->campus == $campus->id) selected @endif >{{ $campus->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -69,12 +70,11 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Select Course---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select name="course_id" id="course_id" class="form-control">
+                                    <option value="">--Select Course--</option>
+                                    @foreach($courses as $course)
+                                        <option value="{{ $course->id }}" @if(Request()->course_id == $course->id) selected @endif >{{ $course->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -91,19 +91,19 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Select Session---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
-                                </select>
+                                <select name="batch" id="batch" class="form-control" required>
+                                <option value="">--Select Session--</option>
+                                @foreach($sessions as $batch)
+                                    <option value="{{$batch}}" @if(Request()->batch==$batch) selected @endif >{{$batch}}</option>
+                                @endforeach
+                            </select>
                             </div>
                         </div>
 
                        
 
                     </div>
+                </form>
                     
 
 
@@ -137,52 +137,35 @@
                                             </tr>
 
                                         </thead>
-                                        <tbody>
+                 <tbody>
 
-
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Main Campus</td>
-                                                <td>B.Com. LL.B. (Hons.)</td>
-                                                <td>2024</td>
-                                                <td>ENR123456</td>
-                                                <td>RL12345</td>
-                                                <td>John Doe</td>
-                                                <td>Robert Doe</td>
-                                                <td>Male</td>
-                                                <td>No Disability</td>
-                                                <td>General</td>
-                                                <td>Christian</td>
-                                                {{-- <td class="tableactionnew">
-                                                    <div class="dropdown">
-                                                        <button type="button"
-                                                            class="btn btn-sm dropdown-toggle hide-arrow py-0"
-                                                            data-bs-toggle="dropdown">
-                                                            <i data-feather="more-vertical"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="edit" class="me-50"></i>
-                                                                <span>View Detail</span>
-                                                            </a>
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="edit-3" class="me-50"></i>
-                                                                <span>Edit</span>
-                                                            </a>
-
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="trash-2" class="me-50"></i>
-                                                                <span>Delete</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </td> --}}
-                                            </tr>
-
-
-                                        </tbody>
-
-
+                    {{-- @dd($students) --}}
+                    @if($students && $students->count() > 0)
+                        @foreach($students as $index => $enr)
+                            @php
+                            $student = $enr->studentData;
+                            @endphp
+                            @if($student)
+                            <tr>
+                                <td>{{++$index}}</td>
+                                <td>{{$campuse_name}}</td>
+                                <td>{{$selected_course->name}}</td>
+                                <td>{{Request()->batch}}</td>
+                                <td>{{$student->enrollment_no}}</td>
+                                <td>{{$student->roll_number}}</td>
+                                <td>{{$student->first_Name}}</td>
+                                <td>{{$student->father_first_name}}</td>
+                                <td>{{$student->gender}}</td>
+                                <td>{{$student->disabilty_category}}</td>
+                                <td>{{$student->category}}</td>
+                                <td>{{$student->religion}}</td>
+                            </tr>
+                            @endif
+                        @endforeach
+                    @else
+                        <p>No applications available.</p>
+                    @endif
+                 </tbody>
                                     </table>
                                 </div>
 

@@ -2,7 +2,7 @@
 
 namespace App\models\ums;
 
-use App\Models\StudentSubject;
+use App\Models\ums\StudentSubject;
 use App\Models\ums\Semester;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -98,18 +98,33 @@ class Result extends Model implements HasMedia
         }
     }
 
+	// public function getSemesterFinalCheckAttribute()
+    // {
+	// 	$semeser = Semester::select('id')
+	// 		->where('course_id',$this->course_id)
+	// 		->orderBy('semester_number','DESC')
+	// 		->first();
+	// 	if($semeser->id == $this->semester){
+	// 		return 1;
+	// 	}else{
+	// 		return 0;
+	// 	}
+    // }
 	public function getSemesterFinalCheckAttribute()
-    {
-		$semeser = Semester::select('id')
-			->where('course_id',$this->course_id)
-			->orderBy('semester_number','DESC')
-			->first();
-		if($semeser->id == $this->semester){
-			return 1;
-		}else{
-			return 0;
-		}
+{
+    $semeser = Semester::select('id')
+        ->where('course_id', $this->course_id)
+        ->orderBy('semester_number', 'DESC')
+        ->first();
+    
+    // Check if $semeser is null before accessing its properties
+    if ($semeser && $semeser->id == $this->semester) {
+        return 1;
+    } else {
+        return 0;
     }
+}
+
 
 
 	public function getCgpaAttribute($value)

@@ -1,23 +1,6 @@
 @extends('ums.admin.admin-meta')
 @section("content")
-<!-- END: Head-->
 
-<!-- BEGIN: Body-->
-
-{{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click"
-    data-menu="vertical-menu-modern" data-col=""> --}}
-
-    <!-- BEGIN: Header-->
-    {{-- @include('header') --}}
-
-    <!-- END: Header-->
-
-
-    <!-- BEGIN: Main Menu-->
-    {{-- @include('sidebar') --}}
-    <!-- END: Main Menu-->
-
-    <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -37,12 +20,10 @@
                     </div>
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
+                    <form action="" id="getData">
                     <div class="form-group breadcrumb-right">
-                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="clipboard"></i> Show TR Status
+                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0" type="submit" name="showTr" ><i data-feather="clipboard"></i> Show TR Status
                             </button>
-                        
-
-
                     </div>
                 </div>
             </div>
@@ -54,16 +35,18 @@
 
                         <div class="row align-items-center mb-1">
                             <div class="col-md-3">
-                                <label class="form-label">Exam Session:<span class="text-danger m-0">*</span></label>
+                                <label class="form-label" for="">Exam Session:<span class="text-danger m-0">*</span></label>
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Select Exam Session---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select class="form-control" name="exam_session" required>
+                                    <option value="">--select--</option>
+                                    <option value="2023-2024AUG" @if(Request()->exam_session=='2023-2024AUG') selected @endif>2023-2024AUG</option>
+                                    <option value="2023-2024JUL" @if(Request()->exam_session=='2023-2024JUL') selected @endif>2023-2024JUL</option>
+                                    <option value="2023-2024FEB" @if(Request()->exam_session=='2023-2024FEB') selected @endif>2023-2024FEB</option>
+                                    <option value="2023-2024" @if(Request()->exam_session=='2023-2024') selected @endif>2023-2024</option>
+                                    <option value="2022-2023" @if(Request()->exam_session=='2022-2023') selected @endif>2022-2023</option>
+                                    <option value="2021-2022" @if(Request()->exam_session=='2021-2022') selected @endif>2021-2022</option>
                                 </select>
                             </div>
                         </div>
@@ -76,26 +59,28 @@
 
                         <div class="row align-items-center mb-1">
                             <div class="col-md-3">
-                                <label class="form-label">Exam Type:<span class="text-danger m-0">*</span></label>
+                                <label class="form-label" for="">Exam Type:<span class="text-danger m-0">*</span></label>
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Select Exam Type---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select class="form-control" name="form_type" required>
+                                    <option value="">--select--</option>
+                                    <option value="regular" @if(Request()->form_type=='regular') selected @endif>REGULAR</option>
+                                    <option value="back_paper" @if(Request()->form_type=='back_paper') selected @endif>BACK</option>
+                                    <option value="special_back" @if(Request()->form_type=='special_back') selected @endif>SPL BACK</option>
+                                    <option value="final_back_paper" @if(Request()->form_type=='final_back_paper') selected @endif>FINAL BACK</option>
+                                    <option value="compartment" @if(Request()->form_type=='compartment') selected @endif>SUPPLEMENTARY</option>
                                 </select>
                             </div>
+                            <div class="col-md-4">
+                                <label style="display:block">&nbsp;</label>
+                                <input type="submit" class="btn btn-success" name="showTr" value="Show TR Status">
+                            </div>
+                            </div>
+                        </form>
                         </div>
 
-                        
-
-
                     </div>
-
-
                 </div>
 
 
@@ -123,6 +108,7 @@
                                         </thead>
                                         <tbody>
                                             <tbody>
+                                                {{-- @dd($results) --}}
                                                 @foreach($results as $index=>$result)
                                                 <?php
                                                 $campus_id = $result->course->campus_id;
@@ -197,38 +183,6 @@
                                                 </tr>
                                                 @endforeach
                                             </tbody>
-
-
-                                            <tr>
-                                                <td>1</td>
-                                                <td>sleepwell</td>
-                                                <td>coding</td>
-                                                <td>first</td>
-                                                <td>nothing</td>
-                                                <td class="tableactionnew">
-                                                    <div class="dropdown">
-                                                        <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-                                                            <i data-feather="more-vertical"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                            {{-- <a class="dropdown-item" href="#">
-                                                                <i data-feather="edit" class="me-50"></i>
-                                                                <span>View Detail</span>
-                                                            </a> --}}
-                                                            <a class="dropdown-item" href="{{url('trsummary_edit')}}">
-                                                                <i data-feather="edit-3" class="me-50"></i>
-                                                                <span>Edit</span>
-                                                            </a>
-                                                           
-                                                            <a class="dropdown-item" href="#" onclick="window.confirm('Are you sure ? delere this data')">
-                                                                <i data-feather="trash-2" class="me-50"></i>
-                                                                <span>Delete</span>
-                                                            </a> 
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                           
 
                                         </tbody>
 

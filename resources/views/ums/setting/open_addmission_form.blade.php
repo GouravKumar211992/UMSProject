@@ -5,9 +5,11 @@
 {{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col=""> --}}
 
     <!-- BEGIN: Content-->
+    
 
     <div class="app-content content ">
-
+        <form method="post" id="form_data" action="" enctype="multipart/form-data">
+            @csrf
 
       <div class="content-header row">
             <div class="content-header-left col-md-5 mb-2">
@@ -25,7 +27,7 @@
             </div>
             <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                 <div class="form-group breadcrumb-right">
-                    <button onclick="javascript: history.go(-1)" class=" btn btn-primary btn-sm mb-50 mb-sm-0 waves-effect waves-float waves-light "><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Create</button>
+                    <button type="submit" class=" btn btn-primary btn-sm mb-50 mb-sm-0 waves-effect waves-float waves-light " name="submit_form" value="true"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Submit</button>
                     <button class="btn btn-warning btn-sm mb-50 mb-sm-0" onclick="window.location.reload();" ><i data-feather="refresh-cw"></i>
                         Reset</button> 
                 </div>
@@ -37,36 +39,31 @@
         <div class="row align-items-center mb-1">
             <div class="col-md-4 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Compus <span class="text-danger ">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">--Select--</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>            </div>
+                <select name="campus_id" style="border-color: #c0c0c0;" class="form-control campus_id" id="campus_id" required onchange="getCourseList()">
+                    <option value="">--Select--</option>
+                    @foreach($campuses as $campus)
+                    <option value="{{$campus->id}}">{{$campus->name}}</option>
+                    @endforeach
+                </select>        
+            </div>
 
             <div class="col-md-4 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Category <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">All</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
+                <select id="category_id" name="category_id" style="border-color: #c0c0c0;" class="form-control category_id">
+                    <option value="">All</option>
+                    @foreach($categorys as $category)
+                    <option value="{{$category->id}}">{{$category->name}}</option>
+                    @endforeach
                 </select>
                 </div>
                 
             <div class="col-md-4 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Course <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">All</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
+                <select name="course_id" style="border-color: #c0c0c0;" class="form-control course_id" id="course_id">
+                    <option value="">All</option>
+                    @foreach($courses as $course)
+                    <option value="{{$course->id}}">{{$course->name}}</option>
+                    @endforeach
                 </select>
                 </div>
         </div>
@@ -92,7 +89,8 @@
         </div>
     </div>
     
-    
+</form>
+
 
 <!-- options section end-->
 
@@ -128,6 +126,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                
                                                 @foreach($admissionSetting as $index=>$data)  
                                                 <tr>
                                                 <td>{{++$index}}</td>

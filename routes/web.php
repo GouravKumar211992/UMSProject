@@ -126,10 +126,14 @@ use App\Http\Controllers\ums\Admin\IcardsController;
 // use App\Http\Controllers\SettingController as ControllersSettingController;
 use App\Http\Controllers\ums\SettingController;
 use App\Http\Controllers\ums\Admin\Master\FeeController as MasterFeeController;
+use App\Http\Controllers\ums\Admin\MbbsResultController;
+
 // ums controllers 
+
 
 use App\Http\Controllers\ums\Admin\UserController;
 use App\Http\Controllers\ums\Admin\StudentController;
+use App\Http\Controllers\ums\Admin\TrController;
 use App\Http\Controllers\ums\HomeController as UmsHomeController;
 use App\Http\Controllers\ums\User\HomeController as UserHomeController;
 use FontLib\Table\Type\name;
@@ -433,29 +437,25 @@ Route::get('/add_holiday_calender', function () {
     return view('ums.master.holiday_calender.add_holiday_calender');
 });
 
-// Route::get('/old_grading', function () {
-//     return view('ums.master.grading.old_grading');
-// });
-
 Route::get('/old_grading' , [OldGradeController::class , 'index']);
 Route::get('oldgrade_delete/{id}',[OldGradeController::class , 'oldgrade_delete'])->name('oldgrade_delete');
 
+// Route::get('/add_grading', function () {
+//     return view('ums.master.grading.add_grading');
+// });
 
-Route::get('/add_grading', function () {
-    return view('ums.master.grading.add_grading');
-});
-
-
-Route::get('/fees_list' , [FeeController::class , 'index'])->name('fees_list');
+Route::get('/fees_list' , [FeeController::class , 'index'])->name('master.fees_list');
+Route::get('/add_fee_list', [FeeController::class , 'add']);
+Route::post('/submit-fee-form', [FeeController::class , 'addCourseSession']);
 Route::get('delete_fee/{id}',[FeeController::class , 'softDelete'])->name('delete_fee');
 
+Route::get('/fee_list_edit/{id}', [FeeController::class , 'editcoursesessions'])->name('fee_list_edit');
+Route::post('/edit-fee-form/{id?}', [FeeController::class, 'editCoursesession'])->name('edit-fee');
+// Route::get('/master/fee/fee-export', 'Master\FeeController@feeExport');
 
-Route::get('/add_fee_list', function () {
-    return view('ums.master.fee_list.add_fee_list');
-});
-Route::get('/fee_list_edit', function () {
-    return view('ums.master.fee_list.fee_list_edit');
-});
+// Route::get('/fee_list_edit', function () {
+//     return view('ums.master.fee_list.fee_list_edit');
+// });
 
 Route::get('/stream_list', function () {
     return view('ums.master.stream.stream_list');
@@ -490,88 +490,61 @@ Route::get('/open_exam_form-edit', function () {
 Route::get('all_enrollment', [ReportController::class , 'all_enrollment_list'])->name('all-enrollment-list');
 Route::get('all-enrollment-list-export', [ReportController::class ,'enrollmentListExport'])->name('enrollmentListExport');
 
-Route::get('/mbbs_result', function () {
-    return view('ums.reports.mbbs_result');
-});
+Route::get('/mbbs_result', [MbbsResultController::class , 'mbbs_all_result'])->name('admin.all-mbbs-result');
+
+Route::get('/bulk_result', [MbbsResultController::class , 'mbbsResult'])->name('admin.mbbs-result');
 
 
-Route::get('mark_sheet_position',[ReportController::class , 'marksheetPositionUpdate'])->name('mark_sheet_position');
+//reports//
 
-// Route::get('/cgpa_report', function () {
-//     return view('ums.reports.cgpa_report');
-// });
+Route::get('mark_sheet_position',[ReportController::class , 'marksheetPositionUpdate'])->name('reports.mark_sheet_position');
 
-Route::get('cgpa_report',[ReportController::class , 'cgpaReport'])->name('cgpa_report');
+Route::get('cgpa_report',[ReportController::class , 'cgpaReport'])->name('reportscgpa_report');
 
-Route::get('/studying_student_report', function () {
-    return view('ums.reports.student_studying');
-});
-Route::get('/medal_list', function () {
-    return view('ums.reports.medal_list');
-});
-Route::get('/scholarship_report', function () {
-    return view('ums.reports.scholarship_report');
-});
-Route::get('/scholarship_report_new', function () {
-    return view('ums.reports.scholarship_report');
-});
-Route::get('/passed_student_report', function () {
-    return view('ums.reports.passed_student_report');
-});
-Route::get('/pass_out_student_report', function () {
-    return view('ums.reports.pass_out_student_report');
-});
+Route::get('/studying_student_report',[ReportController::class , 'studyingStudents'])->name('reports.studyingStudents');
+
+Route::get('/medal_list',[ReportController::class , 'medalListCgpa'])->name('reports.medal_list');
+
+Route::get('/scholarship_report',[ReportController::class , 'scholarshipReport'])->name('reports.scholarshipreport');
+
+Route::get('/scholarship_report_new',[ReportController::class , 'scholarshipReport1'])->name('reports.scholarshipreport1');
+
+Route::get('/passed_student_report',[ReportController::class , 'passedStudentReport'])->name('reports.passedstudentreport');
+
+Route::get('/pass_out_student_report',[ReportController::class , 'passOutStudentReport'])->name('reports.passout-student-report');
+
 Route::get('/nirf_report', function () {
     return view('ums.reports.nirf_report');
 });
 Route::get('/mbbs_security_report', function () {
     return view('ums.reports.mbbs_security_report');
 });
-Route::get('/Mark_Filling_Report', function () {
-    return view('ums.reports.Mark_Filling_Report');
-});
-Route::get('/enrollment_report', function () {
-    return view('ums.reports.Enrollment_report');
-});
-Route::get('/enrollment_summary', function () {
-    return view('ums.reports.Enrollment_Summary');
-});
 
-Route::get('/disability_report_list', function () {
-    return view('ums.reports.disability_report_list');
-});
-Route::get('/digilocker_list', function () {
-    return view('ums.reports.digilocker_list');
-});
-Route::get('/digi_shakti_report', function () {
-    return view('ums.reports.digi_shakti_report');
-});
-Route::get('/degree_report_list', function () {
-    return view('ums.reports.degree_report_list');
-});
-Route::get('/chart_for_maximum_marks', function () {
-    return view('ums.reports.chart_for_maximum_marks');
-});
-Route::get('/award_sheet_for_all', function () {
-    return view('ums.reports.award_sheet_for_all');
-});
-// Route::get('/Application_Report', function () {
-//     return view('ums.reports.Application_Report');
-// });
+Route::get('Mark_Filling_Report',[ReportController::class , 'markFillingReport'])->name('markFillingReport');
+
+Route::get('/enrollment_report',[ReportController::class , 'allenrollreport'])->name('reports.allenrollmentReport');
+
+Route::get('/enrollment_summary',[ReportController::class , 'countEnrolledStudent'])->name('count-enrolled-report');
+
+Route::get('/disability_report_list',[ReportController::class , 'disabilityReport'])->name('reports.disabilityreport');
+
+Route::get('/digilocker_list',[ReportController::class , 'digilockerList'])->name('reports.digilockerList');
+
+Route::get('/digi_shakti_report',[ReportController::class , 'digiShaktiReport'])->name('reports.digishaktireport');
+
+Route::get('/degree_report_list',[ReportController::class , 'degreeListReport'])->name('reports.degreeListReport');
+
+Route::get('/chart_for_maximum_marks',[ReportController::class , 'chartForMaxMarks'])->name('reports.chartForMaxMarks');
+
+Route::get('/award_sheet_for_all',[ReportController::class , 'awardsheet'])->name('awardsheet-all');
 
 Route::get('/Application_Report',[ReportController::class , 'applicationReportList'])->name('Application_Report');
 
+Route::get('/all_studying_student',[ReportController::class , 'allstudyingStudents'])->name('allstudyingStudents');
 
-Route::get('/all_studying_student', function () {
-    return view('ums.reports.all_studying_student');
-});
-Route::get('/tr_summary', function () {
-    return view('ums.reports.tr_summary');
-});
-Route::get('/regular_exam_form_report', function () {
-    return view('ums.reports.reqular_exam_form_list');
-});
+Route::get('/tr_summary',[ReportController::class , 'trSummary'])->name('tr_summary');
 
+Route::get('/regular_exam_form_report',[ReportController::class , 'regularPaperReport'])->name('reports.regular-exam-report');
 
 //studentform
 Route::get('/challengeform', function () {
@@ -598,9 +571,7 @@ Route::get('/edit_semesterfee', function () {
 Route::get('/award_sheet_report', function () {
     return view('ums.result.award_sheet_report');
 });
-// Route::get('/result_list', function () {
-//     return view('ums.result.Result_list');
-// }); 
+// Route::get('/get-all-results', 'ResultController@allResults')->name('get-all-results');
 
 Route::get('result_list',[ResultController::class , 'allResults'])->name('result_list');
 
@@ -610,15 +581,13 @@ Route::get('/final_back_tr_generate', function () {
 Route::get('/final_back_tr_view', function () {
     return view('ums.result.final_back_tr_view');
 });
-Route::get('/md_tr_generate', function () {
-    return view('ums.result.MD_TR_Generate');
-});
-Route::get('/regular_tr_view', function () {
-    return view('ums.result.Regular_TR_View');
-});
-Route::get('/regular_tr_generate', function () {
-    return view('ums.result.regular_tr_generate');
-});
+
+Route::get('/md_tr_generate', [TrController::class ,'mdTrView'])->name('md-tr-view');
+
+Route::get('/regular_tr_view', [TrController::class , 'universityTrView'])->name('university-tr-view');
+
+Route::get('/regular_tr_generate', [TrController::class , 'index'])->name('university-tr');
+
 //icards
 Route::get('/bulkuploads', function () {
     return view('ums.icards.bulkuploads');
@@ -754,9 +723,9 @@ Route::get('/mbbs_tr_third', function () {
 Route::get('/mbbs_tr', function () {
     return view('ums.mbbsparanursing.mbbs_tr');
 });
-Route::get('/bulk_result', function () {
-    return view('ums.mbbsparanursing.bulk_result');
-});
+// Route::get('/bulk_result', function () {
+//     return view('ums.mbbsparanursing.bulk_result');
+// });
 //affiliate_information
 Route::get('/affiliate_information_view', function () {
     return view('ums.affiliate_information_view.affiliate_informations_view');

@@ -127,7 +127,7 @@
     <span class="menu-title text-truncate" >Admissions
      </span></a>
      <ul class="menu-content">
-        <li><a class="d-flex align-items-center" href="{{ url('/admission_list') }}"><i data-feather="circle"></i><span
+        <li><a class="d-flex align-items-center" href="{{ url('/Application_Report') }}"><i data-feather="circle"></i><span
                  class="menu-item text-truncate">Admission List</span></a>
         </li>
         <li><a class="d-flex align-items-center" href="{{ url('/entrance_exam_schedule') }}"><i data-feather="circle"></i><span
@@ -229,7 +229,7 @@
             <li><a class="d-flex align-items-center" href="{{ url('/md_tr_generate') }}"><i data-feather="circle"></i><span
                      class="menu-item text-truncate">MD TR Generate</span></a>
             </li>
-            <li><a class="d-flex align-items-center" href="{{ url('/award_sheet_report') }}"><i data-feather="circle"></i><span
+            <li><a class="d-flex align-items-center" href="{{ url('/award_sheet_for_all') }}"><i data-feather="circle"></i><span
                      class="menu-item text-truncate">Award Sheet For All</span></a>
             </li>
         </ul>

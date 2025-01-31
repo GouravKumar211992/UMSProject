@@ -1,6 +1,7 @@
 @extends('ums.admin.admin-meta')
 @section('content')
-    
+{{-- @dd($results); --}}
+
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
@@ -23,6 +24,8 @@
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right"> 
+                        <form method="get" id="form_data">
+
                       <button class="btn btn-primary btn-sm mb-50 mb-sm-0"  type="submit" name="submit_form"><i data-feather="check-circle" ></i>Get Report</button>
 
 							<!-- <button class="btn btn-success btn-sm mb-50 mb-sm-0" data-bs-target="#approved" data-bs-toggle="modal"><i data-feather="check-circle" ></i> Assign Team</button> -->
@@ -37,12 +40,11 @@
                             <label class="form-label">Campus Name:<span class="text-danger m-0">*</span></label>
                         </div>
                         <div class="col-md-8">
-                            <select name="selcet" id="" class="form-control">
-                                <option value="">2023-2024</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                                <option value="4">Option 4</option>
+                            <select name="campus" id="campus" class="form-control" required>
+                                <option value="">--Select Campus--</option>
+                                @foreach($campuses as $campus)
+                                    <option value="{{$campus->id}}" @if(Request()->campus==$campus->id) selected @endif >{{$campus->name}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -53,16 +55,16 @@
                             <label class="form-label">Academic Session:<span class="text-danger m-0">*</span></label>
                         </div>
                         <div class="col-md-8">
-                            <select name="selcet" id="" class="form-control">
-                                <option value="">2023-2024</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                                <option value="4">Option 4</option>
+                            <select name="academic_session" id="academic_session" class="form-control" required>
+                                <option value="">--Select Session--</option>
+                                @foreach($sessions as $session)
+                                    <option value="{{$session->academic_session}}" @if(Request()->academic_session==$session->academic_session) selected @endif >{{$session->academic_session}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
                 </div>
+            </form>
 
                 {{-- <div class="col-md-4 mt-4 mb-3">
                     <button class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle" ></i>Get report
@@ -98,20 +100,32 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>1</td>
-                                                    <td>1</td>
-                                                    <td>1</td>
-                                                    <td>1</td>
-                                                    <td>1</td>
-                                                    <td>1</td>
-                                                    <td>1</td>
-                                                    <td>1</td>
-                                                    <td>1</td>
-                                                    <td>1</td>
-                                                </tr>
-                                               
+                                            @if($results)
+                                            @php $i = 0; @endphp
+                                            @foreach($results as $index_summary=>$result)
+                                            <tr>
+                                                <td>{{++$i}}</td>
+                                                <td>{{$result->course->campuse->name}}</td>
+                                                <td>{{$result->course_name()}}</td>
+                                                <td>{{$result->semester_details->name}}</td>
+                                                <td>{{$result->roll_no}}</td>
+                                                <td>{{$result->enrollment_no}}</td>
+                                                @if($result->student)
+                                                <td>{{$result->student->full_name}}</td>
+                                                <td>{{$result->student->email}}</td>
+                                                <td>{{$result->student->disabilty_category}}</td>
+                                                <td>{{$result->student->gender}}</td>
+                                                <td>{{$result->student->category}}</td>
+                                                @else
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                @endif
+                                            </tr>
+                                            @endforeach
+                                            @endif
                                             </tbody>
                                         </table>
                                     </div>
