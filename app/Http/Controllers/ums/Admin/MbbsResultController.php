@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 namespace App\Http\Controllers\ums\Admin;
 
 use App\Http\Controllers\Controller;
@@ -11,6 +12,20 @@ use App\Models\ums\Campuse;
 use App\Models\ums\Category;
 use App\Models\ums\Semester;
 use Illuminate\Support\Facades\Auth;
+=======
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\AcademicSession;
+use App\Models\Result;
+use App\Models\Course;
+use App\Models\Campuse;
+use App\Models\Category;
+use App\Models\Semester;
+use Auth;
+
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 class MbbsResultController extends Controller
 {
     /**
@@ -42,12 +57,20 @@ class MbbsResultController extends Controller
         ->where('course_id',$course_id)
         ->orderBy('semester_number')
         ->get();
+<<<<<<< HEAD
 		// if(Auth::guard('admin')->check()==false){
 		// 	return back()->with('error','Not Allowed');
 		// }
         $students = array();
         $batchPrefix = ['2020-2021','2021-2022','2022-2023','2023-2024']; //updated code//
         // $batchPrefix = batchPrefixByBatch($batch);
+=======
+		if(Auth::guard('admin')->check()==false){
+			return back()->with('error','Not Allowed');
+		}
+        $students = array();
+        $batchPrefix = batchPrefixByBatch($batch);
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
         if($course_id!='' && $semester_id!='' && $batch!=''){
             
         // $array_roll_no = [
@@ -59,6 +82,7 @@ class MbbsResultController extends Controller
 
             $students_query = Result::select('roll_no','course_id','semester')
 //            ->where('exam_session',$batch)
+<<<<<<< HEAD
             // ->where('roll_no','LIKE',$batchPrefix.'%')  //
             // ->whereIn('roll_no',$array_roll_no)
             ->where(function($query) use ($batchPrefix) {
@@ -75,6 +99,18 @@ class MbbsResultController extends Controller
             // else{
             //     $students_query->where('result_type','new');
             // }
+=======
+            ->where('roll_no','LIKE',$batchPrefix.'%')
+            // ->whereIn('roll_no',$array_roll_no)
+            ->where('course_id',$course_id)
+            ->where('semester',$semester_id)
+            ->where('status',2);
+            if(Auth::guard('admin')->check()==true){
+                $students_query->whereIn('result_type',['new','old']);
+            }else{
+                $students_query->where('result_type','new');
+            }
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
             if($roll_no!=''){
                 $students_query->where('roll_no',$roll_no);
             }
@@ -104,7 +140,11 @@ class MbbsResultController extends Controller
                 $student->results = $results;
             }   
 		}
+<<<<<<< HEAD
 		return view('ums.mbbsparanursing.bulk_result',compact('students','campuses','courses','semesters','batch','batchPrefix'));
+=======
+		return view('admin.result.mbbs-result-view',compact('students','campuses','courses','semesters','batch','batchPrefix'));
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 	}
 	
 	
@@ -179,7 +219,10 @@ class MbbsResultController extends Controller
     }
     public function mbbs_all_result(Request $request)
     {
+<<<<<<< HEAD
         // dd($request->all());
+=======
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
       $results = Result::where('course_id','49')
       ->groupby('enrollment_no','semester')
       ->orderBy('id', 'DESC');
@@ -224,6 +267,7 @@ class MbbsResultController extends Controller
         $data['campuselist']=$campuse;
         $data['semesterlist']=$semester;
 
+<<<<<<< HEAD
       return view('ums.reports.mbbs_result',$data);
     }
 
@@ -281,4 +325,9 @@ class MbbsResultController extends Controller
 // }
    //updated function previous not working//
 
+=======
+      return view('admin.result.mbbs-results',$data);
+    }
+
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 }

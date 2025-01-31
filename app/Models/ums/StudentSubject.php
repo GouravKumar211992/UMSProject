@@ -1,6 +1,10 @@
 <?php
 
+<<<<<<< HEAD
 namespace App\Models\ums;
+=======
+namespace App\Models;
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

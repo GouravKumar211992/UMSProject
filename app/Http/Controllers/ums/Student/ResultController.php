@@ -1,11 +1,16 @@
 <?php
 
+<<<<<<< HEAD
 namespace App\Http\Controllers\ums\Student;
+=======
+namespace App\Http\Controllers\Student;
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use App\Models\StudentSubject;
+<<<<<<< HEAD
 use App\Models\ums\Result;
 use App\Models\ums\Course;
 use App\Models\ExamFee;
@@ -22,16 +27,37 @@ use App\Models\ums\AcademicSession;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+=======
+use App\Models\Result;
+use App\Models\Course;
+use App\Models\ExamFee;
+use App\Models\Enrollment;
+use App\Models\Stream;
+use App\Models\Campuse;
+use App\Models\ExamForm;
+use App\Models\Subject;
+use App\Models\Semester;
+use App\Models\Icard;
+use App\Models\Grade;
+use App\Models\GradeOld;
+use App\Models\AcademicSession;
+use Auth;
+use DB;
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 use Illuminate\Support\Facades\Artisan;
 
 class ResultController extends Controller
 {
     public function index()
     {
+<<<<<<< HEAD
 		$roll_number=Auth::
 		
 		
 		uard('student')->user()->roll_number;
+=======
+		$roll_number=Auth::guard('student')->user()->roll_number;
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 		$semesters=Semester::select('semesters.*')->join('results','results.semester','semesters.id')
 						->where('roll_no',$roll_number)
 						->groupBy('semester')

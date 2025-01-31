@@ -119,6 +119,7 @@ use App\Http\Controllers\PurchaseOrder\PurchaseOrderReportController;
 use App\Http\Controllers\PurchaseBillController;
 use App\Http\Controllers\DiscountMasterController;
 use App\Http\Controllers\ExpenseMasterController;
+<<<<<<< HEAD
 use App\Http\Controllers\ums\admin\ResultController;
 use App\Http\Controllers\PurchaseReturnController;
 use App\Http\Controllers\ums\Report\ReportController;
@@ -134,6 +135,17 @@ use App\Http\Controllers\ums\Admin\MbbsResultController;
 use App\Http\Controllers\ums\Admin\UserController;
 use App\Http\Controllers\ums\Admin\StudentController;
 use App\Http\Controllers\ums\Admin\TrController;
+=======
+
+use App\Http\Controllers\PurchaseReturnController;
+// use App\Http\Controllers\SettingController as ControllersSettingController;
+use App\Http\Controllers\ums\SettingController;
+use App\Http\Controllers\ums\Admin\Master\FeeController as MasterFeeController;
+// ums controllers 
+
+use App\Http\Controllers\ums\Admin\UserController;
+use App\Http\Controllers\ums\Admin\StudentController;
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 use App\Http\Controllers\ums\HomeController as UmsHomeController;
 use App\Http\Controllers\ums\User\HomeController as UserHomeController;
 use FontLib\Table\Type\name;
@@ -437,6 +449,7 @@ Route::get('/add_holiday_calender', function () {
     return view('ums.master.holiday_calender.add_holiday_calender');
 });
 
+<<<<<<< HEAD
 Route::get('/old_grading' , [OldGradeController::class , 'index']);
 Route::get('oldgrade_delete/{id}',[OldGradeController::class , 'oldgrade_delete'])->name('oldgrade_delete');
 
@@ -456,6 +469,31 @@ Route::post('/edit-fee-form/{id?}', [FeeController::class, 'editCoursesession'])
 // Route::get('/fee_list_edit', function () {
 //     return view('ums.master.fee_list.fee_list_edit');
 // });
+=======
+// Route::get('/old_grading', function () {
+//     return view('ums.master.grading.old_grading');
+// });
+
+Route::get('/old_grading' , [OldGradeController::class , 'index']);
+Route::get('oldgrade_delete/{id}',[OldGradeController::class , 'oldgrade_delete'])->name('oldgrade_delete');
+
+
+Route::get('/add_grading', function () {
+    return view('ums.master.grading.add_grading');
+});
+
+
+Route::get('/fees_list' , [FeeController::class , 'index'])->name('fees_list');
+Route::get('delete_fee/{id}',[FeeController::class , 'softDelete'])->name('delete_fee');
+
+
+Route::get('/add_fee_list', function () {
+    return view('ums.master.fee_list.add_fee_list');
+});
+Route::get('/fee_list_edit', function () {
+    return view('ums.master.fee_list.fee_list_edit');
+});
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 
 Route::get('/stream_list', function () {
     return view('ums.master.stream.stream_list');

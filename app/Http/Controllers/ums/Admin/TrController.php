@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 namespace App\Http\Controllers\ums\Admin;
 
 use Illuminate\Http\Request;
@@ -16,11 +17,33 @@ use App\Models\ums\ExamType;
 use App\Models\ums\GradeOldAllowedSemester;
 use App\Http\Traits\ResultsTrait;
 use App\Models\ums\StudentSubject;
+=======
+namespace App\Http\Controllers\Admin;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\AdminController;
+
+use App\Models\Course;
+use App\Models\Campuse;
+use App\Models\Semester;
+use App\Models\Subject;
+use App\Models\Result;
+use App\Models\AcademicSession;
+use App\Models\ExamFee;
+use App\Models\ExamType;
+use App\Models\GradeOldAllowedSemester;
+use App\Http\Traits\ResultsTrait;
+use App\Models\StudentSubject;
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 use DB;
 
 class TrController extends  AdminController
 {
+<<<<<<< HEAD
 	// use ResultsTrait;
+=======
+	use ResultsTrait;
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
     public function __construct()
     {
         parent::__construct();
@@ -122,7 +145,11 @@ class TrController extends  AdminController
 		$data['full_retult'] = $full_retult;
 		$data['download'] = '';
 
+<<<<<<< HEAD
 		return view('ums.result.regular_tr_generate', $data);
+=======
+		return view('admin.tr.university-tr', $data);
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 	}
 
 	public function freezRegularTr(Request $request){
@@ -202,7 +229,10 @@ class TrController extends  AdminController
     {
 		$sessions = AcademicSession::orderBy('id','DESC')->get();
         $campuses = Campuse::withoutTrashed()->orderBy('name')->get();
+<<<<<<< HEAD
 		// dd($campuses->where('id' , $request->id));
+=======
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
         $courses = Course::withoutTrashed()->where('campus_id',$request->campus_id)->orderBy('name')->get();
 		$course_single = Course::find($request->course);
 		$semesters = Semester::withoutTrashed()->where('course_id',$request->course)->orderBy('id','asc')->get();
@@ -255,13 +285,18 @@ class TrController extends  AdminController
 
 		if($request->paper_size!=null && count($full_retult) > 0){
 			$data['download'] = 'pdf';
+<<<<<<< HEAD
             $htmlfile = view('ums.result.Regular_TR_View', $data)->render();
+=======
+            $htmlfile = view('admin.tr.university-tr-view', $data)->render();
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 			$pdf = app()->make('dompdf.wrapper');
 			$pdf->loadHTML($htmlfile,'UTF-8')
 			->setWarnings(false)
 			->setPaper($request->paper_size, $request->paper_type);
             return $pdf->download('Regular TR Report For Course '.$semester_details->course->name.' ( '.$semester_details->name.' ) and Academic Session '.$request->academic_session.'.pdf');
         }
+<<<<<<< HEAD
 		return view('ums.result.Regular_TR_View', $data);
 	}
 	public function batchPrefixByBatch($batch)
@@ -346,6 +381,49 @@ class TrController extends  AdminController
     return view('ums.result.MD_TR_Generate', $data);
 }
 
+=======
+		return view('admin.tr.university-tr-view', $data);
+	}
+	public function mdTrView(Request $request)
+    {
+		$batchs = batchArray();
+        $unuversity_name = Campuse::find(1);
+        $campus_details = Campuse::find(4);
+        $courses = Course::whereIn('id',[131,132])->get();
+		$semesters = Semester::where('course_id',$request->course)->orderBy('id','asc')->get();
+		$semester_details = Semester::find($request->semester);
+		$subjects = Subject::where('semester_id',$request->semester)->orderBy('position','asc')->get();
+
+		$batchPrefixByBatch = batchPrefixByBatch($request->batch);
+		$results = Result::where('roll_no','LIKE',$batchPrefixByBatch.'%')
+		->select('back_status_text','exam_session','semester','course_id','roll_no')
+		->where('semester',$request->semester)
+		->distinct()
+		->get();
+		
+		$data['batchs'] = $batchs;
+		$data['campus_details'] = $campus_details;
+		$data['courses'] = $courses;
+		$data['semesters'] = $semesters;
+		$data['semester_details'] = $semester_details;
+		$data['subjects'] = $subjects;
+		$data['subject_theory_count'] = $subjects->where('subject_type','Theory')->count();
+		$data['results'] = $results;
+		$data['unuversity_name'] = $unuversity_name;
+		$data['download'] = '';
+
+		if($request->download_pdf=='true'){
+			$data['download'] = 'pdf';
+            $htmlfile = view('admin.tr.md-tr-view', $data)->render();
+			$pdf = app()->make('dompdf.wrapper');
+			$pdf->loadHTML($htmlfile,'UTF-8')
+			->setWarnings(false)
+			->setPaper('a3', 'landscape');
+            return $pdf->download("MD_TR_".$semester_details->course->name."_batch_".$request->batch.".pdf");
+        }
+		return view('admin.tr.md-tr-view', $data);
+	}
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 
 
     // public function backTr(Request $request)

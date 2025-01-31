@@ -126,7 +126,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+<<<<<<< HEAD
                                                 
+=======
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
                                                 @foreach($admissionSetting as $index=>$data)  
                                                 <tr>
                                                 <td>{{++$index}}</td>

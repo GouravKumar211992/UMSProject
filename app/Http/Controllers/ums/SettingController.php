@@ -70,11 +70,19 @@ class SettingController extends Controller
     {   
 
         // $admission_open_couse_wise = admission_open_couse_wise(1,$request->type);
+<<<<<<< HEAD
     //    dd($admission_open_couse_wise); 
         $campuses = Campuse::get();
         $categorys = Category::all();
         $courses = Course::where('campus_id',$request->campus_id)->get();
         $admissionSetting = AdmissionSetting::where('action_type','1')->orderBy('id','DESC')->get(); //add static value 1//
+=======
+    //  dd($admission_open_couse_wise);
+        $campuses = Campuse::get();
+        $categorys = Category::all();
+        $courses = Course::where('campus_id',$request->campus_id)->get();
+        $admissionSetting = AdmissionSetting::where('action_type',$request->type)->orderBy('id','DESC')->get();
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
         return view('ums.setting.open_addmission_form',compact('admissionSetting','campuses','courses','categorys'));
     }
 
@@ -86,7 +94,11 @@ class SettingController extends Controller
         $campuses = Campuse::get();
         $categorys = Category::all();
         $courses = Course::where('campus_id',$request->campus_id)->get();
+<<<<<<< HEAD
         $admissionSetting = AdmissionSetting::where('action_type','2')->orderBy('id','DESC')->get(); //add static value 2//
+=======
+        $admissionSetting = AdmissionSetting::where('action_type',$request->type)->orderBy('id','DESC')->get();
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
         return view('ums.setting.open_admission_edit_form',compact('admissionSetting','campuses','courses','categorys'));
     }
 

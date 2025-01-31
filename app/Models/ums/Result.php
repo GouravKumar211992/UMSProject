@@ -2,8 +2,12 @@
 
 namespace App\models\ums;
 
+<<<<<<< HEAD
 use App\Models\ums\StudentSubject;
 use App\Models\ums\Semester;
+=======
+use App\Models\Semester;
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
@@ -98,6 +102,7 @@ class Result extends Model implements HasMedia
         }
     }
 
+<<<<<<< HEAD
 	// public function getSemesterFinalCheckAttribute()
     // {
 	// 	$semeser = Semester::select('id')
@@ -125,6 +130,20 @@ class Result extends Model implements HasMedia
     }
 }
 
+=======
+	public function getSemesterFinalCheckAttribute()
+    {
+		$semeser = Semester::select('id')
+			->where('course_id',$this->course_id)
+			->orderBy('semester_number','DESC')
+			->first();
+		if($semeser->id == $this->semester){
+			return 1;
+		}else{
+			return 0;
+		}
+    }
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 
 
 	public function getCgpaAttribute($value)
@@ -290,7 +309,11 @@ class Result extends Model implements HasMedia
     }
     public function getInternalMarksIntAttribute($value)
 	{
+<<<<<<< HEAD
 		if(is_numeric($value)){
+=======
+		if(is_numeric()){
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 			return $value;
 		}else{
 			return 0;
@@ -347,7 +370,11 @@ class Result extends Model implements HasMedia
 		}
 	}
 	public function semester() {
+<<<<<<< HEAD
 		return $this->hasOne(Semester::class, 'id','semester');
+=======
+		return $this->hasOne(\App\Models\Semester::class, 'id','semester');
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 	}
 	public function semester_details() {
 		return $this->hasOne(Semester::class, 'id','semester')->withTrashed();

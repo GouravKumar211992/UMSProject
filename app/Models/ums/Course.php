@@ -4,7 +4,11 @@ namespace App\Models\ums;
 // use Auth;
 // use DB;
 
+<<<<<<< HEAD
 use App\Models\ums\Semester;
+=======
+use App\Models\Semester;
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -213,6 +217,7 @@ class Course extends Model
 
 		];
 
+<<<<<<< HEAD
 	}	
 
 	public function batchPrefixByBatch($batch)
@@ -296,6 +301,35 @@ class Course extends Model
     $hi_students_clone = collect($results);
     $ld_oh_ph_students_clone = collect($results);
     $others_students_clone = collect($results);
+=======
+	}	function studying_course_wise_students($batch){
+		if($batch!='All'){
+			$batchPrefixByBatch = batchPrefixByBatch($batch);
+		}
+		$result_query = Student::select('students.*')
+		->join('enrollments','students.roll_number','enrollments.roll_number')
+		->where('course_id',$this->id)
+		->where('is_student_studing','Yes');
+		if($batch!='All'){
+			$result_query->where('students.roll_number', 'LIKE', $batchPrefixByBatch . '%');
+		}
+		$result_query->distinct('roll_no');
+
+		$results_clone = clone $result_query;
+		$results = $results_clone->get();
+		$all_students_clone = collect($results);
+		$male_students_clone = collect($results);
+		$female_students_clone = collect($results);
+		$gen_students_clone = collect($results);
+		$obc_students_clone = collect($results);
+		$st_students_clone = collect($results);
+		$sc_students_clone = collect($results);
+		$ews_students_clone = collect($results);
+		$vi_students_clone = collect($results);
+		$hi_students_clone = collect($results);
+		$ld_oh_ph_students_clone = collect($results);
+		$others_students_clone = collect($results);
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 
    // dd($vi_students_clone);
 		$all_students = $all_students_clone->count();
@@ -409,6 +443,7 @@ class Course extends Model
 
 	}
 
+<<<<<<< HEAD
 //update this funtion//
 
 	function all_course_wise_students($academic_session, $type) {
@@ -470,6 +505,42 @@ class Course extends Model
 	
 		// Continue your logic...
 	
+=======
+	function all_course_wise_students($academic_session,$type){
+
+		$batchPrefixByBatch = batchPrefixByBatch($academic_session);
+		$results = Result::where('back_status_text','REGULAR')
+		->where('roll_no', 'NOT LIKE', $batchPrefixByBatch . '%')
+		->where('semester_final',1)
+		->where('course_id',$this->id)
+		->where('exam_session', $academic_session)
+		->where('result_overall', 'PASS')
+		->distinct('semester')
+		->pluck('roll_no')
+		->toArray();
+		$result_query = Student::select('students.*')
+		->join('enrollments','students.roll_number','enrollments.roll_number')
+		->whereNotIn('students.roll_number',$results)
+		->where('course_id',$this->id);
+		if($type=='old'){
+			$exam_roll_no_array = ExamFee::join('semesters','semesters.id','exam_fees.semester')
+			->where('academic_session', $academic_session)
+			->where('exam_fees.course_id',$this->id)
+			->where('semester_number','>',1)
+			->where('roll_no', 'NOT LIKE', $batchPrefixByBatch . '%')
+			->where('form_type','regular')
+			// ->whereNotNull('bank_name')
+			->distinct('semester')
+			->pluck('roll_no')
+			->toArray();
+			// dd($exam_roll_no_array);
+			$result_query->whereIn('students.roll_number',$exam_roll_no_array);
+		}else{
+			$result_query->where('students.roll_number', 'LIKE', $batchPrefixByBatch . '%');
+		}
+		$result_query->distinct('roll_no');
+
+>>>>>>> f4765a923a28bfad5b4cade903cdbf51ead6f96d
 
 		$results_clone = clone $result_query;
 		$results = $results_clone->get();
