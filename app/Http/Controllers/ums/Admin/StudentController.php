@@ -43,7 +43,7 @@ class StudentController extends AdminController
         // dd($students);
     
        
-        return view('ums.usermanagement.student_list.index', [
+        return view('ums.usermanagement.student.index', [
             'students' => $students
         ]);
     }
@@ -150,7 +150,7 @@ class StudentController extends AdminController
             ->whereNull('hindi_name')
             ->whereNotNull('roll_number')
             ->get();
-        return view('ums.usermanagement.student_list.studentsName', [
+        return view('ums.usermanagement.student.student_hindi_name', [
             'students' => $students
         ]);
     }

@@ -55,7 +55,7 @@ class UserController extends AdminController
         }
 		
         $users = $users->paginate(10);
-        return view('ums.usermanagement.users.index', [
+        return view('ums.usermanagement.user.index', [
             'page_title' => "User",
             'sub_title' => "records",
             'all_users' => $users
@@ -108,7 +108,7 @@ class UserController extends AdminController
         }
         $users = $users->paginate(10);
         
-        return view('ums.usermanagement.admins.admin_list', [
+        return view('ums.usermanagement.admin.admin_list', [
             'page_title' => "User",
             'sub_title' => "records",
             'all_users' => $users
@@ -121,7 +121,7 @@ class UserController extends AdminController
         
        
         $users = $users->paginate(10);
-        return view('ums.usermanagement.email_list.email_template', [
+        return view('ums.usermanagement.email.email_template', [
             'page_title' => "User",
             'sub_title' => "records",
             'all_users' => $users
@@ -131,7 +131,7 @@ class UserController extends AdminController
     public function add(Request $request)
     {
         
-        return view('ums.admins.admin_list_add', [
+        return view('ums.admin.admin_add', [
             'page_title' => "Add New",
             'sub_title' => "User"
         ]);
@@ -140,7 +140,7 @@ class UserController extends AdminController
     public function addEmailTemplatePage(Request $request)
     {
         
-        return view('admin.email.add_email_template', [
+        return view('admin.email.email_template_add', [
             'page_title' => "Add New",
             'sub_title' => "User"
         ]);
@@ -169,7 +169,7 @@ class UserController extends AdminController
       
             $user=$this->create($data);
             // dd($data);
-            return redirect('admins');
+            return redirect('admin-get');
         
      
     }
@@ -191,7 +191,7 @@ class UserController extends AdminController
         $data = $request->all();
         
          EmailTemplate::create($data);
-        return redirect()->route('/email-template');
+        return redirect('/email-template');
     }
    
 
@@ -226,7 +226,7 @@ public function editEmailTemplates(Request $request, $slug)
 
     $selectedUser =  EmailTemplate::Where('id', $slug)->first();
 
-    return view('ums.usermanagement.email_list.email_template_edit', [
+    return view('ums.usermanagement.email.email_template_edit', [
         'selected_user' => $selectedUser
     ]);
 }
@@ -265,7 +265,7 @@ public function editEmailTemplates(Request $request, $slug)
         ]);
         // dd($request->all());
         $update_category = Admin::where('id', $request->user_id)->update(['name' => $request->name,'mobile' => $request->mobile, 'role' => $request->role,'gender' => $request->gender,'marital_status' => $request->marital,'date_of_birth' => $request->user_dob, 'status' => $request->user_status, 'updated_by' => 1]);
-        return redirect()->route('get-admin');
+        return redirect()->route('usermanagement.admin');
         
     }
 
@@ -275,7 +275,7 @@ public function editEmailTemplates(Request $request, $slug)
 
         $selectedUser = Admin::Where('id', $slug)->first();
 
-        return view('ums.usermanagement.admins.admin_list_edit', [
+        return view('ums.usermanagement.admin.admin_edit', [
             'page_title' => $selectedUser->name,
             'sub_title' => "Edit Information",
             'selected_user' => $selectedUser
@@ -306,7 +306,7 @@ public function editEmailTemplates(Request $request, $slug)
     public function softDelete(Request $request,$slug) {
         
         Admin::where('id', $slug)->delete();
-        return redirect('admins');
+        return redirect('admin-get');
         
     }
     public function EmailsoftDelete(Request $request,$slug) {

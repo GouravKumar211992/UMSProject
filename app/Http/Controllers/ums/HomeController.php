@@ -88,7 +88,7 @@ class HomeController extends Controller
 			Auth::login($user);
 			// Auth::guard('admin')->check() &&  Auth::guard('admin')->user()->role==1
 			if(true){
-				return redirect()->route('user-dashboard')->with('success','Login Successfully');
+				return redirect()->route('user.dashboard')->with('success','Login Successfully');
 			}else{
 				return redirect('view-application-form?view=true&application_id='.$request->application_id)->with('success','Login Successfully');
 			}

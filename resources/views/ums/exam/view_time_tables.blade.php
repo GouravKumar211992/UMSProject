@@ -1,7 +1,7 @@
-@extends("ums.admin.admin-meta")
-@section("content")
+@extends('ums.admin.admin-meta')
+@section('content')
 
-{{-- <!DOCTYPE html>
+    {{-- <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 <!-- BEGIN: Head-->
 
@@ -88,20 +88,23 @@
                     </div>
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
-                    <div class="form-group breadcrumb-right">
-                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0"  id="submitBtn"><i data-feather="clipboard"></i> Submit</button>
-                        {{-- <button class="btn btn-secondary btn-sm mb-50 mb-sm-0">Go Back</button>
+                    <form method="get" id="form_data">
+                        <div class="form-group breadcrumb-right">
+                            <button class="btn btn-primary btn-sm mb-50 mb-sm-0" type="submit" id="submitBtn"><i
+                                    data-feather="clipboard"></i> Submit</button>
+                            {{-- <button class="btn btn-secondary btn-sm mb-50 mb-sm-0">Go Back</button>
                          <a class="btn btn-primary btn-sm mb-50 mb-sm-0" href="/view_time_tables"> View Time Tables</a>  
 
                           
                         <button class="btn btn-success  btn-sm mb-50 mb-sm-0">Schedule Bulk Upload</button> --}}
 
 
-                    </div>
+                        </div>
                 </div>
             </div>
             <div class="content-body bg-white p-4 shadow">
 
+                @include('ums.admin.notifications')
                 <div class="row">
 
                     <!-- Campus and Course Selection -->
@@ -112,24 +115,37 @@
                                 <label class="form-label">Campus:<span class="text-danger m-0">*</span></label>
                             </div>
                             <div class="col-md-9">
-                                <select id="campus" class="form-control">
-                                    <option value="">---Choose Campus---</option>
-                                    <option value="campus1">Campus 1</option>
-                                    <option value="campus2">Campus 2</option>
-                                    <option value="campus3">Campus 3</option>
+                                <select data-live-search="true" name="campus_id" id="campus_id"
+                                    style="border-color: #c0c0c0;" class="form-control js-example-basic-single "
+                                    onChange="return $('#form_data').submit();">
+                                    <option value="">--Choose Campus--</option>
+                                    @foreach ($campuses as $campus)
+                                        <option value="{{ $campus->id }}"
+                                            @if (Request()->campus_id == $campus->id) selected @endif>{{ $campus->name }}</option>
+                                    @endforeach
                                 </select>
+                                <span class="text-danger">{{ $errors->first('campus_id') }}</span>
+
                             </div>
                         </div>
-            
+
                         <!-- Course Selection -->
                         <div class="row align-items-center mb-1">
                             <div class="col-md-3">
                                 <label class="form-label">Course:<span class="text-danger">*</span></label>
                             </div>
                             <div class="col-md-9">
-                                <select id="course" class="form-control">
-                                    <option value="">---Select Course---</option>
+                                <select data-live-search="true" name="course" id="course" style="border-color: #c0c0c0;"
+                                    class="form-control js-example-basic-single "
+                                    onChange="return $('#form_data').submit();">
+                                    <option value="">--Choose Course--</option>
+                                    @foreach ($courses as $course)
+                                        <option value="{{ $course->id }}"
+                                            @if (Request()->course == $course->id) selected @endif>{{ $course->name }}</option>
+                                    @endforeach
                                 </select>
+                                <span class="text-danger">{{ $errors->first('course') }}</span>
+
                             </div>
                         </div>
                         <div class="row align-items-center mb-1">
@@ -138,17 +154,19 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                  <option value="0">---Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2"> 2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
+                                <select data-live-search="true" name="schedule_count" id="schedule_count"
+                                    style="border-color: #c0c0c0;" class="form-control js-example-basic-single ">
+                                    <option value="">Select Schedule Count</option>
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <option value="{{ $i }}"
+                                            @if (Request()->schedule_count == $i) selected @endif>{{ $i }}</option>
+                                    @endfor
                                 </select>
+                                <span class="text-danger">{{ $errors->first('schedule_count') }}</span>
                             </div>
                         </div>
                     </div>
-            
+
                     <!-- Semester, Session, and other options -->
                     <div class="col-md mt-4 mb-3">
                         <div class="row align-items-center mb-1">
@@ -156,43 +174,138 @@
                                 <label class="form-label">Semester:<span class="text-danger m-0">*</span></label>
                             </div>
                             <div class="col-md-9">
-                                <select id="semester" class="form-control">
-                                    <option value="">---Select Semester---</option>
-                                    <option value="1">Semester 1</option>
-                                    <option value="2">Semester 2</option>
+                                <select data-live-search="true" name="semester" id="semester"
+                                    style="border-color: #c0c0c0;" class="form-control js-example-basic-single ">
+                                    <option value="">Select Semester</option>
+                                    @foreach ($semesters as $semester)
+                                        <option value="{{ $semester->id }}"
+                                            @if (Request()->semester == $semester->id) selected @endif>{{ $semester->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
+                                <span class="text-danger">{{ $errors->first('semester') }}</span>
                             </div>
                         </div>
-            
+
                         <div class="row align-items-center mb-1">
                             <div class="col-md-3">
                                 <label class="form-label">Session:<span class="text-danger m-0">*</span></label>
                             </div>
                             <div class="col-md-9">
-                                <select id="session" class="form-control">
-                                    <option value="">---Select Session---</option>
-                                    <option value="2024">2024</option>
-                                    <option value="2025">2025</option>
+                                <select data-live-search="true" name="session" id="session" style="border-color: #c0c0c0;"
+                                    class="form-control js-example-basic-single ">
+                                    <option value="">Select Session</option>
+                                    @foreach ($sessions as $session)
+                                        <option value="{{ $session->academic_session }}"
+                                            @if (Request()->session == $session->academic_session) selected @endif>
+                                            {{ $session->academic_session }}</option>
+                                    @endforeach
                                 </select>
+                                <span class="text-danger">{{ $errors->first('session') }}</span>
                             </div>
                         </div>
-                       
+
                     </div>
-            
+                    </form>
+                    @if ($exams)
+                        @if (count($exams) > 0)
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <span></span>
+
+                                </div>
+                                <div class="col-sm-4">
+                                    <span></span><br>
+                                    <a herf="#"onclick="window.print()" name=""
+                                        class="btn btn-primary hidden-print" value="">PRINT</a>
+                                </div>
+
+                            </div>
+
+                            <div class="container" style="background-color: #FFFFFF; margin-top: 15px;">
+                                <div class="panel-group" id="accordion">
+                                    <div class="panel panel-default">
+                                        <div id="" class="" style="color:black">
+                                            <div class="panel-body">
+                                                <div class="container">
+                                                    <table border="1" id="tblTheory21" class="table table-hover">
+                                                        <tr>
+                                                            <td colspan="6">
+                                                                <center>
+                                                                    <h4>Exam Time Table</h4>
+                                                                </center>
+                                                        </tr>
+                                                        <tr>
+                                                            {{-- !Auth::guard('student')->user() --}}
+                                                            @if (true)
+                                                                <th class="thcenter hidden-print">Action</th>
+                                                            @endif
+                                                            <th class="thcenter">COURSE</th>
+                                                            <th class="thcenter">DATE</th>
+                                                            <th class="thcenter">SHIFT</th>
+                                                            <th class="thcenter">PAPER CODE</th>
+                                                            <th class="thcenter">PAPER NAME</th>
+                                                        </tr>
+                                                        @foreach ($exams as $exam)
+                                                            <tr class="auto-style18 thcenter">
+                                                                {{-- !Auth::guard('student')->user() --}}
+                                                                @if (true)
+                                                                    <td class="hidden-print"><a href="#!"
+                                                                            data-toggle="modal"
+                                                                            data-mid="{{ $exam->id }}" id="login_btn"
+                                                                            data-target="#exampleModal"
+                                                                            class="fa fa-pencil login_btn">
+                                                                            Edit</a>
+                                                                    </td>
+                                                                @endif
+                                                                <td><span
+                                                                        id="lblPap1ID">{{ $exam->semester->name }}</span>
+                                                                </td>
+                                                                <td><span id="lblPap1Name"><input type="text"
+                                                                            class="date" value="{{ $exam['date'] }}"
+                                                                            name="date[]"
+                                                                            hidden>{{ date('d-m-Y', strtotime($exam['date'])) }}</span>
+                                                                </td>
+                                                                <td><span id="lblPap1TE"><input type="text"
+                                                                            class="shift" value="{{ $exam['shift'] }}"
+                                                                            name="shift[]" hidden>
+                                                                        {{ $exam['shift'] }}
+                                                                    </span></td>
+                                                                <td><span id="lblPap1TS">{{ $exam['paper_code'] }}
+                                                                    </span></td>
+                                                                <td><span
+                                                                        id="lblPap1ID">{{ @$exam->subject->name }}</span>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <div class="container" style="background-color: #FFFFFF; margin-top: 15px;">
+                                <b style="color: black;">No Schedule Generated Please Wait... </b>
+                            </div>
+                        @endif
+                    @endif
+
                     <!-- Submit Button -->
-                  
+
                 </div>
-            
-           
- 
-    <!-- END: Content-->
-
-    
 
 
-    <!-- BEGIN: Vendor JS-->
 
-    {{-- <!-- BEGIN: Vendor JS-->
+                <!-- END: Content-->
+
+
+
+
+                <!-- BEGIN: Vendor JS-->
+
+                {{-- <!-- BEGIN: Vendor JS-->
     <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
 
@@ -401,4 +514,4 @@
 
 </html> --}}
 
-@endsection
+            @endsection

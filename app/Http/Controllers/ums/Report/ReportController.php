@@ -14,7 +14,6 @@ use App\Models\Phd2023EntranceTest;
 use App\Models\ExamForm;
 use App\Models\Campuse;
 use App\Models\Semester;
-use App\Scrutiny;
 use App\Models\Course;
 use App\Models\Result;
 use App\Models\Category;
@@ -923,7 +922,7 @@ class ReportController extends Controller
         ->orderBy('roll_no', 'ASC')
         ->get();
     }
-    return view('report.mbbs-bsc-nursing-exam-report', compact('academic_session', 'form_type', 'get_allowed_student_data'));
+    return view('ums.exam.mbbs_exam_report', compact('academic_session', 'form_type', 'get_allowed_student_data'));
   }
 
   public function awardsheet(Request $request)

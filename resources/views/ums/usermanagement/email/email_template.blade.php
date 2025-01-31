@@ -23,7 +23,7 @@
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right"> 
-                        <a class="btn btn-dark btn-sm mb-50 mb-sm-0" href="{{ url('email_template_add') }}"><i data-feather="file-text"></i>Add Email Template</a>  
+                        <a class="btn btn-dark btn-sm mb-50 mb-sm-0" href="{{ url('email-template-add') }}"><i data-feather="file-text"></i>Add Email Template</a>  
 
 							<button class="btn btn-primary btn-sm mb-50 mb-sm-0" data-bs-target="#filter" data-bs-toggle="modal"><i data-feather="filter"></i> Filter</button> 
 							<!-- <button class="btn btn-success btn-sm mb-50 mb-sm-0" data-bs-target="#approved" data-bs-toggle="modal"><i data-feather="check-circle" ></i> Assign Team</button> -->
@@ -255,7 +255,7 @@
         window.location.href = url;
     }
 	function editCat(slug) {
-		var url = "{{url('/email-template/edit')}}"+"/"+slug;
+		var url = "{{url('/email-template/edit/')}}"+"/"+slug;
 		window.location.href = url;
 	}
 	function deleteCat(slug) {
@@ -263,7 +263,7 @@
         if(confirm(testalert)==false){
             return false;
         }
-        var url = "{{url('admin/email/delete-model-trim')}}"+"/"+slug;
+        var url = "{{url('email/delete-model-trim')}}"+"/"+slug;
         window.location.href = url;
     }
 </script>

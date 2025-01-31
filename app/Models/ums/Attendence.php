@@ -10,7 +10,7 @@ class Attendence extends Model
         return $this->belongsTo(Course::class, 'course_id')->withTrashed();
     }
     public function faculty() {
-        return $this->belongsTo(faculty::class, 'faculty_id')->withTrashed();
+        return $this->belongsTo(Faculty::class, 'faculty_id')->withTrashed();
     }
     public function semester()
     {

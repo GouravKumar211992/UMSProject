@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\faculty;
+namespace App\Http\Controllers\ums\Faculty;
 
 use View;
 use Auth;
@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use App\Models\InternalMarksMapping;
 use App\Models\InternalMark;
 use App\Models\StudentSubject;
-use App\Models\Attendence;
+use App\Models\ums\Attendence;
 use App\Models\AcademicSession;
 use Validator;
 
@@ -23,7 +23,7 @@ class AttendenceController extends Controller
 
     public function index(Request $request)
     {
-        $user=Auth::guard('faculty')->user()->id;
+        // $user=Auth::guard('faculty')->user()->id;
          $attendence = Attendence::with(['faculty','course','semester'])->orderBy('id', 'DESC');
 
         if($request->search) {
@@ -50,8 +50,8 @@ class AttendenceController extends Controller
         }
         $attendence=$attendence->paginate(10);
 
-        //dd($attendence);
-    return view('faculty.attendence.index',[
+        // dd($attendence);
+    return view('ums.master.faculty.attendance',[
         'attendence'=>$attendence,
 
     ]);

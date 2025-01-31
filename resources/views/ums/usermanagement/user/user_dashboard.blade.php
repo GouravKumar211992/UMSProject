@@ -2,7 +2,7 @@
 @extends('ums.admin.admin-meta')
 
 @section('content')
-{{-- {{dd($data)}} --}}
+{{-- {{dd()}} --}}
     <style>
 .blink_me {
   font-size: 30px;
@@ -21,119 +21,121 @@
 
     </style>
 {{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col=""> --}}
-
-<div class="app-content content ">
-    <div class="content-overlay"></div>
-    <div class="header-navbar-shadow"></div>
-    <div class="content-wrapper container-xxl p-0">
-        <div class="content-header row">
-        </div>
-        <div class="content-body">
-            <section class="app-user-view-billing">
-                <div class="row ">
-                    <!-- User Sidebar -->
-                    <div class="col-xl col-lg col-md order-1 order-md-0 mt-1">
-                        <!-- User Card -->
-                        <div class="card py-1">
-                            <h4 class="fw-bolder border-bottom mt-1 text-center"><img src="images/icon/db1.png" alt="">My Profile</h4>
-                                
-                            <div class="card-body ">
-                                <div class="user-avatar-section">
-                                    <div class="d-flex align-items-center flex-column">
-                                        <img class="img-fluid rounded mt-2 mb-2" src="../../../app-assets/images/portrait/small/avatar-s-4.jpg" height="110" width="110" alt="User avatar">
-                                        <div class="user-info text-center">
-                                            <h4>Dinesh</h4>
-                                            <span class="badge bg-light-secondary">Roll No. 721</span>
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper container-xxl p-0">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <section class="app-user-view-billing">
+                    <div class="row">
+                        <!-- User Sidebar -->
+                        <div class="col-xl col-lg col-md order-1 order-md-0 mt-1">
+                            <!-- User Card -->
+                            <div class="card py-1">
+                                <h4 class="fw-bolder border-bottom mt-1 text-center">
+                                    <img src="images/icon/db1.png" alt=""> My Profile
+                                </h4>
+                                <div class="card-body">
+                                    <div class="user-avatar-section">
+                                        <div class="d-flex align-items-center flex-column">
+                                            <img class="img-fluid rounded mt-2 mb-2" 
+                                                src="../../../app-assets/images/portrait/small/avatar-s-4.jpg" 
+                                                height="110" width="110" alt="User avatar">
+                                            <div class="user-info text-center">
+                                                <h4>{{ $user_data->name }}</h4> <!-- Display User Name -->
+                                                <span class="badge bg-light-secondary">Roll No. {{ $user_data->id }}</span> <!-- Display Roll Number -->
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                {{-- <h4 class="fw-bolder border-bottom pb-50 mb-1 mt-1 text-center"><img src="images/icon/db1.png" alt="">My Profile</h4> --}}
-                                <div class="udb-sec udb-prof py-1">
-                                    {{-- <h4><img src="images/icon/db1.png" alt=""> My Profile</h4> --}}
-                                    <div class="sdb-tabl-com sdb-pro-table">
-                                        <table class="responsive-table bordered ">
-                                            <tbody>
-                                                <tr>
-                                                    <td>Student Name</td>
-                                                    <td>:</td>
-                                                    <td>dinesh  kumar
-                                                    </td>
-                                                </tr>
-                                                
-                                                <tr>
-                                                    <td>Email</td>
-                                                    <td>:</td>
-                                                    <td>g9950979863@gmail.com</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Phone</td>
-                                                    <td>:</td>
-                                                    <td>8955876831</td>
-                                                </tr>                       
-                                            </tbody>
-                                        </table>
-                                        <!--<div class="sdb-bot-edit"> 
-                                            <a href="#" class="waves-effect waves-light btn-large sdb-btn"><i class="fa fa-pencil"></i> Edit my profile</a>
-                                        </div>-->
+    
+                                    <div class="udb-sec udb-prof py-1">
+                                        <div class="sdb-tabl-com sdb-pro-table">
+                                            <table class="responsive-table bordered">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Student Name</td>
+                                                        <td>:</td>
+                                                        <td>{{ $user_data->first_name }}{{$user_data->last_name}}</td> <!-- Display Student Name -->
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Email</td>
+                                                        <td>:</td>
+                                                        <td>{{ $user_data->email }}</td> <!-- Display Email -->
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Phone</td>
+                                                        <td>:</td>
+                                                        <td>{{ $user_data->mobile }}</td> <!-- Display Phone Number -->
+                                                    </tr>                       
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                         
-                    </div>
-                    <!--/ User Sidebar -->
-
-                    <!-- User Content -->
-                    <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1 me-1" >
-
-                    
-                        <div class="sdb-tabl-com sdb-pro-table py-1">
-                        <div class="row shadow p-1 bg-white">
-                          <div class="text-center "><h1 class="auto-style14 ">Notification-Board</h1></div><br><br>
-                           <table class="table">
-                            <thead>
-                                <tr>
-                                
-                                <th scope="col">Notification Description</th>
-                                <th scope="col">Notification Started</th>
-                                <th scope="col">Notification Ended</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                        <!--/ User Sidebar -->
+    
+                        <!-- User Content -->
+                        <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1 me-1">
+                            <div class="sdb-tabl-com sdb-pro-table py-1">
+                                <div class="row shadow p-1 bg-white">
+                                    <div class="text-center">
+                                        <h1 class="auto-style14">Notification-Board</h1>
+                                    </div>
+                                    <br><br>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Notification Description</th>
+                                                <th scope="col">Notification Started</th>
+                                                <th scope="col">Notification Ended</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($notifications as $notification)
                                                 <tr>
-                                
-                                <td>motifincation</td>
-                                <td>2025-01-23</td>
-                                <td>2025-01-24</td>
-                                </tr>
-                                            
-                            </tbody>
-                            </table>
-                      </div>
-                   </div>
-                   <div class="col-md-12  mt-2 py-1">
-                    <div class="row udb py-1 shadow bg-white">
-                
-                    
-                        <div class="udb-sec udb-cour-stat text-center">
-                            <h1 class="text-center">My-Dashboard</h1>
-
-                            <h4 class="heading  "><img src="images/icon/db3.png" alt=""> Course Application Status</h4>
-                            
-                                    <b>	You have not applied any Course!!!! Please Apply First<br></b><br>
-                                        <a href="/application_form"> <span class="blink_me">👉</span><b>Click Here To Apply</b></a><br>
-                                        
+                                                    <td>{{ $notification->description }}</td> <!-- Display Notification Description -->
+                                                    <td>{{ $notification->start_date }}</td> <!-- Display Notification Start Date -->
+                                                    <td>{{ $notification->end_date }}</td> <!-- Display Notification End Date -->
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+    
+                            <div class="col-md-12 mt-2 py-1">
+                                <div class="row udb py-1 shadow bg-white">
+                                    <div class="udb-sec udb-cour-stat text-center">
+                                        <h1 class="text-center">My-Dashboard</h1>
+                                        <h4 class="heading">
+                                            <img src="images/icon/db3.png" alt=""> Course Application Status
+                                        </h4>
+    
+                                        @if($lastApplication)
+                                            <p><b>You have already applied for the course!</b></p>
+                                            <p>Course: {{ $lastApplication->course->name }}</p> <!-- Display Course Name -->
+                                            <p>Status: {{ $lastApplication->status }}</p> <!-- Display Application Status -->
+                                        @else
+                                            <b>You have not applied for any Course yet! Please Apply First.</b><br><br>
+                                            <a href="{{url('/user-application-form')}}">
+                                                <span class="blink_me">👉</span><b>Click Here To Apply</b>
+                                            </a><br>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    
-                    
+                        <!--/ User Content -->
                     </div>
-                </div> 
-                </div>
-                    <!--/ User Content -->
-
-                </div>
-            </section>
+                </section>
+            </div>
+        </div>
+    </div>
+    
             <!-- Edit User Modal -->
             <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-user">

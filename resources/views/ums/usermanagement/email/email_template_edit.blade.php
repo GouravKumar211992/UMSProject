@@ -26,7 +26,7 @@
 						</div>
 					</div>
 					<div class="content-header-right text-sm-end col-md-6 mb-50 mb-sm-0">
-                        <form id="edit_email_form" type="POST" action="{{route('email-template')}}">
+                        <form id="edit_email_form"  method="POST" action="{{route('email.editform')}}">
                             @csrf
                                 <input type="hidden" name="user_id" value="{{$selected_user->id}}">
                                 <input type="hidden" name="user_status" id="user_status" value="">

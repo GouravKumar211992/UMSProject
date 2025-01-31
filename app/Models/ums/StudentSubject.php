@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\ums;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use DB;
+use Illuminate\Support\Facades\DB;
+
+
 
 class StudentSubject extends Model
 {

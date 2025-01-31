@@ -1,7 +1,8 @@
 <?php
 
 use App\Helpers\Helper;
-
+// use App\Http\Controllers\Admin\BackPaperController;
+use App\Http\Controllers\Admin\Master\ExamFeeAllController;
 use App\Http\Controllers\ums\Admin\StudentController as AdminStudentController;
 use App\Http\Controllers\DPRTemplateController;
 use App\Http\Controllers\DocumentDriveController;
@@ -116,12 +117,27 @@ use App\Http\Controllers\ExpenseMasterController;
 
 use App\Http\Controllers\PurchaseReturnController;
 // ums controllers 
-
+use App\Http\Controllers\ums\Report\RegularMarkFillingController;
 use App\Http\Controllers\ums\Admin\GrievanceController;
 use App\Http\Controllers\ums\Admin\UserController;
+use App\Http\Controllers\ums\Faculty\AttendenceController;
 use App\Http\Controllers\ums\Admin\StudentController;
 use App\Http\Controllers\ums\HomeController as UmsHomeController;
 use App\Http\Controllers\ums\User\HomeController as UserHomeController;
+use App\Http\Controllers\ums\Admin\Master\ExamFeeAllController as MasterExamFeeAllController;
+use App\Http\Controllers\ums\Admin\Master\ExamFeeController;
+use App\Http\Controllers\ums\Report\BackReportController;
+use App\Http\Controllers\ums\Admin\Master\ExamScheduleController;
+use App\Http\Controllers\ums\Admin\BackPaperController;
+use App\Http\Controllers\ums\Admin\ApprovalSystemController;
+
+
+
+
+
+
+
+
 
 
 
@@ -201,70 +217,54 @@ Route::get('/practical_marks_filling', function () {
 // Route::get('/admin_list', function () {
 //     return view('ums.usermanagement.admin_list.admin_list');
 // });
-Route::get('/admins', [UserController::class,'admins'])->name('get-admin');
-Route::get('/admin_list_edit', function () {
-    return view('ums.usermanagement.admins.admin_list_edit');
-});
-Route::get('/admin_list_add', function () {
-    return view('ums.usermanagement.admins.admin_list_add');
-});
+// Admin Management Routes
 
-Route::get('admin/user/delete-model-trim/{slug}', [UserController::class,'softDelete']);
-Route::post('/user/edit-user-form', [UserController::class,'editUser'])->name('edit-user-form');
-Route::get('admin/user/edit-user/{slug}', [UserController::class,'editusers']);
-Route::get('admin/email/delete-model-trim/{slug}', [UserController::class,'EmailsoftDelete']);
+Route::get('/admin-get', [UserController::class, 'admins'])->name('usermanagement.admin');
+// Admin Edit Routes
+Route::get('/admin-edit', function () {
+    return view('ums.usermanagement.admin.admin_edit');
+})->name('usermanagement.admin.edit');
+Route::get('admin-edit/{slug}', [UserController::class, 'editusers'])->name('usermanagement.admin.editget');
+Route::post('admin-edit-form', [UserController::class, 'editUser'])->name('usermanagement.admin.editform');
+// Admin Add Routes
+Route::get('/admin-add', function () {
+    return view('ums.usermanagement.admin.admin_add');  
+})->name('usermanagement.admin.add');
+Route::post('admin-add-form', [UserController::class, 'addUser'])->name('usermanagement.admin.addform');
+// Admin Delete Route
+Route::get('admin-delete-model-trim/{slug}', [UserController::class, 'softDelete'])->name('usermanagement.admin.delete');
+// User Secret Login Route
+Route::get('user-secret-login/{id}', [UmsHomeController::class, 'secretLogin'])->name('user-secret-login');
+// Email Template Management Routes
+Route::get('/email-template', [UserController::class, 'getTemplate'])->name('email.email-template');
 
-Route::post('/user/submit-user-form', [UserController::class,'addUser'])->name('add-user');
-Route::get('user-secret-login/{id}', [UmsHomeController::class,'secretLogin'])->name('user-secret-login');
+// Email Template Add Route
+Route::get('/email-template-add', function () {
+    return view('ums.usermanagement.email.email_template_add');
+})->name('email.add');
+Route::post('email-add-form', [UserController::class, 'addEmailTemplate'])->name('email.addform');
 
-// Route::get('/email_template', function () {
-//     return view('ums.usermanagement.email_list.email_template');
-// });
-Route::get('/email-template', [UserController::class,'getTemplate'])->name('/email-template');
+// Email Template Edit Routes
+Route::get('/email-template-edit', function () {
+    return view('ums.usermanagement.email.email_template_edit');
+})->name('email.edit');
+Route::post('/email-edit-form', [UserController::class, 'EditEmailTemplate'])->name('email.editform');
+Route::get('/email-template/edit/{slug}', [UserController::class, 'editEmailTemplates'])->name('email.editget');
 
-Route::get('/email_template_add', function () {
-    return view('ums.usermanagement.email_list.email_template_add');
-});
-Route::post('/email/save-email-template', [UserController::class,'addEmailTemplate'])->name('save-email-template');
-Route::post('/student/save-email', [StudentController::class,'updateEmail']);
-Route::get('/email_template_edit', function () {
-    return view('ums.usermanagement.email_list.email_template_edit');
-});
-Route::get('/email-template/edit', [UserController::class, 'EditEmailTemplate'])->name('email-template');
-Route::get('/email-template/edit/{slug}', [UserController::class,'editEmailTemplates']);
-
-
-// Route::get('/studentsName', function () {
-//     return view('ums.usermanagement.student_list.studentsName');
-// });
+// Email Soft Delete Route
+Route::get('email/delete-model-trim/{slug}', [UserController::class, 'EmailsoftDelete'])->name('usermanagement.email.delete');
+// student Route 
 Route::get('/student-hindi-name', [StudentController::class,'studentHindiName']);
-
-// Route::get('/studentlist', function () {
-//     return view('ums.usermanagement.student_list.students');
-// });
-
-
-
-Route::get('/students', [StudentController::class,'index'])->name('admin.student.list');
-
-
+Route::post('/student/save-email', [StudentController::class,'updateEmail']);
+Route::get('/students', [StudentController::class,'index'])->name('admin.student.index');
 Route::post('/user/edit-user-form', [UserController::class,'editUser'])->name('edit-user-form');
 Route::get('/user/edit-user/{slug}', [UserController::class,'editUsers']);
-
 Route::get('/users', [UserController::class,'index'])->name('get-user');
+Route::get('user-dashboard', [UserHomeController::class, 'userDashboardAndProfile'])->name('user.dashboard');
 
-//userdashboard routes
 
-// Route::get('/user_dashboard', function () {
-//     return view('ums.usermanagement.users.user_dashboard');
-// })->name('user-dashboard');
-Route::get('user_dashboard', [UserHomeController::class, 'Userdashboard'])->name('user-dashboard');
-
-// Route::get('/application_form', function () {
-//     return view('ums.usermanagement.user_list.application_form');
-// });
-Route::get('/application_form', function () {
-    return view('ums.usermanagement.user_list.application_form');
+Route::get('/user-application-form', function () {
+    return view('ums.usermanagement.user.application_form');
 });
 
 //master
@@ -624,28 +624,54 @@ Route::get('/internal_mapping_add', function () {
 });
 
 //exam
-Route::get('/back_paper_report', function () {
-    return view('ums.exam.back_paper_report');
-});
+// Route::get('/back-paper-report', function () {
+//     return view('ums.exam.back_paper_report');
+// });
+Route::get('back-paper-report',[BackReportController::class,'index'])->name('back-report');
+
 Route::get('/regular_mark_filling', function () {
     return view('ums.exam.regular_mark_filling');
 });
-Route::get('/Exam_list', function () {
-    return view('ums.exam.Exam_list');
-});
+Route::get('regular-mark-filling',[RegularMarkFillingController::class,'regularMarkFilling'])->name('regularMarkFilling');
 
-Route::get('/check_eligibalty', function () {
-    return view('ums.exam.check_eligibalty');
-});
+// Route::get('/Exam_list', function () {
+//     return view('ums.exam.Exam_list');
+// });
+Route::get('/Exam-list',[MasterExamFeeAllController::class,'index'])->name('get-examfees');
+Route::get('update_student_subjects/{id}',[ExaminationController::class,'update_student_subjects'])->name('update_student_subjects');;
+
+// Route::get('/Exam_list',[ExamFeeController::class,'index']);
+
+// Route::get('/check_eligibalty', function () {
+//     return view('ums.exam.check_eligibalty');
+// });
+Route::get('check-eligibility',[BackReportController::class,'checkEligibilityBackStudent'])->name('check-eligibility');
+
 Route::get('/Exam_paper_approvel_system', function () {
     return view('ums.exam.Exam_paper_approvel_system');
 });
-Route::get('/Exam_Schedule', function () {
-    return view('ums.exam.Exam_Schedule');
-});
-Route::get('/view_time_tables', function () {
-    return view('ums.exam.view_time_tables');
-});
+Route::get('Exam-paper-approvel-system',[ApprovalSystemController::class,'index'])->name('approval-system');
+Route::post('paper-allow-create',[ApprovalSystemController::class,'store'])->name('paper-allow-create');
+// Route::post('paper-allowed-edit','ApprovalSystemController@update');
+Route::get('exam-approve-delete/{roll_no}',[ApprovalSystemController::class,'destroy']);
+Route::get('bulk-back-paper', [BackPaperController::class,'bulkBackPaper']);
+Route::post('bulk-back-paper', [BackPaperController::class,'bulkBackPaperSave']);
+
+// Route::get('/Exam-Schedule', function () {
+//     return view('ums.exam.Exam_Schedule');
+// });
+Route::get('Exam-Schedule',[ExamScheduleController::class,'schedule_show'])->name('exam-schedule');
+Route::post('Exam-Schedule',[ExamScheduleController::class,'schedule_post'])->name('exam-schedule');
+// Route::post('exam-schedule-bulk-uploading','Master\ExamScheduleController@schedule_bulk_uploading')->name('exam-schedule-bulk-uploading');
+Route::get('view-time-tables',[ExamScheduleController::class,'timetable'])->name('examtime-table');
+Route ::post('get-semester',[ExamScheduleController::class,'get_Semester'])->name('semester');
+// Route::post('/schedule-update', 'Master\ExamScheduleController@schedule_update')->name('schedule-update');
+
+
+
+// Route::get('/view-time-tables', function () {
+//     return view('ums.exam.view_time_tables');
+// });
 Route::get('/mbbs_exam_report', function () {
     return view('ums.exam.mbbs_exam_report');
 });
@@ -653,12 +679,14 @@ Route::get('/mbbs_exam_report', function () {
 Route::get('/mbbs_exam_report', function () {
     return view('ums.exam.mbbs_exam_report');
 });
-Route::get('/reqular_exam_form_list', function () {
-    return view('ums.exam.reqular_exam_form_list');
-});
-Route::get('/bulk_back_paper', function () {
-    return view('ums.exam.bulk_back_paper');
-});
+// Route::get('/reqular_exam_form_list', function () {
+//     return view('ums.exam.reqular_exam_form_list');
+// });
+Route::get('/reqular-exam-form-list',[BackReportController::class,'regularExamFormReport']);
+
+// Route::get('/bulk_back_paper', function () {
+//     return view('ums.exam.bulk_back_paper');
+// });
 
 //challengform
 Route::get('/allowed_student_for_challenge', function () {
@@ -741,13 +769,13 @@ Route::get('grievance',[GrievanceController::class,'complaints']);
 // Route::get('/grievance_complaint_list', function () {
     //     return view('ums.grievance.grievance_complaint_list');
     // });
-    Route::get('grievance_complaint_list',[GrievanceController::class,'complaintList']);
+    Route::get('grievance-complaint-list',[GrievanceController::class,'complaintList']);
     
     
     // Route::get('/grievance_complaint_details', function () {
         //     return view('ums.grievance.grievance_complaint_details');
         // });
-        Route::get('grievance_complaint_details',[GrievanceController::class,'complaintDetails']);
+        Route::get('grievance-complaint-details',[GrievanceController::class,'complaintDetails']);
 
 
 

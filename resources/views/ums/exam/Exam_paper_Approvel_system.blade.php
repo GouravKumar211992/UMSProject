@@ -1,6 +1,9 @@
 @extends("ums.admin.admin-meta")
 @section("content")
 
+
+
+
 {{-- <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 <!-- BEGIN: Head-->
@@ -88,10 +91,12 @@
                     </div>
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
+                <form action="{{route('paper-allow-create')}}" method="post">
+
                     <div class="form-group breadcrumb-right">
-                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="plus"></i> ADD ROLL NUMBER
+                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0" type="submit"><i data-feather="plus"></i> ADD ROLL NUMBER
                             </button>
-                        <button class="btn btn-warning btn-sm mb-50 mb-sm-0" onclick="location.href='{{url('bulk_back_paper')}}'"> <i data-feather="upload-cloud" style="font-size: 40px;"></i>
+                        <button class="btn btn-warning btn-sm mb-50 mb-sm-0" onclick="location.href='{{url('bulk-back-paper')}}'"> <i data-feather="upload-cloud" style="font-size: 40px;"></i>
                             BULK BACK PAPER UPLOAD</button>
 
 
@@ -99,6 +104,7 @@
                 </div>
             </div>
             <div class="content-body">
+                @include('ums.admin.notifications')
                 <div class="row  ">
 
 
@@ -110,7 +116,7 @@
                             </div>
 
                             <div class="col-md-9">
-                              <input type="text" placeholder="Enter the roll number" class="form-control">
+                              <input type="text" placeholder="Enter the roll number" class="form-control roll_no" value="{{Request()->roll_no}}" placeholder="Enter the roll number" required onblur="setUrl()" required>
                             </div>
                         </div>
 
@@ -120,16 +126,27 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    
-                                    <option value="1">Regular</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select class="form-control special_back" id="special_back" name="special_back" required>
+                                    @foreach($backTypes as $backType)
+                                    <option value="{{$backType}}" @if($backType==Request()->special_back) selected @endif>{{$backType}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
+                        <div class="row align-items-center mb-1">
+                            <div class="col-md-3">
+                                <label class="form-label">Subjects<span class="text-danger">*</span></label>
+                            </div>
 
+                            <div class="col-md-9">
+                                <select class="form-control sub_code" id="sub_code" name="sub_code[]" multiple required>
+                                    <option value="">--Select--</option>
+                                    @foreach($subjects as $subject)
+                                    <option value="{{$subject->sub_code}}">{{$subject->sub_code}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
                     </div>
                     <div class="col-md mt-4 mb-3">
@@ -140,12 +157,11 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                   
-                                    <option value="1">---Select---</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select class="form-control semester_id" id="semester_id" name="semester_id" onchange="setUrl()" required>
+                                    <option value="">--Select--</option>
+                                    @foreach($semesters as $semester)
+                                    <option value="{{$semester->id}}" @if($semester->id==Request()->semester_id) selected @endif >{{$semester->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -156,36 +172,22 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                  
-                                    <option value="1">2024-2025</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select class="form-control session" id="session" name="session" required>
+                                    @foreach($sessions as $session)
+                                    <option value="{{$session->academic_session}}" >{{$session->academic_session}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
-                        <div class="row align-items-center mb-1">
-                            <div class="col-md-3">
-                                <label class="form-label">Subjects<span class="text-danger">*</span></label>
-                            </div>
+                       
 
-                            <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                  <option value="0">---Select---</option>
-                                    <option value="1">2024-2025</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
-                                </select>
-                            </div>
-                        </div>
 
 
                     </div>
 
 
                 </div>
+            </form>
 
 
                 <section id="basic-datatable">
@@ -212,78 +214,38 @@
 
                                         </thead>
                                         <tbody>
+                                            @if($allData->count()>0)
+                                            <form id="form-data" style="display: inline;margin-right: 15px;float: left;">
+                                            @foreach($allData as $index=>$approvalData)
+                                            <tr class="save_names">  
+                                            <td>{{++$index}}</td>
+                                            <td>{{$approvalData->roll_number}}</td>
+                                            <td>{{$approvalData->special_back}}</td>
+                                            <td>{{($approvalData->course)?$approvalData->course->name:''}}</td>
+                                            <td>{{($approvalData->semester)?$approvalData->semester->name:''}}</td>
+                                            <td>{{$approvalData->session}}</td>
+                                            <td>{{$approvalData->sub_code}}</td>
+                                
+                                               
+                                                {{-- <a onclick="return confirm('Are you sure?')" style="float: left;" class="btn-sm btn-danger" href="{{url('admin/student-delete')}}/{{$approvalData->roll_number}}">Delete</a> --}}
 
-
-                                            <tr>
-                                                <td>1</td>
-                                                <td>12345</td>
-                                                <td>Theory</td>
-                                                <td>BSc Computer Science</td>
-                                                <td>2nd Semester</td>
-                                                <td>2024</td>
-                                                <td>Mathematics, Programming</td>
-                                                  <td class="tableactionnew">
-                                                    <div class="dropdown">
-                                                        <button type="button"
-                                                            class="btn btn-sm dropdown-toggle hide-arrow py-0"
-                                                            data-bs-toggle="dropdown">
-                                                            <i data-feather="more-vertical"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="edit" class="me-50"></i>
-                                                                <span>View Detail</span>
-                                                            </a>
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="edit-3" class="me-50"></i>
-                                                                <span>Edit</span>
-                                                            </a>
-
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="trash-2" class="me-50"></i>
-                                                                <span>Delete</span>
-                                                            </a>
-                                                        </div>
+                                            
+                                            <td class="tableactionnew">  
+                                                <div class="dropdown">
+                                                    <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
+                                                        <i data-feather="more-vertical"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <a class="dropdown-item" href="{{url('exam-approve-delete')}}/{{$approvalData->roll_number}}" onclick="return confirm('Are you sure?')" >
+                                                            <i data-feather="trash-2" class="me-50"></i>
+                                                            <span>Delete</span>
+                                                        </a>
                                                     </div>
-                                                </td>
+                                                </div> 
+                                            </td>
                                             </tr>
-                                           
-                                            <tr>
-                                                <td>1</td>
-                                                <td>12345</td>
-                                                <td>Theory</td>
-                                                <td>BSc Computer Science</td>
-                                                <td>2nd Semester</td>
-                                                <td>2024</td>
-                                                <td>Mathematics, Programming</td>
-                                                  <td class="tableactionnew">
-                                                    <div class="dropdown">
-                                                        <button type="button"
-                                                            class="btn btn-sm dropdown-toggle hide-arrow py-0"
-                                                            data-bs-toggle="dropdown">
-                                                            <i data-feather="more-vertical"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="edit" class="me-50"></i>
-                                                                <span>View Detail</span>
-                                                            </a>
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="edit-3" class="me-50"></i>
-                                                                <span>Edit</span>
-                                                            </a>
-
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="trash-2" class="me-50"></i>
-                                                                <span>Delete</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                           
-                                           
-
+                                            @endforeach
+                                            @endif
                                         </tbody>
 
 
@@ -626,5 +588,40 @@
 <!-- END: Body-->
 
 </html> --}}
+<script>
+    // $(document).ready( function () {
+    //   // $('#myTable').DataTable();
+    // });
 
+    function setUrl(){
+        var roll_no = $('.roll_no').val();
+        var semester_id = $('.semester_id').val();
+        var special_back = $('.special_back').val();
+        if(roll_no!='' && semester_id!='' && special_back!=''){
+            window.location.href = "{{url('Exam-paper-approvel-system')}}?roll_no="+roll_no+"&semester_id="+semester_id+"&special_back="+special_back;
+        }else if(roll_no!='' && semester_id!=''){
+            window.location.href = "{{url('Exam-paper-approvel-system')}}?roll_no="+roll_no+"&semester_id="+semester_id;
+        }else if(roll_no!=''){
+            window.location.href = "{{url('Exam-paper-approvel-system')}}?roll_no="+roll_no;
+        }
+    }
+
+        function allowExamForm($this){
+                var special_back = $this.val();
+                var roll_number = $this.closest('tr').find('.roll_number').val();
+                var formData = {
+                    roll_number: roll_number,
+                    special_back: special_back,
+                    "_token": "{{ csrf_token() }}"
+                }; //Array 
+                $.ajax({
+                    url: "{{url('admin/paper-allowed-edit')}}",
+                    type: "POST",
+                    data: formData,
+                    success: function(data) {
+                        console.log(data);
+                    },
+                });
+        }
+</script>
 @endsection

@@ -24,20 +24,22 @@
 </head>
 <!-- END: Head-->
 
-<!-- BEGIN: Body-->
 
 <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click"
-    data-menu="vertical-menu-modern" data-col="">
+data-menu="vertical-menu-modern" data-col="">
 
 
 
-    @include('ums.admin.navbar')
-    <!-- BEGIN: Main Menu-->
-    @include('ums.admin.sidebar')
-    <!-- END: Main Menu-->
-    {{-- @include('ums.admin.header') --}}
+<!-- BEGIN: Body-->
 
-    @yield('content')
+@include('ums.admin.navbar')
+<!-- BEGIN: Main Menu-->
+@include('ums.admin.sidebar')
+<!-- END: Main Menu-->
+{{-- @include('ums.admin.header') --}}
+
+@yield('content')
+
     @include('ums.admin.footer')
 
 </body>

@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\ums\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\ApprovalSystem;
-use App\Models\Enrollment;
-use App\Models\Subject;
-use App\Models\Student;
-use App\Models\ExamFee;
-use App\Models\Semester;
-use App\Models\AcademicSession;
+use App\Models\ums\ApprovalSystem;
+use App\Models\ums\Enrollment;
+use App\Models\ums\Subject;
+use App\Models\ums\Student;
+use App\Models\ums\ExamFee;
+use App\Models\ums\Semester;
+use App\Models\ums\AcademicSession;
 
 class ApprovalSystemController extends Controller
 {
@@ -36,7 +36,7 @@ class ApprovalSystemController extends Controller
         ->where('semester_id',$request->semester_id)
         ->orderBy('position','ASC')
         ->get();
-        return view('admin.exam-paper-approval.show',compact('sessions','allData','backTypes','couse_id','semesters','subjects'));
+        return view('ums.exam.Exam_paper_approvel_system',compact('sessions','allData','backTypes','couse_id','semesters','subjects'));
     }
 
     /**
@@ -57,6 +57,7 @@ class ApprovalSystemController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $student = Student::where('roll_number',$request->roll_no)->first();
         if(!$student){
             return back()->with('error','Invalid Roll Number');

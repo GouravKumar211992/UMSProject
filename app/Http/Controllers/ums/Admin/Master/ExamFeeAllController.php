@@ -1,38 +1,38 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Master;
+namespace App\Http\Controllers\ums\Admin\Master;
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ums\AdminController;
 use Illuminate\Http\Request;
 
-use App\Models\Course;
-use App\Models\Student;
-use App\Models\ExamFee;
-use App\Models\Subject;
-use App\Models\Campuse;
-use App\Models\ExamSchedule;
-use App\Models\Enrollment;
-use App\Models\Application;
-use App\Models\StudentSemesterFee;
-use App\Models\Semester;
-use App\Models\Icard;
-use App\Models\Stream;
-use App\Models\Category;
-use App\Models\MbbsExamForm;
-use App\Models\ExamPayment;
-use App\Models\AdmitCard;
-use App\Models\ExamForm;
-use App\Models\AcademicSession;
-use App\Models\ExamFormAllow;
+use App\Models\ums\Course;
+use App\Models\ums\Student;
+use App\Models\ums\ExamFee;
+use App\Models\ums\Subject;
+use App\Models\ums\Campuse;
+use App\Models\ums\ExamSchedule;
+use App\Models\ums\Enrollment;
+use App\Models\ums\Application;
+use App\Models\ums\StudentSemesterFee;
+use App\Models\ums\Semester;
+use App\Models\ums\Icard;
+use App\Models\ums\Stream;
+use App\Models\ums\Category;
+use App\Models\ums\MbbsExamForm;
+use App\Models\ums\ExamPayment;
+use App\Models\ums\AdmitCard;
+use App\Models\ums\ExamForm;
+use App\Models\ums\AcademicSession;
+use App\Models\ums\ExamFormAllow;
 use App\Scrutiny;
 use Validator;  
 use App\Exports\ExamFeeExport;
 use App\Exports\ChallengeExport;
-use App\Models\Audit;
-use App\Models\BackPaper;
+use App\Models\ums\Audit;
+use App\Models\ums\BackPaper;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\StudentAllFromOldAgency;
-use App\Models\StudentSubject;
+use App\Models\ums\StudentSubject;
 use DB;
 use Illuminate\Support\Facades\Artisan;
 use Mockery\CountValidator\Exact;
@@ -51,11 +51,13 @@ class ExamFeeAllController extends AdminController
         ->withTrashed()
         ->get();
   
-       return view('admin.master.examfee.index', [
+        // dd($examfees);
+       return view('ums.exam.Exam_list', [
             'page_title' => "ExamFee",
             'sub_title' => "Records",
             'examfees' => $examfees,
         ]);
+
     }
 	 public function add(Request $request)
     {

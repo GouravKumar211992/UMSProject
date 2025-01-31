@@ -29,7 +29,7 @@ class HolidayCalenderModel extends Model implements HasMedia
         }
     }
 
-    public function registerMediaCollections()
+    public function registerMediaCollections():void
     {
 
         $this->addMediaCollection('HolidayCalenderModel_doc')

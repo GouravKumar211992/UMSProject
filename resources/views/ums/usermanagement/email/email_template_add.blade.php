@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <div class="content-header-right text-sm-end col-md-6 mb-50 mb-sm-0">
-                        <form action="/email/save-email-template" method="POST">
+                        <form action="{{url('email-add-form')}}" method="POST">
                             @csrf
                             <div class="form-group breadcrumb-right">
                                 <button onClick="javascript: history.go(-1)"

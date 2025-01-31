@@ -93,6 +93,7 @@ class ExamFee extends Model implements HasMedia
         ->where('semester_id',$this->semester)
         ->where('type',$this->form_type)
         ->get();
+        dd($data);
         return $data;
 	}
 

@@ -2,7 +2,7 @@
 
 namespace App\models\ums;
 
-use App\Models\Semester;
+use App\Models\ums\Semester;
 use Illuminate\Database\Eloquent\Model;
 
 class BackPaperBulk extends Model

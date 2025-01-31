@@ -26,7 +26,7 @@
 						</div>
 					</div>
 					<div class="content-header-right text-sm-end col-md-6 mb-50 mb-sm-0">
-                        <form action="{{route('add-user')}}" method="post" id="add_user_form">
+                        <form action="{{url('admin-add-form')}}" method="post" id="add_user_form">
                             @csrf
 						<div class="form-group breadcrumb-right">   
 							<button onClick="javascript: history.go(-1)" class="btn btn-secondary btn-sm mb-50 mb-sm-0"><i data-feather="arrow-left-circle"></i>Go Back</button>    
