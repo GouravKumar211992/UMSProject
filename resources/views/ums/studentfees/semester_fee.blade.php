@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 @section("content")
 <!-- END: Head-->
 
@@ -40,7 +40,7 @@
 							<button class="btn btn-primary btn-sm mb-50 mb-sm-0" data-bs-target="#filter" data-bs-toggle="modal"><i data-feather="filter"></i> Filter</button> 
                             <button class="btn btn-warning box-shadow-2 btn-sm me-1 mb-sm-0 mb-50"><i data-feather="refresh-cw"></i>reset</button>
 							<!-- <button class="btn btn-success btn-sm mb-50 mb-sm-0" data-bs-target="#approved" data-bs-toggle="modal"><i data-feather="check-circle" ></i> Assign Team</button> -->
-                            <a class="btn btn-dark btn-sm mb-50 mb-sm-0" href="incident-add.html"><i data-feather="file-text"></i> Add semester fee </a>  
+                            <a class="btn btn-dark btn-sm mb-50 mb-sm-0" href="add_semesterfee"><i data-feather="file-text"></i> Add semester fee </a>  
                     </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                                                     <th>Id</th>
                                                     <th>student id</th>
                                                     <th>course</th>
-                                                    <th>Semester to</th>
+                                                    <th>Semester</th>
                                                     <th>Semester fee</th>
                                                     <th>reciept Number</th>
                                                     <th>Status</th>
@@ -68,22 +68,28 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                
+                                                @foreach($all_fee as $fee)
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td class="fw-bolder text-dark">1234</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">IT</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Shivangi</span></td>
-                                                    <td>VMM Pvt Ltd</td>
-                                                    <td>Description will come here</td> 
-                                                    <td><span class="badge rounded-pill badge-light-warning badgeborder-radius">Open</span></td>  
+                                                    <td>{{$fee->id}}</td>
+                                                    <td class="fw-bolder text-dark">{{$fee->enrollment_no}}</td>
+                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">{{ $fee->course->name ?? 'N/A' }}</span></td>
+                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">{{$fee->semester->name}}</span></td>
+                                                    <td>{{$fee->semester_fee ?? 'N/A'}}</td>
+                                                    <td>{{$fee->receipt_number ?? 'N/A'}}</td> 
+                                                    <td>
+                                                        @if($fee->status == 1)
+                                                            <span class="badge rounded-pill badge-light-success badgeborder-radius">Approved</span>
+                                                        @else
+                                                            <span class="badge rounded-pill badge-light-warning badgeborder-radius">Pending</span>
+                                                        @endif
+                                                    </td>                                                    
                                                     <td class="tableactionnew">  
                                                         <div class="dropdown">
                                                             <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
                                                                 <i data-feather="more-vertical"></i>
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" href="{{url('semesterfee_edit')}}" >
+                                                                <a class="dropdown-item" href="{{url('edit_semester_fee',$fee->id)}}" >
                                                                     <i data-feather="edit" class="me-50"></i>
                                                                     <span>Edit</span>
                                                                 </a> 
@@ -93,7 +99,7 @@
                                                                 {{-- </a> <a class="dropdown-item" data-bs-toggle="modal" href="#reallocate">
                                                                     <i data-feather="copy" class="me-50"></i>
                                                                     <span>Re-Allocate</span> --}}
-                                                                </a> <a class="dropdown-item" href="#">
+                                                                </a> <a class="dropdown-item" href="{{ route('delete-semester-fee', $fee->id) }}">
                                                                     <i data-feather="trash-2" class="me-50"></i>
                                                                     <span>Delete</span>
                                                                 </a>
@@ -101,6 +107,7 @@
                                                         </div> 
                                                     </td>
                                                 </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

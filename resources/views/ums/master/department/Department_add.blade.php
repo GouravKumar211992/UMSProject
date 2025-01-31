@@ -1,4 +1,4 @@
-  @extends('admin.admin-meta')
+  @extends('ums.admin.admin-meta')
 
 <!-- BEGIN: Body-->
  @section('content')
@@ -14,6 +14,7 @@
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
             <div class="content-header row">
+               
                 <div class="content-header-left col-md-5 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
@@ -31,14 +32,16 @@
                     <div class="form-group breadcrumb-right">
                         <button class="btn btn-dark btn-sm mb-50 mb-sm-0"  onclick="location.href='{{url('department')}}'"> <i data-feather="arrow-left-circle"></i> Go Back
                             </button>
-                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0" > <i data-feather="check-circle" style="font-size: 40px;"></i>
-                            Publish</button>
+                        <button form="add-department-form" class="btn btn-primary btn-sm mb-50 mb-sm-0" > <i data-feather="check-circle" style="font-size: 40px;"></i>
+                            Submit</button>
 
 
                     </div>
                 </div>
             </div>
             <div class="content-body bg-white p-4 shadow">
+            <form id="add-department-form" action="{{url('department_add')}}" method="POST">
+            @csrf
                 <div class="row gy-0  mt-3 p-2 ">
 
 
@@ -50,7 +53,7 @@
                             </div>
 
                             <div class="col-md-9">
-                               <input type="text" class="form-control" placeholder="Enter Department name">
+                               <input type="text" name="name" class="form-control" placeholder="Enter Department name">
                                 
                             </div>
                         </div>
@@ -60,7 +63,7 @@
                             </div>
 
                             <div class="col-md-9">
-                                <input type="text" class="form-control" placeholder="Enter Head name">                         </div>
+                                <input type="text" name="head" class="form-control" placeholder="Enter Head name">                         </div>
                         </div>
 
                        
@@ -74,7 +77,7 @@
                             </div>
 
                             <div class="col-md-9">
-                              <input type="text" class="form-control" placeholder="Enter Dean name">                         </div>
+                              <input type="text"  name="dean" class="form-control" placeholder="Enter Dean name">                         </div>
                         </div>
 
                         <div class="row align-items-center mb-1">
@@ -83,13 +86,15 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    
-                                    <option value="1">--Select--</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
-                                </select>
+                            <select id="faculty" name="faculty" class="form-control">
+                            	<option>--SELECT--</option>
+                            	<option value="arts">Arts</option>
+                            	<option value="special education">Special Education</option>
+                            	<option value="law">Law</option>
+                            	<option value="commerce &amp; management">Commerce &amp; Management</option>
+                            	<option value="science &amp; technology">Science &amp; Technology</option>
+                            	<option value="engineering &amp; technology">Engineering &amp; Technology</option>
+                            </select>
                             </div>
                         </div>
                         
@@ -106,7 +111,7 @@
                             </div>
 
                             <div class="col-md-9">
-                               <input type="text" class="form-control" placeholder="Enter email name">
+                               <input type="text" name="contact" class="form-control" placeholder="Enter email name">
                             </div>
                         </div>
                         
@@ -121,12 +126,12 @@
                             </div>
     
                             <div class="col-md-9">
-                              <input type="text" placeholder="Enter email name" class="form-control">
+                              <input type="text" name="email" placeholder="Enter email name" class="form-control">
                             </div>
                         </div>
                     </div>
                 
-
+</form>
                  
                  
                     
@@ -142,7 +147,7 @@
 
 
                
-
+</form>
             </div>
           
         </div>

@@ -1,4 +1,4 @@
-@extends("admin.admin-meta")
+@extends("ums.admin.admin-meta")
 @section("content")
 {{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col=""> --}}
   
@@ -25,7 +25,8 @@
     </div> --}}
 
     <div class="submitss text-end me-3">
-        <button onclick="javascript: history.go(-1)" class=" btn btn-primary btn-sm mb-50 mb-sm-0r waves-effect waves-float waves-light "><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Submit</button>
+        <button  class=" btn btn-primary btn-sm mb-50 mb-sm-0r waves-effect waves-float waves-light "><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> 
+        Submit</button>
         <button class="btn btn-warning btn-sm mb-50 mb-sm-0r " type="reset">
             <i data-feather="refresh-cw"></i> Reset
         </button>
@@ -38,11 +39,7 @@
                 <label class="form-label mb-0 me-2 col-3">Courses <span class="text-danger">*</span></label>
                 <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
                     <option value="7">--Select--</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
+                    <option value="10">MBBS</option>
                 </select>
             </div>
     
@@ -50,23 +47,18 @@
                 <label class="form-label mb-0 me-2 col-3">Semester <span class="text-danger">*</span></label>
                 <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
                     <option value="7">--Select Semester--</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
+												<option value="7">FIRST PROFESSIONAL</option>
+												<option value="8">SECOND PROFESSIONAL</option>
+												<option value="9">THIRD PROFESSIONAL (PART-I)</option>
+												<option value="10">THIRD PROFESSIONAL (PART-II)</option>
                 </select>
             </div>
     
             <div class="col-md-4 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Form Type <span class="text-danger">*</span></label>
                 <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">Regular</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
+                    <option value="Regular">Regular</option>
+                    <option value="Compartment">Compartment</option>
                 </select>
             </div>
         </div>
@@ -76,12 +68,9 @@
             <div class="col-md-4 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Academic Session <span class="text-danger">*</span></label>
                 <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">2024-2025</option>
-                    <option value="10">2023-2024AUG</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
+                    <option value="2022-2023">2022-2023</option>
+                    <option value="2023-2024">2023-2024</option>
+                    
                 </select>               </div>
     
             <div class="col-md-4 d-flex align-items-center">
@@ -160,18 +149,19 @@
                                                     <th>Result</th>
                                                 </tr>
                                             </thead>
+                                            @foreach($data as $data)
                                             <tbody>
                                                 <tr>
-                                                    <td>1.</td>
-                                                    <td class="fw-bolder text-dark">05-Sep-2024</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Shivangi</span></td>
-                                                    <td>VMM Pvt Ltd</td>
+                                                    <td>{{ $data ->id}}</td>
+                                                    <td class="fw-bolder text-dark">{{ $data ->roll_no}}</td>
+                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">{{ $data ->name}}</span></td>
+                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">{{ $data ->grand_total}}</span></td>
+                                                    <td>{{ $data ->results}}</td>
                                                     
                                                 </tr>
                                                  
                                                
-                                               
+                                               @endforeach
                                             </tbody>
                                         </table>
                                     </div>

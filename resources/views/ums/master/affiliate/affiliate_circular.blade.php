@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
     
@@ -36,7 +36,7 @@
             </div>
             <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
               <div class="form-group breadcrumb-right">
-                <a class="btn btn-dark btn-sm mb-50 mb-sm-0" href="affiliate_circular_add"><i data-feather="file-text"></i> Add Affiliate Circular</a> 
+                <a class="btn btn-dark btn-sm mb-50 mb-sm-0" href="{{url('affiliate_circular_add')}}"><i data-feather="file-text"></i> Add Affiliate Circular</a> 
                 </div>
             </div>
         </div>
@@ -56,21 +56,17 @@
                                                     <th>Affiliate Circular Description</th>
                                                     <th>Circular Date</th>
                                                     <th>Circular Details</th>
-                                                    
                                                     <th>Action</th>
                                                     
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                               
+                                               @foreach($items as $item)
                                                 <tr>
-                                                  <td>1</td>
-                                                    
-                                                  <td class="fw-bolder text-dark">special education</td>
-                                                  <td>sdfg</td>
-                                                  
-                                                   
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">View Document</span></td>
+                                                  <td>{{$item->id}}</td>
+                                                  <td class="fw-bolder text-dark">{{$item->circular_description}}</td>
+                                                  <td>{{$item->circular_date}}</td>
+                                                  <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">{{$item->circular_file}}</span></td>
 
                                                     
                                                     <td class="tableactionnew">  
@@ -79,11 +75,11 @@
                                                               <i data-feather="more-vertical"></i>
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-end">
-                                                              <a class="dropdown-item" href="affiliate_circular_edit" >
+                                                              <a class="dropdown-item" href="{{url('affiliate_circular_edit',$item->id)}}" >
                                                                     <i data-feather="edit" class="me-50"></i>
                                                                     <span>Edit</span>
                                                                 </a> 
-                                                             <a class="dropdown-item" href="#">
+                                                             <a class="dropdown-item" href="{{url('affiliate_circular_delete',$item->id)}}">
                                                                     <i data-feather="trash-2" class="me-50"></i>
                                                                     <span onclick="return confirm('Are you sure?');">Delete</span>                                                                </a>
                                                                 </a>
@@ -91,7 +87,7 @@
                                                         </div> 
                                                     </td>
                                                 </tr>
-                                                
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
