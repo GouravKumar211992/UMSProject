@@ -2,7 +2,7 @@
 @section("content") --}}
 
 
-@extends('master.faculty.faculty-meta')
+@extends('ums.master.faculty.faculty-meta')
 <!-- END: Head-->
 
 <!-- BEGIN: Body-->
@@ -11,9 +11,15 @@
 
 
     <!-- BEGIN: Content-->
+    <form action="{{ url('time_table') }}" method="POST">
+        @csrf
+        <input type="hidden" name="timetable_id" value="{{ $selected_timetable->id }}">
+        <input type="hidden" name="timetable_status" value="{{ $selected_timetable->status }}">
+    
     <div class="app-content content ">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
+       
         <div class="content-wrapper container-xxl p-0">
             <div class="content-header pocreate-sticky">
 				<div class="row">
@@ -33,14 +39,18 @@
 							</div>
 						</div>
 					</div>
+                    {{-- <form action="{{ url('time_table_update') }}"  method="POST">
+                        @csrf --}}
 					<div class="content-header-right text-sm-end col-md-6 mb-50 mb-sm-0">
 						<div class="form-group breadcrumb-right">
         
    
 							<button onClick="javascript: history.go(-1)" class="btn btn-secondary btn-sm mb-50 mb-sm-0"><i data-feather="arrow-left-circle" onclick="history.go(-1)"></i>Go Back</button>    
-							<button onClick="javascript: history.go(-1)" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle"></i>Update</button> 
+							<button type="submit" class="btn btn-primary btn-sm mb-50 mb-sm-0" ><i data-feather="check-circle"></i>Update</button> 
 						</div>
 					</div>
+                    </form>
+                </div>
 				</div>
 			</div>
             <div class="content-body">
@@ -74,11 +84,10 @@
                                                         </div>  
 
                                                         <div class="col-md-5">  
-                                                            <select class="form-select">
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
+                                                            <select class="form-select" id="period_id" name="period_id">
+                                                                @foreach($periods  as $key => $period)
+                                                                <option value="{{ $period->id }}" {{ $selected_timetable->period_id === $period->id ? "selected" : "" }} >{{ $period->name }}</option>						
+                                                              @endforeach
                                                             </select>
                                                         </div>
                                                      </div>
@@ -90,82 +99,93 @@
                                                         </div>  
 
                                                         <div class="col-md-5">  
-                                                            <select class="form-select">
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
+                                                            <select class="form-select" id="day" name="day">
+                                                                <option value="Monday" @if ($selected_timetable-> day=='Monday') selected @endif>Monday</option>
+                                                                <option value="Tuesday" @if ($selected_timetable-> day=='Tuesday') selected @endif>Tuesday</option>
+                                                                <option value="Wednesday" @if ($selected_timetable-> day=='Wednesday') selected @endif>Wednesday</option>
+                                                                <option value="Thursday" @if ($selected_timetable-> day=='Thursday') selected @endif>Thursday</option>
+                                                                <option value="Friday" @if ($selected_timetable-> day=='Friday') selected @endif>Friday</option>
+                                                                <option value="Saturday" @if ($selected_timetable-> day=='Saturday') selected @endif>Saturday</option>
                                                             </select>
                                                         </div>
                                                      </div>
                                                                  
                                                      <div class="row align-items-center mb-1">
                                                         <div class="col-md-3"> 
-                                                            <label class="form-label">Course <span class="text-danger">*</span></label>  
+                                                            <label class="form-label">Course<span class="text-danger">*</span></label>  
                                                         </div>  
 
                                                         <div class="col-md-5">  
-                                                            <select class="form-select">
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
+                                                            <select class="form-select" id="course-id" name="course_id">
+                                                                @foreach($courses as $course)
+                                                                <option value="{{$course->id}}">{{$course->name}}</option>
+                                                                  <option value="{{ $course->id }}" {{ $selected_timetable->course_id === $course->id ? "selected" : "" }} >{{ $course->name }}</option>									  
+                                                                @endforeach
                                                             </select>
+                                                            <span class="text-danger">{{ $errors->first('course_id') }}</span>
                                                         </div>
                                                      </div>
                                                     
                                                                           
                                                      <div class="row align-items-center mb-1">
                                                         <div class="col-md-3"> 
-                                                            <label class="form-label">Semester  <span class="text-danger">*</span></label>  
+                                                            <label class="form-label">Semester<span class="text-danger">*</span></label>  
                                                         </div>  
 
                                                         <div class="col-md-5">  
-                                                            <select class="form-select">
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
+                                                            <select class="form-select" id="semester-id" name="semester_id">
+                                                                @foreach($semesters as $semester)
+                                                                <option value="{{ $semester->id }}" {{ $selected_timetable->semester_id === $semester->id ? "selected" : "" }} >{{ $semester->name }}</option>									  
+                                                                @endforeach
                                                             </select>
+                                                            <span class="text-danger">{{ $errors->first('semester_id') }}</span>
                                                         </div>
                                                      </div>
                                      
                                                      <div class="row align-items-center mb-1">
                                                         <div class="col-md-3"> 
-                                                            <label class="form-label">Select Subject <span class="text-danger">*</span></label>  
+                                                            <label class="form-label">Select Subject<span class="text-danger">*</span></label>  
+
                                                         </div>  
 
                                                         <div class="col-md-5">  
-                                                            <select class="form-select">
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
+                                                            <select id="subject-id" class="form-control" name="subject_id">
+                                                                @foreach($subjects as $subject)
+                                                                <option value="{{ $subject->id }}" {{ $selected_timetable->subject_id == $subject->id ? 'selected' : '' }}>{{ $subject->name }}</option>
+                                                            @endforeach
                                                             </select>
+                                                            <span class="text-danger">{{ $errors->first('subject_id') }}</span>
+
+
                                                         </div>
                                                      </div>
 
                                                      <div class="row align-items-center mb-1">
                                                         <div class="col-md-3"> 
-                                                            <label class="form-label">Faculty<span class="text-danger">*</span></label>  
+                                                            <label class="form-label">Faculty<span class="text-danger">*</span></label>                                                             
                                                         </div>  
-
                                                         <div class="col-md-5">  
-                                                            <select class="form-select">
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
+                                                            <select class="form-select" id="faculty-id" name="faculty_id"  >
+                                                                @foreach($facultys as $faculty)
+                                                                <option value="{{$faculty->id}}" {{ $selected_timetable->faculty_id === $faculty->id ? "selected" : "" }}>{{$faculty->name}}</option>
+                                                            @endforeach
                                                             </select>
+                                                            @if ($errors->has('faculty_id'))
+                                                            <span class="text-danger">{{ $errors->first('faculty_id') }}</span>							
+                                                            @endif
                                                         </div>
                                                      </div>
                                                      <div class="row align-items-center mb-1">
                                                         <div class="col-md-3"> 
-                                                            <label class="form-label">Room No<span class="text-danger">*</span></label>  
+                                                            <label class="form-label">room_no<span class="text-danger">*</span></label>  
+
                                                         </div>  
 
                                                         <div class="col-md-5"> 
-                                                            <input type="text" class="form-control">
+                                                            <input id="room_no" name="room_no" type="text" class="form-control" placeholder="Enter here" value="{{$selected_timetable->room_no}}"> 
+                                                            @if ($errors->has('room_no'))
+                                                            <span class="text-danger">{{ $errors->first('room_no') }}</span>							
+                                                            @endif
                                                         </div> 
                                                     
                                                      </div>
@@ -177,13 +197,16 @@
                                                         <div class="col-md-5"> 
                                                             <div class="demo-inline-spacing">
                                                                 <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio3" name="customColorRadio3" class="form-check-input" checked="">
-                                                                    <label class="form-check-label fw-bolder" for="customColorRadio3">Open</label>
+                                                                    <input type="radio" id="customColorRadio3" name="customColorRadio3" class="form-check-input" id="active" checked="">
+                                                                    <label class="form-check-label fw-bolder" for="customColorRadio3">ACTIVE</label>
                                                                 </div> 
                                                                 <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio4" name="customColorRadio3" class="form-check-input">
-                                                                    <label class="form-check-label fw-bolder" for="customColorRadio4">Close</label>
+                                                                    <input type="radio" id="customColorRadio4" name="customColorRadio3" id="inactive" class="form-check-input">
+                                                                    <label class="form-check-label fw-bolder" for="customColorRadio4">INACTIVE</label>
                                                                 </div> 
+                                                                @if ($errors->has('group1'))
+                                                                <span class="text-danger">{{ $errors->first('group1') }}</span>
+                                                                @endif
                                                             </div>  
                                                         </div>  
                                      
@@ -507,5 +530,87 @@
 			</div>
 		</div>
 	</div>
+
+    <script>
+        $(document).ready(function(){
+    
+            var selected_timetable = {!! json_encode($selected_timetable) !!};
+    
+            if(selected_timetable['status'] == 1) {
+                $('#active').prop('checked', true);
+                $('#inactive').prop('checked', false);
+            }
+            else {
+                $('#active').prop('checked', false);
+                $('#inactive').prop('checked', true);
+            }
+        });
+    </script>
+    <script>
+    $(document).ready(function () {
+    
+                $('#course-id').on('change', function () {
+                    //alert('hi')
+                    var idCourse = this.value;
+                    $("#semester-id").html('');
+                    $.ajax({
+                        url: "{{url('fetch-semester')}}",
+                        type: "POST",
+                        data: {
+                            course_id: idCourse,
+                            _token: '{{csrf_token()}}'
+                        },
+                        dataType: 'json',
+                        success: function (result) {
+                            $('#semester-id').html('<option value="">Select Semester</option>');
+                            $.each(result.semester, function (key, value) {
+                                $("#semester-id").append('<option value="' + value
+                                    .id + '">' + value.name + '</option>');
+                            });
+                            $('#subject-id').html('<option value="">Firstly Select Semester</option>');
+                        }
+                    });
+                });
+            });
+    </script>
+    <script>
+        $(document).ready(function () {
+    
+                $('#semester-id').on('change', function () {
+                    //alert('hi')
+                    var idSemester = this.value;
+                    $("#subject-id").html('');
+                    $.ajax({
+                        url: "{{url('/faculty/fetch-subject')}}",
+                        type: "POST",
+                        data: {
+                            semester_id: idSemester,
+                            _token: '{{csrf_token()}}'
+                        },
+                        dataType: 'json',
+                        success: function (result) {
+                            $('#subject-id').html('<option value="">Select Subject</option>');
+                            $.each(result.subject, function (key, value) {
+                                $("#subject-id").append('<option value="' + value
+                                    .id + '">' + value.name + '</option>');
+                            });
+                            $('#child-id').html('<option value="">Firstly Select Subject</option>');
+                        }
+                    });
+                });
+            });
+        </script>
+    <script>
+        function submitCat(form) {
+            if(document.getElementById('active').checked) {
+                document.getElementById('timetable_status').value = 'active';
+            }
+            else {
+                document.getElementById('timetable_status').value = 'inactive';
+            }
+    
+            document.getElementById('edit_period_form').submit();
+        }
+    </script>
 
     @endsection

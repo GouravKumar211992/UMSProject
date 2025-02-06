@@ -1,4 +1,4 @@
-@extends("admin.admin-meta")
+@extends("ums.admin.admin-meta")
 @section('content')
 {{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col=""> --}}
   
@@ -12,19 +12,12 @@
             <select data-live-search="true" name="course" id="course" style="border-color: #c0c0c0;" class="form-control js-example-basic-single ">
                <option value="">--Choose Course--</option>
                                          
-                      <option value="49">MBBS</option>
-                                             
-                      <option value="64">B.Sc. (Nursing)</option>
-                                             
-                      <option value="95">BPT</option>
-                                             
-                      <option value="96">BMLT</option>
-                                             
-                      <option value="131">M.D.-PATHOLOGY</option>
-                                             
-                      <option value="132">M.D.-COMMUNITY MEDICINE</option>
-                                            </select>
-                    <span class="text-danger"></span>
+               @foreach($courses as $course)
+                     
+               <option value="{{$course->id}}" @if(Request()->course==$course->id) selected @endif >{{$course->name}}</option>
+                 @endforeach
+             </select>
+             <span class="text-danger">{{ $errors->first('course') }}</span>
             </div>
            
             <div class="col-md-2 ms-0 submit text-end">
@@ -106,7 +99,7 @@
                                         <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
                                             <thead>
                                                 <tr>
-                                                    <th>Sr.No.</th>
+                                                    <th>SN#</th>
                                                     <th>Roll No.</th>
                                                     <th>Mobile No.</th>
                                                     <th>DOB</th>
@@ -117,64 +110,53 @@
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody>		
+			
+                                                @foreach($mbbs_allowed_students as $index=>$mbbs_allowed_student)
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td class="fw-bolder text-dark">Description will come here</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Shivangi</span></td>
-                                                    <td>05-Sep-2024</td>
-                                                    <td>05-Sep-2024</td> 
-                                                    <td>05-Sep-2024</td> 
-                                                    <td>Description will come here</td> 
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" href="edit">
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a> 
-                                                                <a class="dropdown-item" href="#" onclick="window.confirm('Are you sure ? you want to delete this data')">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span>Delete</span>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
+                                                    <td>{{++$index}}</td>
+                                                    <td>
+                                                        {{$mbbs_allowed_student->roll_no}}
+                                                        <input type="hidden" name="roll_no" class="roll_no" value="{{$mbbs_allowed_student->roll_no}}">
+                                                    </td>
+                                                    <td>
+                                                        {{$mbbs_allowed_student->mobile}}
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="date_of_birth" class="date_of_birth form-control" value="{{$mbbs_allowed_student->date_of_birth}}" placeholder="YYYY-MM-DD">
+                                                    </td>
+                                                    <td>
+                                                        <select name="regular_permission" class="regular_permission form-control">
+                                                            <option value="Allowed" @if($mbbs_allowed_student->regular_permission=='Allowed') selected @endif>Allowed</option>
+                                                            <option value="Not Allowed" @if($mbbs_allowed_student->regular_permission=='Not Allowed') selected @endif>Not Allowed</option>
+                                                        </select>
+                                                    </td>
+                                    
+                                    
+                                                    <td>
+                                                        <select name="regular_permission" class="supplementary_permission form-control">
+                                                            <option value="Allowed" @if($mbbs_allowed_student->supplementary_permission=='Allowed') selected @endif>Allowed</option>
+                                                            <option value="Not Allowed" @if($mbbs_allowed_student->supplementary_permission=='Not Allowed') selected @endif>Not Allowed</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="regular_permission" class="challenge_permission form-control">
+                                                            <option value="Allowed" @if($mbbs_allowed_student->challenge_permission=='Allowed') selected @endif>Allowed</option>
+                                                            <option value="Not Allowed" @if($mbbs_allowed_student->challenge_permission=='Not Allowed') selected @endif>Not Allowed</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="regular_permission" class="scrutiny_permission form-control">
+                                                            <option value="Allowed" @if($mbbs_allowed_student->scrutiny_permission=='Allowed') selected @endif>Allowed</option>
+                                                            <option value="Not Allowed" @if($mbbs_allowed_student->scrutiny_permission=='Not Allowed') selected @endif>Not Allowed</option>
+                                                        </select>
+                                                    </td>
+                                    
+                                                    <td>
+                                                        <button class="btn-sm btn-success" onClick="mbbs_allowed_students($(this))">Edit</button>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td class="fw-bolder text-dark">05-Sep-2024</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Shivangi</span></td>
-                                                    <td>VMM Pvt Ltd</td>
-                                                    <td>Description will come here</td> 
-                                                    <td>Description will come here</td> 
-                                                    <td>Open</td> 
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" >
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a> 
-                                                                <a class="dropdown-item" href="#" onclick="window.confirm('Are you sure ? you want to delete this data')">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span>Delete</span>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>
-                                                </tr>
-                                                 
-                                               
-                                               
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

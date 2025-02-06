@@ -77,15 +77,25 @@
                 </div>
             </div>
             <div class="content-body">
+              @include('ums.admin.notifications')
+              <form  method="POST" action="" enctype="multipart/form-data">
             <div class="row align-items-center mb-1">
+
   <div class="col-md-2">
     <label class="form-label" for="back_paper_file">Upload File Here<span class="text-danger">*</span></label>
   </div>
   <div class="col-md-3">
     <div class="form-group">
+    
       <input type="file" name="back_paper_file" id="back_paper_file" class="form-control" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
     </div>
   </div>
+  <div class="col-md-4">
+  <div class="form-group">
+    <button type="submit" class="btn btn-success">Upload File</button>
+  </div>
+  </div>
+    </form>
 
 
   {{-- <div class="row align-items-center mt-2">
@@ -129,56 +139,23 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td class="fw-bolder text-dark">Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">M.B.A.</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">DSMNRU/REQ/24221</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">HARSHIT KUMAR</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">ANIL KUMAR</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">ALKA</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">897107636193</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">9719408244</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">harshit19dohare@gmail.com</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">2002-03-19</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">male</span></td>
-                                                    <td>hello</td>
-                                                                                                
-                                                </tr>
-                                                <tr>
-                                                <td>2</td>
-                                                    <td class="fw-bolder text-dark">Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">M.B.A.</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">DSMNRU/REQ/24221</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">HARSHIT KUMAR</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">ANIL KUMAR</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">ALKA</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">897107636193</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">9719408244</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">harshit19dohare@gmail.com</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">2002-03-19</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">male</span></td>
-                                                    <td>hello</td>
-                                                  
-                                                </tr>
-                                                  <tr>
-                                                  <td>3</td>
-                                                    <td class="fw-bolder text-dark">Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">M.B.A.</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">DSMNRU/REQ/24221</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">HARSHIT KUMAR</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">ANIL KUMAR</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">ALKA</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">897107636193</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">9719408244</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">harshit19dohare@gmail.com</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">2002-03-19</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">male</span></td>
-                                                    <td>hello</td>
-                                                   
-                                                </tr>
-                                               
-                                            
+                                              @foreach($applications as $index=>$application)
+                                              <tr @if($application->status==0)  @endif>
+                                                <td>{{++$index}}</td>
+                                                <td>{{$application->campus_name}}</td>
+                                                <td>{{$application->campus_id}}</td>
+                                                <td>{{$application->enrollment_no}}</td>
+                                                <td>{{$application->roll_no}}</td>
+                                                <td>{{$application->course_name}}</td>
+                                                <td>{{$application->course_id}}</td>
+                                                <td>{{$application->semester_name}}</td>
+                                                <td>{{$application->semester_id}}</td>
+                                                <td>{{$application->sub_code}}</td>
+                                                <td>{{$application->accademic_session}}</td>
+                                                <td>{{$application->back_paper_type}}</td>
+                                                <td>{{($application->status==1)?'DONE':'NOT'}}</td>
+                                              </tr>
+                                              @endforeach
                                             </tbody>
                                         </table>
                                     </div>

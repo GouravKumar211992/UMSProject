@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
     
@@ -7,6 +7,8 @@
 
     <!-- BEGIN: Content-->
     <div class="app-content content ">
+        <form id="edit_fee_form" method="post" action="{{url('edit-fee-form')}}">
+            @csrf
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
@@ -26,7 +28,7 @@
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
-                        <button onclick="javascript: history.go(-1)" class=" btn btn-primary btn-sm mb-50 mb-sm-0 waves-effect waves-float waves-light "><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Update</button>
+                        <button href="javascript:void(0);" type="submit" onclick="submitCat();" class=" btn btn-primary btn-sm mb-50 mb-sm-0 waves-effect waves-float waves-light "><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Update</button>
                         <button class="btn btn-warning btn-sm mb-50 mb-sm-0" onclick="window.location.reload();" ><i data-feather="refresh-cw"></i>
                             Reset</button> 
 
@@ -37,34 +39,26 @@
             <div class="content-body bg-white p-4 shadow">                    
         <div class="col-md-12">
         <div class="row align-items-center mb-1">
-            <div class="col-md-4 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3"> Campus Name<span class="text-danger ">*</span></label>
-                <input type="text" class="form-control"> 
-                    </div>
 
             <div class="col-md-4 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Course Name <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">2024-2025</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
+                <select class="form-control" id="course_id" name="course_id">
+                    <option value="">--Select Course--</option>
+                    @foreach($courses as $course)
+                    <option value="{{$course->id}}" @if($selected_fee->course_id==$course->id) selected @endif >{{$course->name}}</option>@endforeach
+                    </select>
+                    <span class="text-danger">{{ $errors->first('course_id') }}</span>
                 </div>
-                
+                <input id="fee_id" name="fee_id" type="hidden" value="{{$selected_fee->id}}" class="form-control " >
 
             <div class="col-md-4 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Academic Session <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">2024-2025</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
+                <select class="form-control" id="academic_session" name="academic_session">
+                    <option value="">--Select Academic Session--</option>
+                    @foreach($sessions as $session)
+                    <option value="{{$session->academic_session}}" @if($selected_fee->academic_session==$session->academic_session) selected @endif >{{$session->academic_session}}</option>@endforeach
+                    </select>
+                    <span class="text-danger">{{ $errors->first('academic_session') }}</span>
               </div>
 
         </div>
@@ -74,31 +68,24 @@
         <div class="row align-items-center mb-1">
             <div class="col-md-4 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Seat <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">1</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
+                <input id="seat" name="seat" type="text" value="{{$selected_fee->seat}}" class="form-control" placeholder="Enter Seat here"> 
+                <span class="text-danger">{{ $errors->first('seat') }}</span>
               </div>
 
             <div class="col-md-4 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3"> Basic Eligibility<span class="text-danger ">*</span></label>
-                <input type="text" class="form-control"> 
-                    </div>
+                <input id="basic_eligibility" name="basic_eligibility" type="text" value="{{$selected_fee->basic_eligibility}}" class="form-control " placeholder="Enter Basic Eligibility here"> 
+                <span class="text-danger">{{ $errors->first('basic_eligibility') }}</span>
+                </div>
 
             <div class="col-md-4 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Mode Of Admission <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">2024-2025</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
+                <select class="form-control" id="mode_of_admission" name="mode_of_admission">
+                    <option value="">--Select Mode Of Admission--</option> 
+                    <option value="Online" @if($selected_fee->mode_of_admission=='Online') selected >Online</option> 
+                    <option value="Offline" @elseif($selected_fee->mode_of_admission=='Offline') selected @endif >Offline</option> 
+                    </select>
+                    <span class="text-danger">{{ $errors->first('mode_of_admission') }}</span>
                 </div>
                 
         </div>
@@ -108,38 +95,20 @@
         <div class="row align-items-center mb-1">
             <div class="col-md-4 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Course Duration <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">2024-2025</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
+            	<input id="course_duration" name="course_duration" type="text" value="{{$selected_fee->course_duration}}" class="form-control @error('course_duration') is-invalid @enderror" placeholder="Enter Course Duration here"> 
+					<span class="text-danger">{{ $errors->first('course_duration') }}</span>
               </div>
 
               <div class="col-md-4 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Tution Fee for Divyang Per Sem <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">300</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
+                <input id="tuition_fee_for_divyang_per_sem" name="tuition_fee_for_divyang_per_sem" type="text" value="{{$selected_fee->tuition_fee_for_divyang_per_sem}}" class="form-control numbersOnly" placeholder="Enter Tution Fee for Divyang Per Sem here"> 
+                <span class="text-danger">{{ $errors->first('tuition_fee_for_divyang_per_sem') }}</span>
               </div>
 
             <div class="col-md-4 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3"> Tution Fee for Other Per Sem<span class="text-danger ">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">500</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
+                <input id="tuition_fee_for_other_per_sem" name="tuition_fee_for_other_per_sem" type="text" value="{{$selected_fee->tuition_fee_for_other_per_sem}}" class="form-control numbersOnly" placeholder="Enter Tution Fee for Other Per Sem here"> 
+                <span class="text-danger">{{ $errors->first('tuition_fee_for_other_per_sem') }}</span>
                  </div>
 
         </div>
@@ -149,27 +118,15 @@
         <div class="row align-items-center mb-1">
             <div class="col-md-4 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Payable Fee for Divyang Per Sem<span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">1000</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
+                <input id="payable_fee_for_divyang_per_sem" name="payable_fee_for_divyang_per_sem" type="text" value="{{$selected_fee->payable_fee_for_divyang_per_sem}}" class="form-control numbersOnly" placeholder="Enter Tution Fee for Other Per Sem here"> 
+                <span class="text-danger">{{ $errors->first('payable_fee_for_divyang_per_sem') }}</span>
                 </div>
                 
 
             <div class="col-md-4 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Payable Fee for Other Per Sem <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">2000</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
+                <input id="payable_fee_for_other_per_sem" name="payable_fee_for_other_per_sem" type="text" value="{{$selected_fee->payable_fee_for_other_per_sem}}" class="form-control numbersOnly" placeholder="Enter Payable Fee for Divyang Per Sem here"> 
+                <span class="text-danger">{{ $errors->first('payable_fee_for_other_per_sem') }}</span>
               </div>  
 
         </div>
@@ -184,6 +141,7 @@
                             </div>
                         </div>
                     </div>
+                </form>
                     <!-- Modal to add new record -->
                     <div class="modal modal-slide-in fade" id="modals-slide-in">
                         <div class="modal-dialog sidebar-sm">
@@ -283,9 +241,35 @@
 					<button type="button" class="btn btn-primary data-submit mr-1">Apply</button>
 					<button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
 				</div>
-			</form>
 		</div>
 	</div>
+    <script>
+	
+        $('.numbersOnly').keyup(function () { 
+        this.value = this.value.replace(/[^0-9\.]/g,'');
+    });
+    $("input").keypress(function() {
+        $(this).parent().find('.text-danger').text('');
+    });
+    
+    $("select").keypress(function() {
+        $(this).parent().find('.text-danger').text('');
+    });
+    
+    
+    $("input").on('change',function() {
+        $(this).parent().find('.text-danger').text('');
+    });
+    
+    $("select").on('change',function() {
+        $(this).parent().find('.text-danger').text('');
+    });
+    
+    </script>
+    <script>
+        function submitCat(form) {
+            document.getElementById('edit_fee_form').submit();
+        }
 
 {{-- </body> --}}
   @endsection

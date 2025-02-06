@@ -1,7 +1,7 @@
 
 
 
-@extends('master.faculty.faculty-meta')
+@extends('ums.master.faculty.faculty-meta')
   @section('content')
       
 
@@ -57,65 +57,47 @@
                             <div class="card">
 								
 								   
-                                <div class="table-responsive">
-                                        <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
-                                            <thead>
-                                                <tr>
-                                                    <th>Sr. No.</th>
-                                                    <th>Student Name</th>
-                                                    <th>Enrollment Number</th>
-                                                    <th>Roll No</th>
-                                                    <th>Course</th>
-                                                    <th>Semester</th>
-                                                    <th>Attendance</th>
-                                                    <th>Date Of Attendance</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                  <td>1</td>
-                                                  <td>John Doe</td>
-                                                  <td>EN12345</td>
-                                                  <td>101</td>
-                                                  <td>Computer Science</td>
-                                                  <td>2nd</td>
-                                                  <td>Present</td>
-                                                  <td>2025-01-10</td>
-                                                </tr>
-                                                <tr>
-                                                  <td>2</td>
-                                                  <td>Jane Smith</td>
-                                                  <td>EN67890</td>
-                                                  <td>102</td>
-                                                  <td>Mechanical Engineering</td>
-                                                  <td>3rd</td>
-                                                  <td>Absent</td>
-                                                  <td>2025-01-10</td>
-                                                </tr>
-                                                <tr>
-                                                  <td>3</td>
-                                                  <td>Robert Brown</td>
-                                                  <td>EN11223</td>
-                                                  <td>103</td>
-                                                  <td>Civil Engineering</td>
-                                                  <td>4th</td>
-                                                  <td>Present</td>
-                                                  <td>2025-01-12</td>
-                                                </tr>
-                                                <tr>
-                                                  <td>4</td>
-                                                  <td>Alice White</td>
-                                                  <td>EN44567</td>
-                                                  <td>104</td>
-                                                  <td>Electrical Engineering</td>
-                                                  <td>1st</td>
-                                                  <td>Present</td>
-                                                  <td>2025-01-13</td>
-                                                </tr>
-                                              </tbody>
-                                        </table>
-                                    </div>
-                            </div>
+                                <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr. No.</th>
+                                            <th>Student Name</th>
+                                            <th>Enrollment Number</th>
+                                            <th>Roll No</th>
+                                            <th>Course</th>
+                                            <th>Semester</th>
+                                            <th>Attendance</th>
+                                            <th>Date Of Attendance</th>
+                                        </tr>
+                                    </thead>
+                                    @foreach($attendence as $key=> $attendences)
+
+                                <tbody>
+									<tr>
+
+										<th>{{$key+1}}</th>
+
+										<th>{{$attendences->students_name}}</th>
+										<th>{{$attendences->enrollment_no}}</th>
+										<th>{{$attendences->roll_no}}</th>
+										<th>{{$attendences->course->name}}</th>
+										<th>{{$attendences->semester->name}}</th>
+										<th>{{$attendences->attendence_status}}</th>
+										<th>{{date('d M,Y',strtotime($attendences->date_of_attendence))}}</th>
+
+									
+									</tr>
+								</tbody>
+                               @endforeach
+                            </table>
+                        </div>
+                        {{-- {{$attendence->appends(Request()->all())->links('partials.pagination')}} --}}
+
+                                {{-- Pagination Links --}}
+                                {{-- <div class="pagination-container">
+                                    {{ $attendence->links() }}
+                                </div> --}}
+                                
                         </div>
                     </div>
                     <!-- Modal to add new record -->

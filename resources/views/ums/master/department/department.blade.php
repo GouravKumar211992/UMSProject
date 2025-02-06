@@ -1,4 +1,4 @@
- @extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 <!-- BEGIN: Body-->
  @section('content')
      
@@ -10,6 +10,7 @@
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
+        @include('ums.admin.notifications')
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
             <div class="content-header row">
@@ -29,7 +30,7 @@
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right"> 
                        
-                            <a class="btn btn-dark btn-sm mb-50 mb-sm-0" href="{{url('Department_add')}}"><i data-feather="file-text"></i> Add  </a> 
+                            <a class="btn btn-dark btn-sm mb-50 mb-sm-0" href="{{url('department_add')}}"><i data-feather="file-text"></i> Add  </a> 
                             <!-- <button class="btn btn-success btn-sm mb-50 mb-sm-0" data-bs-target="#approved" data-bs-toggle="modal"><i data-feather="check-circle" ></i> Assign Team</button> -->
                              
                     </div>
@@ -59,16 +60,16 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                               
+                                               @foreach($items as $item)
                                                 <tr>
-                                                    <td>1</td>
+                                                    <td>{{ $item->id}}</td>
                                                     
-                                                    <td class="fw-bolder text-dark">special education</td>
-                                                    <td>sdfg</td>
-                                                    <td>df</td>
-                                                    <td>df</td>
-                                                    <td>sdf</td>
-                                                    <td>dfg@gmail.com</td>
+                                                    <td class="fw-bolder text-dark">{{ $item->faculty}}</td>
+                                                    <td>{{ $item->name}}</td>
+                                                    <td>{{ $item->dean}}</td>
+                                                    <td>{{ $item->head}}</td>
+                                                    <td>{{ $item->contact}}</td>
+                                                    <td>{{ $item->email}}</td>
                                                     
                                                     <td class="tableactionnew">  
                                                         <div class="dropdown">
@@ -76,11 +77,11 @@
                                                                 <i data-feather="more-vertical"></i>
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" href="{{url('Department_edit')}}" >
+                                                                <a class="dropdown-item" href="{{url('department_edit',$item->id) }}" >
                                                                     <i data-feather="edit" class="me-50"></i>
                                                                     <span>Edit</span>
                                                                 </a> 
-                                                             <a class="dropdown-item" href="#">
+                                                             <a class="dropdown-item" href="{{url('department_delete', $item->id )}}">
                                                                     <i data-feather="trash-2" class="me-50"></i>
                                                                     <span>Delete</span>
                                                                 </a>
@@ -88,7 +89,7 @@
                                                         </div> 
                                                     </td>
                                                 </tr>
-                                                
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

@@ -1,5 +1,6 @@
  @extends('ums.admin.admin-meta')
  @section('content')
+ {{-- {{dd($data)}} --}}
      
 
 {{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col=""> --}}
@@ -53,18 +54,15 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <!-- <td class="fw-bolder text-dark">05-Sep-2024</td> -->
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">4DCAE0</span></td>
-                                                    <td>Pending</td>
-                                                    <td>2025-01-15 21:38:13</td>
-                                                    <td>  
-                                                    <a href="{{ url('/grievance_complaint_details') }}" style="text-decoration: none;">
-        Action
-        </a>
-                                                    </td>                                                 
-                                                </tr>
+                                                @foreach($data as $index=>$data)
+                                <tr>
+                                    <td>{{++$index}}</td>
+                                    <td>{{$data->complaint_no}}</td>
+                                    <td>{{$data->latestComplaint()->status_text}}</td>
+                                    <td>{{$data->latestComplaint()->created_at}}</td>
+                                    <td><a href="{{url('grievance-complaint-details')}}?complaint_no={{$data->complaint_no}}" target="_blank">Action</a></td>
+                                </tr>
+                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

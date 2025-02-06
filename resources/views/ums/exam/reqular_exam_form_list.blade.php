@@ -1,73 +1,15 @@
 @extends("ums.admin.admin-meta")
 @section("content")
 
-{{-- <!DOCTYPE html>
-<html class="loading" lang="en" data-textdirection="ltr">
-<!-- BEGIN: Head-->
-
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
-
-    <title>Presence 360</title>
-
-    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../../../assets/css/favicon.png">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600;700"
-        rel="stylesheet">
-
-    <!-- BEGIN: Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="../../../app-assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="../../../app-assets/vendors/css/tables/datatable/responsive.bootstrap5.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="../../../app-assets/vendors/css/tables/datatable/buttons.bootstrap5.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="../../../app-assets/vendors/css/tables/datatable/rowGroup.bootstrap5.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/forms/select/select2.min.css">
-    <!-- END: Vendor CSS-->
-
-    <!-- BEGIN: Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/dark-layout.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/bordered-layout.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/semi-dark-layout.css">
-
-    <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
-    <!-- END: Page CSS-->
-
-    <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
-    <link rel="stylesheet" type="text/css" href="../../../assets/css/iconsheet.css">
-    <!-- END: Custom CSS-->
-
-</head>
-<!-- END: Head-->
-
-<!-- BEGIN: Body-->
-
-<body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click"
-    data-menu="vertical-menu-modern" data-col="">
-
-    <!-- BEGIN: Header-->
-    @include('header')
-
-    <!-- END: Header-->
-
-
-    <!-- BEGIN: Main Menu-->
-    @include('sidebar')
-    <!-- END: Main Menu-->
- --}}
+<style>
+    @media print{
+        .dt-buttons,
+        .dataTables_filter,
+        #form_data{
+            display:none;
+        }
+    }
+</style>
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
@@ -89,7 +31,8 @@
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
-                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="clipboard"></i> GET
+                        <form method="get" id="form_data" action="{{url('reqular-exam-form-list')}}">
+                        <button type="submit" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="clipboard"></i> GET
                             REPORT</button>
                         <button class="btn btn-warning btn-sm mb-50 mb-sm-0" onclick="window.location.reload();"><i
                                 data-feather="refresh-cw"></i>
@@ -111,12 +54,11 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
+                                <select name="campus_id" style="border-color: #c0c0c0;" class="form-control js-example-basic-single" onChange="return $('#form_data').submit();">
                                     <option value="">---Choose Campus---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                    @foreach($campuses as $campus)
+                                    <option value="{{$campus->id}}" @if($campus->id==Request()->campus_id) selected @endif >{{$campus->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -127,12 +69,11 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Select---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select name="course[]" style="border-color: #c0c0c0;" class="form-control" multiple>
+                                    <option value="">--Select--</option>
+                                    @foreach($courses as $course)
+                                        <option value="{{$course->id}}" @if(Request()->course && in_array($course->id,Request()->course)) selected @endif >{{$course->name}}</option>
+                                        @endforeach
                                 </select>
                             </div>
                         </div>
@@ -147,12 +88,11 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Select Back Type---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select name="form_type" style="border-color: #c0c0c0;" class="form-control">
+                                    <option value="">--Select Back Type--</option>
+                                    @foreach($form_type as $form_type)
+                                        <option value="{{$form_type->form_type}}" @if($form_type->form_type==Request()->form_type) selected @endif >{{$form_type->form_type}}</option>
+                                        @endforeach
                                 </select>
                             </div>
                         </div>
@@ -163,12 +103,11 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
+                                <select name="academic_session" style="border-color: #c0c0c0;" class="form-control js-example-basic-single " >    
                                     <option value="">---Choose Acedmic---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                    @foreach($academic_session as $academic_session)
+                                    <option value="{{$academic_session->academic_session}}" @if($academic_session->academic_session==Request()->academic_session) selected @endif >{{$academic_session->academic_session}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -210,50 +149,29 @@
 
                                         </thead>
                                         <tbody>
-
-
-                                            <tr>
-                                                <td>1</td>
-                                                <td>XYZ University</td>
-                                                <td>Bachelor of Science (BSc)</td>
-                                                <td>2nd Semester</td>
-                                                <td>123456</td>
-                                                <td>ENR123456</td>
-                                                <td>John Doe</td>
-                                                <td>OBC</td>
-                                                <td>No</td>
-                                                <td>CS101</td>
-                                                <td>Computer Science - Basics</td>
-                                                <td>Paid</td>
-                                                <td>2025-01-05</td>
-                                                {{-- <td class="tableactionnew">
-                                                    <div class="dropdown">
-                                                        <button type="button"
-                                                            class="btn btn-sm dropdown-toggle hide-arrow py-0"
-                                                            data-bs-toggle="dropdown">
-                                                            <i data-feather="more-vertical"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="edit" class="me-50"></i>
-                                                                <span>View Detail</span>
-                                                            </a>
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="edit-3" class="me-50"></i>
-                                                                <span>Edit</span>
-                                                            </a>
-
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="trash-2" class="me-50"></i>
-                                                                <span>Delete</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </td> --}}
-                                            </tr>
-                                           
-
-                                        </tbody>
+                                            @php $count=0; @endphp
+                                            @foreach($form_form_data as $index => $result)
+                                            @php $subjectdata = $result->subject_sequence; @endphp
+                                            @foreach($subjectdata as $data)
+                                                    <tr>
+                                                        <td>{{++$count}}</td>
+                                                        <td>{{($data->course)?$data->course->campuse->name:''}}</td>
+                                                        <td>{{($data->course)?$data->course->name:''}}</td>
+                                                        <td>{{($data->semester)?$data->semester->name:''}}</td>
+                                                        <td>{{$result->roll_no}}</td>
+                                                        <td>{{$result->enrollment_no}}</td>
+                                                        <td>{{($result->students)?$result->students->name:''}}</td>
+                                                        <td>{{($result->students && $result->students->disabilty_category)?$result->students->disabilty_category:'Not Applicable'}}</td>
+                                                        <td>{{strtoupper($result->scribe)}}</td>
+                                                        <td>{{$data->sub_code}}</td>
+                                                        <td>{{$data->name}}</td>
+                                                        <td>{{($result->bank_name) ? 'SUCCESS': 'NOT PAID'}}</td>
+                                                        <td>{{date('d-m-Y',strtotime($result->created_at))}}</td>
+                                                    </tr>
+                                            @endforeach
+                                            @endforeach
+                                            </tbody>
+                                            
 
 
                                     </table>

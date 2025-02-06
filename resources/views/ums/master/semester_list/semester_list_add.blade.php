@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
 
@@ -27,126 +27,129 @@
 							</div>
 						</div>
 					</div>
+                    
 					<div class="content-header-right text-sm-end col-md-6 mb-50 mb-sm-0">
 						<div class="form-group breadcrumb-right">
                             <button onClick="javascript: history.go(-1)" class="btn btn-secondary btn-sm mb-50 mb-sm-0"><i data-feather="arrow-left-circle"></i>Cancel</button>    
    
 							<button onClick="javascript: history.go(-1)" class="btn btn-secondary btn-sm mb-50 mb-sm-0"><i data-feather="arrow-left-circle"></i>Go Back</button>    
-							<button onClick="javascript: history.go(-1)" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle"></i>Publish</button> 
+							<button form="sem_form" onClick="javascript: history.go(-1)" type="submit" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle"></i>Publish</button> 
 						</div>
 					</div>
 				</div>
 			</div>
+            <form id="sem_form" method="POST" action="{{ route('semester_list_add') }}">
+                @csrf
             <div class="content-body">
                  
                 
 				
 				<section id="basic-datatable">
-                    <div class="row">
-                        <div class="col-12">  
-							
-                            <div class="card">
-								 <div class="card-body customernewsection-form"> 
-											 
-											<div class="row">
-												<div class="col-md-12">
-                                                    <div class="newheader border-bottom mb-2 pb-25 d-flex flex-wrap justify-content-between"> 
-														<div>
-                                                            <h4 class="card-title text-theme">Basic Information</h4>
-														    <p class="card-text">Fill the details</p>
-                                                        </div> 
-													</div>
-                                                    
-                                                </div> 
-                                                
-                                                
-                                                <div class="col-md-8"> 
-                                                      
-                                                    <div class="row align-items-center mb-1">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label">Campus <span class="text-danger">*</span></label>  
-                                                        </div>  
-
-                                                        <div class="col-md-5">  
-                                                            <select class="form-select">
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                            </select>
-                                                        </div>
-                                                     </div>
-          
-                                                                           
-                                                     <div class="row align-items-center mb-1">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label">Category <span class="text-danger">*</span></label>  
-                                                        </div>  
-
-                                                        <div class="col-md-5">  
-                                                            <select class="form-select">
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                            </select>
-                                                        </div>
-                                                     </div>
-                                                                 
-                                                     <div class="row align-items-center mb-1">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label">Course <span class="text-danger">*</span></label>  
-                                                        </div>  
-
-                                                        <div class="col-md-5">  
-                                                            <select class="form-select">
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                            </select>
-                                                        </div>
-                                                     </div>
-                                                    
-                                                                          
-                                                     <div class="row align-items-center mb-1">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label">Semester Name <span class="text-danger">*</span></label>  
-                                                        </div>  
-
-                                                        <div class="col-md-5">  
-                                                            <select class="form-select">
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                            </select>
-                                                        </div>
-                                                     </div>
-                                     
-                                                     <div class="row align-items-center mb-1">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label">Semester NUmber <span class="text-danger">*</span></label>  
-                                                        </div>  
-
-                                                        <div class="col-md-5">  
-                                                            <select class="form-select">
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                            </select>
-                                                        </div>
-                                                     </div>
-                                       </div>
-                        </div>
-                    </div>
                     
-                    </div>
+                        <div class="row">
+                            <div class="col-12">  
+                                <div class="card">
+                                    <div class="card-body customernewsection-form"> 
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="newheader border-bottom mb-2 pb-25 d-flex flex-wrap justify-content-between"> 
+                                                    <div>
+                                                        <h4 class="card-title text-theme">Basic Information</h4>
+                                                        <p class="card-text">Fill the details</p>
+                                                    </div> 
+                                                </div>
+                                            </div> 
+                    
+                                            <!-- Campus Field -->
+                                            <div class="col-md-8"> 
+                                                <div class="row align-items-center mb-1">
+                                                    <div class="col-md-3"> 
+                                                        <label class="form-label">Campus <span class="text-danger">*</span></label>  
+                                                    </div>  
+                    
+                                                    <div class="col-md-5">  
+                                                        <select class="form-select" name="campus_id" required>
+                                                            <option value="">Select</option>
+                                                            @foreach($campuselist as $campus)
+                                                                <option value="{{ $campus->id }}">{{ $campus->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                    
+                                                <!-- Category Field -->
+                                                <div class="row align-items-center mb-1">
+                                                    <div class="col-md-3"> 
+                                                        <label class="form-label">Category <span class="text-danger">*</span></label>  
+                                                    </div>  
+                    
+                                                    <div class="col-md-5">  
+                                                        <select class="form-select" name="category_id" required>
+                                                            <option value="">Select</option>
+                                                            @foreach($categorylist as $category)
+                                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                    
+                                                <!-- Course Field -->
+                                                <div class="row align-items-center mb-1">
+                                                    <div class="col-md-3"> 
+                                                        <label class="form-label">Course <span class="text-danger">*</span></label>  
+                                                    </div>  
+                    
+                                                    <div class="col-md-5">  
+                                                        <select class="form-select" name="course_id" required>
+                                                            <option value="">Select</option>
+                                                            @foreach($courselist as $course)
+                                                                <option value="{{ $course->id }}">{{ $course->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                    
+                                                <!-- Semester Name Field -->
+                                                <div class="row align-items-center mb-1">
+                                                    <div class="col-md-3"> 
+                                                        <label class="form-label">Semester Name <span class="text-danger">*</span></label>  
+                                                    </div>  
+                    
+                                                    <div class="col-md-5">  
+                                                        <input type="text" name="name" class="form-control" placeholder="Enter Semester Name" required>
+                                                    </div>
+                                                </div>
+                    
+                                                <!-- Semester Number Field -->
+                                                <div class="row align-items-center mb-1">
+                                                    <div class="col-md-3"> 
+                                                        <label class="form-label">Semester Number <span class="text-danger">*</span></label>  
+                                                    </div>  
+                    
+                                                    <div class="col-md-5">  
+                                                        <input type="number" name="semester_number" class="form-control" placeholder="Enter Semester Number" required>
+                                                    </div>
+                                                </div>
+                    
+                                                <!-- Submit Button -->
+                                                {{-- <div class="row mt-3">
+                                                    <div class="col-md-12">
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                </div> --}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                   
+                    
                 </section>
                  
 
             </div>
+        </form>
         </div>
     </div>
     <!-- END: Content-->
@@ -300,3 +303,27 @@
 		</div>
 	</div>
 @endsection
+
+<script>
+	function submitSemester(form) {
+		document.getElementById('sem_form').submit();
+	}
+
+$(document).ready(function(){
+	$('#category_id').change(function() {
+	var university=$('#university').val();
+	var id = $('#category_id').val();
+	$("#course_id").find('option').remove().end();
+	$.ajax({
+        url: "/admin/master/stream/get-course-list",
+        data: {"_token": "{{ csrf_token() }}",university:university ,id: id},
+        type: 'POST',
+        success: function(data,textStatus, jqXHR) {
+        	$('#course_id').append(data);
+        		
+        	
+        }
+    });
+});	
+});	
+</script>

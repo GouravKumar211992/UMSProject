@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 @section("content")
 <!-- END: Head-->
 
@@ -68,6 +68,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                {{-- @foreach ($collection as $item) --}}
+                                                    
                                                 
                                                 <tr>
                                                     <td>1</td>
@@ -101,6 +103,7 @@
                                                         </div> 
                                                     </td>
                                                 </tr>
+                                                {{-- @endforeach --}}
                                             </tbody>
                                         </table>
                                     </div>

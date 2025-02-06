@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
 {{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col=""> --}}
@@ -7,6 +7,7 @@
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
+        @include('ums.admin.notifications')
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
             <div class="content-header row">
@@ -62,19 +63,19 @@
 											</thead>
 											<tbody>
 												
-                                           
+                                           @foreach ($all_courses as $index=> $item)
+                                               
+                                       
 												  <tr>
-													<td>#6</td>
-													<td >B.Ed. S.E. (VI)</td>
-													<td>24</td>
-													<td>
-                                                        Professional	
-                                                     </td>
-                                                     <td>SOCIETY FOR INSTITUTE OF PSYCHOLOGICAL RESEARCH & HEALTH</td>
-                                                     <td>	Visible</td>
-                                                     <td>	Oct 28th, 2024</td>
+													<td>{{$index+1}}</td>
+													<td >{{$item->name}}</td>
+													<td>{{$item->color_code}}</td>
+													<td>{{isset($item->category->name) ? $item->category->name:''}}</td>
+                                                     <td>{{isset($item->campuse->name) ? $item->campuse->name :''}}</td>
+                                                     <td>{{($item->visible_in_application)?'Visible':'Not Visible'}}</td>
+                                                     <td>{{date('M dS, Y', strtotime($item->created_at))}}</td>
                                                    
-                                                    <td>Oct 28th, 2024 05:24:59 AM</td>
+                                                    <td>{{date('M dS, Y h:i:s A', strtotime($item->updated_at))}}</td>
 													<td class="tableactionnew">
 														<div class="dropdown">
 															<button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
@@ -82,15 +83,15 @@
 															</button>
 															<div class="dropdown-menu dropdown-menu-end">
 
-																<a class="dropdown-item" href="course_edit">
+																<a class="dropdown-item"  onclick="editCourse('{{$item->id}}')">
 																	<i data-feather="edit-3" class="me-50"></i>
 																	<span>Edit</span>
 																</a>
                                                                
-																<a class="dropdown-item" href="#">
-																	<i data-feather="trash-2" class="me-50"></i>
-                                  <span onclick="return confirm('Are you sure?');">Delete</span>
-																</a> 
+                                                                <a class="dropdown-item" href="#" onclick="if(window.confirm('Are you sure you want to delete this data?')) { deleteCourse('{{$item->id}}'); }" >
+                                                                    <i data-feather="trash-2" class="me-50"></i>
+                                                                    <span >Delete</span>
+                                                                </a> 
                                 <a class="dropdown-item" href="course_fee">
                                   <i data-feather="dollar-sign" class="me-50"></i>
                                   <span>Course Fee</span>
@@ -99,79 +100,8 @@
 														</div>
 													</td>
 												  </tr>
-												  <tr>
-													<td>#7</td>
-													<td >BA. S.E. (VI)</td>
-													<td>30</td>
-													<td>
-                                                        Professional	
-                                                     </td>
-                                                     <td>SOCIETY FOR INSTITUTE OF PSYCHOLOGICAL RESEARCH & HEALTH</td>
-                                                     <td>	Visible</td>
-                                                     <td>	Oct 28th, 2024</td>
-                                                   
-                                                    <td>Oct 28th, 2024 05:24:59 AM</td>
-													<td class="tableactionnew">
-														<div class="dropdown">
-															<button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-																<i data-feather="more-vertical"></i>
-															</button>
-															<div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="course_edit">
-                                  <i data-feather="edit-3" class="me-50"></i>
-																	<span>Edit</span>
-																</a>
-                                
-																<a class="dropdown-item" href="#">
-                                  <i data-feather="trash-2" class="me-50"></i>
-                                  <span onclick="return confirm('Are you sure?');">Delete</span>
-																</a> 
-
-                                <a class="dropdown-item" href="course_fee">
-                                  <i data-feather="dollar-sign" class="me-50"></i>
-                                  <span>Course Fee</span>
-                                </a>
-															</div>
-														</div>
-													</td>
-												  </tr>
-												  <tr>
-													<td>#8</td>
-													<td >B.Ed. S.E. (VI)</td>
-													<td>29</td>
-													<td>
-                                                        Professional	
-                                                     </td>
-                                                     <td>SOCIETY FOR INSTITUTE OF PSYCHOLOGICAL RESEARCH & HEALTH</td>
-                                                     <td>	Visible</td>
-                                                     <td>	Oct 28th, 2024</td>
-                                                   
-                                                    <td>Oct 28th, 2024 05:24:59 AM</td>
-													<td class="tableactionnew">
-														<div class="dropdown">
-															<button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-																<i data-feather="more-vertical"></i>
-															</button>
-															<div class="dropdown-menu dropdown-menu-end">
-				
-																<a class="dropdown-item" href="course_edit">
-																	<i data-feather="edit-3" class="me-50"></i>
-																	<span>Edit</span>
-																</a>
-                                                               
-																<a class="dropdown-item" href="#">
-																	<i data-feather="trash-2" class="me-50"></i>
-                                  <span onclick="return confirm('Are you sure?');">Delete</span>
-																</a> 
-                                
-                                <a class="dropdown-item" href="course_fee">
-                                  <i data-feather="dollar-sign" class="me-50"></i>
-                                  <span>Course Fee</span>
-                                </a>
-															</div>
-														</div>
-													</td>
-												  </tr>
+                                                  @endforeach
+											
 												 
 											   </tbody>
 
@@ -230,59 +160,58 @@
     </div>
     <!-- END: Content-->
 
-    <div class="sidenav-overlay"></div>
-    <div class="drag-target"></div>
-
-    <!-- BEGIN: Footer-->
-    <footer class="footer footer-static footer-light">
-        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">Copyright &copy; 2024 <a class="ml-25" href="#" target="_blank">Presence 360</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span></p>
-        
-        <div class="footerplogo"><img src="../../../assets/css/p-logo.png" /></div>
-    </footer>
-    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
-    <!-- END: Footer-->
+    
 	
-	 
+    @include('ums.admin.search-model', ['searchTitle' => 'Campus List Search'])
+
     <div class="modal modal-slide-in fade filterpopuplabel" id="filter">
 		<div class="modal-dialog sidebar-sm">
-			<form class="add-new-record modal-content pt-0"> 
+			<form class="add-new-record modal-content pt-0" id="approveds-form" method="GET" action="{{ url('course_list') }}"> 
 				<div class="modal-header mb-1">
 					<h5 class="modal-title" id="exampleModalLabel">Apply Filter</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
 				</div>
 				<div class="modal-body flex-grow-1">
 					<div class="mb-1">
-						  <label class="form-label" for="fp-range">Select Date</label>
+						  <label class="form-label" for="fp-range">Course Name</label>
 <!--                        <input type="text" id="fp-default" class="form-control flatpickr-basic" placeholder="YYYY-MM-DD" />-->
-						  <input type="text" id="fp-range" class="form-control flatpickr-range bg-white" placeholder="YYYY-MM-DD to YYYY-MM-DD" />
+						  <input type="text" id="fp-range" name="name" value="{{Request :: get('name')}}" class="form-control  bg-white" placeholder="search here" />
 					</div>
 					
 					<div class="mb-1">
-						<label class="form-label">PO No.</label>
-						<select class="form-select">
-							<option>Select</option>
+						<label class="form-label">Programm Type</label>
+						<select class="form-select" id="category_id" name="category_id">
+							<option value="">Select</option>
+                                    @foreach($categories as $category)
+                                    
+                                    <option value="{{$category->id}}" {{ (Request::get('category_id') == $category->id) ? 'selected':'' }}>{{$category->name}}</option>
+                                    @endforeach
 						</select>
 					</div> 
                     
                     <div class="mb-1">
-						<label class="form-label">Vendor Name</label>
-						<select class="form-select select2">
-							<option>Select</option> 
+						<label class="form-label">Campus Name</label>
+						<select class="form-select select2" id="campuse_id" name="campuse_id">
+                            <option value="">Select</option>
+                            @foreach($campuses as $campuse)
+                            
+                            <option value="{{$campuse->id}}" {{ (Request::get('campuse_id') == $campuse->id) ? 'selected':'' }}>{{$campuse->name}}</option>
+                            @endforeach 
 						</select>
 					</div> 
                     
                     <div class="mb-1">
-						<label class="form-label">Status</label>
-						<select class="form-select">
-							<option>Select</option>
-							<option>Open</option>
-							<option>Close</option>
+						<label class="form-label">Course Eligibility</label>
+						<select class="form-select" id="visibility" name="visibility">
+							<option value="">Select</option>
+                                    <option value="1">Visible</option>
+                                    <option value="0">Not Visible</option>
 						</select>
 					</div> 
 					 
 				</div>
 				<div class="modal-footer justify-content-start">
-					<button type="button" class="btn btn-primary data-submit mr-1">Apply</button>
+					<button type="submit"  class="btn btn-primary data-submit mr-1">Apply</button>
 					<button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
 				</div>
 			</form>
@@ -293,3 +222,33 @@
    
 {{-- </body> --}}
 @endsection
+<script>
+    function exportdata() {
+       var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
+        var fullUrl = "{{url()->full()}}";
+        if(fullUrl_count>1){
+            fullUrl = fullUrl.split('?')[1];
+            fullUrl = fullUrl.replace(/&amp;/g, '&');
+            fullUrl = '?'+fullUrl;
+       }else{
+           fullUrl = '';
+       }
+       var url = "{{url('admin/master/course/course-export')}}"+fullUrl;
+       window.location.href = url;
+   }
+   function orderCourse(slug) {
+       var url = "{{url('admin/master/course/order-course')}}"+"/"+slug;
+       window.location.href = url;
+   }
+   function editCourse(slug) {
+       var url = "{{url('course_list_edit')}}"+"/"+slug;
+       window.location.href = url;
+   }
+   function deleteCourse(slug) {
+       var url = "{{url('course_list_delete')}}"+"/"+slug;
+       window.location.href = url;
+   }
+   $('.alphaOnly').keyup(function() {
+           this.value = this.value.replace(/[^a-z|A-Z\.]/g, '');
+       });
+</script>

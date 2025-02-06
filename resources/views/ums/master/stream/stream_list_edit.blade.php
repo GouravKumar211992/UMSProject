@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
     
@@ -26,7 +26,7 @@
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
-                        <button onclick="javascript: history.go(-1)" class=" btn btn-primary btn-sm mb-50 mb-sm-0 waves-effect waves-float waves-light "><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Update</button>
+                        <button type="submit" onclick="submitCat();" form="edit_stream_form"  class=" btn btn-primary btn-sm mb-50 mb-sm-0 waves-effect waves-float waves-light "><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Update</button>
                         <button class="btn btn-warning btn-sm mb-50 mb-sm-0" onclick="window.location.reload();" ><i data-feather="refresh-cw"></i>
                             Reset</button> 
 
@@ -34,44 +34,34 @@
                     </div>
                 </div>
             </div>
+
             <div class="content-body bg-white p-4 shadow">
-                                 
+            <form id="edit_stream_form" method="POST" action="{{route('stream_list_update')}}">
+            	@csrf
+                @method('PUT') 
+                <input type="hidden" name="stream_id" value="{{$selected_stream->id}}">                    
         <div class="col-md-12">
         <div class="row align-items-center mb-1">
-            <div class="col-md-4 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3"> Stream<span class="text-danger ">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">BCA</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>                   
-             </div>
 
-            <div class="col-md-4 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Stream Code <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">501</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
+            <div class="col-md-4 ">
+                <div class="d-flex align-items-center">
+                    <label class="form-label mb-0 me-2 col-3">Stream Name<span class="text-danger">*</span></label>
+                    <input type="text" id="course_name" class="form-control" name="stream_name"  value="{{$selected_stream->name}}" >
+                    
                 </div>
+            </div>
+
+
+        
                 
 
             <div class="col-md-4 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Category <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">Professional</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
+                <select  id="category_id" required="" name="category_id" aria-controls="DataTables_Table_0" class="form-select">
+                    <option value="">Please select</option>
+                                @foreach ($categorylist as $category)
+                                    <option value="{{$category->id}}" {{ ($selected_stream->id && ($selected_stream->category_id == $category->id)) ? 'selected':'' }}>{{ ucfirst($category->name) }}</option>
+                                @endforeach
                 </select>
               </div>
 
@@ -83,32 +73,28 @@
         <div class="row align-items-center mb-1">
             <div class="col-md-4 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Campus <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">Dr. Shakuntala Misra National Rehabilitation University</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
+                <select  name="university" aria-controls="DataTables_Table_0" class="form-select">
+                    <option value="">--Please select Campus--</option>
+                    @foreach ($campuselist as $campus)
+                        <option value="{{$campus->id}}" {{ ($selected_stream->id && ($selected_stream->course->campuse->id == $campus->id)) ? 'selected':'' }}>{{ ucfirst($campus->name) }}</option>
+                    @endforeach
                 </select>
               </div>
 
             <div class="col-md-4 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Created On<span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">2024-2025</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
+                <label class="form-label mb-0 me-2 col-3">Course<span class="text-danger">*</span></label>
+                <select  name="course_id" id="course_id" aria-controls="DataTables_Table_0" class="form-select" required>
+                    <option value="">Please select</option>
+                                @foreach ($courseList as $course)
+                                    <option value="{{$course->id}}" {{ ($selected_stream->id && ($selected_stream->course_id == $course->id)) ? 'selected':'' }}>{{ ucfirst($course->name) }}</option>
+                                @endforeach
                 </select>
                 </div>
                 
         </div>
     </div>
 
-
+            </form>
 				
 				<section id="basic-datatable">
                     <div class="row">
@@ -161,19 +147,7 @@
             </div>
         </div>
     </div>
-    <!-- END: Content-->
-
-    <div class="sidenav-overlay"></div>
-    <div class="drag-target"></div>
-
-    <!-- BEGIN: Footer-->
-    <footer class="footer footer-static footer-light">
-        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">Copyright &copy; 2024 <a class="ml-25" href="#" target="_blank">Presence 360</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span></p>
-        
-        <div class="footerplogo"><img src="../../../assets/css/p-logo.png" /></div>
-    </footer>
-    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
-    <!-- END: Footer-->
+   
 	
 	 
     <div class="modal modal-slide-in fade filterpopuplabel" id="filter">
@@ -222,5 +196,28 @@
 		</div>
 	</div>
 
-{{-- </body> --}}
+
+    <script>
+        function submitCat(form) {
+            document.getElementById('edit_stream_form').submit();
+        }
+    $(document).ready(function(){
+    
+    $('#category_id').change(function() {
+        var university=$('#university').val();
+        var id = $('#category_id').val();
+        $("#course_id").find('option').remove().end();
+        $.ajax({
+            url: "/admin/master/stream/get-course-list",
+            data: {"_token": "{{ csrf_token() }}",university:university ,id: id},
+            type: 'POST',
+            success: function(data,textStatus, jqXHR) {
+                $('#course_id').append(data);
+                    
+                
+            }
+        });
+    });	
+    });	
+    </script>
 @endsection

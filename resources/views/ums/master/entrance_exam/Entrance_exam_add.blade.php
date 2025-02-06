@@ -1,4 +1,4 @@
- @extends('admin.admin-meta')
+ @extends('ums.admin.admin-meta')
 
 <!-- BEGIN: Body-->
  @section('content')
@@ -33,13 +33,14 @@
                     <div class="form-group breadcrumb-right">
                         <button class="btn btn-dark btn-sm mb-50 mb-sm-0"onclick="location.href='{{url('/subject_list')}}'"> <i data-feather="arrow-left-circle"></i> Go Back
                             </button>
-                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0" > <i data-feather="check-circle" style="font-size: 40px;"></i>
+                        <button type="submit" form="cat_form" class="btn btn-primary btn-sm mb-50 mb-sm-0" > <i data-feather="check-circle" style="font-size: 40px;"></i>
                             Publish</button>
 
 
                     </div>
                 </div>
             </div>
+            <form method="POST" id="cat_form" action="{{route('post-entrance-exam')}}">
             <div class="content-body bg-white p-3 shadow">
                 <div class="row gy-0  mt-3 p-2 ">
 
@@ -87,13 +88,8 @@
                             </div>
 
                             <div class="col-md-8">
-                                <select name="" id="" class="form-control">
-                                    <option value="">-- Select Program--</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
-                                </select>                            </div>
+                                <input class="form-control"  id="program_name" name="program_name" >
+                                                            </div>
                         </div>
 
                         <div class="row align-items-center mb-1">
@@ -234,7 +230,7 @@
 
                 </div>
             </div>
-
+        </form>
 
                
 

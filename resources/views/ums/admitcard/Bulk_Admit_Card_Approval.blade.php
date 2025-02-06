@@ -59,6 +59,7 @@
   
 <!-- BEGIN: Content-->
 <div class="app-content content">
+  @include('ums.admin.notifications')
     <div class="content-overlay"></div>
     <div class="header-navbar-shadow"></div>
     <div class="content-wrapper container-xxl p-0">
@@ -77,7 +78,7 @@
             </div>
             <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                 <div class="form-group breadcrumb-right"> 
-                  <button class="btn btn-primary btn-sm" href="#">
+                  <button type="submit" form="form_data" class="btn btn-primary btn-sm" href="#">
                     <i data-feather="check-circle" ></i>
                     Generate Admit Card
                 </button>
@@ -90,103 +91,115 @@
                 </div>
             </div>
         </div>
+        <form method="POST" id="form_data" action="{{route('admit-card_update')}}">
         <div class="customernewsection-form poreportlistview p-1">
             <div class="row">
                 <!-- First Row -->
                 <div class="col-md-3">
                     <div class="mb-1">
                         <label class="form-label" for="paperType">Paper Type:</label>
-                        <select id="paperType" class="form-select">
-                            <option>--Choose Course--</option>
-                            <option>Raw Material</option>
-                            <option>Semi Finished</option>
-                            <option>Finished Goods</option>
-                            <option>Traded Item</option>
-                            <option>Asset</option>
-                            <option>Expense</option>
+                        <select name="paper_type" id="paper_type" class="form-select">
+                          <option value="">Choose Paper Type</option>
+                          <option value="regular" @if(Request()->paper_type=='regular') selected @endif>REGULAR</option>
+                          <option value="back_paper" @if(Request()->paper_type=='back_paper') selected @endif>BACK</option>
+                          <option value="special_back" @if(Request()->paper_type=='special_back') selected @endif>SPLBACK</option>
+                          <option value="final_back_paper" @if(Request()->paper_type=='final_back_paper') selected @endif>FINAL BACK</option>
+                          <option value="compartment" @if(Request()->paper_type=='compartment') selected @endif>Supplementary</option>
                         </select>
+                        <span class="text-danger">{{ $errors->first('course') }}</span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="mb-1">
                         <label class="form-label" for="campus">Campus:</label>
-                        <input type="text" id="campus" placeholder="Select" class="form-control mw-100 ledgerselecct" />
+                        <select name="campus_id" id="campus_id"  class="form-select" onChange="return $('#form_data').submit();">
+                        <option value="">--Choose Campus--</option>
+               @foreach($campuses as $campus)
+                <option value="{{$campus->id}}" @if(Request()->campus_id==$campus->id) selected @endif>{{$campus->name}}</option>
+                @endforeach
+                        </select>
+                        <span class="text-danger">{{ $errors->first('course') }}</span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="mb-1">
                         <label class="form-label" for="course">Course:</label>
-                        <select id="course" class="form-select select2">
-                            <option value="">--Batch--</option>
-                            <option value="2021-2022">2021-2022</option>
-                            <option value="2022-2023">2022-2023</option>
-                            <option value="2023-2024">2023-2024</option>
-                            <option value="2023-2024FEB">2023-2024FEB</option>
-                            <option value="2023-2024JUL">2023-2024JUL</option>
-                            <option value="2023-2024AUG">2023-2024AUG</option>
-                            <option value="2024-2025">2024-2025</option>
+                        <select name="course" id="course" class="form-select select2" onChange="return $('#form_data').submit();">
+                          <option value="">--Choose Course--</option>
+                          @foreach($courses as $course)
+                            <option value="{{$course->id}}" @if(Request()->course==$course->id) selected @endif >{{$course->name}}</option>
+                              @endforeach
                         </select>
+                        <span class="text-danger">{{ $errors->first('course') }}</span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="mb-1">
                         <label class="form-label" for="semester">Semester:</label>
-                        <select id="semester" class="form-select select2">
-                            <option>Regular</option>
-                            <option>Raw Material</option>
-                            <option>Semi Finished</option>
-                            <option>Finished Goods</option>
+                        <select name="semester" id="semester" class="form-select select2">
+                          <option value="ALL">All Semester</option>
+                          @foreach($semesters as $semester)
+                          <option value="{{$semester->id}}" @if(Request()->semester==$semester->id) selected @endif >{{$semester->name}}</option>
+                          @endforeach
                         </select>
+                        <span class="text-danger">{{ $errors->first('course') }}</span>
                     </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-1">
                       <label class="form-label" for="academicSession">Academic Session:</label>
-                      <select id="academicSession" class="form-select">
-                          <option>--Choose Course--</option>
-                          <option>Raw Material</option>
-                          <option>Semi Finished</option>
-                          <option>Finished Goods</option>
-                          <option>Traded Item</option>
-                          <option>Asset</option>
-                          <option>Expense</option>
+                      <select name="session" id="session"  class="form-select">
+                        <option value="">--Select Session--</option>
+                        @foreach($sessions as $session)
+                        <option value="{{$session->academic_session}}" @if(Request()->session==$session->academic_session) selected @endif >{{$session->academic_session}}</option>
+                        @endforeach
                       </select>
+                      <span class="text-danger">{{ $errors->first('course') }}</span>
                   </div>
               </div>
               <div class="col-md-3">
                   <div class="mb-1">
                       <label class="form-label" for="month">Month:</label>
-                      <input type="text" id="month" placeholder="Select" class="form-control mw-100 ledgerselecct" />
+                      <select name="month" id="month" class="form-select">
+
+                      <option value="">--Select Month--</option>
+                @for($month=1;$month<=12;$month++)
+                @php $month_text = date('F',strtotime('2023-'.$month.'-01')); @endphp
+                <option value="{{$month_text}}">{{$month_text}}</option>                    
+                @endfor
+                      </select>
+                      <span class="text-danger">{{ $errors->first('course') }}</span>
                   </div>
               </div>
               <div class="col-md-3">
                   <div class="mb-1">
                       <label class="form-label" for="year">Year:</label>
-                      <select id="year" class="form-select select2">
-                          <option value="">--Batch--</option>
-                          <option value="2021-2022">2021-2022</option>
-                          <option value="2022-2023">2022-2023</option>
-                          <option value="2023-2024">2023-2024</option>
-                          <option value="2023-2024FEB">2023-2024FEB</option>
-                          <option value="2023-2024JUL">2023-2024JUL</option>
-                          <option value="2023-2024AUG">2023-2024AUG</option>
-                          <option value="2024-2025">2024-2025</option>
+                      <select name="year" id="year" class="form-select select2">
+                        <option value="">--Select Year--</option>
+                        @for($year=(date('Y')-1);$year<=date('Y');$year++)
+                        <option value="{{$year}}">{{$year}}</option>
+                        @endfor
                       </select>
+                      <span class="text-danger">{{ $errors->first('course') }}</span>
                   </div>
               </div>
               <div class="col-md-3">
                   <div class="mb-1">
                       <label class="form-label" for="center">Center:</label>
-                      <select id="center" class="form-select select2">
-                          <option>Regular</option>
-                          <option>Raw Material</option>
-                          <option>Semi Finished</option>
-                          <option>Finished Goods</option>
+                      <select  name="center" id="center" class="form-select select2">
+                        <option value="">--Select Center--</option>
+                        @foreach($centers as $center)
+     
+      <option value="{{$center->center_code}}" @if(Request()->center==$center->center_code) selected @endif >{{$center->center_code}} {{$center->center_name}}</option>
+        @endforeach
+                       
                       </select>
+                      <span class="text-danger">{{ $errors->first('course') }}</span>
                   </div>
               </div>
             </div>
         </div>
+      </form>
     </div>
   </div>
   
@@ -431,4 +444,20 @@
 <!-- END: Body-->
 
 </html> --}}
+<script>
+  $(document).ready(function(){
+  $('#course').change(function() {
+var course=$('#course').val();
+var formData = {course:course,"_token": "{{ csrf_token() }}"}; //Array 
+$.ajax({
+  url : "{{route('semester_list')}}",
+  type: "POST",
+  data : formData,
+  success: function(data, textStatus, jqXHR){
+    $('#semester').html(data);
+  },
+});
+});
+});
+</script>
 @endsection

@@ -1,5 +1,6 @@
   @extends('ums.admin.admin-meta')
    @section('content')
+   {{-- {{dd($complaints)}} --}}
        
   
 {{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col=""> --}}
@@ -64,66 +65,20 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach($data as $index=>$data)
                                                 <tr>
-                                                  <td>1</td>
-                                                  <td>Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                  <td>B.Com. LL.B. (Hons.)</td>
-                                                  <td>224140064</td>
-                                                  <td>SUNEEL KUMAR</td>
-                                                  <td>MALE</td>
-                                                  <td>1</td>
-                                                  <td>Pending</td>
-                                                  <td></td>
-                                                  <td> <a href="grievance_complaint_list">Action</a></td>
+                                                    <td>{{++$index}}</td>
+                                                    <td>{{$data->enrollment->course->campuse->name}}</td>
+                                                    <td>{{$data->enrollment->course->name}}</td>
+                                                    <td>{{$data->roll_number}}</td>
+                                                    <td>{{$data->student->full_name}}</td>
+                                                    <td>{{$data->student->gender}}</td>
+                                                    <td>{{$data->complaintCount()}}</td>
+                                                    <td>{{$data->status_text}}</td>
+                                                    <td>{{$data->created_at}}</td>
+                                                    <td><a href="{{url('grievance-complaint-list')}}?roll_number={{$data->roll_number}}" target="_blank">Action</a></td>
                                                 </tr>
-                                                <tr>
-                                                  <td>2</td>
-                                                  <td>Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                  <td>M.A. (History)</td>
-                                                  <td>191050014</td>
-                                                  <td>PANKAJ KUMAR</td>
-                                                  <td>MALE</td>
-                                                  <td>2</td>
-                                                  <td>Pending</td>
-                                                  <td></td>
-                                                  <td> <a href="grievance_complaint_list">Action</a></td>
-                                                </tr>
-                                                <tr>
-                                                  <td>3</td>
-                                                  <td>Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                  <td>M.B.A.</td>
-                                                  <td>202110021</td>
-                                                  <td>MOHD KAIFI</td>
-                                                  <td>MALE</td>
-                                                  <td>1</td>
-                                                  <td>Pending</td>
-                                                  <td></td>
-                                                  <td> <a href="grievance_complaint_list">Action</a></td>
-                                                </tr>
-                                                <tr>
-                                                  <td>4</td>
-                                                  <td>Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                  <td>B.Tech. (CSE)</td>
-                                                  <td>188330029</td>
-                                                  <td>NAVNEET SHANDILYA</td>
-                                                  <td>MALE</td>
-                                                  <td>1</td>
-                                                  <td>Pending</td>
-                                                  <td></td>
-                                                  <td> <a href="grievance_complaint_list">Action</a></td>
-                                                </tr>
-                                                <tr>
-                                                  <td>5</td>
-                                                  <td>Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                  <td>B.Tech. (CSE)</td>
-                                                  <td>188330014</td>
-                                                  <td>ANMOL CHAUDHARI</td>
-                                                  <td>MALE</td>
-                                                  <td>1</td>
-                                                  <td>Pending</td>
-                                                  <td></td>
-                                                  <td> <a href="grievance_complaint_list">Action</a></td>
-                                                </tr>
+                                                @endforeach
                                               </tbody>
                                         </table>
                                     </div>

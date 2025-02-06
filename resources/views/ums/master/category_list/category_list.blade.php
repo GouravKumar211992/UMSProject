@@ -1,9 +1,10 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
     <!-- END: Main Menu-->
 @section('content')
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
+        @include('ums.admin.notifications')
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
             <div class="content-header row">
@@ -51,13 +52,24 @@
                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
+                                            @foreach ($all_categories as $index=>$item)
+                                            
+                                           
                                             <tbody>
                                                
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td class="fw-bolder text-dark">Professional</td>
-                                                    <td >Jul 29th, 2020</td>
-                                                    <td>Active</td>
+                                                    <td>{{ $index + 1 }}</td>
+                                                    <td class="fw-bolder text-dark">{{$item->name}}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($item->created_at)->format('F j, Y') }}</td>
+
+                                                    <td>
+                                                        @if($item->status == 0)
+                                                        <span class="badge rounded-pill badge-light-danger">Inactive</span>
+                                                        @else
+                                                        <span class="badge rounded-pill badge-light-success">Active</span>
+                                                        @endif
+                                                    </td>
+                                                    
                                                     
                                                     <td class="tableactionnew">  
                                                         <div class="dropdown">
@@ -65,13 +77,13 @@
                                                                 <i data-feather="more-vertical"></i>
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" href="{{ url('category_list_edit') }}">
+                                                                <a class="dropdown-item"  onclick="editCat('{{$item->id}}')">
                                                                     <i data-feather="edit" class="me-50"></i>
                                                                     <span>Edit</span>
                                                                 </a> 
-                                                                <a class="dropdown-item" href="#" onclick="window.confirm('Are you sure ? delere this data')">
+                                                                <a class="dropdown-item" href="#" onclick="deleteCat('{{$item->id}}')" >
                                                                     <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span>Delete</span>
+                                                                    <span onclick="window.confirm('Are you sure ? delere this data')">Delete</span>
                                                                 </a>
                                                             </div>
                                                         </div> 
@@ -79,6 +91,7 @@
                                                 </tr>
                                                 
                                             </tbody>
+                                            @endforeach
                                         </table>
                                     </div>
 								
@@ -188,58 +201,54 @@
     
       
     
-	 
+    @include('ums.admin.search-model', ['searchTitle' => 'Campus List Search'])
     <div class="modal modal-slide-in fade filterpopuplabel" id="filter">
 		<div class="modal-dialog sidebar-sm">
-			<form class="add-new-record modal-content pt-0"> 
+			<form class="add-new-record modal-content pt-0" id="approveds-form" method="GET"  action="{{ url('category_list') }}" > 
 				<div class="modal-header mb-1">
 					<h5 class="modal-title" id="exampleModalLabel">Apply Filter</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
 				</div>
 				<div class="modal-body flex-grow-1">
 					<div class="mb-1">
-						  <label class="form-label" for="fp-range">Select Date Range</label>
-						  <input type="text" id="fp-range" class="form-control flatpickr-range" placeholder="YYYY-MM-DD to YYYY-MM-DD" />
+						  <label class="form-label" for="fp-range">Name</label>
+						  <input type="text" id="fp-range" name="name" class="form-control " value="{{Request::get('name')}}" placeholder="search here" />
 					</div>
 					
-					<div class="mb-1">
-						<label class="form-label">Select Incident No.</label>
-						<select class="form-select select2">
-							<option>Select</option>
-						</select>
-					</div> 
+				
                     
-                    <div class="mb-1">
-						<label class="form-label">Select Customer</label>
-						<select class="form-select select2">
-							<option>Select</option>
-						</select>
-					</div> 
-                    
-                    <div class="mb-1">
-						<label class="form-label">Assigned To</label>
-						<select class="form-select select2">
-							<option>Select</option>
-						</select>
-					</div> 
-                    
-                    <div class="mb-1">
-						<label class="form-label">Status</label>
-						<select class="form-select">
-							<option>Select</option> 
-							<option>Open</option>
-							<option>Close</option>
-							<option>Re-Allocatted</option>
-						</select>
-					</div> 
+                     
 					 
 				</div>
 				<div class="modal-footer justify-content-start">
-					<button type="button" class="btn btn-primary data-submit mr-1">Apply</button>
-					<button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+					<button type="submit" form="approveds-form" class="btn btn-primary data-submit mr-1">Apply</button>
+					<button type="reset"  class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
 				</div>
 			</form>
 		</div>
 	</div>
 
    @endSection
+   <script>
+    function exportdata() {
+        var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
+		 var fullUrl = "{{url()->full()}}";
+		 if(fullUrl_count>1){
+			 fullUrl = fullUrl.split('?')[1];
+			 fullUrl = fullUrl.replace(/&amp;/g, '&');
+			 fullUrl = '?'+fullUrl;
+		}else{
+            fullUrl = '';
+        }
+        var url = "{{url('admin/master/category/category-export')}}"+fullUrl;
+        window.location.href = url;
+    }
+	function editCat(slug) {
+		var url = "{{url('category_list_edit')}}"+"/"+slug;
+		window.location.href = url;
+	}
+	function deleteCat(slug) {
+        var url = "{{url('category_list_delete')}}"+"/"+slug;
+        window.location.href = url;
+    }
+</script>

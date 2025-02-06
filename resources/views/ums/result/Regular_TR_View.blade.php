@@ -1,57 +1,15 @@
-@extends("admin.admin-meta")
+@extends("ums.admin.admin-meta")
 @section("content")
 
+    @php
 
-{{-- <!DOCTYPE html>
-<html class="loading" lang="en" data-textdirection="ltr">
-<!-- BEGIN: Head-->
-
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
-    
-    <title>Presence 360</title>
-     	
-    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../../../assets/css/favicon.png">
-     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600;700" rel="stylesheet">
-
-    <!-- BEGIN: Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/responsive.bootstrap5.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/buttons.bootstrap5.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/rowGroup.bootstrap5.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css">
-	<link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/forms/select/select2.min.css">
-    <!-- END: Vendor CSS-->
-
-    <!-- BEGIN: Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/dark-layout.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/bordered-layout.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/semi-dark-layout.css">
-
-    <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
-    <!-- END: Page CSS-->
-
-    <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
-    <link rel="stylesheet" type="text/css" href="../../../assets/css/iconsheet.css">
-    <!-- END: Custom CSS--> 
-
-</head>
-<body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col="">
-    @include('header'); 
-    @include('sidebar');
-    <!-- BEGIN: Content--> --}}
+    $course_name = '';
+    $semester_name = '';
+    @endphp
 
     <div class="app-content content">
+        <form method="get" id="form_data">
+
         <div class="big-box d-flex justify-content-between mb-1 align-items-center">
 
          
@@ -82,73 +40,58 @@
     </div>
 
 
-        <!-- options section -->
-    {{-- <div class="col-md-12">
-        <div class="row align-items-center mb-1">
-            <div class="col-md-4 text-center">
-                <label class="form-label ">Base Rate % <span class="text-danger">*</span></label>
-                <input type="number" value="5" class="form-control ">
-            </div>
-            <div class="col-md-4 text-center">
-                <label class="form-label">Effective from <span class="text-danger">*</span></label>
-                <input type="date" class="form-control">
-            </div>
-            <div class="col-md-4 text-center">
-                <label class="form-label">Additional Input <span class="text-danger">*</span></label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-    </div> --}}
-
-
     <div class="col-md-12">
         <div class="row align-items-center mb-1">
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Campus <span class="text-danger">*</span></label>
-                <select data-live-search="true" name="campus_id" id="campus_id" style="border-color: #c0c0c0;" class="form-control" onchange="return $('#form_data').submit();">
-		<option value="">--Choose Campus--</option>
-							<option value="28">Dr. RPS INSTITUTE OF EDUCATION</option>
-								<option value="1">Dr. Shakuntala Misra National Rehabilitation University</option>
-								<option value="9">GRAMODYOG SEWA SANSTHAN</option>
-								<option value="20">Handicapped Development Council, Sikandara, Agra</option>
-								<option value="5">Hind Mahavidyalaya, Barabanki</option>
-								<option value="21">JAY NAND SPECIAL TEACHERS’ TRAINING INSTITUTE, AYODHYA </option>
-								<option value="8">K.S. Memorial College for Research &amp; Rehabilitation, Raebareli</option>
-								<option value="2">Kalyanam Karoti, Mathura</option>
-								<option value="18">MAA BALIRAJI SEWA SANSTHAN(ALLAHABAD)</option>
-								<option value="17">MAA BALIRAJI SEWA SANSTHAN(MIRZAPUR)</option>
-								<option value="26">MAHARISHI DAYANAND REHABILITATION INSTITUTE</option>
-								<option value="3">Nai Subah,Village-Khanav, Post-Bachhav, Varanasi</option>
-								<option value="27">PRAKASH KIRAN EDUCATIONAL INSTITUTION</option>
-								<option value="13">PRAMILA KATIYAR SPECIAL EDUCATION INSTITUTE</option>
-								<option value="24">Sarveshwari Shikshan Sansthan, Kausambi</option>
-								<option value="25">SHRI CHANDRABHAN SINGH DEGREE COLLEGE</option>
-								<option value="29">SOCIETY FOR INSTITUTE OF PSYCHOLOGICAL RESEARCH &amp; HEALTH</option>
-								<option value="23">T. S. Misra College of Paramedical Sciences, Lucknow</option>
-								<option value="6">T.S. Misra College of Nursing, Lucknow</option>
-								<option value="4">T.S. Misra Medical College and Hospital, Lucknow</option>
-							</select>
+                <select data-live-search="true" name="campus_id" id="campus_id" style="border-color: #c0c0c0;" class="form-control" onChange="return $('#form_data').submit();">
+                    <option value="">--Choose Campus--</option>
+                        @foreach($campuses as $campus)
+                            <option value="{{$campus->id}}" @if(Request()->campus_id==$campus->id) selected @endif >{{$campus->name}}</option>
+                            @endforeach
+                        </select>
+                        <span class="text-danger">{{ $errors->first('campus_id') }}</span>
             </div>
     
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Courses <span class="text-danger">*</span></label>
-                <select data-live-search="true" name="course" id="course" style="border-color: #c0c0c0;" class="form-control js-example-basic-single " onchange="return $('#form_data').submit();">
+                <select data-live-search="true" name="course" id="course" style="border-color: #c0c0c0;" class="form-control js-example-basic-single " onChange="return $('#form_data').submit();">
 					<option value="">--Choose Course--</option>
-														</select>
+							@foreach($courses as $course)
+								@if(Request()->course==$course->id)
+									@php
+										$course_name = $course->name;
+									@endphp
+								@endif
+								<option value="{{$course->id}}" @if(Request()->course==$course->id) selected @endif >{{$course->name}}</option>
+								@endforeach
+							</select>
+							<span class="text-danger">{{ $errors->first('course') }}</span>
             </div>
     
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Semester <span class="text-danger">*</span></label>
-                <select data-live-search="true" name="semester" id="semester" style="border-color: #c0c0c0;" class="form-control js-example-basic-single " onchange="$('#group_name').prop('selectedIndex',0); return $('#form_data').submit();">
-                        <option value="">--Select Semester--</option>
-                                            </select>
+                <select data-live-search="true" name="semester" id="semester" style="border-color: #c0c0c0;" class="form-control js-example-basic-single " onChange="$('#group_name').prop('selectedIndex',0); return $('#form_data').submit();">
+                    <option value="">--Select Semester--</option>
+                    @foreach($semesters as $semester)
+                        @if(Request()->semester==$semester->id)
+                            @php
+                                $semester_name = $semester->name;
+                            @endphp
+                        @endif
+                    <option value="{{$semester->id}}" @if(Request()->semester==$semester->id) selected @endif >{{$semester->name}}</option>
+                    @endforeach
+                </select>
+                <span class="text-danger">{{ $errors->first('semester') }}</span>
             </div>
+
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Result Type <span class="text-danger">*</span></label>
                 <select name="form_type" id="form_type" class="form-control" style="border-color: #c0c0c0;">
-						<option value="regular">Regular</option>
-						<option value="UFM">UFM</option>
-					</select>
+                    <option value="regular" @if(Request()->result_type == 'regular') selected @endif >Regular</option>
+                    <option value="UFM" @if(Request()->result_type == 'UFM') selected @endif >UFM</option>
+                </select>
+                <span class="text-danger">{{ $errors->first('academic_session') }}</span>
             </div>
         </div>
     </div>
@@ -158,42 +101,41 @@
             
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Academic Session <span class="text-danger">*</span></label>
-                <select name="academic_session" id="academic_session" class="form-control" style="border-color: #c0c0c0;" onchange="return $('#form_data').submit();">
-                        						<option value="2024-2025">2024-2025</option>
-												<option value="2023-2024AUG">2023-2024AUG</option>
-												<option value="2023-2024JUL">2023-2024JUL</option>
-												<option value="2023-2024FEB">2023-2024FEB</option>
-												<option value="2023-2024">2023-2024</option>
-												<option value="2022-2023">2022-2023</option>
-												<option value="2021-2022">2021-2022</option>
-											</select>           
+                <select name="academic_session" id="academic_session" class="form-control" style="border-color: #c0c0c0;" onChange="return $('#form_data').submit();">
+                    @foreach($sessions as $sessionRow)
+                    <option value="{{$sessionRow->academic_session}}" @if(Request()->academic_session == $sessionRow->academic_session) selected @endif >{{$sessionRow->academic_session}}</option>
+                    @endforeach
+                </select>
+                <span class="text-danger">{{ $errors->first('academic_session') }}</span>           
             </div>
 
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Paper Size <span class="text-danger">*</span></label>
-                <select name="paper_size" id="paper_size" class="form-control" style="border-color: #c0c0c0;">
-						<option value="">Select</option>
-						<!-- <option value="a4">A4</option>
-						<option value="a3">A3</option>
-						<option value="a2">A2</option> -->
-						<option value="a1">A1</option>
-						<!-- <option value="a0">A0</option> -->
-					</select>           
+            	<select name="paper_size" id="paper_size" class="form-control" style="border-color: #c0c0c0;">
+                    <option value="">Select</option>
+                    <!-- <option value="a4">A4</option>
+                    <option value="a3">A3</option>
+                    <option value="a2">A2</option> -->
+                    <option value="a1">A1</option>
+                    <!-- <option value="a0">A0</option> -->
+                </select>
+                <span class="text-danger">{{ $errors->first('paper_size') }}</span>          
             </div>
 
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">One Paper Group <span class="text-danger">*</span></label>
-                <select name="onepagegroup" id="onepagegroup" class="form-control" style="border-color: #c0c0c0;" required="">
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-					</select>           
+                <select name="onepagegroup" id="onepagegroup" class="form-control" style="border-color: #c0c0c0;" required>
+                    <option value="1" @if(Request()->onepagegroup==1) selected @endif >1</option>
+                    <option value="2" @if(Request()->onepagegroup==2) selected @endif >2</option>
+                    <option value="3" @if(Request()->onepagegroup==3) selected @endif >3</option>
+                    <option value="4" @if(Request()->onepagegroup==4) selected @endif >4</option>
+                </select>
+                <span class="text-danger">{{ $errors->first('onepagegroup') }}</span>          
             </div>
 
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Paper SN# <span class="text-danger">*</span></label>
-                <input type="number" class="form-control">
+                <input type="number" name="page_index" class="form-control" style="border-color: #c0c0c0;" value="{{(Request()->page_index)?Request()->page_index:'1'}}">
             </div>
         </div>
     </div>
@@ -203,39 +145,33 @@
             
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">From Serial Number<span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">All</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
+                <input type="number" name="from_serial_no" class="form-control" style="border-color: #c0c0c0;" value="{{Request()->from_serial_no}}">
+
             </div>
 
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">To Serial Number<span class="text-danger">*</span></label>
-                <input type="number" class="form-control">
+                <input type="number" name="to_serial_no" class="form-control" style="border-color: #c0c0c0;" value="{{Request()->to_serial_no}}">
             </div>
 
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Roll Number <span class="text-danger">*</span></label>
-                <input type="number" class="form-control">
-            </div>
+                <input type="text" name="roll_no" class="form-control" style="border-color: #c0c0c0;" value="{{(Request()->roll_no)?Request()->roll_no:''}}">
+                <span class="text-danger">{{ $errors->first('roll_no') }}</span>            </div>
 
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Subject List<span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">All</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
+                <label class="form-label mb-0 me-2 col-3">Group List<span class="text-danger">*</span></label>
+                <select name="group_name[]" id="group_name" class="form-control" style="border-color: #c0c0c0;" multiple>
+                    <option value="">All</option>
+                    @foreach($group_list as $group_index=>$group_row)
+                    <option value="{{$group_row}}" @if(Request()->group_name && in_array($group_row,Request()->group_name)) selected @endif >{{++$group_index}}){{$group_row}}</option>
+                    @endforeach
                 </select>
+                <span class="text-danger">{{ $errors->first('onepagegroup') }}</span>
             </div>
     
         </div>
+        </form>
     </div>
 
 
@@ -283,176 +219,272 @@
                             <div class="card">
 								
 								   
-                                {{-- <div class="table-responsive">
+                                 <div class="table-responsive">
                                         <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
+                                            @php $count = 1;
+                                            $page = 1;
+                                            if(Request()->semester==32){
+                                                $page = 64;
+                                            }
+                                            if(Request()->semester==31){
+                                                $page = 65;
+                                            }
+                                             if(Request()->page == 2){
+                                                 $count = $page+1;
+                                             }
+                                            @endphp
+                                            @foreach($full_retult as $index_retult=>$full_retult_row)
+                                            @if(Request()->roll_no)
+                                            @php $examStudents = $full_retult_row->studentByGroup()->where('roll_no',Request()->roll_no); @endphp
+                                            @else
+                                            @php $examStudents = $full_retult_row->studentByGroup(); @endphp
+                                            @endif
+                                            @php $sub_count = count(explode(' ',$full_retult_row->subject)); @endphp
+                                            @if($full_retult_row && $full_retult_row->get_last_semester()->id == Request()->semester)
+                                                @php $column_count = ($sub_count*4) + 8; @endphp
+                                            @else
+                                                @php $column_count = ($sub_count*4) + 6; @endphp
+                                            @endif
+                                            @php $onepagegroup = (Request()->onepagegroup)?Request()->onepagegroup:1; @endphp
+                                            @php $headerVisible = ($index_retult !=0 && $index_retult%$onepagegroup!=0)?'hidden':''; @endphp
+                                            @if($index_retult>0)
+                                            <table class="table table-responsive {{$headerVisible}} @if($headerVisible=='') page-break @endif" style="width: 100%;border-collapse: unset;">
+                                                <tfoot>
+                                                    <tr>
+                                                        <th colspan="{{$column_count}}" style="border: none !important;">
+                                                            <br/>
+                                                            <br/>
+                                                            <br/>
+                                                            <br/>
+                                                            <br/>
+                                                            <br/>
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="{{$column_count/2}}" style="border: none !important;text-align: left;font-size: 15px;"><strong>P=PASSED, PCP=PROMOTED WITH CARRYOVER PAPERS, A=ABSENT, LG=LETTER GRADE, QP=QUALITY POINT, SGPA=SEMESTER GRADE POINT AVERAGE, WH=WITHHELD</strong></th>
+                                                        <th colspan="{{$column_count/2}}" style="border: none !important;text-align: right;font-size: 15px;"><strong>CONTROLLER OF EXAMINATION</strong></th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                            @endif
+                                            <br/>
+                                            <table class="table table-responsive {{$headerVisible}}" style="width: 100%;border-collapse: unset;">
+                                                @php
+                                                $sem_text = 'SEMESTER END';
+                                                @endphp
+                                                <tr>
+                                                    <th colspan="{{$column_count}}" style="border: none !important;font-size: 25px;font-weight: bold;">
+                                                        DR. SHAKUNTALA MISRA NATIONAL REHABILITATION UNIVERSITY, LUCKNOW
+                                                        <br>
+                                                        {{strtoupper($sem_text)}} EXAMINATION RESULT, 
+                                    
+                                                        @foreach($full_retult_row->subject_sequence as $selected_subjects)
+                                                        @php
+                                                        if(isset($examStudents[0])){
+                                                            $examStudents_value = $examStudents[0];
+                                                        }
+                                                        else if(isset($examStudents[1])){
+                                                            $examStudents_value = $examStudents[1];
+                                                        }
+                                                        else if(isset($examStudents[2])){
+                                                            $examStudents_value = $examStudents[2];
+                                                        }
+                                                        @endphp
+                                                        @if(isset($examStudents_value))
+                                                            @php $result_single = $selected_subjects->getResult($examStudents_value) @endphp
+                                                        @endif
+                                                        @endforeach
+                                    
+                                                        @if($course_single && $course_single->semester_type=='year')
+                                                            MAY-{{date('Y')}}
+                                                        @elseif(isset($result_single) && $result_single)
+                                                            @if($result_single->session_name=='DECEMBER-2023')
+                                                            DEC-2023
+                                                            @else
+                                                            {{$result_single->session_name}}
+                                                            @endif
+                                                        @endif
+                                    
+                                    
+                                                        <br>
+                                                        STATEMENT OF MARKS AND GRADES
+                                                        @if(Request()->form_type == 'UFM')
+                                                        <br>
+                                                        UFM RESULT
+                                                        @endif
+                                                    </th>
+                                                </tr>
+                                            </table>
+                                            <br/>
+                                            <br/>
+                                            <table class="table" style="width: 100% !important;" id="example" border="1" cellpadding="0" cellspacing="0">
                                             <thead>
                                                 <tr>
-                                                    <th>No.</th>
-                                                    <th>ROLL NO</th>
-                                                    <th>NAME</th>
-                                                    <th>GRAND TOTAL</th>
-                                                    <th>RESULT</th>
-                                                    <th>Action</th>
+                                                    <th style="text-align: left !important;" colspan="{{$column_count}}">
+                                                        <!-- GRADE TYPE : @if($grade_type) OLD @else NEW @endif -->
+                                                        <!-- <br> -->
+                                                        COURSE : {{$semester_details->course->name}}
+                                                        <br>
+                                                        SEMESTER : {{$semester_details->name}}
+                                                        <br>
+                                                        SUBJECT CODES : {{$full_retult_row->subject}}
+                                                        @if(Request()->campus_id!=1)
+                                                        <br>
+                                                        @if($campus_details)
+                                                        CAMPUS : {{$campus_details->name}}
+                                                        @endif
+                                                        @endif
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th rowspan="3">SN#</th>
+                                                    <th rowspan="3">ROLL NO.</th>
+                                                    <th rowspan="3" style="min-width: 200px;text-align: left;">NAME</th>
+                                                    @foreach($full_retult_row->subject_sequence as $selected_subjects_header)
+                                                    <th colspan="4" style="max-width: 300px;">{{strtoupper($selected_subjects_header->name)}}</th>
+                                                    @endforeach
+                                                    <th rowspan="3">QP</th>
+                                                    <th rowspan="3">SGPA</th>
+                                                    <th rowspan="3">RESULT</th>
+                                                    @if($full_retult_row && $full_retult_row->get_last_semester()->id == Request()->semester)
+                                                    <th rowspan="3">CGPA</th>
+                                                    <th rowspan="3">OVERALL RESULT</th>
+                                                    @endif
+                                                </tr>
+                                                <tr>
+                                                    @foreach($full_retult_row->subject_sequence as $selected_subjects_header)
+                                                    <th colspan="4">{{$selected_subjects_header->sub_code}}</th>
+                                                    @endforeach
+                                                </tr>
+                                                <tr>
+                                                    @foreach($full_retult_row->subject_sequence as $selected_subjects_header)
+                                    
+                                                    @if($selected_subjects_header->internal_maximum_mark>0)
+                                                    <th>INT<br>{{$selected_subjects_header->internal_maximum_mark}}</th>
+                                                    @else
+                                                    <th>INT<br>-</th>
+                                                    @endif
+                                    
+                                                    @if($selected_subjects_header->maximum_mark>0)
+                                                    <th>EXT<br>{{$selected_subjects_header->maximum_mark}}</th>
+                                                    @else
+                                                    <th>EXT<br>-</th>
+                                                    @endif
+                                    
+                                                    @if($selected_subjects_header->internal_maximum_mark==0 && $selected_subjects_header->maximum_mark==0)
+                                                    <th>TOTAL<br>-</th>
+                                                    @else
+                                                    <th>TOTAL<br>{{$selected_subjects_header->total_marks}}</th>
+                                                    @endif
+                                    
+                                                    <th>LG</th>
+                                                    @endforeach
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td class="fw-bolder text-dark">Description will come here</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-danger badgeborder-radius">Description will come here</span></td> 
-                                                    <td>pass</td> 
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item">
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a> 
-                                                                <a class="dropdown-item" href="incident-view.html">
-                                                                    <i data-feather="eye" class="me-50"></i>
-                                                                    <span>View Detail</span>
-                                                                </a> <a class="dropdown-item" data-bs-toggle="modal" href="#reallocate">
-                                                                    <i data-feather="copy" class="me-50"></i>
-                                                                    <span>Re-Allocate</span>
-                                                                </a> <a class="dropdown-item" href="#">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span>Delete</span>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td class="fw-bolder text-dark">05-Sep-2024</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-warning badgeborder-radius">Open</span></td> 
-                                                    <td>pass</td> 
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" >
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a> 
-                                                                <a class="dropdown-item" href="incident-view.html">
-                                                                    <i data-feather="eye" class="me-50"></i>
-                                                                    <span>View Detail</span>
-                                                                </a> <a class="dropdown-item" data-bs-toggle="modal" href="#reallocate">
-                                                                    <i data-feather="copy" class="me-50"></i>
-                                                                    <span>Re-Allocate</span>
-                                                                </a> <a class="dropdown-item" href="#">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span>Delete</span>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>
-                                                </tr>
-                                                  <tr>
-                                                    <td>3</td>
-                                                    <td class="fw-bolder text-dark">05-Sep-2024</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-success badgeborder-radius">Close</span></td> 
-                                                    <td>pass</td> 
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item">
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a> 
-                                                                <a class="dropdown-item" href="incident-view.html">
-                                                                    <i data-feather="eye" class="me-50"></i>
-                                                                    <span>View Detail</span>
-                                                                </a> <a class="dropdown-item" data-bs-toggle="modal" href="#reallocate">
-                                                                    <i data-feather="copy" class="me-50"></i>
-                                                                    <span>Re-Allocate</span>
-                                                                </a> <a class="dropdown-item" href="#">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span>Delete</span>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>
-                                                </tr>
-                                                 <tr>
-                                                    <td>4</td>
-                                                    <td class="fw-bolder text-dark">05-Sep-2024</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-danger badgeborder-radius">Re-Allocatted</span></td> 
-                                                    <td>pass</td> 
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" >
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a> 
-                                                                <a class="dropdown-item" href="incident-view.html">
-                                                                    <i data-feather="eye" class="me-50"></i>
-                                                                    <span>View Detail</span>
-                                                                </a> <a class="dropdown-item" data-bs-toggle="modal" href="#reallocate">
-                                                                    <i data-feather="copy" class="me-50"></i>
-                                                                    <span>Re-Allocate</span>
-                                                                </a> <a class="dropdown-item" href="#">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span>Delete</span>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td class="fw-bolder text-dark">05-Sep-2024</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td> 
-                                                    <td><span class="badge rounded-pill badge-light-warning badgeborder-radius">Open</span></td>
-                                                    <td>pass</td>   
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item">
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a> 
-                                                                <a class="dropdown-item" href="incident-view.html">
-                                                                    <i data-feather="eye" class="me-50"></i>
-                                                                    <span>View Detail</span>
-                                                                </a> <a class="dropdown-item" data-bs-toggle="modal" href="#reallocate">
-                                                                    <i data-feather="copy" class="me-50"></i>
-                                                                    <span>Re-Allocate</span>
-                                                                </a> <a class="dropdown-item" href="#">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span>Delete</span>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            
+                                                    @foreach($examStudents as $examStudent)
+                                                        @php
+                                                            $qp = '';
+                                                            $sgpa = '';
+                                                            $result_text = '';
+                                                            $serial_no = (Request()->page_index++);
+                                                            $from_serial_no = (Request()->from_serial_no)?Request()->from_serial_no:1;
+                                                            $to_serial_no = (Request()->to_serial_no)?Request()->to_serial_no:1000;
+                                                        @endphp
+                                                        @if($serial_no >= $from_serial_no && $serial_no <= $to_serial_no)
+                                                        <tr>
+                                                            <td>{{$serial_no}}</td>
+                                                            <td>{{$examStudent->roll_no}}</td>
+                                                            <td class="text-left" style="text-align: left;">{{@$examStudent->students->full_name}}</td>
+                                                            @foreach($full_retult_row->subject_sequence as $selected_subjects)
+                                                            @php $result = $selected_subjects->getResult($examStudent) @endphp
+                                                            @if($result)
+                                                                @php $qp = $result->qp; @endphp
+                                                                @php $sgpa = $result->sgpa; @endphp
+                                                                @php $result_text = $result->result @endphp
+                                    
+                                                                @if($result->subject->internal_maximum_mark > 0)
+                                                                <td>{{$result->internal_marks}}</td>
+                                                                @else
+                                                                <td>-</td>
+                                                                @endif
+                                    
+                                                                @if($result->subject->maximum_mark > 0)
+                                                                <td>{{$result->external_marks}}</td>
+                                                                @else
+                                                                <td>-</td>
+                                                                @endif
+                                    
+                                                                @if($result->max_total_marks==0)
+                                                                <td>-</td>
+                                                                <td>-</td>
+                                                                @else
+                                                                <td>{{$result->total_marks}}</td>
+                                                                <td>{{$result->grade_letter}}</td>
+                                                                @endif
+                                    
+                                                            @else
+                                                                <td>-</td>
+                                                                <td>-</td>
+                                                                <td>-</td>
+                                                                <td>-</td>
+                                                            @endif
+                                                            @endforeach
+                                                            <td>{{$qp}}</td>
+                                                            <td>{{number_format((float)$sgpa, 2, '.', '')}}</td>
+                                                            <td>{{$result_text}}</td>
+                                                            @if(isset($result) && $result && $result->get_last_semester()->id == Request()->semester)
+                                                                <td>{{number_format((float)$result->cgpa, 2, '.', '')}}</td>
+                                                                @if($result->result_overall)
+                                                                    <td style="text-align: center;">{{$result->result_overall}} {{($result->semester_by_number)?'IN '.$result->semester_by_number->name:''}}</td>
+                                                                @else
+                                                                    <td>PASS</td>
+                                                                @endif
+                                                            @endif
+                                                        </tr>
+                                                        @endif
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            @if(Request()->semester==71)
+                                            <strong>* MC-106 (RESEARCH PROJECT) to be evaluvated in 2nd semester</strong>
+                                            @endif
+                                            @if(count($full_retult)== ($index_retult+1))
+                                            <br/>
+                                            <br/>
+                                            <br/>
+                                            <table class="table table-responsive" style="width: 100%;border-collapse: unset;">
+                                                <tfoot>
+                                                    <tr>
+                                                        <th colspan="{{$column_count}}" style="border: none !important;">
+                                                            <br/>
+                                                            <br/>
+                                                            <br/>
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="{{$column_count/2}}" style="border: none !important;text-align: left;font-size: 15px;"><strong>P=PASSED, PCP=PROMOTED WITH CARRYOVER PAPERS, A=ABSENT, LG=LETTER GRADE, QP=QUALITY POINT, SGPA=SEMESTER GRADE POINT AVERAGE, WH=WITHHELD</strong></th>
+                                                        <th colspan="{{$column_count/2}}" style="border: none !important;text-align: right;font-size: 15px;"><strong>CONTROLLER OF EXAMINATION</strong></th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                            @endif
+                                        @endforeach
+                                    </section>
+                                    
+                                             
+                                    </div>
+                                    @if($download!='pdf')
+                                        @if(count($full_retult)>0)
+                                            {{$full_retult->appends(Request()->all())->links('partials.pagination')}}
+                                        @endif
+                                    @endif
+                                          
                                         </table>
                                         
                                     </div>
 								
-                            </div> --}}
+                            </div> 
 
                             
                         </div>

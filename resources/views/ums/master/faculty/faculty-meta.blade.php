@@ -16,7 +16,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="../../../assets/css/favicon.png">
     {{-- <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600;700" rel="stylesheet"> --}}
 
-    @include('admin.header')
+    @include('ums.admin.header')
 
 </head>
 <!-- END: Head-->
@@ -28,14 +28,15 @@
 
 
 
-    @include('admin.navbar')
+    @include('ums.admin.navbar')
     <!-- BEGIN: Main Menu-->
-    @include('master.faculty.facultysidebar')
+    @include('ums.master.faculty.facultysidebar')
     <!-- END: Main Menu-->
     {{-- @include('admin.header') --}}
 
     @yield('content')
-    @include('admin.footer')
+    @include('ums.admin.footer')
+    @include('ums.admin.script')
 
 </body>
 <!-- END: Body-->

@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
 
@@ -30,11 +30,15 @@
                             {{-- <button onClick="javascript: history.go(-1)" class="btn btn-secondary btn-sm mb-50 mb-sm-0"><i data-feather="arrow-left-circle"></i>Cancel</button>     --}}
    
 							<button onClick="javascript: history.go(-1)" class="btn btn-secondary btn-sm mb-50 mb-sm-0"><i data-feather="arrow-left-circle"></i>Go Back</button>    
-							<button onClick="javascript: history.go(-1)" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle"></i>Update</button> 
+							<button type="submit" form="edit_campus_form" onClick="javascript: history.go(-1)" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle"></i>Update</button> 
 						</div>
 					</div>
 				</div>
 			</div>
+            <form id="edit_campus_form" method="POST" action="{{route('campus_list_edit')}}">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="campus_id" value="{{$selected_campuse->id}}">
             <div class="content-body">
                  
                 
@@ -67,7 +71,7 @@
                                                         </div>  
 
                                                         <div class="col-md-5"> 
-                                                            <input type="text" class="form-control">
+                                                            <input type="text" name="campus_code" value="{{$selected_campuse->campus_code}}" class="form-control">
                                                         </div> 
                                                     
                                                      </div> 
@@ -78,21 +82,21 @@
                                                         </div>  
 
                                                         <div class="col-md-5"> 
-                                                            <input type="text" class="form-control">
+                                                            <input type="text" name="name" value="{{$selected_campuse->name}}" class="form-control">
                                                         </div> 
                                                    
                                                      </div>
-                                                     
+                                                     <?php $types = ['DSMNRU CAMPUS'=>'DSMNRU CAMPUS','AFFILIATED COLLEGE'=> 'AFFILIATED COLLEGE']?>
                                                      <div class="row align-items-center mb-1">
                                                         <div class="col-md-3"> 
                                                             <label class="form-label">Type<span class="text-danger">*</span></label>  
                                                         </div>  
 
                                                         <div class="col-md-5">  
-                                                            <select class="form-select">
+                                                            <select class="form-select" name="is_affiliated">
                                                                 <option>Select</option> 
-                                                                <option>DSMNRU Campus</option> 
-                                                                <option>AFFILIATED COLLAGE</option> 
+                                                                <option value="1"@if($selected_campuse->is_affiliated=='1')selected @endif>DSMNRU Campus</option> 
+                                                                <option value="0"@if($selected_campuse->is_affiliated=='0')selected @endif>AFFILIATED COLLAGE</option> 
                                                             </select>
                                                         </div>
                                                      </div>
@@ -103,7 +107,7 @@
                                                         </div>  
 
                                                         <div class="col-md-5"> 
-                                                            <input type="text" class="form-control">
+                                                            <input type="text" name="short_name" value="{{$selected_campuse->short_name}}" class="form-control">
                                                         </div> 
                                                    
                                                      </div>
@@ -114,7 +118,7 @@
                                                             </div>  
 
                                                             <div class="col-md-5"> 
-                                                                <input type="email" class="form-control">
+                                                                <input type="email"  name="email" value="{{$selected_campuse->email}}" class="form-control">
                                                             </div> 
                                                          </div>
                                                     
@@ -124,7 +128,7 @@
                                                             </div>  
 
                                                             <div class="col-md-5"> 
-                                                                <input type="number" class="form-control">
+                                                                <input type="number" name="contact" value="{{$selected_campuse->contact}}" class="form-control">
                                                             </div> 
                                                          </div>
                                                         
@@ -136,7 +140,7 @@
                                                             </div>  
 
                                                             <div class="col-md-5"> 
-                                                                <input type="text" class="form-control">
+                                                                <input type="text" name="website" value="{{$selected_campuse->website}}" class="form-control">
                                                             </div> 
                                                          </div>
                                                         
@@ -147,7 +151,7 @@
                                                             </div>  
 
                                                             <div class="col-md-5"> 
-                                                                <input type="text" class="form-control">
+                                                                <input type="text" name="address" value="{{$selected_campuse->address}}"  class="form-control">
                                                             </div> 
                                                          </div>
                                                      </div>
@@ -325,6 +329,7 @@
                  
 
             </div>
+            </form>
         </div>
     </div>
     <!-- END: Content-->
@@ -486,3 +491,13 @@
 	</div>
 
     @endsection
+    <script>
+        function submitCat(form) {
+            document.getElementById('edit_campus_form').submit();
+        }
+        $(document).ready(function() {
+        $('.numbersOnly').keyup(function() {
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+            });
+                });
+    </script>

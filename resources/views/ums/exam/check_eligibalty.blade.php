@@ -88,8 +88,9 @@
                     </div>
                 </div>
                 <div class="content-header-right text-sm-end col-md-6 mb-50 mb-sm-0">
+                    <form method="get" id="form_data" action="{{url('check-eligibility')}}">
                     <div class="form-group breadcrumb-right">
-                        <button onclick="window.location.reload()" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="clipboard"></i> GET
+                        <button type="submit" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="clipboard"></i> GET
                             REPORT</button>
                         <button  onclick="window.location.reload()" class="btn btn-warning btn-sm mb-50 mb-sm-0" onclick="window.location.reload();"><i
                                 data-feather="refresh-cw"></i>
@@ -100,6 +101,7 @@
                 </div>
             </div>
             <div class="content-body">
+                @include('ums.admin.notifications')
                 <div class="row  ">
 
 
@@ -111,29 +113,13 @@
                             </div>
 
                             <div class="col-md-9">
-                            <select name="campus_id" style="border-color: #c0c0c0;" class="form-control js-example-basic-single" onchange="getCourses($(this))">
-    <option value="">---Choose Campus---</option>
-    <option value="1">Dr. Shakuntala Misra National Rehabilitation University</option>
-    <option value="2">Kalyanam Karoti, Mathura</option>
-    <option value="3">Nai Subah, Village-Khanav, Post-Bachhav, Varanasi</option>
-    <option value="4">T.S. Misra Medical College and Hospital, Lucknow</option>
-    <option value="5">Hind Mahavidyalaya, Barabanki</option>
-    <option value="6">T.S. Misra College of Nursing, Lucknow</option>
-    <option value="8">K.S. Memorial College for Research &amp; Rehabilitation, Raebareli</option>
-    <option value="9">GRAMODYOG SEWA SANSTHAN</option>
-    <option value="13">PRAMILA KATIYAR SPECIAL EDUCATION INSTITUTE</option>
-    <option value="17">MAA BALIRAJI SEWA SANSTHAN (MIRZAPUR)</option>
-    <option value="18">MAA BALIRAJI SEWA SANSTHAN (ALLAHABAD)</option>
-    <option value="20">Handicapped Development Council, Sikandara, Agra</option>
-    <option value="21">JAY NAND SPECIAL TEACHERS’ TRAINING INSTITUTE, AYODHYA</option>
-    <option value="23">T. S. Misra College of Paramedical Sciences, Lucknow</option>
-    <option value="24">Sarveshwari Shikshan Sansthan, Kausambi</option>
-    <option value="25">SHRI CHANDRABHAN SINGH DEGREE COLLEGE</option>
-    <option value="26">MAHARISHI DAYANAND REHABILITATION INSTITUTE</option>
-    <option value="27">PRAKASH KIRAN EDUCATIONAL INSTITUTION</option>
-    <option value="28">Dr. RPS INSTITUTE OF EDUCATION</option>
-    <option value="29">SOCIETY FOR INSTITUTE OF PSYCHOLOGICAL RESEARCH &amp; HEALTH</option>
-</select>
+                                <select data-live-search="true" name="campus_id" id="campus_id" style="border-color: #c0c0c0;" class="form-control" onChange="return $('#form_data').submit();">
+                                    <option value="">--Choose Campus--</option>
+                                    @foreach($campuses as $campus)
+                                    <option value="{{$campus->id}}" @if(Request()->campus_id==$campus->id) selected @endif >{{$campus->name}}
+                                     </option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 
@@ -143,9 +129,12 @@
                             </div>
 
                             <div class="col-md-9">
-                            <select name="course[]" style="border-color: #c0c0c0;" class="form-control" >
-                <option value="">--Select--</option>
-                            </select>
+                                <select data-live-search="true" name="course" id="course" style="border-color: #c0c0c0;" class="form-control js-example-basic-single " onChange="return $('#form_data').submit();">
+                                    <option value="">--Choose Course--</option>
+                                    @foreach($courses as $course)
+                                    <option value="{{$course->id}}" @if(Request()->course==$course->id) selected @endif >{{$course->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 
@@ -159,13 +148,12 @@
                             </div>
 
                             <div class="col-md-9">
-                            <select name="form_type" style="border-color: #c0c0c0;" class="form-control">
-                <option value="">--Select Back Type--</option>
-                                                                                <option value="back_paper">back_paper</option>
-                                                                <option value="special_back">special_back</option>
-                                                                <option value="final_back_paper">final_back_paper</option>
-                                                                <option value="compartment">compartment</option>
-                                            </select>
+                                <select data-live-search="" name="form_type" id="" style="border-color: #c0c0c0;" class="form-control">
+                                    <option value="">--Select Back Type--</option>
+                                    <option value="back" @if(Request()->form_type == 'back') selected @endif>Back Paper</option>
+                                    <option value="final_back" @if(Request()->form_type == 'final_back') selected @endif>Final Back Paper</option>
+                                    <option value="special_back" disabled>Special Back Paper</option>
+                                </select>
                             </div>
                         </div>
 
@@ -175,16 +163,10 @@
                             </div>
 
                             <div class="col-md-9">
-                            <select name="academic_session" style="border-color: #c0c0c0;" class="form-control js-example-basic-single ">    
-                <option value="">---Choose Acedmic---</option>
-                                <option value="2024-2025">2024-2025</option>
-                                <option value="2023-2024JUL">2023-2024JUL</option>
-                                <option value="2023-2024FEB">2023-2024FEB</option>
-                                <option value="2023-2024AUG">2023-2024AUG</option>
-                                <option value="2023-2024">2023-2024</option>
-                                <option value="2022-2023">2022-2023</option>
-                                <option value="2021-2022">2021-2022</option>
-                            </select>
+                                <select data-live-search="true" name="academic_session" id="" style="border-color: #c0c0c0;" class="form-control js-example-basic-single " >    
+                                    <option value="">---Choose Acedmic---</option>
+                                    <option value="{{$academic_sessions->academic_session}}" @if($academic_sessions->academic_session==Request()->academic_session) selected @endif >{{$academic_sessions->academic_session}}</option>
+                                </select>
                             </div>
                         </div>
 
@@ -220,25 +202,28 @@
                                             </tr>
 
                                         </thead>
+                                        {{-- {{dd($resultData)}} --}}
                                         <tbody>
+                                            @foreach (@$resultData as $index => $result)
+                                                <tr>
+                                                    <td>{{ $result->course->campuse->name }}</td>
+                                                    <td>{{ $result->course_name() }}</td>
+                                                    <td>{{ $result->semesters->name }}</td>
+                                                    <td>{{ $result->roll_no }}</td>
+                                                    <td>{{ $result->student->full_name }}</td>
+                                                    <td>{{ $result->subject_code }}</td>
+                                                    @if (Request()->form_type == 'back')
+                                                        <td>Back</td>
+                                                    @else
+                                                        <td>Final Back</td>
+                                                    @endif
 
-
-                                            <tr>
-                                                <!-- <td>Regular</td>
-                                                <td>2024</td> -->
-                                                <td>Main Campus</td>
-                                                <td>Bachelor of Science</td>
-                                                <td>1st Semester</td>
-                                                <td>123456</td>
-                                                <td>John Doe</td>
-                                                <td>CS101</td>
-                                                <td>Theory</td>
-                                                <td>2024</td>
-                                              
-                                            </tr>
-
-
+                                                    <td>{{ $result->exam_session }}</td>
+                                                </tr>
+                                            @endforeach
+            
                                         </tbody>
+            
 
 
                                     </table>

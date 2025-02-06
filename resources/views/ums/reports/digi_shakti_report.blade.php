@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
 
@@ -26,50 +26,34 @@
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right"> 
-					<button class="btn btn-primary btn-sm mb-50 mb-sm-0"  type="submit" name="submit_form"><i data-feather="check-circle" ></i>Get Report</button>    
+                        <form method="get" id="form_data">
+					<button class="btn btn-primary btn-sm mb-50 mb-sm-0" type="submit" name="submit_form" value="Get Report"><i data-feather="check-circle" ></i>Get Report</button>    
                     </div>
                 </div>
             </div>
             <div class="row mb-2">
             <div class="col-sm-2">
             <label class="form-label">Campus:</label>
-            <select class="form-select" name="type" id="type"  class="form-control">
-            <option value="">--Choose Campus--</option>
-                            <option value="1">Dr. Shakuntala Misra National Rehabilitation University</option>
-                                <option value="2">Kalyanam Karoti, Mathura</option>
-                                <option value="3">Nai Subah,Village-Khanav, Post-Bachhav, Varanasi</option>
-                                <option value="4">T.S. Misra Medical College and Hospital, Lucknow</option>
-                                <option value="5">Hind Mahavidyalaya, Barabanki</option>
-                                <option value="6">T.S. Misra College of Nursing, Lucknow</option>
-                                <option value="8">K.S. Memorial College for Research &amp; Rehabilitation, Raebareli</option>
-                                <option value="9">GRAMODYOG SEWA SANSTHAN</option>
-                                <option value="13">PRAMILA KATIYAR SPECIAL EDUCATION INSTITUTE</option>
-                                <option value="17">MAA BALIRAJI SEWA SANSTHAN(MIRZAPUR)</option>
-                                <option value="18">MAA BALIRAJI SEWA SANSTHAN(ALLAHABAD)</option>
-                                <option value="20">Handicapped Development Council, Sikandara, Agra</option>
-                                <option value="21">JAY NAND SPECIAL TEACHERS’ TRAINING INSTITUTE, AYODHYA </option>
-                                <option value="23">T. S. Misra College of Paramedical Sciences, Lucknow</option>
-                                <option value="24">Sarveshwari Shikshan Sansthan, Kausambi</option>
-                                <option value="25">SHRI CHANDRABHAN SINGH DEGREE COLLEGE</option>
-                                <option value="26">MAHARISHI DAYANAND REHABILITATION INSTITUTE</option>
-                                <option value="27">PRAKASH KIRAN EDUCATIONAL INSTITUTION</option>
-                                <option value="28">Dr. RPS INSTITUTE OF EDUCATION</option>
-                                <option value="29">SOCIETY FOR INSTITUTE OF PSYCHOLOGICAL RESEARCH &amp; HEALTH</option>
-                            </select>
+        	<select data-live-search="true" name="campus_id" id="campus_id" style="border-color: #c0c0c0;" class="form-control" onChange="return $('#form_data').submit();">
+                <option value="">--Choose Campus--</option>
+                @foreach($campuses as $campus)
+                    <option value="{{$campus->id}}" @if(Request()->campus_id==$campus->id) selected @endif >{{$campus->name}}</option>
+                    @endforeach
+                </select>
         </div>
         <div class="col-md-2">
                         <div class="mb-1 mb-sm-0"> 
                             <label class="form-label">Academic Session:</label>
-                            <select class="form-select mb-2">
-                            <option value="">--Select Academic Session--</option>
-                            <option value="21">2021</option>
-                                                    <option value="22">2022</option>
-                                                    <option value="23">2023</option>
-                                                    <option value="24">2024</option>
-                            </select> 
+                            <select name="year" id="year" style="border-color: #c0c0c0;" class="form-control js-example-basic-single">
+                                <option value="">--Select Academic Session--</option>
+                                @foreach($years as $index=>$year)
+                                    <option value="{{$index}}" @if(Request()->year==$index) selected @endif >{{$year}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
-</div>
+                </div>
+            </form>
 
 
 <div class="content-body">
@@ -106,33 +90,47 @@
 									</tr>
                                              </thead>
                                              <tbody>
-                                             <tr>
-                                                 <td>SN#</td>
-                                                     <td>Collage Code</td>
-                                                     <td>Course Code</td>
-                                                     <td>Enrollment</td>
-                                                     <td>Name</td>
-                                                     <td>Father Name</td>
-                                                     <td>Mother Name</td>
-                                                     <td>Date Of Birth</td>
-                                                     <td>Course Name</td>
-                                                     <td>Branch Name</td>
-                                                     <td>Status</td>
-                                                     <td>Remarks</td>
-                                                     <td>Promoted
-                                                     Y/N</td>
-                                                     <td>Student Roll No
-                                                     University Alloted</td>
-                                                     <td>Passing Year</td>
-                                                     <td>Full Exam-System
-                                                     (S for Semester Or Y for Year)</td>
-                                                     <td>Second Last Semester Total Marks</td>
-                                                     <td>Second Last Semester Obtained Marks</td>
-                                                     <td>Last Semester Total Marks</td>
-                                                                                               
-                                                 </tr>
 
-                                             </tbody>
+                                                @if(count($students) > 0)
+                                                @foreach( $students as $key => $student_details )
+                                                @php $studentData = $student_details->studentData; @endphp
+                                                @php $course = $student_details->course; @endphp
+                                                    <tr>
+                                                        <td>{{++$key}}</td>
+                                                        <td>{{$student_details->enrollment_no}}</td>
+                                                        <td>{{$student_details->roll_number}}</td>
+                                                        <td>{{$studentData->full_name}}</td>
+                                                        <td>{{$course->campuse->name}}</td>
+                                                        <td>{{$course->name}}</td>
+                                                        <td>First Semester</td>
+                                                        <td>{{$student_details->first_paper_name()}}</td>
+                                                        <td>{{$studentData->father_name}}</td>
+                                                        <td>{{$studentData->mother_name}}</td>
+                                                        <td>{{$studentData->aadhar}}</td>
+                                                        <td>{{$studentData->mobile}}</td>
+                                                        <td>{{$studentData->email}}</td>
+                                                        <td>{{($studentData->date_of_birth)?date('d-m-Y',strtotime($studentData->date_of_birth)):''}}</td>
+                                                        <td>{{$studentData->gender}}</td>
+                                                        @if($student_details->applicationAddress)
+                                                            @php $applicationAddress = $student_details->applicationAddress; @endphp
+                                                            <td>{{$applicationAddress->address}}</td>
+                                                            <td>{{$applicationAddress->police_station}}</td>
+                                                            <td>{{$applicationAddress->district}}</td>
+                                                            <td>{{$applicationAddress->state_union_territory}}</td>
+                                                        @else
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                        @endif
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                                @else
+                                                    <tr>
+                                                        <td colspan="8" class="text-center">NO DATA FOUND</td>
+                                                    </tr>
+                                                @endif
                                          </table>
                                      </div>
                                  

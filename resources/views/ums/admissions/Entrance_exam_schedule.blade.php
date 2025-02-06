@@ -54,95 +54,36 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td class="fw-bolder text-dark">Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                <td class="fw-bolder text-dark">APP001</td>
-                                                <td>20-07-2024</td>
-                                                <td>Nishu Garg</td>
-                                                <td>nishu@gmail.com</td>
-                                                <td>9876787656</td>
-                                                <td>Home</td> 
-                                               
-                                                <td>
-                                                    <div class="action-rec">
-                                                        <a href="#" class="me-50"><i data-feather="edit-3"></i></a>
-                                                        <a href="#" class="text-danger"><i data-feather="trash-2"></i></a>
-                                                    </div>
-                                                </td>
-                                                  
-                                               
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td class="fw-bolder text-dark">Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                <td class="fw-bolder text-dark">APP001</td>
-                                                <td>20-07-2024</td>
-                                                <td>Kundan Kumar</td>
-                                                <td>nishu@gmail.com</td>
-                                                <td>9876787656</td>
-                                                <td>Term</td> 
-
-                                                <td>
-                                                    <div class="action-rec">
-                                                        <a href="#" class="me-50"><i data-feather="edit-3"></i></a>
-                                                        <a href="#" class="text-danger"><i data-feather="trash-2"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td class="fw-bolder text-dark">Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                <td class="fw-bolder text-dark">APP001</td>
-                                                <td>20-07-2024</td>
-                                                <td>Rahul Upadhyay</td>
-                                                <td>nishu@gmail.com</td>
-                                                <td>9876787656</td>
-                                                <td>Vehicle</td> 
-                                                
-                                                <td>
-                                                    <div class="action-rec">
-                                                        <a href="#" class="me-50"><i data-feather="edit-3"></i></a>
-                                                        <a href="#" class="text-danger"><i data-feather="trash-2"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td class="fw-bolder text-dark">Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                <td class="fw-bolder text-dark">APP001</td>
-                                                <td>20-07-2024</td>
-                                                <td>Ashish Kumar</td>
-                                                <td>nishu@gmail.com</td>
-                                                <td>9876787656</td>
-                                                <td>Home</td> 
-                                                
-                                                <td>
-                                                    <div class="action-rec">
-                                                        <a href="#" class="me-50"><i data-feather="edit-3"></i></a>
-                                                        <a href="#" class="text-danger"><i data-feather="trash-2"></i></a>
-                                                    </div>
-                                                </td>
-                                             
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td class="fw-bolder text-dark">Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                <td class="fw-bolder text-dark">APP001</td>
-                                                <td>20-07-2024</td>
-                                                <td>Inder Singh</td>
-                                                <td>nishu@gmail.com</td>
-                                                <td>9876787656</td>
-                                                <td>Term</td> 
-                                                <td>
-                                                    <div class="action-rec">
-                                                        <a href="#" class="me-50"><i data-feather="edit-3"></i></a>
-                                                        <a href="#" class="text-danger"><i data-feather="trash-2"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                        </tbody>
+                                        @if(count($entranceExamData) > 0)
+                        @foreach($entranceExamData as $index=>$data)
+                        @php
+                        $total_applications = $data->total_applications();
+                        $generated_roll_number_applications = $data->generated_roll_number_applications();
+                        @endphp
+                        <tbody>
+							<tr>  
+								<td>{{++$index}}</td>
+								<td class="text-left">{{$data->campus->name}}</td>
+                                <td style="width: 150px;">{{isset($data->course) ? $data->course->name :''}}<br>({{$data->session}})</td>
+                                <td>{{isset($data->entrance_exam_date) ? $data->entrance_exam_date :''}}</td>
+                                <td>{{date('h:i A', strtotime($data->reporting_time))}}</td>
+                                <td>{{date('h:i A', strtotime($data->examination_time))}}-{{date('h:i A', strtotime($data->end_time))}}</td>
+                                <td class="text-left">{{isset($data->centerName) ? $data->centerName->center_name :''}}</td>
+                                <td>{{$total_applications}}({{$generated_roll_number_applications}})</td>
+                                <td>
+                                    @if($total_applications > $generated_roll_number_applications)
+                                    <a href="{{url('generate-entrance-roll-number')}}?academic_session={{$data->session}}&course_id={{$data->course_id}}"  onclick="return confirm('Are you sure?');" target="_blank" class="btn-md btn-dark"> Generate Roll Number For Entrance</a>
+                                    @endif
+                                	<a href="{{url('admin/master/entrance/delete-model-trim',[$data->id])}}"  onclick="return confirm('Are you sure?');" class="btn-md btn-add"> Delete</a>
+                                </td>
+							</tr>
+						</tbody>
+                        @endforeach
+                        @else
+                            <tr>
+                                <td colspan="6" class="text-center">NO DATA FOUND</td>
+                            </tr>
+                        @endif
                                     </table>
                                 </div>
 								

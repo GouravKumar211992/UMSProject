@@ -2,72 +2,54 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\DefaultGroupCompanyOrg;
-use App\Traits\Deletable;
 
-class Category  extends Model
+class Category extends Model
 {
-    use HasFactory,SoftDeletes,Deletable,DefaultGroupCompanyOrg;
- 
-    protected $table = 'erp_categories';
+
+    use SoftDeletes;
 
     protected $fillable = [
-        'parent_id',
-        'type',
         'name',
-        'status', 
-        'group_id',     
-        'company_id',       
-        'organization_id',
-        'cat_initials',     
-        'sub_cat_initials',  
+        'slug',
+        'parent_id',
+        'created_by',
+        'updated_by',
+        'status'
     ];
 
-    public function parent()
+    protected $hidden = [
+        'deleted_at',
+    ];
+
+    /*public function parent()
     {
-        return $this->belongsTo(Category::class, 'parent_id');
+        return $this->belongsTo(ProductCategory::class);
+    }
+*/
+    /*public function childs()
+    {
+        return $this->hasMany(Category::class, 'parent_id')->with('subCategoryProducts');
     }
 
-    public function subCategories()
+    public function services()
     {
-        return $this->hasMany(Category::class, 'parent_id');
-    }
-    public function group()
+        return $this->hasMany(Service::class, 'category_id');
+    }*/
+
+    /*public function categoryProducts()
     {
-        return $this->belongsTo(OrganizationGroup::class, 'group_id');
+        return $this->hasMany(CategoryProduct::class, 'category_id');
     }
 
-    public function company()
+    public function subCategoryProducts()
     {
-        return $this->belongsTo(OrganizationCompany::class, 'company_id');
+        return $this->hasMany(CategoryProduct::class, 'sub_category_id');
     }
 
-    public function organization()
+    public function productslists()
     {
-        return $this->belongsTo(Organization::class, 'organization_id');
-    }
-
-    public function items()
-    {
-        return $this->hasMany(Item::class, 'category_id');
-    }
-    public function itemSub()
-    {
-        return $this->hasMany(Item::class, 'subcategory_id');
-    }
-
-    public function customers()
-    {
-        return $this->hasMany(Customer::class,'category_id');
-    }
-
-    public function customersSub()
-    {
-        return $this->hasMany(Customer::class,'subcategory_id');
-    }
-
-
+        return $this->hasMany(Product::class, 'sub_category_id');
+    }*/
 }

@@ -19,12 +19,12 @@
                     <span class="menu-title text-truncate">User Management</span>
                 </a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="{{ url('/admin_list') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Admin List</span></a></li>
-                    <li><a class="d-flex align-items-center" href="{{ url('/user_list') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">User List</span></a></li>
-                    <li><a class="d-flex align-items-center" href="{{ url('/studentlist') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Student List</span></a></li>
-                    <li><a class="d-flex align-items-center" href="{{ url('/studentsName') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Student Name (Hindi/English)</span></a></li>
+                    <li><a class="d-flex align-items-center" href="{{ url('/admin-get') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Admin List</span></a></li>
+                    <li><a class="d-flex align-items-center" href="{{ url('/users') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">User List</span></a></li>
+                    <li><a class="d-flex align-items-center" href="{{ url('/students') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Student List</span></a></li>
+                    <li><a class="d-flex align-items-center" href="{{ url('/student-hindi-name') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Student Name (Hindi/English)</span></a></li>
                     <li><a class="d-flex align-items-center" href="{{ url('/') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Enrollment List</span></a></li>
-                    <li><a class="d-flex align-items-center" href="{{ url('/email_template') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Email Template</span></a></li>
+                    <li><a class="d-flex align-items-center" href="{{ url('/email-template') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Email Template</span></a></li>
                 </ul>
             </li>
             
@@ -127,10 +127,10 @@
     <span class="menu-title text-truncate" >Admissions
      </span></a>
      <ul class="menu-content">
-        <li><a class="d-flex align-items-center" href="{{ url('/admission_list') }}"><i data-feather="circle"></i><span
-                 class="menu-item text-truncate">Admission List</span></a>
-        </li>
-        <li><a class="d-flex align-items-center" href="{{ url('/entrance_exam_schedule') }}"><i data-feather="circle"></i><span
+        <li><a class="d-flex align-items-center" href="{{ url('/Application_Report') }}"><i data-feather="circle"></i><span
+            class="menu-item text-truncate">Admission List</span></a>
+   </li>
+        <li><a class="d-flex align-items-center" href="{{ url('/entrance_exam') }}"><i data-feather="circle"></i><span
                  class="menu-item text-truncate">Entrance Exam Schedule</span></a>
         </li>
         <li><a class="d-flex align-items-center" href="{{ url('/admission_counselling') }}"><i data-feather="circle"></i><span
@@ -164,14 +164,14 @@
         <span class="menu-title text-truncate">Exam</span>
     </a>
     <ul class="menu-content">
-        <li><a class="d-flex align-items-center" href="{{ url('/Exam_list') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Exam List or Exam Edit</span></a></li>
-        <li><a class="d-flex align-items-center" href="{{ url('/reqular_exam_form_list') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Regular Exam Form Report</span></a></li>
-        <li><a class="d-flex align-items-center" href="{{url('/regular_mark_filling')}}"><i data-feather="circle"></i><span class="menu-item text-truncate">Regular Mark Filling Report</span></a></li>
-        <li><a class="d-flex align-items-center" href="{{ url('/back_paper_report') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Back Exam Report</span></a></li>
-        <li><a class="d-flex align-items-center" href="{{ url('/Exam_Schedule') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Exam Schedule</span></a></li>
-        <li><a class="d-flex align-items-center" href="{{ url('/Exam_paper_approvel_system') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Exam Papers Approval System</span></a></li>
-        <li><a class="d-flex align-items-center" href="{{ url('/check_eligibalty') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Back / Final / Special Back Paper Eligibility</span></a></li>
-        <li><a class="d-flex align-items-center" href="{{ url('/mbbs_exam_report') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">MBBS / B.Sc.(Nursing) Exam Form Report</span></a></li>
+        <li><a class="d-flex align-items-center" href="{{ url('/Exam-list') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Exam List or Exam Edit</span></a></li>
+        <li><a class="d-flex align-items-center" href="{{ url('/reqular-exam-form-list') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Regular Exam Form Report</span></a></li>
+        <li><a class="d-flex align-items-center" href="{{url('/regular-mark-filling')}}"><i data-feather="circle"></i><span class="menu-item text-truncate">Regular Mark Filling Report</span></a></li>
+        <li><a class="d-flex align-items-center" href="{{ url('/back-paper-report') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Back Exam Report</span></a></li>
+        <li><a class="d-flex align-items-center" href="{{ url('/Exam-Schedule') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Exam Schedule</span></a></li>
+        <li><a class="d-flex align-items-center" href="{{ url('/Exam-paper-approvel-system') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Exam Papers Approval System</span></a></li>
+        <li><a class="d-flex align-items-center" href="{{ url('/check-eligibility') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Back / Final / Special Back Paper Eligibility</span></a></li>
+        <li><a class="d-flex align-items-center" href="{{ url('/mbbs-bscnursing-exam-report') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">MBBS / B.Sc.(Nursing) Exam Form Report</span></a></li>
     </ul>
 </li>
 
@@ -229,7 +229,7 @@
             <li><a class="d-flex align-items-center" href="{{ url('/md_tr_generate') }}"><i data-feather="circle"></i><span
                      class="menu-item text-truncate">MD TR Generate</span></a>
             </li>
-            <li><a class="d-flex align-items-center" href="{{ url('/award_sheet_report') }}"><i data-feather="circle"></i><span
+            <li><a class="d-flex align-items-center" href="{{ url('/award_sheet_for_all') }}"><i data-feather="circle"></i><span
                      class="menu-item text-truncate">Award Sheet For All</span></a>
             </li>
         </ul>

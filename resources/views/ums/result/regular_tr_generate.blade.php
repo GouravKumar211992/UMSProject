@@ -1,4 +1,4 @@
-@extends("admin.admin-meta")
+@extends("ums.admin.admin-meta")
 @section("content")
 
 {{-- <!DOCTYPE html>
@@ -61,7 +61,15 @@
  --}}
 
     <!-- BEGIN: Main Menu-->
+    @php
+
+$course_name = '';
+$semester_name = '';
+@endphp
     <div class="app-content content ">
+      @if($download!='pdf')
+      <form method="get" id="form_data">
+
       <div class="big-box d-flex justify-content-between mb-1 align-items-center">
 
         <div class="head">
@@ -97,50 +105,56 @@
         <div class="row align-items-center mb-1">
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Campus <span class="text-danger ">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">--Select--</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>    
+                <select data-live-search="true" name="campus_id" id="campus_id" style="border-color: #c0c0c0;" class="form-control" onChange="return $('#form_data').submit();">
+                <option value="">--Choose Campus--</option>
+                  @foreach($campuses as $campus)
+                    <option value="{{$campus->id}}" @if(Request()->campus_id==$campus->id) selected @endif >{{$campus->name}}</option>
+                    @endforeach
+                  </select>
+                  <span class="text-danger">{{ $errors->first('campus_id') }}</span>
                     </div>
 
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Courses <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">All</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
+                <select data-live-search="true" name="course" id="course" style="border-color: #c0c0c0;" class="form-control js-example-basic-single " onChange="return $('#form_data').submit();">
+                  <option value="">--Choose Course--</option>
+                      @foreach($courses as $course)
+                        @if($course_id==$course->id)
+                          @php
+                            $course_name = $course->name;
+                          @endphp
+                        @endif
+                        <option value="{{$course->id}}" @if($course_id==$course->id) selected @endif >{{$course->name}}</option>
+                        @endforeach
+                      </select>
+                      <span class="text-danger">{{ $errors->first('course') }}</span>
                 </div>
                 
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Semester <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">All</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
+                <select data-live-search="true" name="semester" id="semester" style="border-color: #c0c0c0;" class="form-control js-example-basic-single " onChange="$('#group_name').prop('selectedIndex',0); return $('#form_data').submit();">
+                  <option value="">--Select Semester--</option>
+                  @foreach($semesters as $semester)
+                    @if($semester_id==$semester->id)
+                      @php
+                        $semester_name = $semester->name;
+                      @endphp
+                    @endif
+                <option value="{{$semester->id}}" @if($semester_id==$semester->id) selected @endif >{{$semester->name}}</option>
+                  @endforeach
+                            
+                    </select>
+                  <span class="text-danger">{{ $errors->first('semester') }}</span>
                 </div>
+
                 <div class="col-md-3 d-flex align-items-center">
                     <label class="form-label mb-0 me-2 col-3">Academic Session <span class="text-danger">*</span></label>
-                    <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                        <option value="7">All</option>
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="75">75</option>
-                        <option value="100">100</option>
-                    </select>
-                    
+          <select name="academic_session" id="academic_session" class="form-control" style="border-color: #c0c0c0;" onChange="return $('#form_data').submit();">
+						@foreach($sessions as $sessionRow)
+						<option value="{{$sessionRow->academic_session}}" @if(Request()->academic_session == $sessionRow->academic_session) selected @endif >{{$sessionRow->academic_session}}</option>
+						@endforeach
+					</select>
+					<span class="text-danger">{{ $errors->first('academic_session') }}</span>
                 </div>
         </div>
     </div>
@@ -149,41 +163,55 @@
         <div class="row align-items-center mb-1">
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Form Type <span class="text-danger ">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">--Select--</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>  
+                <select name="form_type" id="form_type" class="form-control" style="border-color: #c0c0c0;">
+                  <option value="regular" @if(Request()->form_type=='regular') selected @endif >Regular</option>
+                </select>
+                <span class="text-danger">{{ $errors->first('form_type') }}</span> 
             </div>
 
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Roll number<span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">--Select--</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>  
+                <input type="text" name="roll_no" class="form-control" style="border-color: #c0c0c0;" value="{{(Request()->roll_no)?Request()->roll_no:''}}">
+                <span class="text-danger">{{ $errors->first('roll_no') }}</span> 
             </div>
             <div class="col-md-6 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Subject Group Name<span class="text-danger">*</span></label>
-                <select name="group_name[]" id="group_name" class="form-control" multiple="">
-                    <option value="">Please Select</option>
-                    <span class="text-danger"></span>
-                    </select>
+                <select name="group_name[]" id="group_name" class="form-control" style="border-color: #c0c0c0;" multiple>
+                  <option value="">Please Select</option>
+                  @foreach($subjects_header_group as $index_sub=>$subject)
+                  <option value="{{$subject->subject}}" @if(Request()->group_name && in_array($subject->subject,Request()->group_name)) selected @endif >{{++$index_sub}}) {{$subject->subject}}</option>
+                  @endforeach
+                </select>
+                <span class="text-danger">{{ $errors->first('group_name') }}</span>
             </div>
           
             
         </div>
         
+      </div>
+      @if($full_retult && count($full_retult) > 0)
+      <div class="col-6">
+        <br>
+        <br>
+        <a href="{{Request::getRequestUri()}}&finalize=true" class="btn btn-success">Finalize TR</a>
+        <a href="{{Request::getRequestUri()}}&finalize=reset" class="btn btn-danger" style="margin-left:50;">Re-Fresh TR</a>
+      </div>
+      @endif
+      <div class="@if($full_retult && count($full_retult) > 0) col-6 @else col-12 @endif text-right">
+        <br>
+        <br>
+      </div>
+      </div>
+    </form>
+    @endif
+    <div class="container">
+      <!-- or use any other number .col-md- -->
+      
     </div>
-
-</div>
+  </div>
+  @if($full_retult && count($full_retult) > 0)
+    <div class="alert alert-success">Results of {{count($full_retult)}} students are generated.</div>
+  @endif		 
    
 
 

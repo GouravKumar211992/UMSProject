@@ -61,64 +61,19 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Nishu Garg</td>
-                                                <td>nishu@gmail.com</td>
-                                                <td>9876787656</td>
-                                                <td>Home</td> 
-                                                <td><span class="badge rounded-pill badge-light-danger badgeborder-radius">Pending</span></td> 
-                                                <td>regular</td>
-                                                <td>20-07-2024</td>
-                                               
-                                                  
-                                               
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Kundan Kumar</td>
-                                                <td>nishu@gmail.com</td>
-                                                <td>9876787656</td>
-                                                <td>Term</td> 
-                                                <td><span class="badge rounded-pill badge-light-danger badgeborder-radius">Pending</span></td> 
-                                                <td>regular</td>
-                                                <td>20-07-2024</td>
-                                               
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Rahul Upadhyay</td>
-                                                <td>nishu@gmail.com</td>
-                                                <td>9876787656</td>
-                                                <td>Vehicle</td> 
-                                                <td><span class="badge rounded-pill badge-light-danger badgeborder-radius">Pending</span></td> 
-                                                <td>regular</td>
-                                                <td>20-07-2024</td>
-                                                
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Ashish Kumar</td>
-                                                <td>nishu@gmail.com</td>
-                                                <td>9876787656</td>
-                                                <td>Home</td> 
-                                                <td><span class="badge rounded-pill badge-light-danger badgeborder-radius">Pending</span></td> 
-                                                <td>regular</td>
-                                                <td>20-07-2024</td>
-                                              
-                                             
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>Inder Singh</td>
-                                                <td>nishu@gmail.com</td>
-                                                <td>9876787656</td>
-                                                <td>Term</td> 
-                                                <td><span class="badge rounded-pill badge-light-danger badgeborder-radius">Pending</span></td> 
-                                                <td>regular</td>
-                                                <td>20-07-2024</td>
-                                               
-                                            </tr>
+                                        @foreach($students as $index=>$student)
+				<tr @if($student->status==0) style="background: pink;" @endif>
+					<td>{{++$index}}</td>
+					<td>{{$student->name}}</td>
+					<td>{{$student->roll_no}}</td>
+					<td>{{$student->course_old->name}}</td>
+					<td>{{$student->course_new->name}}</td>
+					<td>{{($student->status==1)?'DONE':'NOT'}}</td>
+					<td>{{$student->ip_address}}</td>
+					<td>{{date('d-m-Y',strtotime($student->created_at))}}</td>
+				</tr>
+				@endforeach
+                                            
 
                                         </tbody>
                                     </table>

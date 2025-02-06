@@ -1,10 +1,11 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 @section('content')
     
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
+        <form method="get" id="form_data">
         <div class="content-wrapper container-xxl p-0">
             <div class="content-header row">
                 <div class="content-header-left col-md-5 mb-2">
@@ -22,12 +23,7 @@
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right"> 
-                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0"  type="submit" name="submit_form"><i data-feather="check-circle" ></i>Get Report</button>
-
-                        {{-- <button class="btn btn-warning box-shadow-2 btn-sm  mb-sm-0 mb-50"><i data-feather="refresh-cw"></i>Reset</button> --}}
-                           
-                            <!-- <button class="btn btn-success btn-sm mb-50 mb-sm-0" data-bs-target="#approved" data-bs-toggle="modal"><i data-feather="check-circle" ></i> Assign Team</button> -->
-                             
+                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0"  type="submit" name="submit_form" value="true" ><i data-feather="check-circle" ></i>Get Report</button>
                     </div>
                 </div>
                
@@ -41,18 +37,18 @@
                                 <label class="form-label">Academic Session:<span class="text-danger m-0">*</span></label>
                             </div>
                             <div class="col-md-8">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">2023-2024</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select name="academic_session" id="academic_session" class="form-control" required>
+                                    <option value="">--Select Session--</option>
+                                    @foreach($sessions as $session)
+                                        <option value="{{$session->academic_session}}" @if(Request()->academic_session==$session->academic_session) selected @endif >{{$session->academic_session}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                     </div>
               
                 </div>
+            </form>
                 
 <br>
 
@@ -79,22 +75,34 @@
                                                     <th>Category</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
-                                               
-                                            </tbody>
+                                           <tbody>
+                                            @if($results)
+                                            @php $i = 0; @endphp
+                                            @foreach($results as $index_summary=>$result)
+                                            <tr>
+                                                <td>{{++$i}}</td>
+                                                <td>{{$result->course->campuse->name}}</td>
+                                                <td>{{$result->course_name()}}</td>
+                                                <td>{{$result->semester_details ? $result->semester_details->name: '-'}}</td>
+                                                <td>{{$result->roll_no}}</td>
+                                                <td>{{$result->enrollment_no}}</td>
+                                                @if($result->student)
+                                                <td>{{$result->student->full_name}}</td>
+                                                <td>{{$result->student->email}}</td>
+                                                <td>{{$result->student->disabilty_category}}</td>
+                                                <td>{{$result->student->gender}}</td>
+                                                <td>{{$result->student->category}}</td>
+                                                @else
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                @endif
+                                            </tr>
+                                            @endforeach
+                                            @endif
+                                           </tbody>
                                         </table>
                                     </div>
 								

@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 @section('content')
     
     <!-- BEGIN: Content-->
@@ -18,8 +18,10 @@
                     </div>
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
+                    <form method="get" id="form_data">
+
                     <div class="form-group breadcrumb-right">
-                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0"  type="submit" name="submit_form"><i data-feather="check-circle" ></i>Get Report</button>
+                        <button type="submit" class="btn btn-primary btn-sm mb-50 mb-sm-0"  type="submit" name="submit_form"><i data-feather="check-circle" ></i>Get Report</button>
 
                             {{-- <button class="btn btn-warning box-shadow-2 btn-sm me-1 mb-sm-0 mb-50"><i data-feather="refresh-cw"></i>Reset</button> --}}
                         
@@ -33,15 +35,15 @@
                     <div class="col-md-6">
                         <div class="row align-items-center mb-1">
                             <div class="col-md-4">
-                                <label class="form-label">Academic Session:<span class="text-danger m-0">*</span></label>
+                                <label class="form-label">Campus Name:<span class="text-danger m-0">*</span></label>
                             </div>
                             <div class="col-md-8">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">2023-2024</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select name="campus" id="campus" class="form-control" required>
+                                    <option value="">--Select Session--</option>
+                                    @foreach($campuses as $campus)
+                                    <option value="{{$campus->id}}" @if(Request()->campus==$campus->id) selected @endif
+                                        >{{$campus->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -52,13 +54,12 @@
                                 <label class="form-label">Academic Session:<span class="text-danger m-0">*</span></label>
                             </div>
                             <div class="col-md-8">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">2023-2024</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select name="batch" id="batch" class="form-control" required>
+                                    @foreach($batch as $batchValue)
+                                        <option value="{{ $batchValue }}">{{ $batchValue }}</option>
+                                    @endforeach
                                 </select>
+                                
                             </div>
                         </div>
                     </div>
@@ -68,11 +69,8 @@
                         </button>
                     </div> --}}
 
-
-                    
-
-
                 </div>
+            </form>
 
 
                 <section id="basic-datatable">
@@ -130,31 +128,187 @@
                 
                 
                                         </thead>
-                                        {{-- <tbody>
-
-
+                                         <tbody>
+                                            @if($courses)
+                                            @php
+                                            $index = 0;
+                                            $total_male_nonPwd = 0;
+                                            $total_female_nonPwd = 0;
+                                            $total_gender_nonPwd = 0;
+                                            $total_ews_students_nonPwd = 0;
+                                            $total_gen_students_nonPwd = 0;
+                                            $total_obc_students_nonPwd = 0;
+                                            $total_sc_students_nonPwd = 0;
+                                            $total_st_students_nonPwd = 0;
+                                            $total_category_nonPwd = 0;
+                    
+                                            $total_male_students_Pwd = 0;
+                                            $total_female_students_Pwd = 0;
+                                            $total_gender_Pwd = 0 ;
+                                            $total_vi_students_Pwd = 0;
+                                            $total_hi_students_Pwd = 0;
+                                            $total_ld_oh_ph_students_Pwd = 0;
+                                            $total_others_students_Pwd = 0;
+                                            $total_diability = 0;
+                                            $total_category_Pwd = 0;
+                    
+                                            $total_ews_students_Pwd = 0;
+                                            $total_gen_students_Pwd = 0;
+                                            $total_obc_students_Pwd = 0;
+                                            $total_sc_students_Pwd = 0;
+                                            $total_st_students_Pwd = 0;
+                    
+                                            $grand_total_male = 0 ;
+                                            $grand_total_female = 0;
+                                            $grand_total_students = 0;
+                    
+                                            @endphp
+                                            @foreach($courses as $index => $course)
+                                            @php $course_wise_students = $course->studying_course_wise_students(Request()->batch); 
+                                            $total_male_nonPwd +=  $course_wise_students['male_students_nonPwd'];
+                                            $total_female_nonPwd += $course_wise_students['female_students_nonPwd'];
+                                            $gender_total_nonPwd = ($course_wise_students['male_students_nonPwd'] + $course_wise_students['female_students_nonPwd']);
+                    
+                                            $total_gender_nonPwd += $gender_total_nonPwd;
+                    
+                                            $total_ews_students_nonPwd += $course_wise_students['ews_students_nonPwd'];
+                    
+                                            $total_gen_students_nonPwd += $course_wise_students['gen_students_nonPwd'];
+                    
+                                            $total_obc_students_nonPwd += $course_wise_students['obc_students_nonPwd'];
+                    
+                                            $total_sc_students_nonPwd += $course_wise_students['sc_students_nonPwd'];
+                    
+                                            $total_st_students_nonPwd += $course_wise_students['st_students_nonPwd'];
+                    
+                                            $total_category_nonPwd = $total_gen_students_nonPwd + $total_ews_students_nonPwd + $total_obc_students_nonPwd + $total_sc_students_nonPwd + $total_st_students_nonPwd ;
+                    
+                                            $category_total_nonPwd = ($course_wise_students['ews_students_nonPwd'] + $course_wise_students['gen_students_nonPwd'] + $course_wise_students['obc_students_nonPwd'] + $course_wise_students['sc_students_nonPwd'] + $course_wise_students['st_students_nonPwd']);
+                    
+                    
+                                            $total_male_students_Pwd += $course_wise_students['male_students_Pwd'];
+                    
+                                            $total_female_students_Pwd += $course_wise_students['female_students_Pwd'];
+                    
+                                            $total_gender_Pwd = $total_male_students_Pwd + $total_female_students_Pwd;
+                    
+                                            $total_vi_students_Pwd +=  $course_wise_students['vi_students'];
+                                            $total_hi_students_Pwd +=  $course_wise_students['hi_students'];
+                                            $total_ld_oh_ph_students_Pwd +=   $course_wise_students['ld_oh_ph_students'];
+                                            $total_others_students_Pwd += $course_wise_students['others_students'];
+                                            
+                                            $total_diability =  $total_vi_students_Pwd + $total_hi_students_Pwd + $total_ld_oh_ph_students_Pwd + $total_others_students_Pwd;
+                    
+                                             $total_ews_students_Pwd += $course_wise_students['ews_students_Pwd'];
+                                             $total_gen_students_Pwd += $course_wise_students['gen_students_Pwd'];
+                                             $total_obc_students_Pwd += $course_wise_students['obc_students_Pwd'];
+                    
+                                             $total_sc_students_Pwd += $course_wise_students['sc_students_Pwd'];
+                                             $total_st_students_Pwd += $course_wise_students['st_students_Pwd'];
+                    
+                    
+                                             $total_category_Pwd = $total_ews_students_Pwd + $total_gen_students_Pwd + $total_obc_students_Pwd + $total_sc_students_Pwd + $total_st_students_Pwd;
+                    
+                                            
+                    
+                                            $gender_total_Pwd = ($course_wise_students['male_students_Pwd'] + $course_wise_students['female_students_Pwd']);
+                    
+                    
+                                            $category_total_Pwd = ($course_wise_students['ews_students_Pwd'] + $course_wise_students['gen_students_Pwd'] + $course_wise_students['obc_students_Pwd'] + $course_wise_students['sc_students_Pwd'] + $course_wise_students['st_students_Pwd']);
+                    
+                                            $total_male = ($course_wise_students['male_students_nonPwd'] + $course_wise_students['male_students_Pwd']);
+                    
+                                            $grand_total_male += $total_male;
+                                            
+                                            $total_female = ($course_wise_students['female_students_nonPwd'] + $course_wise_students['female_students_Pwd']);
+                    
+                                            $grand_total_female += $total_female;
+                    
+                                            $grand_total = $gender_total_nonPwd + $gender_total_Pwd ;
+                    
+                                            $grand_total_students +=  $grand_total;
+                    
+                    
+                    
+                    
+                                           
+                    
+                                            @endphp
+                                            
                                             <tr>
-                                                <td>dfgh</td>
-                                                <td>xcvb</td>
-                                                <td>cvb</td>
-                                                <td>cvb</td>
-                                                <td>cvb</td>
-                                                <td>cvb</td>
-                                                <td>cvb</td>
-                                                <td>cvb</td>
-                                                <td>cvb</td>
-                                                <td>cvb</td>
-                                                <td>cvb</td>
-                                                <td>cvb</td>
-                                                <td>cvb</td>
                                                 
-                                                <td class="tableactionnew">
-                                                    
+                                                <td>{{++$index}}</td>
+                                                <td>{{ $course->name}}</td>
+                                                <td>{{$course->total_no_of_seats}}</td>
+                                                <td>{{ $course_wise_students['male_students_nonPwd']}}</td>
+                                                <td>{{ $course_wise_students['female_students_nonPwd']}}</td>
+                                                <td>{{ $gender_total_nonPwd}}</td>
+                                                 <td>{{ $course_wise_students['ews_students_nonPwd']}}</td>
+                                                <td>{{ $course_wise_students['gen_students_nonPwd']}}</td>
+                                                <td>{{ $course_wise_students['obc_students_nonPwd']}}</td>
+                                                <td>{{ $course_wise_students['sc_students_nonPwd']}}</td>
+                                                <td>{{ $course_wise_students['st_students_nonPwd']}}</td>
+                                                <td>{{ $category_total_nonPwd}}</td>
+                                                <td>{{ $course_wise_students['male_students_Pwd']}}</td>
+                                                <td>{{ $course_wise_students['female_students_Pwd']}}</td>
+                                                <td>{{ $gender_total_Pwd}}</td>
+                                                <td>{{ $course_wise_students['vi_students']}}</td>
+                                                <td>{{ $course_wise_students['hi_students']}}</td>
+                                                <td>{{ $course_wise_students['ld_oh_ph_students']}}</td>
+                                                <td>{{ $course_wise_students['others_students']}}</td>
+                                                <td>{{ $course_wise_students['total_disable_students']}}</td>
+                                                <td>{{ $course_wise_students['ews_students_Pwd']}}</td>
+                                                <td>{{ $course_wise_students['gen_students_Pwd']}}</td>
+                                                <td>{{ $course_wise_students['obc_students_Pwd']}}</td>
+                                                <td>{{ $course_wise_students['sc_students_Pwd']}}</td>
+                                                <td>{{ $course_wise_students['st_students_Pwd']}}</td>
+                                                <td>{{ $category_total_Pwd}}</td>
+                                                <td>{{ $total_male }}</td>
+                                                <td>{{ $total_female }}</td>
+                                                <td>{{ $grand_total  }}
                                                 </td>
                                             </tr>
-                                           
-
-                                        </tbody> --}}
+                                            @endforeach
+                                            @endif
+                                            <tr>
+                                            <td colspan="3">
+                                                <h6>Grand Total</h6>
+                                            </td>
+                                            <td>
+                                                {{ $total_male_nonPwd }}
+                                            </td>
+                                            <td>
+                                               {{ $total_female_nonPwd }}
+                                            </td>
+                                            <td>
+                                                {{ $total_gender_nonPwd }} 
+                                            </td>
+                                            <td>{{$total_ews_students_nonPwd}}</td>
+                                            <td>{{$total_gen_students_nonPwd}}</td>
+                                            <td>{{ $total_obc_students_nonPwd }}</td>
+                                            <td>{{ $total_sc_students_nonPwd }}</td>
+                                            <td>{{$total_st_students_nonPwd}}</td>
+                                            <td>{{ $total_category_nonPwd }}</td>
+                                            <td>{{ $total_male_students_Pwd }}</td>
+                                            <td>{{ $total_female_students_Pwd }}</td>
+                                            <td>{{ $total_gender_Pwd }}</td>
+                                            <td>{{ $total_vi_students_Pwd }}</td>
+                                            <td>{{ $total_hi_students_Pwd }}</td>
+                                            <td>{{ $total_ld_oh_ph_students_Pwd }}</td>
+                                            <td>{{ $total_others_students_Pwd }}</td>
+                                            <td>{{ $total_diability }}</td>
+                                            <td>{{ $total_ews_students_Pwd }}</td>
+                                            <td>{{ $total_gen_students_Pwd }}</td>
+                                            <td>{{ $total_obc_students_Pwd }}</td>
+                                            <td>{{ $total_sc_students_Pwd }}</td>
+                                            <td>{{ $total_st_students_Pwd }}</td>
+                                            <td>{{ $total_category_Pwd}}</td>
+                                            <td>{{ $grand_total_male }}</td>
+                                             <td>{{$grand_total_female}}</td>
+                                             <td>{{$grand_total_students}}</td>
+                                            
+                                            
+                                        </tbody> 
 
 
                                     </table>

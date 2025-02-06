@@ -1,4 +1,4 @@
-@extends("admin.admin-meta")
+@extends("ums.admin.admin-meta")
 @section("content")
 
 
@@ -21,9 +21,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
+                <form method="get" id="form_data">
+                    <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
-                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="clipboard"></i> GET
+                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0" type="submit" name="submit_form" value="true"><i data-feather="clipboard"></i> GET
                             REPORT</button>
                         <button class="btn btn-warning btn-sm mb-50 mb-sm-0" onclick="window.location.reload();"><i
                                 data-feather="refresh-cw"></i>
@@ -45,28 +46,26 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
+                                <select name="campus_id" style="border-color: #c0c0c0;" class="form-control js-example-basic-single" onChange="return $('#form_data').submit();">
                                     <option value="">---Choose Campus---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                    @foreach($campuses as $campus)
+                                    <option value="{{$campus->id}}" @if($campus->id==Request()->campus_id) selected @endif >{{$campus->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
 
                         <div class="row align-items-center mb-1">
                             <div class="col-md-3">
-                                <label class="form-label">Course:<span class="text-danger">*</span></label>
+                                <label class="form-label">Course:<span class="text-danger ">*</span></label>
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Select---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                    <select name="course[]" style="border-color: #c0c0c0;" class="form-control" multiple>
+                                    <option value="">--Select--</option>
+                                    @foreach($courses as $course)
+                                        <option value="{{$course->id}}" @if(Request()->course && in_array($course->id,Request()->course)) selected @endif >{{$course->name}}</option>
+                                        @endforeach
                                 </select>
                             </div>
                         </div>
@@ -81,12 +80,11 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Select Back Type---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select name="academic_session" id="academic_session" class="form-control" required>
+                                    <option value="">--Select Session--</option>
+                                    @foreach($sessions as $session)
+                                        <option value="{{$session->academic_session}}" @if(Request()->academic_session==$session->academic_session) selected @endif >{{$session->academic_session}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -97,21 +95,17 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Choose Acedmic---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select name="semester_type" id="semester_type" class="form-control" required>
+                                    <option value="">--Select Semester Type--</option>
+                                    <option value="odd" @if(Request()->semester_type=='odd') selected @endif >Odd</option>
+                                    <option value="even" @if(Request()->semester_type=='even') selected @endif >Even</option>
                                 </select>
                             </div>
                         </div>
-
-
                     </div>
-
-
                 </div>
+            </form>
+
 
 
                 <section id="basic-datatable">
@@ -124,6 +118,11 @@
                                     <table
                                         class="datatables-basic table myrequesttablecbox tableistlastcolumnfixed newerptabledesignlisthome">
                                         <thead>
+                                            <th >
+                                                Student Result Count:
+                                                {{($results)?$results->count():0}}
+                           
+                                            </th> 
                                             <tr>
 
                                                 <th>S.NO</th>
@@ -141,55 +140,49 @@
 
                                         </thead>
                                         <tbody>
-
-
+                                            @if($results)
+                                            @php
+                                                $filledCount = 0;
+                                                $notFilledCount = 0;
+                                                @endphp
+                                            @foreach($results as $index_summary=>$result)
+                                            @php $student = $result->student; @endphp
+                                            @php $course = $result->course; @endphp
+                                            @php $elegible_for_exam = $result->elegible_for_exam(Request()->semester_type); @endphp
+                                            @php $exam_filled_Status = $result->exam_filled_Status(Request()->academic_session,Request()->semester_type); @endphp
                                             <tr>
-                                                <td>1</td>
-                                                <td>XYZ University</td>
-                                                <td>Bachelor of Science (BSc)</td>
-                                                <td>2nd Semester</td>
-                                                <td>123456</td>
-                                                <td>ENR123456</td>
-                                                <td>John Doe</td>
-                                                <td>OBC</td>
-                                                <td>No</td>
-                                               
-                                                {{-- <td class="tableactionnew">
-                                                    <div class="dropdown">
-                                                        <button type="button"
-                                                            class="btn btn-sm dropdown-toggle hide-arrow py-0"
-                                                            data-bs-toggle="dropdown">
-                                                            <i data-feather="more-vertical"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="edit" class="me-50"></i>
-                                                                <span>View Detail</span>
-                                                            </a>
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="edit-3" class="me-50"></i>
-                                                                <span>Edit</span>
-                                                            </a>
-
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="trash-2" class="me-50"></i>
-                                                                <span>Delete</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </td> --}}
+                                                <td>{{++$index_summary}}</td>
+                                                <td>{{$course->campuse->name}}</td>
+                                                <td>{{$course->name}}</td>
+                                                <td>
+                                                @if($exam_filled_Status)
+                                                    {{$exam_filled_Status->semester_details->name}}
+                                                @else
+                                                    @if($elegible_for_exam)
+                                                    {{$elegible_for_exam->name}}
+                                                    @endif
+                                                @endif
+                                                </td>
+                                                <td>{{$result->roll_no}}</td>
+                                                <td>{{$result->enrollment_no}}</td>
+                                                <td>{{($student)?$student->full_name:''}}</td>
+                                                <td>{{($student)?$student->mobile:''}}</td>
+                                                <td>{{($exam_filled_Status)?'Filled':'Not Filled'}}</td>
+                                                @if($exam_filled_Status)
+                                                    @php $filledCount++ @endphp
+                                                @else
+                                                    @php $notFilledCount++ @endphp
+                                                @endif
                                             </tr>
-                                           
-
+                                            @endforeach
+                                              {{-- Display filled and not filled student count --}}
+                                              <p>Filled Student Count: {{$filledCount}}</p>
+                                              <p>Not Filled Student Count: {{$notFilledCount}}</p>
+                                            @endif 
                                         </tbody>
-
 
                                     </table>
                                 </div>
-
-
-
-
 
                             </div>
                         </div>

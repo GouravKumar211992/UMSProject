@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 @section('content')
     
     <!-- BEGIN: Content-->
@@ -22,6 +22,8 @@
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right"> 
+                        <form method="GET" id="form_data">
+
                         <button class="btn btn-primary btn-sm mb-50 mb-sm-0"  type="submit" name="submit_form"><i data-feather="check-circle" ></i>Get Report</button>
 
                         {{-- <button class="btn btn-warning box-shadow-2 btn-sm  mb-sm-0 mb-50"><i data-feather="refresh-cw"></i>Reset</button> --}}
@@ -41,12 +43,11 @@
                                 <label class="form-label">Campus:<span class="text-danger m-0">*</span></label>
                             </div>
                             <div class="col-md-8">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">2023-2024</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select data-live-search="true" name="campus_id" id="campus_id" style="border-color: #c0c0c0;" class="form-control" onChange="return $('#form_data').submit();">
+                                    <option value="">--Choose Campus--</option>
+                                    @foreach($campuses as $campus)
+                                        <option value="{{$campus->id}}" @if(Request()->campus_id==$campus->id) selected @endif >{{$campus->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -57,12 +58,11 @@
                                 <label class="form-label">Courses:<span class="text-danger m-0">*</span></label>
                             </div>
                             <div class="col-md-8">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">2023-2024</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select data-live-search="true" name="course_id" id="course_id" style="border-color: #c0c0c0;" class="form-control js-example-basic-single " onChange="return $('#form_data').submit();">
+                                    <option value="">--Choose Course--</option>
+                                    @foreach($courses as $course)
+                                        <option value="{{$course->id}}" @if(Request()->course_id==$course->id) selected @endif >{{$course->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -73,18 +73,18 @@
                                 <label class="form-label">Academic Session:<span class="text-danger m-0">*</span></label>
                             </div>
                             <div class="col-md-8">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">2023-2024</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
-                                </select>
+                                <select name="academic_session" id="academic_session" style="border-color: #c0c0c0;" class="form-control">
+                                    <option value="">--Academic Session--</option>
+                                    @foreach($sessions as $session)
+                                    <option value="{{$session->academic_session}}" @if(Request()->academic_session==$session->academic_session) selected @endif >{{$session->academic_session}}</option>
+                                    @endforeach
+                                  </select>
                             </div>
                         </div>
                     </div>
               
                 </div>
+            </form>
                 
 <br>
 
@@ -128,31 +128,56 @@
                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                @php $counter = 0; @endphp
+                                                @foreach($results as $index=>$result)
+                                                  @php
+                                                    $get_second_last_semesters = $result->get_second_last_semesters(Request()->academic_session);
+                                                    $get_last_semesters = $result->get_last_semesters(Request()->academic_session);
+                                                  @endphp
+                                                  @if($get_last_semesters->count()>0)
+                                                  @php
+                                                    $result_data = $get_last_semesters->first();
+                                                    $secont_last_max_marks = ($get_second_last_semesters->sum('max_internal_marks')+$get_second_last_semesters->sum('max_external_marks'));
+                                                    $secont_last_obtained_marks = $get_second_last_semesters->sum('total_marks');
+                                                    $last_max_marks = ($get_last_semesters->sum('max_internal_marks')+$get_last_semesters->sum('max_external_marks'));;
+                                                    $last_obtained_marks = $get_last_semesters->sum('total_marks');
+                                                    $total_max_marks = ($secont_last_max_marks + $last_max_marks);
+                                                    $total_abtained_marks = ($secont_last_obtained_marks + $last_obtained_marks);
+                                                    $percentage = (($total_abtained_marks*100)/$total_max_marks);
+                                                  @endphp
+                                                  <tr>
+                                                    <td>{{++$counter}}</td>
+                                                    <td>{{$result_data->course->campuse->campus_code}}</td>
+                                                    <td>{{$result_data->course_name()}}</td>
+                                                    <td>{{$result->enrollment_no}}</td>
+                                                    <td>{{$result->student ? $result->student->full_name : "N/A"}}</td>
+                                                    <td>{{$result->student ? $result->student->father_name : "N/A"}}</td>
+                                                    <td>{{$result->student ? $result->student->mother_name : "N/A"}}</td>
+                                                    <td>{{($result->student && $result->student->date_of_birth) ? date('d-m-Y',strtotime($result->student->date_of_birth)) : "N/A"}}</td>
+                                                    <td>{{$result_data->course_description()}}</td>
+                                                    <td>{{$result_data->course->stream->name}}</td>
+                                                    <td>{{$result_data->result_full_text}}</td>
+                                                    <td>N/A</td>
+                                                    <td>
+                                                      @if($result_data->result_full == 'FAILED' || $result_data->result_full == 'ABSENT')
+                                                      No
+                                                      @else
+                                                      Yes
+                                                      @endif
+                                                    </td>
+                                                    <td>{{$result->roll_no}}</td>
+                                                    <td>{{Request()->academic_session}}</td>
+                                                    <td>{{( strpos( $result_data->semester_details->name, 'YEAR' ) == true)?'Y':'S'}}</td>
+                                                    <td>{{$secont_last_max_marks}}</td>
+                                                    <td>{{$secont_last_obtained_marks}}</td>
+                                                    <td>{{$last_max_marks}}</td>
+                                                    <td>{{$last_obtained_marks}}</td>
+                                                    <td>{{$total_max_marks}}</td>
+                                                    <td>{{$total_abtained_marks}}</td>
+                                                    <td>{{round($percentage,2)}}</td>
                                                 </tr>
+                                                @endif
+                                                @endforeach
                                                
                                             </tbody>
                                         </table>

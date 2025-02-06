@@ -1,4 +1,4 @@
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
     
@@ -70,19 +70,22 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach($all_subject as $subject)
+                                                   
                                                
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td>2</td>
-                                                    <td>3</td>
-                                                    <td>4</td>
-                                                    <td class="fw-bolder text-dark">5</td>
-                                                    <td >4</td>
-                                                    <td>5<span class="badge rounded-pill badge-light-secondary badgeborder-radius"></span></td>
-                                                    <td>6<span class="badge rounded-pill badge-light-secondary badgeborder-radius">	</span></td>
-                                                    <td>7</td>
-                                                    <td>8</td>
-                                                    <td>9</td>
+                                                    <td>{{$subject->id}}</td>
+                                                    <td>{{$subject->category ? $subject->category->name : '-'}}</td>
+                                                    <td>{{$subject->course ? $subject->course->name : '-'}}</td>
+                                                    <td>{{$subject->course->campuse ? $subject->course->campuse->name : '-'}}</td>
+                                                    <td class="fw-bolder text-dark">{{$subject->semester ? $subject->semester->name : '-'}}</td>
+                                                    <td >{{$subject->stream ? $subject->stream->name : '-'}}</td>
+                                                    <td>{{$subject->sub_code}}<span class="badge rounded-pill badge-light-secondary badgeborder-radius"></span></td>
+                                                    <td>{{$subject->back_fees}}<span class="badge rounded-pill badge-light-secondary badgeborder-radius">	</span></td>
+                                                    {{-- <td>{{$subject->back_fees}}</td> --}}
+                                                    <td>{{$subject->status}}</td>
+                                                    <td>{{$subject->subject_type}}</</td>
+                                                    <td>{{date('M dS, Y', strtotime($subject->created_at))}}</td>
                                                     <td>10</td>
                                                     
                                                     <td class="tableactionnew">  
@@ -104,7 +107,7 @@
                                                         </div> 
                                                     </td>
                                                 </tr>
-                                                
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

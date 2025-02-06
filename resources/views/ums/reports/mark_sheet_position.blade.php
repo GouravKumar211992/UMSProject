@@ -1,4 +1,4 @@
-@extends("admin.admin-meta")
+@extends("ums.admin.admin-meta")
 @section("content")
 
 
@@ -22,9 +22,10 @@
                         </div>
                     </div>
                 </div>
+                <form method="get" id="form_data">
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
-                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle" ></i> Get Report
+                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0" name="submit_form" type="submit"><i data-feather="check-circle" ></i> Get Report
                             </button>
                         
 
@@ -44,13 +45,12 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Choose Campus---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
-                                </select>
+                                <select data-live-search="true" name="campus_id" id="campus_id" style="border-color: #c0c0c0;" class="form-control" onChange="return $('#form_data').submit();">
+                                    <option value="">--Choose Campus--</option>
+                                    @foreach($campuses as $campus)
+                                        <option value="{{$campus->id}}" @if(Request()->campus_id==$campus->id) selected @endif >{{$campus->name}}</option>
+                                        @endforeach
+                                    </select>
                             </div>
                         </div>
 
@@ -60,13 +60,12 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Select---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
-                                </select>
+                                <select data-live-search="true" name="course_id" id="course_id" style="border-color: #c0c0c0;" class="form-control js-example-basic-single " onChange="return $('#form_data').submit();">
+                                    <option value="">--Choose Course--</option>
+                                        @foreach($courses as $course)
+                                        <option value="{{$course->id}}" @if(Request()->course_id==$course->id) selected @endif >{{$course->name}}</option>
+                                        @endforeach
+                                    </select>
                             </div>
                         </div>
 
@@ -80,12 +79,11 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Select Semester---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select data-live-search="true" name="semester_id" id="semester_id" style="border-color: #c0c0c0;" class="form-control js-example-basic-single">
+                                    <option value="">--Select Semester--</option>
+                                    @foreach($semesters as $semester)
+                                        <option value="{{$semester->id}}" @if(Request()->semester_id==$semester->id) selected @endif >{{$semester->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -96,12 +94,11 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Select Batch---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select data-live-search="true" name="semester_id" id="semester_id" style="border-color: #c0c0c0;" class="form-control js-example-basic-single">
+                                    <option value="">--Select Semester--</option>
+                                    @foreach($semesters as $semester)
+                                        <option value="{{$semester->id}}" @if(Request()->semester_id==$semester->id) selected @endif >{{$semester->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -109,7 +106,7 @@
 
                     </div>
 
-
+                </form>
                 </div>
 
 
@@ -118,7 +115,9 @@
                         <div class="col-12">
                             <div class="card">
 
-
+                                <form method="post" id="saveSequence">
+                                    <input type="hidden" name="semester_id" value="{{Request()->semester_id}}">
+                                    <input type="hidden" name="batch_year" value="{{Request()->batch}}">
                                 <div class="table-responsive">
                                     <table
                                         class="datatables-basic table myrequesttablecbox tableistlastcolumnfixed newerptabledesignlisthome">
@@ -134,42 +133,67 @@
                                             </tr>
 
                                         </thead>
-                                        <tbody>
-
-
-                                            <tr>
-                                                <td></td>
-                                                <td class="fw-bolder text-dark"></td>
-                                                
-                                                <td></td>
-                                            
-                                                
-                                                <td class="tableactionnew">
-                                                    {{-- <div class="dropdown">
-                                                        <button type="button"
-                                                            class="btn btn-sm dropdown-toggle hide-arrow py-0"
-                                                            data-bs-toggle="dropdown">
-                                                            <i data-feather="more-vertical"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                            
-                                                            
-
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="trash-2" class="me-50"></i>
-                                                                <span>Delete</span>
-                                                            </a>
+                                <tbody>
+                                    @php 
+                                        $serial_no = 0; 
+                                    @endphp
+                                
+                                    @foreach($results as $result)
+                                    @php
+                                    $subjectSuggetions = $result->subjectSuggetions(Request()->semester_id);
+                                    $serial_no = $serial_no + 1;
+                                    @endphp
+                                        <tr class="main-tr">
+                                            <td>
+                                                <span class="position_show">{{$serial_no}}</span>
+                                                <input type="hidden" name="subject_position[]" class="position position_style" value="{{$result->subject_position}}">
+                                                <input type="hidden" name="subject_code[]" class="subject_code" value="{{$result->subject_code}}">
+                                            </td>
+                                            <td>
+                                                {{$result->subject_code}}
+                                            </td>
+                                            <td>
+                                                <input type="text" name="subject_name[]" class="subject_name position_style form-control text-left" style="width: 100%;" value="{{$result->subject_name}}">
+                                                <hr>
+                                                <span class="text-info fa fa-eye" style="cursor: pointer;" data-toggle="modal" data-target="#myModal{{$serial_no}}"> Suggetions</span>
+                                                        <!-- Modal -->
+                                                        <div id="myModal{{$serial_no}}" class="modal fade" role="dialog">
+                                                        <div class="modal-dialog">
+                                
+                                                            <!-- Modal content-->
+                                                            <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Subject Suggetions</h4>
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <table class="table table-hover">
+                                                                    @foreach($subjectSuggetions as $subjectSuggetion)
+                                                                    <tr>
+                                                                        <td>{{$result->subject_code}}</td>
+                                                                        <td>{{$subjectSuggetion}}</td>
+                                                                        <td><input type="button" data-subject="{{$subjectSuggetion}}" onclick="setSubjectSuggetion($(this))" value="User This" class="btn btn-sm btn-success"  data-dismiss="modal"></td>
+                                                                    </tr>
+                                                                    @endforeach
+                                                                </table>
+                                                            </div>
+                                                            <!-- <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div> -->
+                                                            </div>
+                                
                                                         </div>
-                                                    </div> --}}
-                                                </td>
-                                            </tr>
-                                           
-
-                                        </tbody>
-
-
-                                    </table>
-                                </div>
+                                                        </div>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="brn btn-sm btn-info" onclick="marksheetSubjectNameUpdate($(this))">Update Subject Name Batch Wise</button>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                               </tbody>
+                            </table>
+                        </form>
+                        </div>
 
 
 
@@ -295,5 +319,107 @@
             </form>
         </div>
     </div>
+
+    {{-- <script type="text/javascript">
+        $(function () {
+            $("#tblLocations").sortable({
+                items: 'tbody tr',
+                cursor: 'pointer',
+                axis: 'y',
+                dropOnEmpty: false,
+                start: function (e, ui) {
+                    ui.item.addClass("selected");
+                },
+                stop: function (e, ui) {
+                    ui.item.removeClass("selected");
+                    $(this).find("tr").each(function (index) {
+                        if (index > 0) {
+                            // $(this).find("td").eq(0).html((index-1));
+                            $(this).find(".position").eq(0).val((index));
+                            $(this).find(".position_show").eq(0).text((index));
+                        }
+                    });
+                    saveSequence();
+                }
+            });
+        });
+
+        function saveSequence() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': '<?php echo csrf_token() ?>'
+                }
+            });
+            var batch = $('.batch').val();
+            if(batch==''){
+                alert('Please Select Batch');
+                return false;
+            }
+            $('#myModalLoader').css({'display':'block','opacity':'1'});
+            $.ajax({
+            type:'POST',
+            dataType: 'json',
+            url:"{{route('marksheet-position-update')}}",
+            data: $('#saveSequence').serialize(),
+            success:function(data) {
+                $('#myModalLoader').css({'display':'none','opacity':'0'});
+                $("#msg").html(data.msg);
+            }
+            });
+
+         }
+        function marksheetSubjectNameUpdate($this) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': '<?php echo csrf_token() ?>'
+                }
+            });
+            var semester_id = $('#semester_id').val();
+            var subject_name = $this.closest('tr').find('.subject_name').val();
+            var subject_code = $this.closest('tr').find('.subject_code').val();
+            var batch = $('.batch').val();
+            if(semester_id==''){
+                alert('Please Select Semester');
+                return false;
+            }
+            if(subject_name==''){
+                alert('Please Enter Subject Name');
+                return false;
+            }
+            if(batch==''){
+                alert('Please Select Batch');
+                return false;
+            }
+            if(semester_id=='' || subject_name=='' || subject_code=='' || batch==''){
+                alert('Please Fill Required Fields');
+                return false;
+            }
+            $('#myModalLoader').css({'display':'block','opacity':'1'});
+            $.ajax({
+            type:'POST',
+            dataType: 'json',
+            url:"{{route('marksheet-subject-name-update')}}",
+            data: {
+                semester_id : semester_id,
+                subject_name : subject_name,
+                subject_code : subject_code,
+                batch : batch,
+            },
+            success:function(data) {
+                $('#myModalLoader').css({'display':'none','opacity':'0'});
+                if(data=='true'){
+                    alert('Updated Successfully.');
+                }
+            }
+            });
+
+         }
+
+         function setSubjectSuggetion($this){
+            var subject = $this.data('subject');
+            $this.closest('tr.main-tr').find('.subject_name').val(subject);
+            // alert($this.closest('tr.main-tr').find('.subject_name').val());
+         }
+    </script> --}}
 
 @endsection

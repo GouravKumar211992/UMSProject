@@ -1,5 +1,5 @@
 
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
 {{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click"
@@ -26,70 +26,40 @@
                         </div>
                     </div>
                 </div>
-                <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
-                    <div class="form-group breadcrumb-right">
-                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="clipboard"></i> Show Report
-                            </button>
-                        
-
-
-                    </div>
-                </div>
             </div>
             <div class="content-body">
-                <div class="row  ">
-
-
-                    <div class="col-md mt-4 mb-3">
-
-                        <div class="row align-items-center mb-1">
-                            <div class="col-md-3">
-                                <label class="form-label">Exam Session:<span class="text-danger m-0">*</span></label>
-                            </div>
-
-                            <div class="col-md-9">
-                                <input type ="date" class="form-control"/>
- 
-                            </div>
-                        </div>
-
-                        
-
-
-                    </div>
-                    <div class="col-md mt-4 mb-3">
-
-                        <div class="row align-items-center mb-1">
-                            <div class="col-md-3">
-                                <label class="form-label">Exam Type:<span class="text-danger m-0">*</span></label>
-                            </div>
-
-                            <div class="col-md-9">
-                                <input type ="date" class="form-control"/>
-                            </div>
-                        </div>
-
-                        
-
-
-                    </div>
-
-
-                </div>
-
-
                 <section id="basic-datatable">
-                    <div class="row">
+                    <div class="row" style="margin-top: -30px">
+                        <form id="dateform" method="GET" action="{{ route('mbbs_security_report') }}">
+                            <div class="row">
+                                <div class="col-md-12 text-end">
+                                    <div class="form-group breadcrumb-right">
+                                        <button type="submit" class="btn btn-primary btn-sm">
+                                            <i data-feather="clipboard"></i> Show Report
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="row align-items-center mb-1">
+                                <div class="col-md-4">
+                                    <label class="form-label">From Date:<span class="text-danger m-0">*</span></label>
+                                    <input type="date" name="from" class="form-control" value="{{ request()->from }}" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">To Date:<span class="text-danger m-0">*</span></label>
+                                    <input type="date" name="to" class="form-control" value="{{ request()->to }}" required>
+                                </div>
+                            </div>
+                        </form>
+                        
                         <div class="col-12">
                             <div class="card">
-
-
                                 <div class="table-responsive">
                                     <table
                                         class="datatables-basic table myrequesttablecbox tableistlastcolumnfixed newerptabledesignlisthome">
                                         <thead>
                                             <tr>
-
                                                 <th>S.NO</th>
                                                 <th>Campus </th>
                                                 <th>COURSE</th>
@@ -114,55 +84,41 @@
                                                <th>order_id</th>
                                                <th>Payment_mode</th>
                                                <th>Created_at</th>
-                                              
-
                                             </tr>
-
                                         </thead>
                                         <tbody>
-
-
+                                            @foreach($data as $index=>$row)
                                             <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                
-                                                <td class="tableactionnew">
-                                                    
-                                                </td>
+                                                <td>{{++$index}}</td>
+                                                <td>{{$row->course->campuse->name}}</td>
+                                                <td>{{$row->course->name}}</td>
+                                                <td>{{$row->semester->name}}</td>
+                                                <td>{{$row->roll_no}}</td>
+                                                <td>{{$row->enrollment_no}}</td>
+                                                <td>{{$row->batch}}</td>
+                                                <td>{{$row->student_name}}</td>
+                                                <td>{{$row->father}}</td>
+                                                <td>{{$row->mother}}</td>
+                                                <td>{{$row->aadhar}}</td>
+                                                <td>{{$row->mobile}}</td>
+                                                <td>{{$row->email}}</td>
+                                                <td>{{$row->sub_code}}</td>
+                                                <td>{{$row->bank_name}}</td>
+                                                <td>{{$row->branch_name}}</td>
+                                                <td>{{$row->challan_reciept_date}}</td>
+                                                <td>{{$row->amount}}</td>
+                                                <td>{{$row->bank_ifsc_code}}</td>
+                                                {{-- <td>{{$row->challan}}</td> --}}
+                                                <td>{{$row->challan_number}}</td>
+                                                <td>{{$row->txn_status}}</td>
+                                                <td>{{$row->order_id}}</td>
+                                                <td>{{$row->payment_mode}}</td>
+                                                <td>{{$row->created_at}}</td>
                                             </tr>
-                                           
-
+                                            @endforeach
                                         </tbody>
-
-
                                     </table>
                                 </div>
-
-
-
-
-
                             </div>
                         </div>
                     </div>

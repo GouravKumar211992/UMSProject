@@ -1,5 +1,5 @@
 
-@extends('admin.admin-meta')
+@extends('ums.admin.admin-meta')
 
 @section('content')
 {{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click"
@@ -32,16 +32,16 @@
                     <div class="row">
                         <div class="col-md-5 mt-2 mb-2">
                             <div class="row align-items-center mb-1">
+                                <form method="get" id="form_data">
                                 <div class="col-md-2">
                                     <label class="form-label">Campus:<span class="text-danger m-0">*</span></label>
                                 </div>
                                 <div class="col-md-6">
-                                    <select name="step" id="stepSelect" class="form-control" required>
-                                        <option value="">---Choose Campus---</option>
-                                        <option value="1">Option 1</option>
-                                        <option value="2">Option 2</option>
-                                        <option value="3">Option 3</option>
-                                        <option value="4">Option 4</option>
+                                    <select data-live-search="true" name="campus_id" id="campus_id" style="border-color: #c0c0c0;" class="form-control">
+                                        <option value="">--Choose Campus--</option>
+                                        @foreach($campuses as $campus)
+                                            <option value="{{$campus->id}}" @if(Request()->campus_id==$campus->id) selected @endif >{{$campus->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-3" >
@@ -50,6 +50,7 @@
                                     </button>
                                 </div>
                             </div>
+                        </form>
                         </div>
                     </div>
                 </form>
@@ -71,13 +72,16 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach($students as $index=>$student)
                                             <tr>
-                                                <td>1</td>
-                                                <td>XYZ Campus</td>
-                                                <td>Computer Science</td>
-                                                <td>John Doe</td>
-                                                <td>224140064</td>
-                                                <td>Visually Impaired</td> 
+                                                <td>{{++$index}}</td>
+                                                <td>{{$student->course->campuse->name}}</td>
+                                                <td>{{$student->course->name}}</td>
+                                                <td>{{$student->name}}</td>
+                                                <td>{{$student->rollno}}</td>
+                                                <td>{{$student->disabilty_category}}</td>
+                                            </tr>
+                                            @endforeach 
                                         </tbody>
                                     </table>
                                 </div>
