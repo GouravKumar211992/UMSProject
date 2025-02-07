@@ -1,7 +1,7 @@
 @extends('ums.admin.admin-meta')
 
 @section('content')
-{{-- {{dd($all_users)}} --}}
+ 
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
@@ -11,11 +11,11 @@
                 <div class="content-header-left col-md-5 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">Admin</h2>
+                            <h2 class="content-header-title float-start mb-0">Email Template</h2>
                             <div class="breadcrumb-wrapper">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="ums_dashboard">Home</a></li>  
-                                    <li class="breadcrumb-item active">List of Admins</li>
+                                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                    <li class="breadcrumb-item active"> List of Template</li>
                                 </ol>
                             </div>
                         </div>
@@ -23,24 +23,17 @@
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right"> 
-                        
-                        <!-- <button class="btn btn-success btn-sm mb-50 mb-sm-0" data-bs-target="#approved" data-bs-toggle="modal"><i data-feather="check-circle" ></i> Assign Team</button> -->
-                        <a class="btn  btn-dark  btn-sm mb-50 mb-sm-0" href="{{ url('admin_list_add') }}">
-                            <i data-feather="user-plus"></i> Add Admin
-                        </a>  
-                        <button class="btn  btn-primary btn-sm mb-50 mb-sm-0" data-bs-target="#filter" data-bs-toggle="modal">
-                            <i data-feather="filter"></i> Filter
-                        </button> 
-                        <!-- Reset Button -->
-                        <button class="btn btn-warning  btn-sm mb-50 mb-sm-0" type="reset" onClick="window.location.reload()">
-                            <i data-feather="refresh-cw"></i> Reset
-                        </button>
+                        <a class="btn btn-dark btn-sm mb-50 mb-sm-0" href="{{ url('email-template-add') }}"><i data-feather="file-text"></i>Add Email Template</a>  
+
+							<button class="btn btn-primary btn-sm mb-50 mb-sm-0" data-bs-target="#filter" data-bs-toggle="modal"><i data-feather="filter"></i> Filter</button> 
+							<!-- <button class="btn btn-success btn-sm mb-50 mb-sm-0" data-bs-target="#approved" data-bs-toggle="modal"><i data-feather="check-circle" ></i> Assign Team</button> -->
+                            <button class="btn btn-warning box-shadow-2 btn-sm me-1 mb-sm-0 mb-50" onclick="window.location.reload();"><i data-feather="refresh-cw"></i>Reset</button>
                     </div>
                 </div>
-                
             </div>
             <div class="content-body">
-                 
+                  
+                @include('ums.admin.notifications')
 				<section id="basic-datatable">
                     <div class="row">
                         <div class="col-12">
@@ -52,34 +45,23 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID#</th>
-                                                    <th>Name</th>
-                                                    <th>Email</th>
-                                                    <th>Mobile</th>
-                                                    <th>Gender</th>
-                                                    <th>Marital Status</th>
-                                                    <th>DOB</th>
-                                                    <th>Role</th>
-                                                    <th>Created On</th>
+                                                    <th>Aliase</th>
+                                                    <th>Subject</th>
+                                                    <th>Message</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             @if(count($all_users) > 0)
-                                            @foreach($all_users as $key=> $user)
-                                            <tbody>
-                                                <tr>  
-                                                    <td>#{{$key+1}}</td>
-                                                    <td>{{$user->name}}</td>
-                                                    <td>{{$user->email}}</td>
-                                                    <td>{{$user->mobile}}</td>
-                                                    <td>{{ucfirst($user->gender)}}</td>
-                                                    <td>{{ucfirst($user->marital_status)}}</td>
-                                                    <td>
-                                                        @if($user->date_of_birth != '')
-                                                        {{date('M dS, Y', strtotime($user->date_of_birth))}} @endif</td>
-                                                    <td>{{$user->role}}</td>
-                                                    <td>{{date('M dS, Y', strtotime($user->created_at))}}</td>
-                                                    <td><div class="admin-status progStat"><span></span>{{ucfirst($user->status)}}</div></td>
+                                @foreach($all_users as $key=> $user)
+                                <tbody>
+									<tr>  
+										<td>#{{$key+1}}</td>
+										<td>{{ucfirst($user->alias)}}</td>
+                                        <td>{{ucfirst($user->subject)}}</td>
+                                        <td>{{ucfirst($user->message)}}</td>
+                                        <td><span class="badge rounded-pill badge-light-{{ strtolower($user->status) == 'active' ? 'success' : 'danger' }}">{{ucfirst($user->status)}}</span></td>
+
                                                     <td class="tableactionnew">  
                                                         <div class="dropdown">
                                                             <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
@@ -90,7 +72,7 @@
                                                                     <i data-feather="edit" class="me-50"></i>
                                                                     <span>Edit</span>
                                                                 </a> 
-                                                                <a class="dropdown-item" href="#"  onclick="deleteCat('{{$user->id}}')">
+                                                                <a class="dropdown-item" href="#" onclick="deleteCat('{{$user->id}}')">
                                                                     <i data-feather="trash-2" class="me-50"></i>
                                                                     <span>Delete</span>
                                                                 </a>
@@ -105,12 +87,10 @@
                                                     <td colspan="10" class="text-center">NO DATA FOUND</td>
                                                 </tr>
                                             @endif
-                                            
-                                                
-                                               
-                                            </tbody>
+                                          
                                         </table>
                                     </div>
+								
                             </div>
                         </div>
                     </div>
@@ -151,6 +131,8 @@
                         </div>
                     </div>
                 </section>
+                 
+
             </div>
         </div>
     </div>
@@ -159,14 +141,9 @@
     <div class="sidenav-overlay"></div>
     <div class="drag-target"></div>
 
-    
-  <!-- BEGIN: Footer-->
-  <footer class="footer footer-static footer-light">
-    <p class="clearfix mb-0"><span class="float-md-start d-block d-md-inline-block mt-25">COPYRIGHT © 2022<a class="ms-25" href="#" target="_blank">Staqo Presence</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span></p>
-</footer>
-<button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
-<!-- END: Footer-->
-   
+    <!-- BEGIN: Footer-->
+    {{-- @include('footer') --}}
+    <!-- END: Footer-->
 	
      
     
@@ -273,19 +250,22 @@
 			</form>
 		</div>
 	</div>
-
-    @endsection
-    <script>
-        function editCat(slug) {
-		var url = "{{url('admin/user/edit-user')}}"+"/"+slug;
+@endsection
+<script>
+    function exportdata() {
+        var url = "{{url('admin/user/admin-export')}}";
+        window.location.href = url;
+    }
+	function editCat(slug) {
+		var url = "{{url('/email-template/edit/')}}"+"/"+slug;
 		window.location.href = url;
 	}
-        function deleteCat(slug) {
+	function deleteCat(slug) {
         var testalert = "Are you sure?\n Press OK or Cancel";
         if(confirm(testalert)==false){
             return false;
         }
-        var url = "{{url('admin/user/delete-model-trim')}}"+"/"+slug;
+        var url = "{{url('email/delete-model-trim')}}"+"/"+slug;
         window.location.href = url;
     }
-    </script>
+</script>

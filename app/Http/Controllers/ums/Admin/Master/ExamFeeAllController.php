@@ -1,39 +1,44 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Master;
+namespace App\Http\Controllers\ums\Admin\Master;
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ums\AdminController;
 use Illuminate\Http\Request;
 
-use App\Models\Course;
-use App\Models\Student;
-use App\Models\ExamFee;
-use App\Models\Subject;
-use App\Models\Campuse;
-use App\Models\ExamSchedule;
-use App\Models\Enrollment;
-use App\Models\Application;
-use App\Models\StudentSemesterFee;
-use App\Models\Semester;
-use App\Models\Icard;
-use App\Models\Stream;
-use App\Models\Category;
-use App\Models\MbbsExamForm;
-use App\Models\ExamPayment;
-use App\Models\AdmitCard;
-use App\Models\ExamForm;
-use App\Models\AcademicSession;
-use App\Models\ExamFormAllow;
-use App\Scrutiny;
-use Validator;  
+use App\Models\ums\Course;
+use App\Models\ums\Student;
+use App\Models\ums\ExamFee;
+use App\Models\ums\Subject;
+use App\Models\ums\Campuse;
+use App\Models\ums\ExamSchedule;
+use App\Models\ums\Enrollment;
+use App\Models\ums\Application;
+use App\Models\ums\StudentSemesterFee;
+use App\Models\ums\Semester;
+use App\Models\ums\Icard;
+use App\Models\ums\Stream;
+use App\Models\ums\Category;
+use App\Models\ums\MbbsExamForm;
+use App\Models\ums\ExamPayment;
+use App\Models\ums\AdmitCard;
+use App\Models\ums\ExamForm;
+use App\Models\ums\AcademicSession;
+use App\Models\ums\ExamFormAllow;
+use App\Models\Scrutiny;
+use Illuminate\Support\Facades\Validator;
+
+
+
 use App\Exports\ExamFeeExport;
 use App\Exports\ChallengeExport;
-use App\Models\Audit;
-use App\Models\BackPaper;
+use App\Models\ums\Audit;
+use App\Models\ums\BackPaper;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\StudentAllFromOldAgency;
-use App\Models\StudentSubject;
-use DB;
+use App\Models\ums\StudentSubject;
+use Illuminate\Support\Facades\DB;
+
+
 use Illuminate\Support\Facades\Artisan;
 use Mockery\CountValidator\Exact;
 
@@ -51,11 +56,13 @@ class ExamFeeAllController extends AdminController
         ->withTrashed()
         ->get();
   
-       return view('admin.master.examfee.index', [
+        // dd($examfees);
+       return view('ums.exam.Exam_list', [
             'page_title' => "ExamFee",
             'sub_title' => "Records",
             'examfees' => $examfees,
         ]);
+
     }
 	 public function add(Request $request)
     {
@@ -105,7 +112,7 @@ class ExamFeeAllController extends AdminController
 		
       
 		//dd($data['mbbs']);
-        return view('admin.master.examfee.examfee-view',['data'=>$data,'exam_fee' => $exam_fee, 'student' => $student]);
+        return view('ums.exam.examfee-view',['data'=>$data,'exam_fee' => $exam_fee, 'student' => $student]);
     } 
 
     public function exam_form_allowed(Request $request,$roll_no)
@@ -124,9 +131,9 @@ class ExamFeeAllController extends AdminController
         $exam_fee=ExamFee::find($slug);
         $exam_form=ExamForm::where('exam_fee_id',$slug)->get('sub_code');
         //dd($exam_fee);
-        $subjects=Subject::where(['course_id'=>$exam_fee->course_id,'semester_id'=>$exam_fee->semester])->whereNull('deleted_at')->get();
+        $subjects=Subject::where(['course_id'=>$exam_fee->course_id,'semester_id'=>$exam_fee->semester])->get();
 
-        return view('admin.master.examfee.edit-form',['slug'=>$slug,'exam_fee'=>$exam_fee,'subjects'=>$subjects,'$exam_form'=>$exam_form]);
+        return view('ums.exam.edit-form',['slug'=>$slug,'exam_fee'=>$exam_fee,'subjects'=>$subjects,'$exam_form'=>$exam_form]);
     }
 	public function edit_exam_back_form(Request $request, $slug){
         $examFee = ExamFee::find($slug);
@@ -211,7 +218,7 @@ class ExamFeeAllController extends AdminController
                 'user_id' => $exam->id,
                 'event' => 'Regular Exam Subject Change by Admin',
                 'auditable_type' => 'Regular Exam Subject Change by Admin',
-                'auditable_id' => 'Regular Exam Subject Change by Admin',
+                'auditable_id' => 0,
                 'old_values' => serialize($exam),
                 'url' => url()->current(),
                 'ip_address' => $request->ip(),
@@ -227,7 +234,7 @@ class ExamFeeAllController extends AdminController
             DB::rollback();
             throw $e;
         }
-        return redirect('admin/master/examfee?search='.$exam->roll_no)->with('success','Exam Form Updated Successfully.');
+        return redirect('/master/examfee?search='.$exam->roll_no)->with('success','Exam Form Updated Successfully.');
     }
 
     public function resetPayment(Request $request,$slug)

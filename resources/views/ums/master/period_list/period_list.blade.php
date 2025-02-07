@@ -67,18 +67,21 @@
                                                         <td>{{$period->name}}</td>
                                                         <td>{{$period->time_rang}}</td>
                                                         <td>{{date('M dS, Y', strtotime($period->created_at))}}</td>
-                                                        @if($period->status == '1')
-                                                            <td><div class="admin-status progStat"><span></span> Active</div></td>
-                                                        @else
-                                                            <td><div class="admin-status compStat"><span></span> Inactive</div></td>
-                                                        @endif
+                                                        <td>
+                                                            @if($period->status == 0)
+                                                            <span class="badge rounded-pill badge-light-danger">Inactive</span>
+                                                            @else
+                                                            <span class="badge rounded-pill badge-light-success">Active</span>
+                                                            @endif
+                                                        </td>
+                                                        
                                                         <td class="tableactionnew">   
                                                             <div class="dropdown">
                                                                 <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown">
                                                                     <i data-feather="more-vertical"></i>
                                                                 </button>
                                                                 <div class="dropdown-menu dropdown-menu-end">
-                                                                    <a class="dropdown-item" href="#" onclick="editPeriod({{ $period->id }})">
+                                                                    <a class="dropdown-item" href="#" onclick="editCat({{ $period->id }})">
                                                                         <i data-feather="edit" class="me-50"></i>
                                                                         <span>Edit</span>
                                                                     </a>
@@ -258,6 +261,29 @@
 			</form>
 		</div>
 	</div>
+    <script>
+        function exportdata() {
+             var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
+             var fullUrl = "{{url()->full()}}";
+             if(fullUrl_count>1){
+                 fullUrl = fullUrl.split('?')[1];
+                 fullUrl = fullUrl.replace(/&amp;/g, '&');
+                 fullUrl = '?'+fullUrl;
+            }else{
+                fullUrl = '';
+            }
+            var url = "{{url('admin/master/period/period-export')}}"+fullUrl;
+            window.location.href = url;
+        }
+        function editCat(slug) {
+            var url = "{{url('period_list_edit')}}"+"/"+slug;
+            window.location.href = url;
+        }
+        function deleteCat(slug) {
+            var url = "{{url('admin/master/period/delete-model-trim')}}"+"/"+slug;
+            window.location.href = url;
+        }
+    </script>
   @endsection
 
   

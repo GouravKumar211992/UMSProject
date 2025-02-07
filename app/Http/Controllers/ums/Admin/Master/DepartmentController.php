@@ -44,7 +44,7 @@ class DepartmentController extends Controller
         $data->email = $request->email;
         $data->created_at = date('Y-m-d');
         $data->save();
-        return back()->with('success','Added Successfully.');
+        return redirect('get-department')->with('success','Added Successfully.');
     }
     public function edit($id)
     {
@@ -69,7 +69,7 @@ class DepartmentController extends Controller
           $data->email = $request->email;
           $data->updated_at = date('Y-m-d');
           $data->save();
-          return back()->with('success','Update Successfully.');
+          return redirect('get-department')->with('success','Update Successfully.');
       }
        public function departmentExport(Request $request)
     {

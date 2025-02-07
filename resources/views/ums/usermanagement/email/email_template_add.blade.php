@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <div class="content-header-right text-sm-end col-md-6 mb-50 mb-sm-0">
-                        <form action="/email/save-email-template" method="POST">
+                        <form action="{{url('email-add-form')}}" method="POST">
                             @csrf
                             <div class="form-group breadcrumb-right">
                                 <button onClick="javascript: history.go(-1)"
@@ -39,7 +39,8 @@
             </div>
             <div class="content-body">
 
-
+ 
+                @include('ums.admin.notifications')
 
                 <section id="">
                     <div class="row">
@@ -71,7 +72,7 @@
                                                 </div>
 
                                                 <div class="col-md-5">
-                                                    <input type="text" class="form-control" name="alias">
+                                                    <input type="text" class="form-control" name="alias"  required>
                                                 </div>
 
                                             </div>
@@ -82,7 +83,7 @@
                                                 </div>
 
                                                 <div class="col-md-5">
-                                                    <input type="text" class="form-control" name="subject">
+                                                    <input type="text" class="form-control" name="subject" required>
                                                 </div>
 
                                             </div>
@@ -115,7 +116,7 @@
                                         <div class="col-md-12">
                                             <div class="mb-1">
                                                 <label class="form-label">Description</label>
-                                                <textarea type="text" rows="4" class="form-control" placeholder="Enter Remarks here..." name="message"></textarea>
+                                                <textarea type="text" rows="4" class="form-control" placeholder="Enter Remarks here..." name="message" required></textarea>
 
                                             </div>
                                         </div>

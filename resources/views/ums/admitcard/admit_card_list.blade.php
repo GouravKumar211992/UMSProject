@@ -80,14 +80,14 @@
                                                     <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown" aria-expanded="false">                                                          <i data-feather="more-vertical"></i>
                                                       </button>
                                                       <div class="dropdown-menu dropdown-menu-end">
-                                                          <a class="dropdown-item" ref="{{url('admit_card_list?exam_id='.$examData->id)}}">
+                                                          <a class="dropdown-item" onclick="editCourse('{{$examData->id}}')">
                                                               <i data-feather="edit" class="me-50"></i>
                                                               <span>Edit</span>
                                                           </a> 
-                                                           <a class="dropdown-item" onClick="return confirm('Are you sure?');" href="{{url('admin/master/delete-admit-card')}}/{{$examData->id}}">
+                                                           {{-- <a class="dropdown-item" onclick="deleteCourse('{{$examData->id}}')">
                                                               <i data-feather="trash-2" class="me-50"></i>
                                                               <span>Delete</span>
-                                                          </a>
+                                                          </a> --}}
                                                       </div>
                                                   </div> 
                                               </td>
@@ -180,7 +180,7 @@
 
 @endsection
 
-<script>
+{{-- <script>
     function exportdata() {
        var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
             var fullUrl = "{{url()->full()}}";
@@ -194,63 +194,27 @@
             var url = "{{url('admin/master/admitcard/admitcard-export')}}"+fullUrl;
            window.location.href = url;
        }
-   </script>
-   <script>
-       
-       $(document).ready(function(){
-           $('#program').change(function() {
-                   var course_type = $('#program').val();
-                   var campuse_id = $('#type').val();
-               // console.log('campuse id>>>>>>>>>>>',course_type);
-               //  $("#course").find('option').remove().end();
-                   var formData = {
-                       program: course_type,
-                       campuse_id: campuse_id,
-                       "_token": "{{ csrf_token() }}"
-                   }; //Array 
-                   $.ajax({
-                       url: "{{route('course_list')}}",
-                       type: "POST",
-                       data: formData,
-                       success: function(data, textStatus, jqXHR) {
-                           $('#course').html(data);
-                           console.log(data);
-                       },
-                   });
-           });
-   
-           $('#filter_program').change(function() {
-                   var course_type = $('#filter_program').val();
-                   var campuse_id = $('#campus').val();
-               // console.log('campuse id>>>>>>>>>>>',course_type);
-               //  $("#course").find('option').remove().end();
-                   var formData = {
-                       program: course_type,
-                       campuse_id: campuse_id,
-                       "_token": "{{ csrf_token() }}"
-                   }; //Array 
-                   $.ajax({
-                       url: "{{route('course_list')}}",
-                       type: "POST",
-                       data: formData,
-                       success: function(data, textStatus, jqXHR) {
-                           $('#filter_course').html(data);
-                           console.log(data);
-                       },
-                   });
-           });
-   
-           $('#course').change(function() {
-               var course=$('#course').val();
-               var formData = {course:course,"_token": "{{ csrf_token() }}"}; //Array 
-               $.ajax({
-                   url : "{{route('semester_list')}}",
-                   type: "POST",
-                   data : formData,
-                   success: function(data, textStatus, jqXHR){
-                       $('#semester').html(data);
-                   },
-               });
-           });
-       });
-   </script>
+   </script> --}}
+  <script>
+    function exportdata() {
+       var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
+        var fullUrl = "{{url()->full()}}";
+        if(fullUrl_count>1){
+            fullUrl = fullUrl.split('?')[1];
+            fullUrl = fullUrl.replace(/&amp;/g, '&');
+            fullUrl = '?'+fullUrl;
+       }else{
+           fullUrl = '';
+       }
+       var url = "{{url('admin/master/course/course-export')}}"+fullUrl;
+       window.location.href = url;
+   }
+   function editCourse(slug) {
+       var url = "{{url('admit-card_edit')}}"+"/"+slug;
+       window.location.href = url;
+   }
+//    function deleteCourse(slug) {
+//        var url = "{{url('admit-card_delete')}}"+"/"+slug;
+//        window.location.href = url;
+//    }
+</script>

@@ -1,31 +1,33 @@
 <?php
 
-namespace App\Http\Controllers\Faculty;
+namespace App\Http\Controllers\UMS\Faculty;
 
 use View;
 use Auth;
 use App\User;
 
 use App\Http\Controllers\Controller;
+// use App\Http\Controllers\ums\AdminController;
 use Illuminate\Http\Request;
-use App\Models\BackPaper;
-use App\Models\Stream;
-use App\Models\Course;
-use App\Models\Category;
-use App\Models\PermanentAddress;
-use App\Models\UploadDocuments;
-use App\Models\Icard;
-use App\Models\Result;
-use App\Models\Subject;
-use App\Models\Campuse;
-use App\Models\ExamForm;
-use App\Models\StudentSubject;
-use App\Models\StudentsemesterFee;
-use App\Models\InternalMarksMapping;
-use App\Models\AcademicSession;
-use App\Models\PracticalMark;
-use App\Models\MbbsExamForm;
-use App\Models\AwardSheetFile;
+use App\Models\ums\BackPaper;
+use App\Models\ums\Stream;
+use App\Models\ums\Course;
+use App\Models\ums\Category;
+use App\Models\ums\PermanentAddress;
+use App\Models\ums\UploadDocuments;
+use App\Models\ums\Icard;
+use App\Models\ums\Result;
+use App\Models\ums\Subject;
+use App\Models\ums\Campuse;
+use App\Models\ums\ExamForm;
+use App\Models\ums\StudentSubject;
+use App\Models\ums\StudentsemesterFee;
+use App\Models\ums\InternalMarksMapping;
+use App\Models\ums\AcademicSession;
+use App\Models\ums\PracticalMark;
+use App\Models\ums\MbbsExamForm;
+use App\Models\ums\AwardSheetFile;
+use App\Models\ums\Faculty;
 use Validator;
 use DB;
 
@@ -35,14 +37,16 @@ class PracticalMarksController extends Controller
 {
      public function index()
     {
-        return view('faculty.practical.index');
+        return view('ums.master.faculty.practical_marks');
     }
     public function practical(Request $request)
     {
 		$data['streams'] = Stream::whereIn('id',[50,3,4,5])->orderBy('name','ASC')->get();
 		$data['examTypes'] = StudentSubject::distinct('type')->pluck('type')->toArray();    
         $data['sub_code']= $data['sub_name']= $data['date_of_practical_exam']=$data['assign_maximum']=$data['mapped_Semesters']= $data['mapped_faculty']= $mapped_faculty= $data['mapped_Subjects'] =$data['sub_code_name'] = null;
-        $user=Auth::guard('faculty')->user();
+        // $user=Auth::guard('faculty')->user();
+        $faculty_id = request()->get('faculty_id', 46); // Default to 46 if 'faculty_id' is not provided in the request
+        $user = Faculty::find($faculty_id);
         $mapped_Subjects_query = Subject::select('subjects.name', 'subjects.sub_code', 'subjects.back_fees', 'subjects.scrutiny_fee', 'subjects.challenge_fee', 'subjects.status', 'subjects.subject_type', 'subjects.type', 'subjects.internal_maximum_mark', 'subjects.maximum_mark', 'subjects.minimum_mark', 'subjects.credit', 'subjects.internal_marking_type', 'subjects.combined_subject_name')
 				->join('internal_marks_mappings',function($join){
 					$join->on('subjects.sub_code','internal_marks_mappings.sub_code')
@@ -163,7 +167,8 @@ class PracticalMarksController extends Controller
         $data['date_of_practical_exam']=$request->date_of_practical_exam;
         
         $data['practical_maximum']=$request->practical_maximum;
-        return view('faculty.practical.add',$data);
+        dd($data['mapped_Subjects']);
+        return view('ums.master.faculty.practical_marks',$data);
     }
     
     public function post_practical(Request $request){
@@ -270,7 +275,9 @@ class PracticalMarksController extends Controller
 
         $data['streams'] = Stream::whereIn('id',[50,3,4,5])->orderBy('name','ASC')->get();
         $data['examTypes'] = StudentSubject::distinct('type')->pluck('type')->toArray();
-        $user = Auth::guard('faculty')->user();
+        // $user = Auth::guard('faculty')->user();
+        $faculty_id = request()->get('faculty_id', 46); // Default to 46 if 'faculty_id' is not provided in the request
+        $user = Faculty::find($faculty_id);
         $data['sub_code_name'] = null;
         $mapped_Subjects_query = InternalMarksMapping::select('subjects.*')
         ->join('subjects','subjects.sub_code','internal_marks_mappings.sub_code')
@@ -327,7 +334,7 @@ class PracticalMarksController extends Controller
         $data['sessions']=AcademicSession::all();
         $data['campuses'] = Campuse::all();
 		$data['selected_course'] = Course::find($request->course);
-        return view('faculty.practical.show',$data);
+        return view('ums.master.faculty.practical_marks',$data);
     }
 
     public function practical_submit(Request $request){

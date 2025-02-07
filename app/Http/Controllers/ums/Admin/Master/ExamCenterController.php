@@ -21,7 +21,6 @@ class ExamCenterController extends Controller
         'center_code' => 'required',
     'center_name' => 'required',
     'status'   => 'required',
-   
         ]);
      if ($validator->fails()) {    
       return back()->withErrors($validator)->withInput($request->all());
@@ -31,32 +30,33 @@ class ExamCenterController extends Controller
      $data->center_name=$request->center_name;
    	 $data->status=$request->status;
      $data->save();
-   	 return redirect()->route('exam-center')->with('success','Exam-Center Added Successfully.');
+    return redirect()->route('exam_center')->with('success','Exam-Center Added Successfully.');
    }
-     public function delete($id)
-   {
-   	    $data=ExamCenter::find($id);
-        $data->delete();
-       
-     return redirect()->route('exam-center')->with('success','exam-center Data Deleted Successfully.');
     
-   }
-    public function edit($id)
+   public function edit($id)
    {
-   	  $data=ExamCenter::find($id);
-   	  return view('admin.master.examcenter.edit-exam-center',['info'=>$data]);
+       $data = ExamCenter::find($id);
+       return view('ums.master.exam_center.Exam_center_edit', ['data' => $data]);
    }
   
      public function update(Request $request,$id)
    {
-   	  $update=ExamCenter::find($id);
-       $update->center_code=$request->get('center_code');
-       $update->center_name=$request->get('center_name');
-       $update->status=$request->get('status');
-       $update->save();
+       $data= ExamCenter::find($id);
+       $data->center_code=$request->center_code;
+       $data->center_name=$request->center_name;
+       $data->status=$request->status;
+       $data->save();
 
-        return redirect()->route('exam-center')->with('success','Exam Center Updated Successfully.');
+        return redirect()->route('exam_center')->with('success','Exam Center Updated Successfully.');
    	 
+   }
+   public function delete($id)
+   {
+   	    $data=ExamCenter::find($id);
+        $data->delete();
+       
+     return redirect()->route('exam_center')->with('success','exam-center Data Deleted Successfully.');
+    
    }
      public function examEenterExport(Request $request)
     {

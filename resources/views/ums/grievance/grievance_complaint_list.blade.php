@@ -60,7 +60,7 @@
                                     <td>{{$data->complaint_no}}</td>
                                     <td>{{$data->latestComplaint()->status_text}}</td>
                                     <td>{{$data->latestComplaint()->created_at}}</td>
-                                    <td><a href="{{url('grievance_complaint_details')}}?complaint_no={{$data->complaint_no}}" target="_blank">Action</a></td>
+                                    <td><a href="{{url('grievance-complaint-details')}}?complaint_no={{$data->complaint_no}}" target="_blank">Action</a></td>
                                 </tr>
                                 @endforeach
                                             </tbody>

@@ -85,12 +85,15 @@
                                                         <div class="col-md-5"> 
                                                             <div class="demo-inline-spacing">
                                                                 <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio3" name="group1" class="form-check-input" checked="">
-                                                                    <label class="form-check-label fw-bolder" for="customColorRadio3">Active</label>
+                                                                    
+                                                                        
+                                                                    
+                                                                    <input type="radio"  id="active" name="group1" class="form-check-input" value="active" {{ $selected_category->status == 1 ? 'checked' : '' }}>
+                                                                    <label class="form-check-label fw-bolder"  for="customColorRadio3">Active</label>
                                                                 </div> 
                                                                 <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio4"  name="group1" class="form-check-input">
-                                                                    <label class="form-check-label fw-bolder" for="customColorRadio4">Inactive</label>
+                                                                    <input type="radio" id="inactive"  name="group1" class="form-check-input" value="inactive" {{ $selected_category->status == 0 ? 'checked' : '' }}>
+                                                                    <label class="form-check-label fw-bolder"  for="customColorRadio4">Inactive</label>
                                                                 </div> 
                                                             </div>  
                                                         </div> 
@@ -415,32 +418,31 @@
 			</div>
 		</div>
 	</div>
-
+    <script>
+        $(document).ready(function(){
+    
+            var selected_category = {!! json_encode($selected_category) !!};
+    
+            if(selected_category['status'] == 1) {
+                $('#active').prop('checked', true);
+                $('#inactive').prop('checked', false);
+            }
+            else {
+                $('#active').prop('checked', false);
+                $('#inactive').prop('checked', true);
+            }
+        });
+    </script>
+    <script>
+        function submitCat(form) {
+            if(document.getElementById('active').checked) {
+                document.getElementById('category_status').value = 'active';
+            }
+            else {
+                document.getElementById('category_status').value = 'inactive';
+            }
+    
+            document.getElementById('edit_category_form').submit();
+        }
+    </script>
 @endSection
-<script>
-	$(document).ready(function(){
-
-		var selected_category = {!! json_encode($selected_category) !!};
-
-		if(selected_category['status'] == 1) {
-			$('#active').prop('checked', true);
-			$('#inactive').prop('checked', false);
-		}
-		else {
-			$('#active').prop('checked', false);
-			$('#inactive').prop('checked', true);
-		}
-	});
-</script>
-<script>
-	function submitCat(form) {
-		if(document.getElementById('active').checked) {
-			document.getElementById('category_status').value = 'active';
-		}
-		else {
-			document.getElementById('category_status').value = 'inactive';
-		}
-
-		document.getElementById('edit_category_form').submit();
-	}
-</script>

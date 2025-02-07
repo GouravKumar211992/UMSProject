@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\ums;
 
 use App\Http\Requests\AttributeRequest;
 use App\Models\AttributeGroup;

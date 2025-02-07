@@ -137,9 +137,9 @@ class Enrollment extends Model
 		return $paper_name;
 	}
 
-    public function applicationAddress() {
-        return $this->hasOne(ApplicationAddress::class, 'application_id','application_id')->where('address_type','permanent');
-    }
+    // public function applicationAddress() {
+    //     return $this->hasOne(ApplicationAddress::class, 'application_id','application_id')->where('address_type','permanent');
+    // }
 
 	public function courseMaxDuration(){
 		$course = Course::find($this->course_id);

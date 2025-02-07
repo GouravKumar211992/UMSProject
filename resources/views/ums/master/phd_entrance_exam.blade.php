@@ -55,14 +55,17 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                               
+                                               @foreach ($items as $item)
+                                                   
+                                              
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td class="fw-bolder text-dark">Ph D Chemistry</td>
-                                                    <td>PDCH</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">2022-02-04</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">11:00:00</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">1:00:00</span></td>
+                                                    <td>{{$item['id']}}</td>
+                                                    <td class="fw-bolder text-dark">{{$item['program_name']}}</td>
+
+                                                    <td>{{$item['program_code']}}</td>
+                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">{{$item['exam_date']}}</span></td>
+                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">{{$item['exam_time']}}</span></td>
+                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">{{$item['exam_ending_time']}}</span></td>
                                                     
                                                      
                                                     
@@ -84,7 +87,7 @@
                                                         </div> 
                                                     </td>
                                                 </tr>
-                                                
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

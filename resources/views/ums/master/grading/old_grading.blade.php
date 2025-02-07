@@ -8,12 +8,15 @@
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
+        @include('ums.admin.notifications')
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
             <div class="content-header row">
                 <div class="content-header-left col-md-5 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
+                            <form method="get" id="form_data" action="">
+
                             <h2 class="content-header-title float-start mb-0">Master</h2>
                             <div class="breadcrumb-wrapper">
                                 <ol class="breadcrumb">
@@ -26,12 +29,88 @@
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
-                        <button class="btn btn-dark btn-sm mb-50 mb-sm-0" onclick="location.href='{{'add_grading'}}'"><i data-feather="clipboard"></i> Add</button>
+                        <button class="btn btn-dark btn-sm mb-50 mb-sm-0" type="submit" name="submit_form" value="Add"><i data-feather="clipboard"></i> Add</button>
                     </div>
                 </div>
             </div>
             <div class="content-body">
 
+                <div class="row  ">
+
+
+                    <div class="col-md ">
+
+                        <div class="row align-items-center mb-1">
+                            <div class="col-md-3">
+                                <label class="form-label">Campus:<span class="text-danger m-0">*</span></label>
+                            </div>
+
+                            <div class="col-md-9">
+                                <select name="campus_id" id="campus_id" style="border-color: #c0c0c0;" class="form-control" onChange="return $('#form_data').submit();">
+                                    <option value="">--Choose Campus--</option>
+                                    @foreach($campuses as $campus)
+                                        <option value="{{$campus->id}}" @if(Request()->campus_id==$campus->id) selected @endif >{{$campus->name}}</option>
+                                        @endforeach
+                                    </select>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center mb-1">
+                            <div class="col-md-3">
+                                <label class="form-label">Course:<span class="text-danger">*</span></label>
+                            </div>
+
+                            <div class="col-md-9">
+                            	<select name="course_id" id="course_id" style="border-color: #c0c0c0;" class="form-control js-example-basic-single " onChange="return $('#form_data').submit();">
+                                    <option value="">--Choose Course--</option>
+                                        @foreach($courses as $course)
+                                        <option value="{{$course->id}}" @if(Request()->course_id==$course->id) selected @endif >{{$course->name}}</option>
+                                        @endforeach
+                                    </select>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-md">
+
+                        <div class="row align-items-center mb-1">
+                            <div class="col-md-3">
+                                <label class="form-label">Semester:<span class="text-danger m-0">*</span></label>
+                            </div>
+
+                            <div class="col-md-9">
+                                <select name="semester_id" id="semester_id" style="border-color: #c0c0c0;" class="form-control js-example-basic-single">
+                                    <option value="">--Select Semester--</option>
+                                    @foreach($semesters as $semester)
+                                        <option value="{{$semester->id}}" @if(Request()->semester_id==$semester->id) selected @endif >{{$semester->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center mb-1">
+                            <div class="col-md-3">
+                                <label class="form-label">Batch:<span class="text-danger">*</span></label>
+                            </div>
+
+                            <div class="col-md-9">
+                                <select name="academic_session" id="academic_session" class="form-control" style="border-color: #c0c0c0;">
+                                    <option value="">--Select Semester--</option>
+                                    @foreach($sessions as $session)
+                                        <option value="{{$session}}" @if(Request()->academic_session == $session) selected @endif >{{$session}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </form>
 
                 <section id="basic-datatable">
                     <div class="row">

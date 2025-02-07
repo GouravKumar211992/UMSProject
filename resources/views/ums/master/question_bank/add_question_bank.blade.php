@@ -32,6 +32,8 @@
                     </div>
                 </div>
             </div>
+            <form id="cat_form" method="POST" action="{{route('question-bank-save')}}" onsubmit='disableButton()' enctype="multipart/form-data">
+                @csrf
             <div class="content-body bg-white p-4 shadow">
 
                                  
@@ -180,7 +182,7 @@
         </div>
     </div>
 
-				
+            </div>		
 				<section id="basic-datatable">
                     <div class="row">
                         <div class="col-12">

@@ -22,7 +22,7 @@
                         <button class="btn btn-warning btn-sm mb-50 mb-sm-0" data-bs-target="#filter" data-bs-toggle="modal"><i data-feather="filter"></i> Filter</button> 
 						<a class="btn btn-primary btn-sm mb-50 mb-sm-0" href="#"> Remove pagination</a> 
                         <button class="btn btn-warning box-shadow-2 btn-sm me-1 mb-sm-0 mb-50" onclick="window.location.reload();"><i data-feather="refresh-cw"></i> Reset</button>
-                        <a class="btn btn-primary btn-sm mb-50 mb-sm-0" href="#"> Enrollment Summary</a> 
+                        <a class="btn btn-primary btn-sm mb-50 mb-sm-0" href="{{ url('enrollment_summary')}}"> Enrollment Summary</a> 
 
                     </div>
                 </div>
@@ -57,81 +57,31 @@
 											  </tr>
 											</thead>
 											<tbody>
-												 <tr>
-													<td>1</td>
-                                                    <td><input type="checkbox" name="counceling[]" value="24221" class="checkbox_style"></td>
-													<td class="fw-bolder text-dark">Land Plot</td>
-													<td>ERP</td>
-													<td>land-plot</td>
-													<td>erp-portal</td>
-													<td>Internal</td>
-													<td>Quick Link</td>
-													<td>1</td>
-													<td>ERP Admin</td>
-													<td>16 Oct 2024, 12:14 pm</td>
-													<td><span class="badge rounded-pill badge-light-success badgeborder-radius">Active</span></td>
-													
-												  </tr>
-												  <tr>
-													<td>2</td>
-													<td><input type="checkbox" name="counceling[]" value="24221" class="checkbox_style"></td>
-													<td class="fw-bolder text-dark">Land Plot</td>
-													<td>ERP</td>
-													<td>land-plot</td>
-													<td>erp-portal</td>
-													<td>Internal</td>
-													<td>Quick Link</td>
-													<td>1</td>
-													<td>ERP Admin</td>
-													<td>16 Oct 2024, 12:14 pm</td>
-													<td><span class="badge rounded-pill badge-light-danger badgeborder-radius">Inactive</span></td>
-													
-												  </tr>
-												  <tr>
-													<td>3</td>
-                                                    <td><input type="checkbox" name="counceling[]" value="24221" class="checkbox_style"></td>													
-                                                    <td class="fw-bolder text-dark">Land Plot</td>
-													<td>ERP</td>
-													<td>land-plot</td>
-													<td>erp-portal</td>
-													<td>Internal</td>
-													<td>Quick Link</td>
-													<td>1</td>
-													<td>ERP Admin</td>
-													<td>16 Oct 2024, 12:14 pm</td>
-													<td><span class="badge rounded-pill badge-light-danger badgeborder-radius">Inactive</span></td>
-													
-												  </tr>
-												  <tr>
-													<td>4</td>
-													<td><input type="checkbox" name="counceling[]" value="24221" class="checkbox_style"></td>
-													<td class="fw-bolder text-dark">Land Plot</td>
-													<td>ERP</td>
-													<td>land-plot</td>
-													<td>erp-portal</td>
-													<td>Internal</td>
-													<td>Quick Link</td>
-													<td>1</td>
-													<td>ERP Admin</td>
-													<td>16 Oct 2024, 12:14 pm</td>
-													<td><span class="badge rounded-pill badge-light-success badgeborder-radius">Active</span></td>
-													
-												  </tr>
-												  <tr>
-													<td>5</td>
-													<td><input type="checkbox" name="counceling[]" value="24221" class="checkbox_style"></td>
-													<td class="fw-bolder text-dark">Land Plot</td>
-													<td>ERP</td>
-													<td>land-plot</td>
-													<td>erp-portal</td>
-													<td>Internal</td>
-													<td>Quick Link</td>
-													<td>1</td>
-													<td>ERP Admin</td>
-													<td>16 Oct 2024, 12:14 pm</td>
-													<td><span class="badge rounded-pill badge-light-success badgeborder-radius">Active</span></td>
-													
-												  </tr>
+										 @if(count($applications) > 0)
+                                @php $serial_no = ((($current_page - 1) * $per_page) + 1); @endphp
+                                @foreach( $applications as $index => $app)
+                                <tbody>
+									<tr>
+                                        <td>{{$serial_no++}}</td>
+                                        <td><input type="checkbox" class="checkboxstyle cancel_enrollment" name="cancel_enrollment"></td>
+                                        <td>{{($app->campus)?$app->campus->name:''}}</td>
+                                        <td>{{($app->counselled_course)?$app->counselled_course->name:''}}</td>
+                                        <td>{{@$app->enrollment->enrollment_no}}</td>
+                                        <td>{{@$app->enrollment->roll_number}}<input type="hidden" name="roll_number[]" value="{{@$app->enrollment->roll_number}}"></td>
+                                        <td>{{$app->full_name}}</td>
+                                        <td>{{$app->email}}<input type="hidden" name="email[]" value="{{$app->email}}"></td>
+                                        <td>{{$app->father_first_name}}</td>
+                                        <td>{{$app->gender}}</td>
+                                        <td>{{$app->disability_category}}</td>
+                                        <td>{{$app->academic_session}}</td>
+                                    </tr>
+								</tbody>
+                                @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="14" class="text-center">NO DATA FOUND</td>
+                                    </tr>
+                                @endif
 											   </tbody>
 
 

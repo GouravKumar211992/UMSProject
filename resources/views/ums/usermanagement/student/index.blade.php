@@ -34,6 +34,8 @@
                 </div>
             </div>
             <div class="content-body">
+                 
+                @include('ums.admin.notifications')
 
                 {{-- <section id="basic-datatable">
                     <div class="row">
@@ -176,6 +178,10 @@
                                                                     <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#infoModal{{$student->id}}">
                                                                         <i data-feather="edit" class="me-50"></i>
                                                                         <span>Change Email</span>
+                                                                    </a>
+                                                                    <a class="dropdown-item"  href="{{url('secret-login/'.$student->id)}}">
+                                                                        <i data-feather="home" class="me-50"></i>
+                                                                        <span>Dashboard</span>
                                                                     </a>
                                                                 </div>
                                                             </div>

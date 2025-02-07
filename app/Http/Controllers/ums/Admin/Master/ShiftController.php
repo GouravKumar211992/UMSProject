@@ -65,7 +65,7 @@ class ShiftController extends AdminController
         $shift = new Shift();
         $shift->fill($data);
         $shift->save();
-        return redirect()->route('add_shift')->with('success','Added Successfully');
+        return redirect()->route('get-shift')->with('success','Added Successfully');
     }
 
     public function editShift(Request $request)
@@ -83,7 +83,7 @@ class ShiftController extends AdminController
     public function editshifts(Request $request, $slug)
     {
         $selectedShift = Shift::where('id', $slug)->first();
-         return view('admin.master.shift.editshift', [
+         return view('ums.master.shift.shift_edit', [
             'page_title' => $selectedShift->name,
             'sub_title' => "Edit Information",
             'selected_shift' => $selectedShift,

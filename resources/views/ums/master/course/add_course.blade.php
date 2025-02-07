@@ -35,7 +35,7 @@
                 </div>
                 
             </div>
-            <form id="cat_form" method="POST" action="{{ route('phd-entrance-exam_add') }}" onsubmit='disableButton()'>
+            <form id="cat_form" method="POST" action="{{ route('course_list_add') }}" onsubmit='disableButton()'>
                 @csrf
             <div class="content-body mt-3">
                 <div class="col-md-12 bg-white p-4 rounded shadow-sm">

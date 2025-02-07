@@ -29,20 +29,27 @@
                 </div>
             </div>
         </div>
-        <form  method="POST" action="">
+        <form method="POST" action="{{route('admit-card_update')}}">
+            @csrf
+            @method('PUT')
         <div class="customernewsection-form poreportlistview bg-white shadow p-5">
             <div class="row ">
                                                 <!-- Candidate Information Section -->
 <div class="col-md-3">
     <div class="mb-1">
         <label class="form-label" for="paperType">Enrollment Number</label>
-        <input type="text" id="paperType" placeholder="Enter Enrollment Number" class="form-control">
+        <p>{{$examfee->students->enrollment_no}}</p>
+        <input type="hidden" id="paperType" name="enrollment_no" value="{{$examfee->students->enrollment_no}}" placeholder="Enter Enrollment Number" class="form-control">
+        
     </div>
 </div>
 <div class="col-md-3">
     <div class="mb-1">
         <label class="form-label" for="campus">Roll Number</label>
-        <input type="text" id="campus" placeholder="Enter Roll Number" class="form-control">
+       
+        <p>{{$examfee->students->roll_number}}</p>
+		<input type="hidden" name="roll_no" value="{{$examfee->students->roll_number}}" placeholder="Enter Roll Number" class="form-control">
+		<input type="hidden" name="exam_fees_id" value="{{$examfee->id}}" placeholder="Enter exam_fee" class="form-control">
     </div>
 </div>
 <div class="col-md-3">

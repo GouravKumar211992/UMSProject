@@ -89,7 +89,7 @@ class BackPaper extends Model implements HasMedia
 	}
 
 
-    public function registerMediaCollections()
+    public function registerMediaCollections():void
     {
         $this->addMediaCollection('nodues_certificate')
             ->singleFile();

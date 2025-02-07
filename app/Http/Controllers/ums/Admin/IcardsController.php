@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\ums\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ums\AdminController;
 
 use App\Admin;
 use App\Imports\ICardsImport;
@@ -16,8 +16,8 @@ use App\Models\Course;
 use App\Models\Category;
 use App\Models\PermanentAddress;
 use App\Models\UploadDocuments;
-use App\Models\Icard;
-use App\Models\Result;
+use App\Models\ums\Icard;
+use App\Models\ums\Result;
 use Illuminate\Support\Facades\Storage;
 
 class IcardsController extends AdminController
@@ -33,7 +33,7 @@ class IcardsController extends AdminController
 
     public function icardList(Request $request){
         $students = Icard::latest()->paginate(10);
-        return view('admin.cards.index', [
+        return view('ums.icards.card_list', [
             'students' => $students
         ]);
     }
@@ -42,7 +42,7 @@ class IcardsController extends AdminController
 		//return redirect('admin/bulk-icard-print?id='.$request->id);
         $data['icard'] = Icard::find($request->id);
        
-        return view('admin.cards.icard',$data);
+        return view('ums.admin.cards.single_icard',$data);
     }
 
     public function singleIcardDelete(Request $request){

@@ -10,7 +10,9 @@ use App\Http\Controllers\ums\AdminController;
 use App\Models\Application;
 use App\Models\ums\StudentAllFromOldAgency;
 use App\Exports\StudentExport;
-use App\Validations\Auth;
+use Illuminate\Support\Facades\Auth;
+
+
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions\StudentT;
 
@@ -43,7 +45,7 @@ class StudentController extends AdminController
         // dd($students);
     
        
-        return view('ums.usermanagement.student_list.index', [
+        return view('ums.usermanagement.student.index', [
             'students' => $students
         ]);
     }
@@ -150,7 +152,7 @@ class StudentController extends AdminController
             ->whereNull('hindi_name')
             ->whereNotNull('roll_number')
             ->get();
-        return view('ums.usermanagement.student_list.studentsName', [
+        return view('ums.usermanagement.student.student_hindi_name', [
             'students' => $students
         ]);
     }
@@ -165,6 +167,7 @@ class StudentController extends AdminController
     }
 
     public function studentLoginRedirect(Request $request){
+        // dd($request->all());
         $roll_no = $request->roll_no;
         $user = Student::where('roll_number',$roll_no)->first();
 		if($user){
@@ -172,7 +175,7 @@ class StudentController extends AdminController
             $user->save();
 			Auth::guard('student')->login($user);
             if($request->exam_id){
-                return redirect('student/exam-form-view/'.$request->exam_id);
+                return redirect('/master/examfee/view/'.$request->exam_id);
             }
 		}
         return back()->with('error','Invalid Student');

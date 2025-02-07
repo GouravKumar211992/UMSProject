@@ -93,6 +93,7 @@ class ExamFee extends Model implements HasMedia
         ->where('semester_id',$this->semester)
         ->where('type',$this->form_type)
         ->get();
+        dd($data);
         return $data;
 	}
 
@@ -191,8 +192,28 @@ class ExamFee extends Model implements HasMedia
         return $subjects;
     }
 	public function getAdmitCardSubjects()
-    {
-		$batch = batchFunctionReturn($this->roll_no);
+    {  $batch='';
+		$student = Student::where('roll_number',$this->roll_no)->first();
+    $match_rollno = substr($student->roll_number,0,2);
+    if($match_rollno == '16'){
+      $batch= '2016-2017';
+    }elseif($match_rollno == 17){
+        $batch= '2017-2018';
+    }elseif($match_rollno == 18){
+        $batch= '2018-2019';
+    }elseif($match_rollno == 19){
+        $batch= '2019-2020';
+    }elseif($match_rollno == 20){
+        $batch= '2020-2021';
+    }elseif($match_rollno == 21){
+      $batch='2021-2022';
+    }elseif($match_rollno == 22){
+        $batch= '2022-2023';
+    }elseif($match_rollno == 23){
+        $batch= '2023-2024';
+    }elseif($match_rollno == 24){
+        $batch= '2024-2025';
+    }
         $enrollment = Enrollment::where('roll_number',$this->roll_no)->first();
         if(!$enrollment){
             return false;

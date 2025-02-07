@@ -81,13 +81,14 @@
                                                             <div class="col-md-5"> 
                                                                 <div class="demo-inline-spacing">
                                                                     <div class="form-check form-check-primary mt-25">
-                                                                        <input type="radio" id="openStatus" name="category_status" value="active" class="form-check-input" checked>
-                                                                        <label class="form-check-label fw-bolder" for="active">Open</label>
+                                                                        <input type="radio" id="closeStatus" name="category_status" value="inactive" class="form-check-input">
+                                                                        <label class="form-check-label fw-bolder" for="inactive">Active</label>
                                                                     </div> 
                                                                     <div class="form-check form-check-primary mt-25">
-                                                                        <input type="radio" id="closeStatus" name="category_status" value="inactive" class="form-check-input">
-                                                                        <label class="form-check-label fw-bolder" for="inactive">Close</label>
+                                                                        <input type="radio" id="openStatus" name="category_status" value="active" class="form-check-input" checked>
+                                                                        <label class="form-check-label fw-bolder" for="active">Inactive</label>
                                                                     </div> 
+                                                                    
                                                                 </div>  
                                                             </div> 
                                                         </div>
@@ -105,17 +106,8 @@
     </div>
     <!-- END: Content-->
 
-    <div class="sidenav-overlay"></div>
-    <div class="drag-target"></div>
 
-    <!-- BEGIN: Footer-->
-    {{-- <footer class="footer footer-static footer-light">
-        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">Copyright &copy; 2024 <a class="ml-25" href="#" target="_blank">Presence 360</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span></p>
-        
-        <div class="footerplogo"><img src="../../../assets/css/p-logo.png" /></div>
-    </footer>
-    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button> --}}
-    <!-- END: Footer-->
+   
 	
 	
 	  <div class="modal fade" id="attribute" tabindex="-1" aria-labelledby="shareProjectTitle" aria-hidden="true">
@@ -203,11 +195,11 @@
                                 </table>
                             </div>
                 </div>
-
-                <div class="modal-footer justify-content-center">  
+           
+                {{-- <div class="modal-footer justify-content-center">  
                         <button type="reset" class="btn btn-outline-secondary me-1">Cancel</button> 
                     <button type="reset" class="btn btn-primary">Select</button>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -260,5 +252,26 @@
 			</div>
 		</div>
 	</div>
-
+    <script>
+        function submitCat(form) {
+            form.prop('disabled',true);
+    
+            if(document.getElementById('active').checked) {
+                document.getElementById('category_status').value = 'active';
+            }
+            else {
+                document.getElementById('category_status').value = 'inactive';
+            }
+    
+            document.getElementById('cat_form').submit();
+        }
+        $('.alphaOnly').keyup(function() {
+                this.value = this.value.replace(/[^a-z|A-Z\.]/g, '');
+            });
+            function disableButton() {
+            var btn = document.getElementById('submit_btn');
+            btn.disabled = true;
+            btn.innerText = 'Submitting...'
+            }
+    </script>
     @endsection

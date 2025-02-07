@@ -10,6 +10,7 @@
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
+        @include('ums.admin.notifications')
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
             <div class="content-header row">
@@ -59,9 +60,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                               @foreach($items as $item)
+                                               @foreach($items as $index=>$item)
                                                 <tr>
-                                                    <td>{{ $item->id}}</td>
+                                                    <td>{{ $index+1}}</td>
                                                     
                                                     <td class="fw-bolder text-dark">{{ $item->faculty}}</td>
                                                     <td>{{ $item->name}}</td>

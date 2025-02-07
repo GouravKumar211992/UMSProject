@@ -8,6 +8,8 @@
  @section('content')
 
     <!-- BEGIN: Content-->
+    <form method="get" name="internal_form" onsubmit="return validateForm()">
+
     <div class="app-content content ">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -54,15 +56,14 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="" id="" class="form-control">
-                                    <option value="">--Please select Campus--</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select name="course" id="course" class="form-control" name="course" >
+                                    <option value="">--Please select Course Code--</option>
+                                    @foreach($mapped_Courses as $index=>$mapped_Course)
+                                    <option value="{{$mapped_Course->id}}"@if(Request()->course==$mapped_Course->id) selected @endif>{{$mapped_Course->name}} ({{$mapped_Course->Course->campuse->campus_code}})</option>
+                                    @endforeach
                                 </select>
-                                
                             </div>
+                            
                         </div>
                         <div class="row align-items-center mb-1">
                             <div class="col-md-3">
@@ -70,13 +71,15 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="" id="" class="form-control">
+                                <select name="semester" id="" class="form-control">
                                     <option value="">--Select Course--</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
-                                </select>                            </div>
+                                    @if($mapped_Semesters)
+                                    @foreach($mapped_Semesters as $index=>$mapped_Semester)
+                                        <option value="{{$mapped_Semester->id}}"@if(Request()->semester==$mapped_Semester->id) selected @endif>{{$mapped_Semester->name}}</option>
+                                        @endforeach
+                                        @endif
+                                </select>                     
+                                   </div>
                         </div>
 
                        
@@ -86,7 +89,9 @@
                     <div class="col-md-6 ">
                         <div class="row align-items-center mb-1">
                             <div class="col-md-3">
-                                <label class="form-label">Course Name<span class="text-danger m-0">*</span></label>
+                                <label class="form-label">Course Name<span class="text-danger m-0">*</span>
+                                    <input type="text" value="{{($mapped_faculty)?$mapped_faculty->Course->name:''}}" hidden><p>{{($mapped_faculty)?$mapped_faculty->Course->name:''}}</p>
+                                </label>
                             </div>
 
                             <div class="col-md-9">
@@ -106,12 +111,12 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
+                                <select name="type" id="" class="form-control">
                                     
                                     <option value="1">--Select Stream--</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                    @foreach($examTypes as $index=>$examType)
+                                    <option value="{{$examType}}" @if(Request()->type==$examType) selected @endif>{{$examType}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -129,12 +134,12 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
+                                <select name="selcet" id="" class="form-control" name="session">
                                     
                                     <option value="1">--Select Semester--</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                    @foreach($sessions as $session)
+                                    <option value="{{$session->academic_session}}" @if(Request()->session==$session->academic_session) selected @endif>{{$session->academic_session}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -167,6 +172,13 @@
                         <div class="row align-items-center mb-1">
                             <div class="col-md-3">
                                 <label class="form-label">Batch<span class="text-danger">*</span></label>
+                                {{-- <select name="batch" id="batch" style="border-color: #c0c0c0;" class="form-control js-example-basic-single" required>
+                                    <option value="">--Select--</option>
+                                    @foreach(batchArray() as $batch)
+                                    @php $batch_prefix = substr($batch,2,2); @endphp
+                                    <option value="{{$batch_prefix}}" @if(Request()->batch == $batch_prefix) selected @endif >{{$batch}}</option>
+                                    @endforeach
+                                </select> --}}
                             </div>
 
                             <div class="col-md-9">
@@ -176,7 +188,8 @@
 
                         <div class="row align-items-center mb-1">
                             <div class="col-md-3">
-                                <label class="form-label">Institution Name:<span class="text-danger m-0">*</span></label>
+                                <label class="form-label">Institution Name:<span class="text-danger m-0">*</span>
+                                    {{-- {{($selected_course)?$selected_course->campuse->name:''}}</label> --}}
                             </div>
 
                             <div class="col-md-9">
@@ -194,19 +207,38 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="" id="" class="form-control">
+                                <select name="sub_code" class="form-control">
                                     <option value="">--Select Type--</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
-                                </select>                            </div>
+                                    @foreach($mapped_Subjects as $mapped_Subject)
+                                        @php
+                                            // Check if the subject code matches the selected sub_code
+                                            $isSelected = (Request()->sub_code == $mapped_Subject->sub_code && Request()->course == $mapped_Subject->course_id);
+                                            $sub_code_name = $isSelected ? $mapped_Subject->name : '';
+                                        @endphp
+                            
+                                        @if ($mapped_Subject->internal_marking_type == 1 && $mapped_Subject->subject_type == 'Theory')
+                                            @if ($loop->first)
+                                                <option value="{{ $mapped_Subject->sub_code }}" @if($isSelected) selected @endif>
+                                                    {{ $mapped_Subject->combined_subject_name }} ({{ $mapped_Subject->name }})
+                                                </option>
+                                            @endif
+                                        @else
+                                            <option value="{{ $mapped_Subject->sub_code }}" @if($isSelected) selected @endif>
+                                                {{ $mapped_Subject->sub_code }} ({{ $mapped_Subject->name }})
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                            
                         </div>
 
                      
                         <div class="row align-items-center mb-1">
                             <div class="col-md-3">
-                                <label class="form-label">Date Of Internal Exam:<span class="text-danger">*</span></label>
+                                <label class="form-label">Date Of Practical Exam:<span class="text-danger">*</span>
+                                    {{-- @if($details){{date('d-m-Y',strtotime($details->date_of_practical_exam))}}@endif --}}
+                                </label>
                             </div>
 
                             <div class="col-md-9">
@@ -225,12 +257,12 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
+                                <select name="selcet" id="" class="form-control"  >
                                     
                                     <option value="1">--Select Subject Type--</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                    <option value="{{$sub_code_name}}"></option>
+                                    {{-- <option value="3">Option 3</option>
+                                    <option value="4">Option 4</option> --}}
                                 </select>
                             </div>
                     

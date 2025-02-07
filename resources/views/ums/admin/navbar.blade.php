@@ -3,7 +3,7 @@
                 <div class="navbar-container d-flex content">
                     <div class="bookmark-wrapper d-flex align-items-center"> 
                         <ul class="nav navbar-nav headerlogo">
-                            <li><img src="../../../assets/css/logo.svg"  /></li>
+                            <li><img src="../../../assets/css/DSMNRU_LOGO.png"  /></li>
                         </ul>
                         <ul class="nav navbar-nav left-baricontop"> 
                             <li class="nav-item">

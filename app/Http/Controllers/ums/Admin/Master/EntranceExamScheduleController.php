@@ -3,41 +3,48 @@
 namespace App\Http\Controllers\ums\Admin\Master;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\EntranceExamScheduleExport;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ums\UmsController;
 use Illuminate\Http\Request;
 use App\Models\ums\EntranceExamSchedule;
 use Validator;
 
-class EntranceExamScheduleController extends Controller
+class EntranceExamScheduleController extends UmsController
 {
     public function index()
    {    
-       $data=EntranceExamSchedule::all();
-     return view('ums.master.entrance_exam.phd_entrance_exam',['items'=>$data]);
-   }
-    public function add(Request $request)
-   { 
-     $validator = Validator::make($request->all(),[
-        'program_name' => 'required',
-    'program_code' => 'required',
-    'exam_date'   => 'required',
-     'exam_time'   => 'required',
-     'exam_ending_time'   => 'required',
-   
-        ]);
-     if ($validator->fails()) {    
-      return back()->withErrors($validator)->withInput($request->all());
+    $entranceExamData = EntranceExamSchedule::all(); 
+    if ($entranceExamData->isEmpty()) {
+        $entranceExamData = [];
     }
-     $data= new EntranceExamSchedule;
-     $data->program_name=$request->program_name;
-     $data->program_code=$request->program_code;
-     $data->exam_date=$request->exam_date;
-     $data->exam_time=$request->exam_time;
-      $data->exam_ending_time=$request->exam_ending_time;
-     $data->save();
-
-     return redirect()->route('entranceexamschedule')->with('success',' Added Successfully.');
+    return view('ums.master.entrance_exam.phd_entrance_exam', ['items' => $entranceExamData]);
    }
+   public function add(Request $request)
+   { 
+       // Validation
+       $validator = Validator::make($request->all(),[
+           'program_name' => 'required',
+           'program_code' => 'required',
+           'exam_date'   => 'required',
+           'exam_time'   => 'required',
+           'exam_ending_time' => 'required', // validation for exam_ending_time
+       ]);
+   
+       if ($validator->fails()) {    
+           return back()->withErrors($validator)->withInput($request->all());
+       }
+   
+       // Data saving
+       $data = new EntranceExamSchedule;
+       $data->program_name = $request->program_name;
+       $data->program_code = $request->program_code;
+       $data->exam_date = $request->exam_date;
+       $data->exam_time = $request->exam_time;
+       $data->exam_ending_time = $request->exam_ending_time; // storing value in exam_ending_time
+       $data->save();
+   
+       return redirect()->route('phd-entrance-exam')->with('success', 'Added Successfully.');
+   }
+   
     public function edit($id)
    {
       $data=EntranceExamSchedule::find($id);

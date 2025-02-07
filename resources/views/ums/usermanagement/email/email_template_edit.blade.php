@@ -26,7 +26,7 @@
 						</div>
 					</div>
 					<div class="content-header-right text-sm-end col-md-6 mb-50 mb-sm-0">
-                        <form id="edit_email_form" type="POST" action="{{route('email-template')}}">
+                        <form id="edit_email_form"  method="POST" action="{{route('email.editform')}}">
                             @csrf
                                 <input type="hidden" name="user_id" value="{{$selected_user->id}}">
                                 <input type="hidden" name="user_status" id="user_status" value="">
@@ -39,7 +39,8 @@
 			</div>
             <div class="content-body">
                  
-                
+                 
+                @include('ums.admin.notifications')
 				
 				<section id="basic-datatable">
                    
@@ -72,7 +73,7 @@
                                                 </div>
 
                                                 <div class="col-md-5">
-                                                    <input type="text" class="form-control" name="alias" value="{{$selected_user->alias}}">
+                                                    <input type="text" class="form-control" name="alias" value="{{$selected_user->alias}} "required>
                                                 </div>
 
                                             </div>
@@ -83,7 +84,7 @@
                                                 </div>
 
                                                 <div class="col-md-5">
-                                                    <input type="text" class="form-control" name="subject" value="{{$selected_user->subject}}">
+                                                    <input type="text" class="form-control" name="subject" value="{{$selected_user->subject}}" required>
                                                 </div>
 
                                             </div>

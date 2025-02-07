@@ -33,7 +33,7 @@
                             {{-- <button onClick="javascript: history.go(-1)" class="btn btn-secondary btn-sm mb-50 mb-sm-0"><i data-feather="arrow-left-circle"></i>Cancel</button>     --}}
    
 							<button onClick="javascript: history.go(-1)" class="btn btn-secondary btn-sm mb-50 mb-sm-0"><i data-feather="arrow-left-circle"></i>Go Back</button>    
-							<button onClick="javascript: history.go(-1)" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle"></i>Update</button> 
+							<button type="submit" form="edit_period_form" onClick="javascript: history.go(-1)" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle"></i>Update</button> 
 						</div>
 					</div>
 				</div>
@@ -59,7 +59,7 @@
                                                     </div>
                                                 </div> 
                                                 
-                                                <form action="{{ route('update_period') }}" method="POST">
+                                                <form id="edit_period_form" action="{{ route('update_period') }}" method="POST">
                                                     @csrf
                                                 
                                                     <!-- Hidden input for the period ID -->
@@ -75,14 +75,16 @@
                                                                 <input type="text" class="form-control" name="name" value="{{ $selected_period->name }}" required>
                                                             </div> 
                                                         </div> 
-                                                
+                                                        <?php $time_rang = explode("-",$selected_period->time_rang);
+                                                        //dd($time_rang);
+                                                         ?>
                                                         <div class="row align-items-center mb-1">
                                                             <div class="col-md-3"> 
                                                                 <label class="form-label">Start Time <span class="text-danger">*</span></label>  
                                                             </div>  
                                                             <div class="col-md-5"> 
                                                                 <!-- Pre-fill with the current start time -->
-                                                                <input type="time" class="form-control" name="start_time" value="{{ $selected_period->start_time }}" required>
+                                                                <input type="time" class="form-control" name="start_time" value="{{$time_rang[0]}}" required>
                                                             </div> 
                                                         </div> 
                                                 
@@ -92,7 +94,7 @@
                                                             </div>  
                                                             <div class="col-md-5"> 
                                                                 <!-- Pre-fill with the current end time -->
-                                                                <input type="time" class="form-control" name="end_time" value="{{ $selected_period->end_time }}" required>
+                                                                <input type="time" class="form-control" name="end_time" value="{{$time_rang[1]}}" required>
                                                             </div> 
                                                         </div> 
                                                 
@@ -116,9 +118,7 @@
                                                             </div> 
                                                         </div> 
                                                 
-                                                        <div class="col-md-12">
-                                                            <button type="submit" class="btn btn-primary">Update Period</button>
-                                                        </div>
+                                                        
                                                     </div> 
                                                 </form>
                                                 
@@ -127,158 +127,7 @@
                                                     </div>
                                      
                                      
-                                             {{-- <div class="mt-2">
-                                                <div class="step-custhomapp bg-light mb-0">
-                                                    <ul class="nav nav-tabs my-25 custapploannav" role="tablist"> 
-                                                        <li class="nav-item">
-                                                            <a class="nav-link active" data-bs-toggle="tab" href="#Invoice">Invoice & Order Detail</a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a class="nav-link" data-bs-toggle="tab" href="#Assigned">Assigned Person Detail</a>
-                                                        </li> 
-                                                    </ul> 
-                                                </div>
-
-												 <div class="tab-content pt-2 pb-1 px-1 rounded-3 border">
-                                                    <div class="tab-pane active" id="Invoice"> 
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Invoice No. <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <input type="text" class="form-control"  />
-                                                            </div> 
-                                                         </div>
-
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Invoice Date <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <input type="date" value="2024-09-10" disabled class="form-control"  />
-                                                            </div> 
-                                                            <div class="col-md-3">
-                                                                <a href="#" class="btn btn-sm btn-outline-primary waves-effect">
-                                                                <i data-feather="file-text"></i> View Invoice</a>
-                                                            </div>
-                                                         </div>
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Sales Order Number <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <input type="text" class="form-control"  />
-                                                            </div> 
-                                                         </div>
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Sales Order Date <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <input type="date" value="2024-09-08" disabled class="form-control"  />
-                                                            </div> 
-                                                         </div>
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Customer Ref. No. <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <input type="text" class="form-control"  />
-                                                            </div> 
-                                                         </div>
-                                                    </div>
-                                                     <div class="tab-pane" id="Assigned"> 
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Error Category <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <select class="form-control select2">
-                                                                    <option>Select</option>
-                                                                </select>
-                                                            </div> 
-                                                         </div>
-
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Sub Category 1</label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <select class="form-control select2">
-                                                                    <option>Select</option>
-                                                                </select>
-                                                            </div> 
-                                                         </div>
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Sub Category 2</label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <select class="form-control select2">
-                                                                    <option>Select</option>
-                                                                </select>
-                                                            </div> 
-                                                         </div>
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Responsible Dept. <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <select class="form-control select2">
-                                                                    <option>Select</option>
-                                                                </select>
-                                                            </div> 
-                                                         </div>
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Assigned To <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <select class="form-control select2">
-                                                                    <option>Select</option>
-                                                                </select>
-                                                            </div> 
-                                                         </div>
-                                                    </div>
-                                                 </div>
-											  
- 
-											 
-											
-											
-											 
- 
-								
-								</div> --}}
-                                     
-                                     
-                                         {{-- <div class="row mt-2"> 
-                                            <div class="col-md-12">
-                                                 <div class="col-md-4">
-                                                    <div class="mb-1">
-                                                        <label class="form-label">Upload Document</label>
-                                                        <input type="file" class="form-control">
-                                                    </div>
-                                                </div> 
-                                             </div> 
-                                            <div class="col-md-12">
-                                                <div class="mb-1">  
-                                                    <label class="form-label">Incident Description</label> 
-                                                    <textarea type="text" rows="4" class="form-control" placeholder="Enter Remarks here..."></textarea> 
-
-                                                </div>
-                                            </div> 
-                                        </div>  --}}
+                               
                             </div>
                         </div>
                     </div>
@@ -447,5 +296,32 @@
 			</div>
 		</div>
 	</div>
-
+    <script>
+        $(document).ready(function(){
+    
+            var selected_period = {!! json_encode($selected_period) !!};
+    
+            if(selected_period['status'] == 1) {
+                $('#active').prop('checked', true);
+                $('#inactive').prop('checked', false);
+            }
+            else {
+                $('#active').prop('checked', false);
+                $('#inactive').prop('checked', true);
+            }
+        });
+    </script>
+    
+    <script>
+        function submitCat(form) {
+            if(document.getElementById('active').checked) {
+                document.getElementById('period_status').value = 'active';
+            }
+            else {
+                document.getElementById('period_status').value = 'inactive';
+            }
+    
+            document.getElementById('edit_period_form').submit();
+        }
+    </script>
 @endsection

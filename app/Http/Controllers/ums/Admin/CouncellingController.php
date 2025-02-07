@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\ums\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ums\AdminController;
 
 use App\Imports\CouncellingImport;
 use Maatwebsite\Excel\Facades\Excel;
 
-use App\Models\BulkCouncelling;
-use App\Models\Application;
-use App\Models\Student;
-use App\Models\Enrollment;
+use App\Models\ums\BulkCouncelling;
+use App\Models\ums\Application;
+use App\Models\ums\Student;
+use App\Models\ums\Enrollment;
 
 use App\Http\Traits\ApplicationTrait;
-use App\Models\ExamFee;
+use App\Models\ums\ExamFee;
 
 class CouncellingController extends AdminController
 {
@@ -28,7 +28,7 @@ class CouncellingController extends AdminController
 
     public function bulkCouncelling(Request $request){
         $applications = BulkCouncelling::get();
-        return view('admin.admission.bulk-councelling',compact('applications'));
+        return view('ums.admissions.bulk_counselling',compact('applications'));
     }
 
     public function bulkCouncellingSave(Request $request)

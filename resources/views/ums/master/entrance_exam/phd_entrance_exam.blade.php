@@ -5,6 +5,7 @@
     <!-- Content Section -->
     <div class="app-content content ">
         <div class="content-overlay"></div>
+        @include('ums.admin.notifications')
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
             <div class="content-header row">

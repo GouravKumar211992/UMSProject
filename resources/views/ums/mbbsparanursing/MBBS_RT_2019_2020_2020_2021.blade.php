@@ -1,4 +1,5 @@
 @extends("ums.admin.admin-meta")
+
 @section('content')
 {{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col=""> --}}
   
@@ -29,7 +30,12 @@
             <i data-feather="refresh-cw"></i> Reset
         </button>
     </div> --}}
-
+@php
+	$selected_semester = ($selectet_semester_data)?$selectet_semester_data->name:'';
+	$selected_form_type = (Request()->form_type)?ucfirst(Request()->form_type):'';
+	$selected_session = Request()->session;
+	$selected_batch = '';
+@endphp
     <form method="get">
         <div class="submitss text-end me-3">
             <button type="submit" onclick="javascript: history.go(-1)" class=" btn btn-primary btn-sm mb-50 mb-sm-0r waves-effect waves-float waves-light "><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Submit</button>
@@ -49,7 +55,7 @@
     
             <div class="col-md-4 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Semester <span class="text-danger">*</span></label>
-                <select data-live-search="true" name="semester" id="semester" class="form-control js-example-basic-single" onchange="$('form').submit();">
+                <select data-live-search="true" name="semester" id="semester" class="form-control js-example-basic-single" >
                     <option value="">--Select Semester--</option>
                     <option value="9" @if(Request()->semester=='9') selected @endif>THIRD PROFESSIONAL (PART-I)</option>
                     <option value="10" @if(Request()->semester=='10') selected @endif>THIRD PROFESSIONAL (PART-II)</option>
@@ -488,7 +494,7 @@ function saveExternalValue($this){
 		type: "POST",
 		data : formData,
 		success: function(data, textStatus, jqXHR){
-			$('#semester').html(data);
+			$('#semester_list').html(data);
 		},
 	});
 });
@@ -524,12 +530,9 @@ $(document).ready(function() {
 		var show_agreement_type = $("#agreement_type option:selected").text();
 		$('.show_agreement_type').text(show_agreement_type);
 
-        var selectedSemester = @json(is_array($selected_semester) ? implode(', ', $selected_semester) : $selected_semester);
-            var selectedFormType = @json(is_array($selected_form_type) ? implode(', ', $selected_form_type) : $selected_form_type);
-            var selectedSession = @json(is_array($selected_session) ? implode(', ', $selected_session) : $selected_session);
-            var selectedBatch = @json(is_array($selected_batch) ? implode(', ', $selected_batch) : $selected_batch);
+
         
-            a.download = "MBBR TR " + selectedSemester + " " + selectedFormType + " Sesson:" + selectedSession + " Batch:" + selectedBatch + ".xls";
+		a.download = "MBBR TR {{$selected_semester}} {{$selected_form_type}} Sesson:{{$selected_session}} Batch:{{$selected_batch}}.xls";
 		
 	});
 });

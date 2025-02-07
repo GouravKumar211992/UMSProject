@@ -45,7 +45,7 @@ class SettingController extends Controller
         $data->campus_id =  $request->campus_id;
         $data->course_id =  $request->course_id;
         $data->semester_id = $request->semester_id;
-        $data->form_type = $request->form_type;
+        $data->form_type = '2';
         $data->semester_type = $request->semester_type;
         $data->from_date = $request->from_date;
         $data->to_date = $request->to_date;
@@ -55,7 +55,7 @@ class SettingController extends Controller
             $data->addMediaFromRequest('paper_doc_url')->toMediaCollection('paper_doc_url');
         }
         $data->save(); 
-        return redirect()->route('ums.setting.open_exam_form')->with('success','Data Saved Successfully.');
+        return redirect('open_exam_form')->with('success','Data Saved Successfully.');
     }
 
     public function destroy(Request $request,$id)
@@ -70,11 +70,11 @@ class SettingController extends Controller
     {   
 
         // $admission_open_couse_wise = admission_open_couse_wise(1,$request->type);
-    //  dd($admission_open_couse_wise);
+    //    dd($admission_open_couse_wise); 
         $campuses = Campuse::get();
         $categorys = Category::all();
         $courses = Course::where('campus_id',$request->campus_id)->get();
-        $admissionSetting = AdmissionSetting::where('action_type',$request->type)->orderBy('id','DESC')->get();
+        $admissionSetting = AdmissionSetting::where('action_type','1')->orderBy('id','DESC')->get(); //add static value 1//
         return view('ums.setting.open_addmission_form',compact('admissionSetting','campuses','courses','categorys'));
     }
 
@@ -86,7 +86,7 @@ class SettingController extends Controller
         $campuses = Campuse::get();
         $categorys = Category::all();
         $courses = Course::where('campus_id',$request->campus_id)->get();
-        $admissionSetting = AdmissionSetting::where('action_type',$request->type)->orderBy('id','DESC')->get();
+        $admissionSetting = AdmissionSetting::where('action_type','2')->orderBy('id','DESC')->get(); //add static value 2//
         return view('ums.setting.open_admission_edit_form',compact('admissionSetting','campuses','courses','categorys'));
     }
 
@@ -96,7 +96,7 @@ class SettingController extends Controller
             return back()->with('success','Campus is required.');
         }
         $data = new AdmissionSetting;
-        $request['action_type'] = $request->type;
+        $request['action_type'] = '1';
         $data->fill($request->all());
         $data->save();
         return back()->with('success','Data Saved Successfully.');

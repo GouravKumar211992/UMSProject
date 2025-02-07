@@ -32,8 +32,8 @@
      <!-- END: Main Menu-->
  
      @yield('content')
-     
- @include('ums.admin.footer')
+     @include('ums.admin.footer')
+ @include('ums.admin.script')
  
  
 </body>

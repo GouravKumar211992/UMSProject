@@ -29,13 +29,11 @@ class GrievanceController extends Controller
         }
     
          $complaints=$complaints->paginate(10);
-        //  dd($complaints);
          return view('ums.grievance.grievance',compact('complaints','data'));
     }
     public function complaintList(Request $request)
     {
         $roll_number = $request->roll_number;
-
         $data = ComplaintForm::select('complaint_no')
         ->where('roll_number',$roll_number)
         ->distinct('complaint_no')

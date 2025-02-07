@@ -1,132 +1,263 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\ums\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Application;
-use App\Models\ApplicationAddress;
-use App\Models\ApplicationEducation;
-use App\Models\ApplicationPayment;
-use App\Models\Notification;
+use App\Models\ums\Application;
+use App\Models\ums\ApplicationAddress;
+use App\Models\ums\ApplicationEducation;
+use App\Models\ums\ApplicationPayment;
+use App\Models\ums\Notification;
+use App\models\ums\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\User;
-use Validator;
-use Auth;
-use DB;
-use Illuminate\Validation\Rule;
-use App\Models\Category;
-use App\Models\AcademicSession;
-use App\Models\Country;
-use App\Models\City;
-use App\Models\Course;
-use App\Models\CourseFee;
-use App\Models\State;
-use Hash;
-use App\Models\Icard;
-use App\Models\Result;
 
-use App\Models\Student;
-use App\Models\Enrollment;
-use App\Models\Stream;
-use App\Models\Campuse;
-use App\Models\Subject;
-use App\Models\Semester;
-use App\Models\CastCategory;
-use App\Models\StudentSubject;
-use App\Models\StudentSemesterFee;
-use App\Models\DisabilityCategory;
-use App\Models\EntranceExamAdmitCard;
-use App\Models\ExamFee;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use App\Models\ums\Category;
+use App\Models\ums\AcademicSession;
+use App\Models\ums\Country;
+use App\Models\ums\City;
+use App\Models\ums\Course;
+use App\Models\ums\CourseFee;
+use App\Models\ums\State;
+use Hash;
+use App\Models\ums\Icard;
+use App\Models\ums\Result;
+
+use App\Models\ums\Student;
+use App\Models\ums\Enrollment;
+use App\Models\ums\Stream;
+use App\Models\ums\Campuse;
+use App\Models\ums\Subject;
+use App\Models\ums\Semester;
+use App\Models\ums\CastCategory;
+use App\Models\ums\StudentSubject;
+use App\Models\ums\StudentSemesterFee;
+use App\Models\ums\DisabilityCategory;
+use App\Models\ums\EntranceExamAdmitCard;
+use App\Models\ums\ExamFee;
 use Spatie\MediaLibrary\Models\Media;
 
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class HomeController extends Controller
 {
-    public function dashboard(Request $request){
-		if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->role!=1){
-			Auth::logout();
-			return redirect('admission-portal')->with('error','Please login first');
-		}
 
-		$subjectList = $total_non_disabled_fees = $total_disabled_fees = $student_semster = '';
-		$user = Auth::user();
-		$lastApplication = Application::where('user_id', $user->id)
-			->orderBy('counselling_date', 'DESC')
-			->orderBy('id', 'DESC')
-			->with(['course', 'categories'])
-			->first();
-		$applications = Application::where('user_id', $user->id)
-			->orderBy('id', 'DESC')
-			->with(['course', 'categories'])
-			->get();
+	// ye maine banaya hai 
 
-			//dd($lastApplication);
-			if($lastApplication){
-			$student_semster=StudentSemesterFee::where('enrollment_no',$lastApplication->application_no)->first();
-			//dd($lastApplication->course_id );
-			$subjectList=Subject::select('subjects.*')->join('semesters','semesters.id','subjects.semester_id')
-							->where(['subjects.program_id'=>$lastApplication->category_id,'subjects.course_id'=>$lastApplication->course_id,'semesters.semester_number'=>1])->get();
-							//dd($subjectList,$lastApplication->category_id,$lastApplication->course_id,$lastApplication);
-			$coursefee=CourseFee::where('course_id',$lastApplication->course_id)->get();
-			$total_non_disabled_fees = $coursefee->sum('non_disabled_fees');
-			$total_disabled_fees = $coursefee->sum('disabled_fees');
-			}
-			//dd($student_semster);
-        return view('frontend.user.dashboard', [
-			'lastApplication' => $lastApplication,
-			'applications' => $applications,
-			'subjectList' => $subjectList,
-			'total_non_disabled_fees'=>$total_non_disabled_fees,
-			'total_disabled_fees'=>$total_disabled_fees,
-			'student_semster'=>$student_semster,
-			'course_type'=>$user->course_type,
-			'section' => 'user-dashboard'
-		]);
+	public function userDashboardAndProfile(Request $request)
+{
+    $user = Auth::user();
+    
+    // Dashboard-related variables
+    $subjectList = $total_non_disabled_fees = $total_disabled_fees = $student_semster = '';
+    
+    // Last application and all applications
+    $lastApplication = Application::where('user_id', $user->id)
+        ->orderBy('counselling_date', 'DESC')
+        ->orderBy('id', 'DESC')
+        ->with(['course', 'categories'])
+        ->first();
+
+    $applications = Application::where('user_id', $user->id)
+        ->orderBy('id', 'DESC')
+        ->with(['course', 'categories'])
+        ->get();
+    
+    // If last application exists, fetch related details
+    if ($lastApplication) {
+        $student_semster = StudentSemesterFee::where('enrollment_no', $lastApplication->application_no)->first();
+        
+        $subjectList = Subject::select('subjects.*')
+            ->join('semesters', 'semesters.id', '=', 'subjects.semester_id')
+            ->where([
+                'subjects.program_id' => $lastApplication->category_id,
+                'subjects.course_id' => $lastApplication->course_id,
+                'semesters.semester_number' => 1
+            ])
+            ->get();
+        
+        $coursefee = CourseFee::where('course_id', $lastApplication->course_id)->get();
+        $total_non_disabled_fees = $coursefee->sum('non_disabled_fees');
+        $total_disabled_fees = $coursefee->sum('disabled_fees');
     }
 
-    public function profile(Request $request){
-		$user_data = Auth::user();
-		$data = ['user_data' => $user_data,'application' => array()];
-		$application = Application::where('user_id',$user_data->id)->orderBy('id', 'DESC')->first();
-		if($application != null){
-		$address = ApplicationAddress::where('application_id',$application->id)->first();
+    // Profile-related data
+    $data = ['user_data' => $user, 'application' => []];
+    $combineAddress = '';
 
-		$data['user_data'] = $user_data;
-		$data['application'] = $application;
+    $application = Application::where('user_id', $user->id)
+        ->orderBy('id', 'DESC')
+        ->first();
 
-		$combineAddress = '';
-		if($address){
-			$combineAddress .= $address->address .' PS: '.$address->police_station;
-			$combineAddress .= " Distt. ".$address->district;
-			$combineAddress .= " Pincode: ".$address->pin_code;
-			$combineAddress .= " State: ".$address->state_union_territory;
-		}
+    if ($application) {
+        $address = ApplicationAddress::where('application_id', $application->id)->first();
 
-        return view('frontend.index.profile', [
-			'section' => 'user-profile',
-			'data'=>$data,
-			'address'=>$combineAddress
-		]);
-		}
-		return view('frontend.index.profile', [
-			'section' => 'user-profile',
-			'data'=>$data
-		]);
+        $data['user_data'] = $user;
+        $data['application'] = $application;
+
+        if ($address) {
+            $combineAddress .= $address->address . ' PS: ' . $address->police_station;
+            $combineAddress .= " Distt. " . $address->district;
+            $combineAddress .= " Pincode: " . $address->pin_code;
+            $combineAddress .= " State: " . $address->state_union_territory;
+        }
     }
 
-    public function applications(Request $request){
-		$user = Auth::user();
-		$applications = Application::where('user_id', $user->id)
-			->orderBy('id', 'DESC')
-			->with(['course', 'categories'])
-			->get();
+    // Notifications
+    $notifications = Notification::all();
+	
+    return view('ums.usermanagement.user.user_dashboard', [
+        'section' => 'user-dashboard-and-profile',
+        'lastApplication' => $lastApplication,
+        'applications' => $applications,
+        'subjectList' => $subjectList,
+        'total_non_disabled_fees' => $total_non_disabled_fees,
+        'total_disabled_fees' => $total_disabled_fees,
+        'student_semster' => $student_semster,
+        'course_type' => $user->course_type,
+        'user_data' => $data['user_data'],
+        'profile_data' => $data,
+        'address' => $combineAddress,
+        'notifications' => $notifications,
+    ]);
+}
 
-        return view('frontend.user.applications',[
-			'applications' => $applications,
-			'section' => 'user-applications'
-		]);
-    }
+
+
+
+
+
+
+//     public function dashboard(Request $request ){
+		
+// 		// Auth::guard('admin')->check() && Auth::guard('admin')->user()->role!=1
+// 		// if(true){
+			
+// 		// 	return redirect('admission-portal')->with('error','Please login first');
+// 		// }
+
+// 		$subjectList = $total_non_disabled_fees = $total_disabled_fees = $student_semster = '';
+// 		$user = Auth::user();
+// 		$lastApplication = Application::where('user_id', $user->id)
+// 			->orderBy('counselling_date', 'DESC')
+// 			->orderBy('id', 'DESC')
+// 			->with(['course', 'categories'])
+// 			->first();
+// 		$applications = Application::where('user_id', $user->id)
+// 			->orderBy('id', 'DESC')
+// 			->with(['course', 'categories'])
+// 			->get();
+
+// 			//dd($lastApplication);
+// 			if($lastApplication){
+// 			$student_semster=StudentSemesterFee::where('enrollment_no',$lastApplication->application_no)->first();
+// 			//dd($lastApplication->course_id );
+// 			$subjectList=Subject::select('subjects.*')->join('semesters','semesters.id','subjects.semester_id')
+// 							->where(['subjects.program_id'=>$lastApplication->category_id,'subjects.course_id'=>$lastApplication->course_id,'semesters.semester_number'=>1])->get();
+// 							//dd($subjectList,$lastApplication->category_id,$lastApplication->course_id,$lastApplication);
+// 			$coursefee=CourseFee::where('course_id',$lastApplication->course_id)->get();
+// 			$total_non_disabled_fees = $coursefee->sum('non_disabled_fees');
+// 			$total_disabled_fees = $coursefee->sum('disabled_fees');
+// 			}
+			
+// 			//dd($student_semster);
+//         return[
+// 			'lastApplication' => $lastApplication,
+// 			'applications' => $applications,
+// 			'subjectList' => $subjectList,
+// 			'total_non_disabled_fees'=>$total_non_disabled_fees,
+// 			'total_disabled_fees'=>$total_disabled_fees,
+// 			'student_semster'=>$student_semster,
+// 			'course_type'=>$user->course_type,
+// 			'section' => 'user-dashboard'
+// 		];
+		
+		
+//     }
+
+//     public function profile(Request $request){
+// 		$user_data = Auth::user();
+// 		$data = ['user_data' => $user_data,'application' => array()];
+// 		$application = Application::where('user_id',$user_data->id)->orderBy('id', 'DESC')->first();
+// 		if($application != null){
+// 		$address = ApplicationAddress::where('application_id',$application->id)->first();
+
+// 		$data['user_data'] = $user_data;
+// 		$data['application'] = $application;
+
+// 		$combineAddress = '';
+// 		if($address){
+// 			$combineAddress .= $address->address .' PS: '.$address->police_station;
+// 			$combineAddress .= " Distt. ".$address->district;
+// 			$combineAddress .= " Pincode: ".$address->pin_code;
+// 			$combineAddress .= " State: ".$address->state_union_territory;
+// 		}
+// dd($data);
+//         return  [
+// 			'section' => 'user-profile',
+// 			'data'=>$data,
+// 			'address'=>$combineAddress
+// 		];
+// 		}
+		
+//     }
+// 	public function showNotification()
+//     {
+// 		$data['user_data']=Auth::user();
+// 		$data['application']=Application::where('email',$data['user_data']->email)->orderBy('id', 'DESC')->first();
+// 		$notification= Notification::all();
+//     	//$data['notification']=$notification;
+// 		return ['data'=>$data,'notifications'=>$notification, ];
+//     }
+
+//     public function applications(Request $request){
+// 		$user = Auth::user();
+// 		$applications = Application::where('user_id', $user->id)
+// 			->orderBy('id', 'DESC')
+// 			->with(['course', 'categories'])
+// 			->get();
+
+//         return view('frontend.user.applications',[
+// 			'applications' => $applications,
+// 			'section' => 'user-applications'
+// 		]);
+//     }
+
+// 	public function Userdashboard(Request $request)
+// 	{
+		
+// 		$dashboardData = $this->dashboard($request);
+	
+	   
+// 		$profileData = $this->profile($request);
+	
+// 		$notice =$this->showNotification();
+	
+	  
+// 		return view('ums.usermanagement.users.user_dashboard', [
+// 			'lastApplication' => $dashboardData['lastApplication'],
+// 			'applications' => $dashboardData['applications'],
+// 			'subjectList' => $dashboardData['subjectList'],
+// 			'total_non_disabled_fees' => $dashboardData['total_non_disabled_fees'],
+// 			'total_disabled_fees' => $dashboardData['total_disabled_fees'],
+// 			'student_semster' => $dashboardData['student_semster'],
+// 			'course_type' => $dashboardData['course_type'],
+// 			'section' => 'user-dashboard',
+// 			'data' => $profileData['data'],
+// 			'address' => $profileData['address'],
+// 			'noticedata'=>$notice['data'],
+// 			'notifications' => $notice['notifications'],
+// 		]);
+// 	}
+
+
+
+
+
+
 
     public function application(Request $request){
         return view('frontend.index.application');
@@ -1277,14 +1408,7 @@ class HomeController extends Controller
        // return redirect('dashboard')->with('semester','First Semester Details Saved Successfully');
     }
 
-	public function showNotification()
-    {
-		$data['user_data']=Auth::user();
-		$data['application']=Application::where('email',$data['user_data']->email)->orderBy('id', 'DESC')->first();
-		$notification= Notification::all();
-    	//$data['notification']=$notification;
-		return view('frontend.user.notice-board',['data'=>$data,'notifications'=>$notification, 'section' => 'notice-board']);
-    }
+	
 
     public function entranceAdmitCard($id)
     {

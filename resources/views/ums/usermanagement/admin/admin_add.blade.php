@@ -1,7 +1,7 @@
 @extends('ums.admin.admin-meta')
 
 @section('content')
-{{-- {{dd($selected_user)}}` --}}
+
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
@@ -12,12 +12,12 @@
 					<div class="content-header-left col-md-6 mb-2">
 						<div class="row breadcrumbs-top">
 							<div class="col-12">
-								<h2 class="content-header-title float-start mb-0"> User Edit</h2>
+								<h2 class="content-header-title float-start mb-0">New User</h2>
 								<div class="breadcrumb-wrapper">
 									<ol class="breadcrumb">
 										<li class="breadcrumb-item"><a href="index.html">Home</a>
 										</li>  
-										<li class="breadcrumb-item active">New Edit</li>
+										<li class="breadcrumb-item active">Add New</li>
 
 
 									</ol>
@@ -26,18 +26,18 @@
 						</div>
 					</div>
 					<div class="content-header-right text-sm-end col-md-6 mb-50 mb-sm-0">
-                        <form action="/user/edit-user-form" method="POST" id="edit_user_form">
+                        <form action="{{url('admin-add-form')}}" method="post" id="add_user_form">
                             @csrf
 						<div class="form-group breadcrumb-right">   
 							<button onClick="javascript: history.go(-1)" class="btn btn-secondary btn-sm mb-50 mb-sm-0"><i data-feather="arrow-left-circle"></i>Go Back</button>    
-							<button  onclick="submitCat();" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle"></i>Update</button> 
+							<button  onclick="submitCat()" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle"></i>Publish</button> 
 						</div>
 					</div>
 				</div>
 			</div>
             <div class="content-body">
                  
-                
+                @include('ums.admin.notifications')
 				
 				<section id="basic-datatable">
                     <div class="row">
@@ -58,16 +58,17 @@
                                                 </div> 
                                                 
                                                 
+                                                  
                                                 <div class="col-md-8"> 
                                                       
-                                                    <input type="hidden" name="user_id" value="{{$selected_user->id}}">
+                              
                                                     <div class="row align-items-center mb-1">
                                                         <div class="col-md-3"> 
                                                             <label class="form-label">User Name <span class="text-danger">*</span></label>  
                                                         </div>  
 
                                                         <div class="col-md-5"> 
-                                                            <input type="text" class="form-control" name="name" value="{{$selected_user->name}}">
+                                                            <input type="text" class="form-control" name="name" required>
                                                         </div> 
                                                     
                                                      </div> 
@@ -78,22 +79,21 @@
                                                         </div>  
 
                                                         <div class="col-md-5"> 
-                                                            <input type="email" class="form-control" name="email" readonly value="{{$selected_user->email}}">
+                                                            <input type="email" class="form-control" name="email">
                                                         </div> 
                                                    
                                                      </div>
-                                                    <div class="row align-items-center mb-1">
+
+                                                     <div class="row align-items-center mb-1">
                                                         <div class="col-md-3"> 
-                                                            <label class="form-label">Mobile</label>  
+                                                            <label class="form-label">Mobile*</label>  
                                                         </div>  
 
                                                         <div class="col-md-5"> 
-                                                            <input type="number" class="form-control" name="mobile" value="{{$selected_user->mobile}}">
+                                                            <input type="number" class="form-control" name="mobile">
                                                         </div> 
                                                    
                                                      </div>
-
-                  
                                                     
                                                         <div class="row align-items-center mb-1">
                                                             <div class="col-md-3"> 
@@ -101,7 +101,7 @@
                                                             </div>  
 
                                                             <div class="col-md-5"> 
-                                                                <input type="text" class="form-control" name="role" value="{{$selected_user->role}}">
+                                                                <input type="text" class="form-control" name="role">
                                                             </div> 
                                                          </div>
                                                     
@@ -111,7 +111,7 @@
                                                             </div>  
 
                                                             <div class="col-md-5"> 
-                                                                <input type="date" class="form-control" name="user_dob" value="{{$selected_user->date_of_birth}}">
+                                                                <input type="date" class="form-control" name="user_dob">
                                                             </div> 
                                                          </div>
                                                         
@@ -121,14 +121,14 @@
                                                         <div class="col-md-3"> 
                                                             <label class="form-label">Gender<span class="text-danger">*</span></label>  
                                                         </div>  
-                                                        <div class="col-md-5">
+
+                                                        <div class="col-md-5">  
                                                             <select class="form-select" name="gender">
-                                                                <option value="male" <?php echo ($selected_user->gender == 'male') ? 'selected' : ''; ?>>Male</option>
-                                                                <option value="female" <?php echo ($selected_user->gender == 'female') ? 'selected' : ''; ?>>Female</option>
-                                                                <option value="other" <?php echo ($selected_user->gender == 'other') ? 'selected' : ''; ?>>Other</option>
+                                                                <option value="male">male</option> 
+                                                                <option value="Female">female</option> 
+                                                                <option value="Other"> other</option> 
                                                             </select>
                                                         </div>
-                                                        
                                                      </div>
                                                     
                                                      <div class="row align-items-center mb-1">
@@ -136,14 +136,13 @@
                                                             <label class="form-label">Marital Status<span class="text-danger">*</span></label>  
                                                         </div>  
 
-                                                        <div class="col-md-5">
+                                                        <div class="col-md-5">  
                                                             <select class="form-select" name="marital">
-                                                                <option value="Married" <?php echo ($selected_user->marital_status == 'Married') ? 'selected' : ''; ?>>Married</option>
-                                                                <option value="Unmarried" <?php echo ($selected_user->marital_status == 'Unmarried') ? 'selected' : ''; ?>>Unmarried</option>
-                                                                <option value="other" <?php echo ($selected_user->marital_status == 'other') ? 'selected' : ''; ?>>Other</option>
+                                                                <option value="Married">Married</option> 
+                                                                <option value="Unmarried">Unmarried</option> 
+                                                                <option value="Other">other</option> 
                                                             </select>
                                                         </div>
-                                                        
                                                      </div>
 
                                                     <div class="row align-items-center mb-2">
@@ -154,11 +153,11 @@
                                                         <div class="col-md-5"> 
                                                             <div class="demo-inline-spacing">
                                                                 <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio3" name="user_status" class="form-check-input" checked="" value="Open">
-                                                                    <label class="form-check-label fw-bolder" for="">Open</label>
+                                                                    <input type="radio" id="status" name="user_status" class="form-check-input" checked="" value="Active">
+                                                                    <label class="form-check-label fw-bolder" for="user_status">Open</label>
                                                                 </div> 
                                                                 <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio4" name="user_status" class="form-check-input" value="Close">
+                                                                    <input type="radio" id="customColorRadio4" name="user_status" class="form-check-input" value="Inactive">
                                                                     <label class="form-check-label fw-bolder" for="customColorRadio4">Close</label>
                                                                 </div> 
                                                             </div>  
@@ -167,7 +166,18 @@
 
                                                     </div> 
 
-                                                  
+                                                    <div class="row align-items-center mb-1">
+                                                        <div class="col-md-3"> 
+                                                            <label class="form-label">Password <span class="text-danger">*</span></label>  
+                                                        </div>  
+
+                                                        <div class="col-md-5"> 
+                                                            <input type="password" class="form-control" name="password">
+                                                        </div> 
+                                                     </div>
+                                                    
+                                                </div>
+                                            </form>
                                                 
                                                   
  
@@ -497,30 +507,7 @@
 	</div>
 
     <!-- BEGIN: Vendor JS-->
-    
     @endsection
-    <script>
-        $(document).ready(function(){
-    
-            var selected_user = {!! json_encode($selected_user) !!};
-    
-            if(selected_user['status'] == 'active') {
-                $('#active').prop('checked', true);
-                $('#inactive').prop('checked', false);
-            }
-            else {
-                $('#active').prop('checked', false);
-                $('#inactive').prop('checked', true);
-            }
-            $('.numbersOnly').keyup(function() {
-                this.value = this.value.replace(/[^0-9\.]/g, '');
-            });
-            $('.alphaOnly').keyup(function() {
-                this.value = this.value.replace(/[^a-z|A-Z\.]/g, '');
-            });
-        });
-    </script>
-    
     <script>
         function submitCat(form) {
             if(document.getElementById('active').checked) {
@@ -530,6 +517,6 @@
                 document.getElementById('user_status').value = 'inactive';
             }
     
-            document.getElementById('edit_user_form').submit();
+            document.getElementById('add_user_form').submit();
         }
     </script>

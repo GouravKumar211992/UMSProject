@@ -18,6 +18,11 @@ class NotificationController extends Controller
    	   $data=Notification::all();
    	 return view('ums.master.notification.notification',['items'=>$data]);
    }
+   public function index2()
+   {  	
+   	   $data=Notification::all();
+   	 return view('ums.master.faculty.notification',['items'=>$data]);
+   }
     public function add(Request $request)
    { 
      $validator = Validator::make($request->all(),[

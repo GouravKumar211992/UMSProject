@@ -12,6 +12,7 @@
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
+        @include('ums.admin.notifications')
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
             <div class="content-header row">
@@ -77,11 +78,12 @@
                                                                 <i data-feather="more-vertical"></i>
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" href="{{url('shift_edit')}}" >
+                                                                <a class="dropdown-item" href="{{ route('shift_edit', ['id' => $item->id]) }}"
+                                                                    >
                                                                     <i data-feather="edit" class="me-50"></i>
                                                                     <span>Edit</span>
                                                                 </a> 
-                                                             <a class="dropdown-item" href="#">
+                                                             <a class="dropdown-item" href="{{ route('delete_shift', ['id' => $item->id]) }}">
                                                                     <i data-feather="trash-2" class="me-50"></i>
                                                                     <span>Delete</span>
                                                                 </a>

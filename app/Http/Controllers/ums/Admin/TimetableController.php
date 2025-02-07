@@ -4,19 +4,19 @@ namespace App\Http\Controllers\ums\Admin;
 
 use Auth;
 
-use App\Models\faculty;
+use App\Models\ums\faculty;
 use App\Models\ums\Course;
-use App\Models\Period;
-use App\Models\Subject;
+use App\Models\ums\Period;
+use App\Models\ums\Subject;
 
-use App\Models\Semester;
+use App\Models\ums\Semester;
 use App\Models\ums\Timetable;
 use Illuminate\Http\Request;
 use App\Exports\PeriodExport;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Http\Controllers\ums\AdminController;
+use App\Http\Controllers\UMS\AdminController;
 
 class TimetableController extends AdminController
 {
@@ -41,8 +41,9 @@ class TimetableController extends AdminController
 
     public function index(Request $request)
     {   
-        $timetables = Timetable::with(['course','period','semester','subject','subject'])->orderBy('id', 'DESC');
-//        dd($timetables);
+        $timetables = Timetable::with(['course','period','semester','subject','subject'])->orderBy('id', 'DESC')->paginate(10);
+    
+    //   dd($timetables);
         if($request->search) {
             $keyword = $request->search;
             $timetables->where(function($q) use ($keyword){
@@ -54,8 +55,9 @@ class TimetableController extends AdminController
             
             $timetables->where('name','LIKE', '%'.$request->name.'%');
         }
-         $timetables = $timetables->paginate(10);
-         //dd($timetables);
+        //  $timetables = $timetables->paginate(10);
+        //  dd($timetables);
+         
         return view('ums.master.faculty.time_table', [
             'page_title' => "Timetable",
             'sub_title' => "records",
@@ -69,10 +71,18 @@ class TimetableController extends AdminController
         $periods = Period::all();
         $courses = Course::all();
         $facultys = faculty::all();
+        $semesters= semester::all();
+        $subjects = Subject::all();
+
     //    dd($facultys);
-        return view('admin.timetable.addtimetable', [
+        return view('ums.master.faculty.time_table_add', [
             'page_title' => "Add New",
             'sub_title' => "Timetable",
+            'periods' => $periods,
+            'courses' => $courses,
+            'facultys' => $facultys,
+           'semesters' => $semesters,
+           'subjects' => $subjects,
         ])->withPeriods($periods)->withCourses($courses)->withFacultys($facultys);
     }
 
@@ -122,6 +132,30 @@ class TimetableController extends AdminController
       ]);
     }
 
+    // public function editTimetable(Request $request)
+    // {
+    //     $request->validate([
+    //         'timetable_status' => 'required',
+    //         'period_id' => 'required',
+    //         'day' => 'required',
+    //         'course_id' => 'required',
+    //         'semester_id' => 'required',
+    //         'subject_id' => 'required',
+    //         'faculty_id' => 'required',
+    //         'room_no' => 'required',
+    //     ]);
+    //     $status = $request['timetable_status'] == 'active'?1:0;
+    //     $update_edit = Timetable::where('id', $request->timetable_id)->update([ 'period_id' => $request->period_id,
+    //     'day' => $request->day,
+    //     'course_id' => $request->course_id,
+    //     'semester_id' => $request->semester_id,
+    //     'subject_id' => $request->subject_id,
+    //     'faculty_id' => $request->faculty_id,
+    //     'room_no' => $request->room_no, 'status' => $status]);
+    //     return redirect()->route('get-timetables')->with('success','Update Successfully.');
+        
+    // }
+
     public function editTimetable(Request $request)
     {
         $request->validate([
@@ -132,38 +166,59 @@ class TimetableController extends AdminController
             'semester_id' => 'required',
             'subject_id' => 'required',
             'faculty_id' => 'required',
-            'room_no' => 'required',
+            'room_no' => 'required'
         ]);
-        $status = $request['timetable_status'] == 'active'?1:0;
-        $update_edit = Timetable::where('id', $request->timetable_id)->update([ 'period_id' => $request->period_id,
-        'day' => $request->day,
-        'course_id' => $request->course_id,
-        'semester_id' => $request->semester_id,
-        'subject_id' => $request->subject_id,
-        'faculty_id' => $request->faculty_id,
-        'room_no' => $request->room_no, 'status' => $status]);
-        return redirect()->route('get-timetables')->with('success','Update Successfully.');
-        
+    
+        $status = $request->timetable_status == 'active' ? 1 : 0;
+    
+        $update_edit = Timetable::where('id', $request->timetable_id)->update([
+            'period_id' => $request->period_id,
+            'day' => $request->day,
+            'course_id' => $request->course_id,
+            'semester_id' => $request->semester_id,
+            'subject_id' => $request->subject_id,
+            'faculty_id' => $request->faculty_id,
+            'room_no' => $request->room_no,
+            'status' => $status
+        ]);
+    
+        return redirect()->route('get-timetables')->with('success', 'Update Successfully.');
     }
+    // public function edittimetables(Request $request, $slug)
+    // {
+    //     $selectedtimetable = Timetable::Where('id', $slug)->first();
+    //         //dd('.');
 
+    //         $periods = Period::all();
+    //         $courses = Course::all();
+    //         $facultys = faculty::all();
+    //         $semesters = Semester::all();
+    //     return view('ums.master.faculty.time_table_edit', [
+    //         'page_title' => $selectedtimetable->name,
+    //         'sub_title' => "Edit Information",
+    //         'selected_timetable' => $selectedtimetable
+    //     ])->withPeriods($periods)->withCourses($courses)->withFacultys($facultys)->withSemesters($semesters);
+    // }
 
-    public function edittimetables(Request $request, $slug)
+    public function edittimetables($slug)
     {
         $selectedtimetable = Timetable::Where('id', $slug)->first();
-            //dd('.');
-
-            $periods = Period::all();
-            $courses = Course::all();
-            $facultys = faculty::all();
-            $semesters = Semester::all();
-        return view('admin.timetable.edittimetable', [
-            'page_title' => $selectedtimetable->name,
-            'sub_title' => "Edit Information",
-            'selected_timetable' => $selectedtimetable
-        ])->withPeriods($periods)->withCourses($courses)->withFacultys($facultys)->withSemesters($semesters);
+        $periods = Period::all();
+        $courses = Course::all();
+        $facultys = Faculty::all();
+        $semesters = Semester::all();
+        $subjects = Subject::all();
+    
+        return view('ums.master.faculty.time_table_edit', [
+            'selected_timetable' => $selectedtimetable,
+            'periods' => $periods,
+            'courses' => $courses,
+            'facultys' => $facultys,
+            'semesters' => $semesters,
+            'subjects' => $subjects
+           
+        ]);
     }
-
-
     public function show()
     {
         return view('admin.ProductPeriod.view');
@@ -176,13 +231,14 @@ class TimetableController extends AdminController
 
 
         return view(
-            'admin.timetable.edit',
+            'ums.master.faculty.time_table_edit',
             array(
                 'parents' => $parents,
                 'productPeriod' => $productPeriod
             )
         );
     }
+   
 
     public function softDelete(Request $request,$slug) {
         
@@ -196,14 +252,5 @@ class TimetableController extends AdminController
     } 
     
 
-    // public function fetch()
-    // {
-    //     //Fetch all time table entries
-    //     $timeTables = Timetable::all();
-
-    //     // Return the view and pass the data
-    //     return view('ums\master\faculty\time_table', compact('timeTables'));
-      
-    // }
 }
 

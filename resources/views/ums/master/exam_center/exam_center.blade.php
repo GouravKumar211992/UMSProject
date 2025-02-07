@@ -10,6 +10,7 @@
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
+        @include('ums.admin.notifications')
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
             <div class="content-header row">
@@ -60,7 +61,13 @@
                                 <td>{{$item->id }}</td>
       <td>{{$item->center_code }}</td>
       <td>{{$item->center_name }}</td>
-      <td>{{$item->status }}</td>
+      <td>
+        @if($item->status == 'inactive')
+        <span class="badge rounded-pill badge-light-danger">Inactive</span>
+        @else
+        <span class="badge rounded-pill badge-light-success">Active</span>
+        @endif
+    </td>
 										
 										
 										<td class="tableactionnew">  
@@ -69,15 +76,12 @@
                                                     <i data-feather="more-vertical"></i>
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('edit-form-{{ $item->id }}').submit();">
-    <i data-feather="edit" class="me-50"></i>
-    <span>Edit</span>
-</a>
+                                                <a class="dropdown-item" href="{{url('exam_center_edit',$item->id)}}">
+                                                             <i data-feather="edit" class="me-50"></i>
+                                                             <span>Edit</span>
+                                                         </a>
 
-<form id="edit-form-{{ $item->id }}" action="{{ route('exam_center.edit', $item->id) }}" method="POST" style="display:none;">
-    @csrf
-    @method('POST')
-</form>
+
 <a class="dropdown-item" href="#" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this Exam Center?')) { document.getElementById('delete-form-{{ $item->id }}').submit(); }">
     <i data-feather="trash-2" class="me-50"></i>
     <span>Delete</span>

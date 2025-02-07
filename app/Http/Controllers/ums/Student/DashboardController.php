@@ -1,19 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Student;
+namespace App\Http\Controllers\ums\Student;
 
-use View;
-use Auth;
+use Illuminate\Support\Facades\View;
+
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
 use App\User;
 use Illuminate\Http\Request;
 use App\Helpers\ConstantHelper;
-use App\Http\Controllers\AdminController;
-use App\Models\Address;
-use App\Models\Icard;
-use App\Models\Student;
-use App\Models\Semester;
-use App\Models\HolidayCalenderModel;
-use App\Models\DisabilityCategory;
+use App\Http\Controllers\ums\AdminController;
+use App\Models\ums\Address;
+use App\Models\ums\Icard;
+use App\Models\ums\Student;
+use App\Models\ums\Semester;
+use App\Models\ums\HolidayCalenderModel;
+use App\Models\ums\DisabilityCategory;
 
 
 class DashboardController extends AdminController
@@ -31,7 +35,7 @@ class DashboardController extends AdminController
         // Auth::guard('student')->logout();
         // return redirect('exam/login?exam_portal=1')->with('error','You are not authorized');
         $data['icard'] = Icard::where('enrolment_number',Auth::guard('student')->user()->enrollment_no)->first();
-        return view('student.dashboard.index',$data);
+        return view('ums.student.student_dashboard',$data);
     }
     public function profile()
     {
@@ -50,7 +54,7 @@ class DashboardController extends AdminController
             $data['semester'] = Semester::where('id', $data['student']->semester_id)->first();
         }
 		// dd($data);
-        return view('student.dashboard.profile', $data);
+        return view('ums.student.profile', $data);
     }
 
     public function editStudent($roll_number)

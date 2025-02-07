@@ -78,7 +78,7 @@
                                                             <i data-feather="more-vertical"></i>
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-end">
-                                                            <a class="dropdown-item" href="{{ url('time_table_edit', $timeTable->id) }}">
+                                                            <a class="dropdown-item" href="{{ url('time_table_edit', $timeTable->id) }} ">
                                                                 <i data-feather="edit" class="me-50"></i>
                                                                 <span>Edit</span>
                                                             </a>

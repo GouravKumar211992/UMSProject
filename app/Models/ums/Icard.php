@@ -81,17 +81,17 @@ class Icard extends Model implements HasMedia
             return $this->getMedia('fee_recipt')->first()->getFullUrl();
         }
     }
-	public function registerMediaCollections()
-    {
-        $this->addMediaCollection('profile_photo')
-            ->singleFile();
+	// public function registerMediaCollections()
+    // {
+    //     $this->addMediaCollection('profile_photo')
+    //         ->singleFile();
 
-		$this->addMediaCollection('signature')
-            ->singleFile();
+	// 	$this->addMediaCollection('signature')
+    //         ->singleFile();
 
-		$this->addMediaCollection('fee_recipt')
-            ->singleFile();
-    }
+	// 	$this->addMediaCollection('fee_recipt')
+    //         ->singleFile();
+    // }
     public function enrollment(){
     	return $this->hasOne(Enrollment::class, 'enrollment_no','enrolment_number');
     }

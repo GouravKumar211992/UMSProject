@@ -1,14 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\ums;
 
+use App\Models\ums\User;
+use App\Models\ums\Course;
 use Illuminate\Http\Request;
-use App\User;
-use Validator;
-use Auth;
-use Hash;
-use Mail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash ;
+use Illuminate\Support\Facades\Mail ;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\Controller;
+
+
+
+
+
+
 use App\Jobs\TrackingEmailFrequency;
+
 
 //use App\Models\MailBox;
 //use App\Services\Mailers\Mailer;
@@ -22,14 +31,14 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-		$data['campus_courses'] = \App\Models\Course::where('campus_id',1)->limit(4)->get();
-		$data['aff_courses'] = \App\Models\Course::where('campus_id',2)->limit(4)->get();
+		$data['campus_courses'] = Course::where('campus_id',1)->limit(4)->get();
+		$data['aff_courses'] = Course::where('campus_id',2)->limit(4)->get();
 		return view('frontend.landing',$data);
     }
 
 	public function admissionPortal(Request $request){
-		$data['campus_courses'] = \App\Models\Course::where('campus_id',1)->limit(4)->get();
-		$data['aff_courses'] = \App\Models\Course::where('campus_id',2)->limit(4)->get();
+		$data['campus_courses'] = Course::where('campus_id',1)->limit(4)->get();
+		$data['aff_courses'] = Course::where('campus_id',2)->limit(4)->get();
         return view('frontend.index.index',$data);
     }
 
@@ -53,7 +62,7 @@ class HomeController extends Controller
 
         $remember = $request->has('remember') ? true : false;
 
-        if (\Auth::attempt($credentials,$remember)) {
+        if (Auth::attempt($credentials,$remember)) {
 			if(Auth::user()->status=='pending'){
 				$data['status'] = false;
 				$data['message'] = 'Your account is not activated. To active your account please click on <a class="btn btn-success" href="activate-your-account/'.$credentials['email'].'">Activate</a> button';
@@ -77,8 +86,9 @@ class HomeController extends Controller
 		$user = User::find($id);
 		if($user){
 			Auth::login($user);
-			if(Auth::guard('admin')->check() &&  Auth::guard('admin')->user()->role==1){
-				return redirect()->route('user-dashboard')->with('success','Login Successfully');
+			// Auth::guard('admin')->check() &&  Auth::guard('admin')->user()->role==1
+			if(true){
+				return redirect()->route('user.dashboard')->with('success','Login Successfully');
 			}else{
 				return redirect('view-application-form?view=true&application_id='.$request->application_id)->with('success','Login Successfully');
 			}
@@ -240,8 +250,8 @@ class HomeController extends Controller
 
     public function categories(Request $request)
     {
-		$data['campus_courses'] = \App\Models\Course::where('campus_id',1)->get();
-		$data['aff_courses'] = \App\Models\Course::where('campus_id',2)->get();
+		$data['campus_courses'] = Course::where('campus_id',1)->get();
+		$data['aff_courses'] = Course::where('campus_id',2)->get();
         return view('frontend.index.all-categories',$data);
     }
 

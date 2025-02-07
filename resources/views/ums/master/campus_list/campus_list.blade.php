@@ -5,6 +5,7 @@
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
+        @include('ums.admin.notifications')
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
             <div class="content-header row">
@@ -57,16 +58,25 @@
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
-                                            @foreach ($campuses as $item)
+                                            @foreach ($campuses as $index => $item)
                                                 
                                            
                                             <tbody>
                                                
                                                 <tr>
-                                                    <td>1</td>
+                                                    <td>{{ $index + 1 }}</td>
                                                     <td>{{$item->campus_code}}</td>
                                                     <td class="fw-bolder text-dark">{{$item->name}}</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">{{$item->is_affiliated}}</span></td>
+                                                    <td>
+                                                        <span class="badge rounded-pill badge-light-secondary badgeborder-radius">
+                                                            @if ($item->is_affiliated == 0)
+                                                                DSMNRU
+                                                            @else
+                                                                AFFILIATED
+                                                            @endif
+                                                        </span>
+                                                    </td>
+                                                    
                                                     <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">{{$item->short_name}}</span></td>
                                                     <td>{{$item->email}}</td>
                                                     <td>{{$item->contact}}</td> 
@@ -202,54 +212,37 @@
     
       
     
-	 
+    
+
     <div class="modal modal-slide-in fade filterpopuplabel" id="filter">
 		<div class="modal-dialog sidebar-sm">
-			<form class="add-new-record modal-content pt-0"> 
+            @include('ums.admin.search-model', ['searchTitle' => 'Campus List Search'])
+			<form class="add-new-record modal-content pt-0" id="approveds-form" method="GET" novalidate  action="{{ url('campus_list') }}"> 
 				<div class="modal-header mb-1">
 					<h5 class="modal-title" id="exampleModalLabel">Apply Filter</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
 				</div>
 				<div class="modal-body flex-grow-1">
 					<div class="mb-1">
-						  <label class="form-label" for="fp-range">Select Date Range</label>
-						  <input type="text" id="fp-range" class="form-control flatpickr-range" placeholder="YYYY-MM-DD to YYYY-MM-DD" />
+						  <label class="form-label" for="fp-range">Name</label>
+						  <input type="text"  name="name" value="{{Request :: get('name')}}"  class="form-control " placeholder="type here" />
 					</div>
-					
-					<div class="mb-1">
-						<label class="form-label">Select Incident No.</label>
-						<select class="form-select select2">
-							<option>Select</option>
+					<?php $types = ['0'=>'DSMNRU CAMPUS','1'=> 'AFFILIATED COLLEGE']?>
+					<div class="mb-1">Type</label>
+						<select class="form-select select2" id="type" name="type">
+							<option value="">Select</option>
+                                    @foreach($types as $index=>$type)
+                                    
+                                    <option value="{{$index}}" {{ (Request::get('type') == $type) ? 'selected': '' }}>{{$type}}</option>
+                                    @endforeach
 						</select>
 					</div> 
                     
-                    <div class="mb-1">
-						<label class="form-label">Select Customer</label>
-						<select class="form-select select2">
-							<option>Select</option>
-						</select>
-					</div> 
-                    
-                    <div class="mb-1">
-						<label class="form-label">Assigned To</label>
-						<select class="form-select select2">
-							<option>Select</option>
-						</select>
-					</div> 
-                    
-                    <div class="mb-1">
-						<label class="form-label">Status</label>
-						<select class="form-select">
-							<option>Select</option> 
-							<option>Open</option>
-							<option>Close</option>
-							<option>Re-Allocatted</option>
-						</select>
-					</div> 
+                     
 					 
 				</div>
 				<div class="modal-footer justify-content-start">
-					<button type="button" class="btn btn-primary data-submit mr-1">Apply</button>
+					<button type="submit" form="approveds-form" class="btn btn-primary data-submit mr-1">Apply</button>
 					<button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
 				</div>
 			</form>
@@ -258,19 +251,7 @@
 
     @endsection
     <script>
-        // function exportdata() {
-        //      var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
-        //      var fullUrl = "{{url()->full()}}";
-        //      if(fullUrl_count>1){
-        //          fullUrl = fullUrl.split('?')[1];
-        //          fullUrl = fullUrl.replace(/&amp;/g, '&');
-        //          fullUrl = '?'+fullUrl;
-        //     }else{
-        //         fullUrl = '';
-        //     }
-        //     var url = "{{url('admin/master/campus/campus-export')}}"+fullUrl;
-        //     window.location.href = url;
-        // }
+       
         function editCourse(slug) {
             var url = "{{url('campus_list_edit')}}"+"/"+slug;
             window.location.href = url;

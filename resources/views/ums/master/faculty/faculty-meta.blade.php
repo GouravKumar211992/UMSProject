@@ -36,6 +36,7 @@
 
     @yield('content')
     @include('ums.admin.footer')
+    @include('ums.admin.script')
 
 </body>
 <!-- END: Body-->

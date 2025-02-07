@@ -33,7 +33,7 @@ class OldGradeController extends AdminController
             $grade->semester_id = $request->semester_id;
             $grade->academic_session = $request->academic_session;
             $grade->save();
-            return redirect('ums.master.grading.old_grading')->with('success','Added Successfully');
+            return redirect('old_grading')->with('success','Added Successfully');
         }
     }
 

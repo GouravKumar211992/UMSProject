@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Report;
+namespace App\Http\Controllers\ums\Report;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Campuse;
-use App\Models\Course;
-use App\Models\AcademicSession;
-use App\Models\ExamType;
-use App\Models\ExamFee;
+use App\Models\ums\Campuse;
+use App\Models\ums\Course;
+use App\Models\ums\AcademicSession;
+use App\Models\ums\ExamType;
+use App\Models\ums\ExamFee;
 
 class RegularMarkFillingController extends Controller
 {
@@ -29,8 +29,10 @@ class RegularMarkFillingController extends Controller
         ->whereIn('course_id',$course_id_array)
         ->orderBy('course_id','ASC')
         ->orderBy('roll_no','ASC')
-        // ->limit(10)
+        ->limit(10)
         ->get();
-        return view('report.regular-mark-filling',compact('academic_session','examType','form_form_data','campuses','courses'));
+        // dd($form_form_data);
+// 
+        return view('ums.exam.regular_mark_filling',compact('academic_session','examType','form_form_data','campuses','courses'));
     }
 }

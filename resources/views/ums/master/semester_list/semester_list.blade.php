@@ -203,7 +203,7 @@
 				<div class="modal-body flex-grow-1">
 					<div class="mb-1">
 						  <label class="form-label" for="fp-range">Select Date Range</label>
-						  <input type="text" id="fp-range" class="form-control flatpickr-range" placeholder="YYYY-MM-DD to YYYY-MM-DD" />
+						  <input type="text" id="fp-range" class="form-control " placeholder="YYYY-MM-DD to YYYY-MM-DD" />
 					</div>
 					
 					<div class="mb-1">

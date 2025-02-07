@@ -47,31 +47,31 @@
                             <div class="card">
 								   
                                 <div class="table-responsive">
-                                        <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
-                                            <thead>
-                                                <tr>
-                                                    <div class="row">
-                                                    <th class="col-md-2">ID#</th>
-                                                    <th class="col-md-3">Year</th>
-                                                    <th class="col-md-7">Click here to download calendor</th>
-                                                    <th class="col-md-7"></th>
-                                                </div>
-                                                   
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                               
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td class="fw-bolder text-dark">2022</td>
-                                                    <td ><button class="btn btn-primary" target="_blank" style="width:110px;">Download</button></td>
-                                                   
-                                                    
-                                                    
-                                                </tr>
-                                                
-                                            </tbody>
-                                        </table>
+                                    <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-md-2">ID#</th>
+                                                <th class="col-md-3">Year</th>
+                                                <th class="col-md-7">Click here to download calendar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($holidayCalendor as $calender)
+                                            <tr>
+                                                <td>{{ $calender->id }}</td>
+                                                <td class="fw-bolder text-dark">{{ $calender->year }}</td>
+                                                <td>
+                                                    @if ($calender->HolidayCalenderModel_doc) 
+                                                        <a href="{{ $calender->HolidayCalenderModel_doc }}" target="_blank" class="btn btn-primary" style="width:110px;">Download</a>
+                                                    @else
+                                                        <span>No file available</span>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    
                                     </div>
 								
                             </div>

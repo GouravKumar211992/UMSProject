@@ -32,12 +32,12 @@
                         </div>
                     </div>
                 </div>
-                <form method="POST" action="{{route('phd-entrance-exam_add')}}">
+       
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
                         <button class="btn btn-dark btn-sm mb-50 mb-sm-0" onclick="location.href='{{url('/phd_entrance_exam')}}'"> <i data-feather="arrow-left-circle"></i> GO BACK
                         </button>
-                        <button type="submit" class="btn btn-primary btn-sm mb-50 mb-sm-0"> <i data-feather="check-circle"
+                        <button type="submit" form="cat_form" class="btn btn-primary btn-sm mb-50 mb-sm-0"> <i data-feather="check-circle"
                                 style="font-size: 40px;"></i>
                             Submit</button>
 
@@ -45,6 +45,8 @@
                     </div>
                 </div>
             </div>
+            <form method="POST" id="cat_form" action="{{route('phd-entrance-exam_add')}}">
+                @csrf
             <div class="content-body bg-white   py-4 mb-4 shadow">
                 <div class="row  mt-3 mb-3 text-center px-md-5 ">
 
@@ -98,7 +100,7 @@
                             </div>
                     
                             <div class="col-md-9">
-                                <input type="time" name="exam_ending_time" class="form-control">
+                                <input type="time" id="exam_ending_time" name="exam_ending_time"  class="form-control">
                             </div>
                         </div>
                     

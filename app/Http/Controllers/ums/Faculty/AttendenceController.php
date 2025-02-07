@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\faculty;
+namespace app\Http\Controllers\UMS\Faculty;
 
 use View;
 use Auth;
@@ -10,11 +10,11 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\InternalMarksMapping;
-use App\Models\InternalMark;
-use App\Models\StudentSubject;
-use App\Models\Attendence;
-use App\Models\AcademicSession;
+use App\Models\ums\InternalMarksMapping;
+use App\Models\ums\InternalMark;
+use App\Models\ums\StudentSubject;
+use App\Models\ums\Attendence;
+use App\Models\ums\AcademicSession;
 use Validator;
 
 
@@ -23,7 +23,7 @@ class AttendenceController extends Controller
 
     public function index(Request $request)
     {
-        $user=Auth::guard('faculty')->user()->id;
+        // $user=Auth::guard('faculty')->user()->id;
          $attendence = Attendence::with(['faculty','course','semester'])->orderBy('id', 'DESC');
 
         if($request->search) {
@@ -46,12 +46,12 @@ class AttendenceController extends Controller
        if (!empty($request->roll_no)) {
            // dd($request->date_of_attendence);
             $attendence->where('roll_no',$request->roll_no);
-           // dd($attendence->get());
         }
+       
+        // dd($attendence);
         $attendence=$attendence->paginate(10);
-
-        //dd($attendence);
-    return view('faculty.attendence.index',[
+        
+    return view('ums.master.faculty.attendance',[
         'attendence'=>$attendence,
 
     ]);
@@ -148,11 +148,11 @@ class AttendenceController extends Controller
     }
     public function searchAttendence(Request $request)
     {
-        $sessionsList=Attendence::groupBy('session')->get()->pluck('session')->toArray();
+        $sessionsList=Attendence::select('session')->groupBy('session')->get()->pluck('session')->toArray();
         // dd($sessionsList);
         $searchAttendence=Attendence::where('session',$request->session)->where('date_of_attendence',$request->date_of_attendence)->paginate(10);
         //echo( $searchAttendence);
-        return view('faculty.attendence.view',[
+        return view('ums.master.faculty.show_Attendance',[
             'searchAttendence'=>$searchAttendence,
             'sessionsList' => $sessionsList,
         ]);

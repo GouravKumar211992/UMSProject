@@ -14,23 +14,47 @@ class HolidayCalenderController extends Controller
    public function holidayCalenderForStudent()
    {
        $holidayCalendor = HolidayCalenderModel::all();
-       return view('student.dashboard.calender',['holidayCalendor'=>$holidayCalendor]);
+       return view('ums.master.faculty.holiday_calender',['holidayCalendor'=>$holidayCalendor]);
    }
-   
-   public function holidayCalenderSave(Request $request)
-   {
-        $HolidayCalenderModel = new HolidayCalenderModel;
-        $HolidayCalenderModel->year = $request->year;
-        $HolidayCalenderModel->addMediaFromRequest('HolidayCalenderModel_doc')->toMediaCollection('HolidayCalenderModel_doc');
-        $HolidayCalenderModel->save();
-        return back()->with('success','data saved');
-   }
-   public function holidayCalenderDelete($id)
-   {
+
+public function holidayCalenderSave(Request $request)
+{
+    $HolidayCalenderModel = new HolidayCalenderModel;
+    $HolidayCalenderModel->year = $request->year;
+    $HolidayCalenderModel->file = $request->file;
+
+    // Check if file is uploaded
+    if ($request->hasFile('holiday_calendar')) {
+        $HolidayCalenderModel->addMediaFromRequest('holiday_calendar')
+                             ->toMediaCollection('holiday_calendar');
+    }
+
+    $HolidayCalenderModel->save();
+
+    return back()->with('success', 'Holiday calendar data saved.');
+}
+
+
+
+//    public function holidayCalenderDelete($id)
+//    {
+//     $HolidayCalenderModel = HolidayCalenderModel::find($id);
+//     $HolidayCalenderModel->delete();
+//     return back();
+//    }
+
+public function holidayCalenderDelete($id)
+{
     $HolidayCalenderModel = HolidayCalenderModel::find($id);
-    $HolidayCalenderModel->delete();
-    return back();
-   }
+    if ($HolidayCalenderModel) {
+        $HolidayCalenderModel->delete(); // Soft delete
+        return back()->with('success', 'Holiday calendar deleted successfully.');
+    }
+    return back()->with('error', 'Holiday calendar not found.');
+}
+
 
 
 }
+
+

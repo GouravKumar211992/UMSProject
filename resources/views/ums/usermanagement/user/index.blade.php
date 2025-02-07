@@ -31,7 +31,8 @@
                 </div>
             </div>
             <div class="content-body">
-
+ 
+                @include('ums.admin.notifications')
                 {{-- <section id="basic-datatable">
                     <div class="row">
                         <div class="col-12">
@@ -168,9 +169,8 @@
                                                         <td>{{ $user->mobile }}</td>
                                                         <td>{{ date('M dS, Y', strtotime($user->created_at)) }}</td>
                                                         <td>
-                                                            <div class="admin-status progStat">
-                                                                <span></span>{{ ucfirst($user->status) }}
-                                                            </div>
+                                                            <td><span class="badge rounded-pill badge-light-{{ strtolower($user->status) == 'active' ? 'success' : 'warning' }}">{{ucfirst($user->status)}}</span></td>
+
                                                         </td>
                                                         <td class="tableactionnew">
                                                             <div class="dropdown">
@@ -178,7 +178,7 @@
                                                                     <i data-feather="more-vertical"></i>
                                                                 </button>
                                                                 <div class="dropdown-menu dropdown-menu-end">
-                                                                    <a class="dropdown-item">
+                                                                    <a class="dropdown-item" href="{{route('user-password-change',$user->id)}}">
                                                                         <i data-feather="edit" class="me-50"></i>
                                                                         <span>Password Reset</span>
                                                                     </a>

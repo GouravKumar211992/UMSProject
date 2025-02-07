@@ -75,7 +75,7 @@ class EntranceExamConrtoller extends AdminController
         $campuse = Campuse::all();
         $sessions = AcademicSession::orderBy('id','DESC')->limit(1)->get();
         $examcenter = ExamCenter::all();
-        return view('admin.master.entrance-exam-allow.add_entrance_exam_schedule', [
+        return view('ums.master.entrance_exam.Entrance_exam_add', [
             'page_title' => "Add New",
             'sub_title' => "Semester",
             'categorylist' => $category,

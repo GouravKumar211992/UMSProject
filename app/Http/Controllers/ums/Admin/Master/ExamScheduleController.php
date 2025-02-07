@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Master;
+namespace App\Http\Controllers\ums\Admin\Master;
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ums\AdminController;
 use Illuminate\Http\Request;
-use App\Models\Course;
-use App\Models\Student;
-use App\Models\Campuse;
-use App\Models\Semester;
-use App\Models\AcademicSession;
-use App\Models\Subject;
-use App\Models\ExamSchedule;
-use Validator;
+use App\Models\ums\Course;
+use App\Models\ums\Student;
+use App\Models\ums\Campuse;
+use App\Models\ums\Semester;
+use App\Models\ums\AcademicSession;
+use App\Models\ums\Subject;
+use App\Models\ums\ExamSchedule;
+use Illuminate\Support\Facades\Validator;
+
+
 use App\Imports\ExamScheduleImport;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -32,16 +34,20 @@ class ExamScheduleController extends AdminController
             ->orderBy('id','asc')->paginate(10);
         }
         $data['subjects'] = $subjects;
-    	  return view('admin.exam.exam-schedule',$data);
+    	  return view('ums.exam.Exam_Schedule',$data);
     }
+
+
       public function schedule_post(Request $request)
     {  
          $validator = Validator::make($request->all(),[
         'date.*' => 'required',
         'shift.*' => 'required',
         ]);
-      if ($validator->fails()) {    
-        return back()->withErrors($validator)->withInput($request->all());
+
+        if ($validator->fails()) {    
+          // dd($request->all());
+          return back()->withErrors($validator)->withInput($request->all());
       }
         $array_data = [];
         foreach($request->paper_code as $index=>$paper_code){
@@ -78,6 +84,7 @@ class ExamScheduleController extends AdminController
    
      public function timetable(Request $request)
     {
+      // dd($request->all());
     	$data['sessions'] = AcademicSession::all();
     	$data['campuses'] = Campuse::all();
     	$data['courses'] = Course::where('campus_id',$request->campus_id)->orderBy('name','asc')->get();
@@ -89,11 +96,12 @@ class ExamScheduleController extends AdminController
         $data['semester_id'] = $request->semester;
     	  $data['exams'] = ExamSchedule::where(['courses_id'=>$request->course,'semester_id'=>$request->semester,'year'=>$request->session,'schedule_count'=>$request->schedule_count])->get();
       }
-     return view('admin.exam.examtime-table',$data);
+      // dd($data);
+     return view('ums.exam.view_time_tables',$data);
     }
     public function get_Semester(Request $request)
 	{
-		//dd($request->all());
+		// dd($request->all());
 		$html='<option value="">--Select Semester--</option>';
 		$query= Semester::where(['course_id' => $request->course])->get();
    // dd($query);
@@ -104,7 +112,7 @@ class ExamScheduleController extends AdminController
 		return $html;
 	}
   public function schedule_update(Request $request){
-    //dd($request->all());
+    // dd($request->all());
         $Schedule = ExamSchedule::find($request->id);
         if($Schedule){
           $Schedule->date = $request->date;

@@ -1,7 +1,7 @@
-@extends("ums.admin.admin-meta")
-@section("content")
+@extends('ums.admin.admin-meta')
+@section('content')
 
-{{-- <!DOCTYPE html>
+    {{-- <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 <!-- BEGIN: Head-->
 
@@ -88,20 +88,23 @@
                     </div>
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
-                    <div class="form-group breadcrumb-right">
-                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0"  id="submitBtn"><i data-feather="clipboard"></i> Submit</button>
-                        {{-- <button class="btn btn-secondary btn-sm mb-50 mb-sm-0">Go Back</button>
+                    <form method="get" id="form_data">
+                        <div class="form-group breadcrumb-right">
+                            <button class="btn btn-primary btn-sm mb-50 mb-sm-0" type="submit" id="submitBtn"><i
+                                    data-feather="clipboard"></i> Submit</button>
+                            {{-- <button class="btn btn-secondary btn-sm mb-50 mb-sm-0">Go Back</button>
                          <a class="btn btn-primary btn-sm mb-50 mb-sm-0" href="/view_time_tables"> View Time Tables</a>  
 
                           
                         <button class="btn btn-success  btn-sm mb-50 mb-sm-0">Schedule Bulk Upload</button> --}}
 
 
-                    </div>
+                        </div>
                 </div>
             </div>
             <div class="content-body bg-white p-4 shadow">
 
+                @include('ums.admin.notifications')
                 <div class="row">
 
                     <!-- Campus and Course Selection -->
@@ -112,24 +115,37 @@
                                 <label class="form-label">Campus:<span class="text-danger m-0">*</span></label>
                             </div>
                             <div class="col-md-9">
-                                <select id="campus" class="form-control">
-                                    <option value="">---Choose Campus---</option>
-                                    <option value="campus1">Campus 1</option>
-                                    <option value="campus2">Campus 2</option>
-                                    <option value="campus3">Campus 3</option>
+                                <select data-live-search="true" name="campus_id" id="campus_id"
+                                    style="border-color: #c0c0c0;" class="form-control js-example-basic-single "
+                                    onChange="return $('#form_data').submit();">
+                                    <option value="">--Choose Campus--</option>
+                                    @foreach ($campuses as $campus)
+                                        <option value="{{ $campus->id }}"
+                                            @if (Request()->campus_id == $campus->id) selected @endif>{{ $campus->name }}</option>
+                                    @endforeach
                                 </select>
+                                <span class="text-danger">{{ $errors->first('campus_id') }}</span>
+
                             </div>
                         </div>
-            
+
                         <!-- Course Selection -->
                         <div class="row align-items-center mb-1">
                             <div class="col-md-3">
                                 <label class="form-label">Course:<span class="text-danger">*</span></label>
                             </div>
                             <div class="col-md-9">
-                                <select id="course" class="form-control">
-                                    <option value="">---Select Course---</option>
+                                <select data-live-search="true" name="course" id="course" style="border-color: #c0c0c0;"
+                                    class="form-control js-example-basic-single "
+                                    onChange="return $('#form_data').submit();">
+                                    <option value="">--Choose Course--</option>
+                                    @foreach ($courses as $course)
+                                        <option value="{{ $course->id }}"
+                                            @if (Request()->course == $course->id) selected @endif>{{ $course->name }}</option>
+                                    @endforeach
                                 </select>
+                                <span class="text-danger">{{ $errors->first('course') }}</span>
+
                             </div>
                         </div>
                         <div class="row align-items-center mb-1">
@@ -138,17 +154,19 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                  <option value="0">---Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2"> 2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
+                                <select data-live-search="true" name="schedule_count" id="schedule_count"
+                                    style="border-color: #c0c0c0;" class="form-control js-example-basic-single ">
+                                    <option value="">Select Schedule Count</option>
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <option value="{{ $i }}"
+                                            @if (Request()->schedule_count == $i) selected @endif>{{ $i }}</option>
+                                    @endfor
                                 </select>
+                                <span class="text-danger">{{ $errors->first('schedule_count') }}</span>
                             </div>
                         </div>
                     </div>
-            
+
                     <!-- Semester, Session, and other options -->
                     <div class="col-md mt-4 mb-3">
                         <div class="row align-items-center mb-1">
@@ -156,249 +174,201 @@
                                 <label class="form-label">Semester:<span class="text-danger m-0">*</span></label>
                             </div>
                             <div class="col-md-9">
-                                <select id="semester" class="form-control">
-                                    <option value="">---Select Semester---</option>
-                                    <option value="1">Semester 1</option>
-                                    <option value="2">Semester 2</option>
+                                <select data-live-search="true" name="semester" id="semester"
+                                    style="border-color: #c0c0c0;" class="form-control js-example-basic-single ">
+                                    <option value="">Select Semester</option>
+                                    @foreach ($semesters as $semester)
+                                        <option value="{{ $semester->id }}"
+                                            @if (Request()->semester == $semester->id) selected @endif>{{ $semester->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
+                                <span class="text-danger">{{ $errors->first('semester') }}</span>
                             </div>
                         </div>
-            
+
                         <div class="row align-items-center mb-1">
                             <div class="col-md-3">
                                 <label class="form-label">Session:<span class="text-danger m-0">*</span></label>
                             </div>
                             <div class="col-md-9">
-                                <select id="session" class="form-control">
-                                    <option value="">---Select Session---</option>
-                                    <option value="2024">2024</option>
-                                    <option value="2025">2025</option>
+                                <select data-live-search="true" name="session" id="session" style="border-color: #c0c0c0;"
+                                    class="form-control js-example-basic-single ">
+                                    <option value="">Select Session</option>
+                                    @foreach ($sessions as $session)
+                                        <option value="{{ $session->academic_session }}"
+                                            @if (Request()->session == $session->academic_session) selected @endif>
+                                            {{ $session->academic_session }}</option>
+                                    @endforeach
                                 </select>
+                                <span class="text-danger">{{ $errors->first('session') }}</span>
                             </div>
                         </div>
-                       
+
                     </div>
-            
+                    </form>
+                    @if ($exams)
+                        @if (count($exams) > 0)
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <span></span>
+
+                                </div>
+                                <div class="col-sm-4">
+                                    <span></span><br>
+                                    <a herf="#"onclick="window.print()" name=""
+                                        class="btn btn-primary hidden-print" value="">PRINT</a>
+                                </div>
+
+                            </div>
+
+                            <div class="container" style="background-color: #FFFFFF; margin-top: 15px;">
+                                <div class="panel-group" id="accordion">
+                                    <div class="panel panel-default">
+                                        <div id="" class="" style="color:black">
+                                            <div class="panel-body">
+                                                <div class="container">
+                                                    <table border="1" id="tblTheory21" class="table table-hover">
+                                                        <tr>
+                                                            <td colspan="6">
+                                                                <center>
+                                                                    <h4>Exam Time Table</h4>
+                                                                </center>
+                                                        </tr>
+                                                        <tr>
+                                                           
+                                                            @if (true)
+                                                                <th class="thcenter hidden-print">Action</th>
+                                                            @endif
+                                                            <th class="thcenter">COURSE</th>
+                                                            <th class="thcenter">DATE</th>
+                                                            <th class="thcenter">SHIFT</th>
+                                                            <th class="thcenter">PAPER CODE</th>
+                                                            <th class="thcenter">PAPER NAME</th>
+                                                        </tr>
+                                                        @foreach ($exams as $exam)
+                                                            <tr class="auto-style18 thcenter">
+                                                                {{-- !Auth::guard('student')->user() --}}
+                                                                @if (true)
+                                                                    <td class="hidden-print"><a href="#!"
+                                                                            data-bs-toggle="modal"
+
+                                                                            
+                                                                            data-bs-target="#exampleModal{{$exam->id}}"
+                                                                            class="fa fa-pencil login_btn">
+                                                                            Edit</a>
+                                                                    </td>
+                                                                @endif
+                                                                <td><span
+                                                                        id="lblPap1ID">{{ $exam->semester->name }}</span>
+                                                                </td>
+                                                                <td><span id="lblPap1Name"><input type="text"
+                                                                            class="date" value="{{ $exam['date'] }}"
+                                                                            name="date[]"
+                                                                            hidden>{{ date('d-m-Y', strtotime($exam['date'])) }}</span>
+                                                                </td>
+                                                                <td><span id="lblPap1TE"><input type="text"
+                                                                            class="shift" value="{{ $exam['shift'] }}"
+                                                                            name="shift[]" hidden>
+                                                                        {{ $exam['shift'] }}
+                                                                    </span></td>
+                                                                <td><span id="lblPap1TS">{{ $exam['paper_code'] }}
+                                                                    </span></td>
+                                                                <td><span
+                                                                        id="lblPap1ID">{{ @$exam->subject->name }}</span>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <div class="container" style="background-color: #FFFFFF; margin-top: 15px;">
+                                <b style="color: black;">No Schedule Generated Please Wait... </b>
+                            </div>
+                        @endif
+                    @endif
+
                     <!-- Submit Button -->
-                  
+
                 </div>
             
-           
+  <!-- Modal -->
+  @foreach($exams as $exam)
+<div class="modal fade" id="exampleModal{{$exam->id}}" tabindex="-1" aria-labelledby="exampleModalLabel{{$exam->id}}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="exampleModalLabel{{$exam->id}}">Change Schedule</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{{ route('schedule-update') }}" id="myform{{$exam->id}}">
+                @csrf
+                <div class="modal-body" style="background:#f0f0f0;">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <!-- Hidden input to store the exam ID -->
+                            <input type="text" name="id" value="{{$exam->id}}" hidden>
+                            <label for="date{{$exam->id}}" class="col-form-label">Date</label>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Input for the exam date -->
+                            <input style="border-color: #c0c0c0;" name="date" type="date" id="date{{$exam->id}}" class="form-control date" value="{{ date('Y-m-d', strtotime($exam->date)) }}">
+                            <span class="text-danger">{{ $errors->first('date[]') }}</span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="shift{{$exam->id}}" class="col-form-label">Shift</label>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Dropdown for the exam shift -->
+                            <select name="shift" class="form-control shift" id="shift{{$exam->id}}">
+                                <option value="">--Choose Shift--</option>
+                                <option value="morning" {{ $exam->shift == 'morning' ? 'selected' : '' }}>Morning</option>
+                                <option value="evening" {{ $exam->shift == 'evening' ? 'selected' : '' }}>Evening</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="submit" value="Save Changes" class="btn btn-primary"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endforeach
+
  
-    <!-- END: Content-->
-
-    
-
-
-    <!-- BEGIN: Vendor JS-->
-
-    {{-- <!-- BEGIN: Vendor JS-->
-    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
-    <!-- BEGIN Vendor JS-->
-
-    <!-- BEGIN: Page Vendor JS-->
-    <script src="../../../app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
-    <script src="../../../app-assets/vendors/js/tables/datatable/dataTables.bootstrap5.min.js"></script>
-    <script src="../../../app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
-    <script src="../../../app-assets/vendors/js/tables/datatable/responsive.bootstrap5.min.js"></script>
-    <script src="../../../app-assets/vendors/js/tables/datatable/datatables.checkboxes.min.js"></script>
-    <script src="../../../app-assets/vendors/js/tables/datatable/datatables.buttons.min.js"></script>
-    <script src="../../../app-assets/vendors/js/tables/datatable/jszip.min.js"></script>
-    <script src="../../../app-assets/vendors/js/tables/datatable/pdfmake.min.js"></script>
-    <script src="../../../app-assets/vendors/js/tables/datatable/vfs_fonts.js"></script>
-    <script src="../../../app-assets/vendors/js/tables/datatable/buttons.html5.min.js"></script>
-    <script src="../../../app-assets/vendors/js/tables/datatable/buttons.print.min.js"></script>
-    <script src="../../../app-assets/vendors/js/tables/datatable/dataTables.rowGroup.min.js"></script>
-    <script src="../../../app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
-    <script src="../../../app-assets/vendors/js/forms/select/select2.full.min.js"></script>
-    <!-- END: Page Vendor JS-->
-
-    <!-- BEGIN: Theme JS-->
-    <script src="../../../app-assets/js/core/app-menu.js"></script>
-    <script src="../../../app-assets/js/core/app.js"></script>
-    <!-- END: Theme JS-->
-
-    <!-- BEGIN: Page JS-->
-    <script src="../../../app-assets/js/scripts/forms/pickers/form-pickers.js"></script>
-    <script src="../../../app-assets/js/scripts/forms/form-select2.js"></script>
-    <!-- END: Page JS-->
-
-    <script>
-        $(window).on('load', function() {
-            if (feather) {
-                feather.replace({
-                    width: 14,
-                    height: 14
-                });
-            }
-        })
-        $(function() {
-
-            var dt_basic_table = $('.datatables-basic'),
-                dt_date_table = $('.dt-date'),
-                dt_complex_header_table = $('.dt-complex-header'),
-                dt_row_grouping_table = $('.dt-row-grouping'),
-                dt_multilingual_table = $('.dt-multilingual'),
-                assetPath = '../../../app-assets/';
-
-            if ($('body').attr('data-framework') === 'laravel') {
-                assetPath = $('body').attr('data-asset-path');
-            }
-
-            // DataTable with buttons
-            // --------------------------------------------------------------------
-
-            if (dt_basic_table.length) {
-                var dt_basic = dt_basic_table.DataTable({
-
-                    order: [
-                        [0, 'asc']
-                    ],
-                    dom: '<"d-flex justify-content-between align-items-center mx-2 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-3 withoutheadbuttin dt-action-buttons text-end"B><"col-sm-12 col-md-3"f>>t<"d-flex justify-content-between mx-2 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-                    displayLength: 7,
-                    lengthMenu: [7, 10, 25, 50, 75, 100],
-                    buttons: [{
-                            extend: 'collection',
-                            className: 'btn btn-outline-secondary dropdown-toggle',
-                            text: feather.icons['share'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) + 'Export',
-                            buttons: [{
-                                    extend: 'print',
-                                    text: feather.icons['printer'].toSvg({
-                                        class: 'font-small-4 mr-50'
-                                    }) + 'Print',
-                                    className: 'dropdown-item',
-                                    exportOptions: {
-                                        columns: [3, 4, 5, 6, 7]
-                                    }
-                                },
-                                {
-                                    extend: 'csv',
-                                    text: feather.icons['file-text'].toSvg({
-                                        class: 'font-small-4 mr-50'
-                                    }) + 'Csv',
-                                    className: 'dropdown-item',
-                                    exportOptions: {
-                                        columns: [3, 4, 5, 6, 7]
-                                    }
-                                },
-                                {
-                                    extend: 'excel',
-                                    text: feather.icons['file'].toSvg({
-                                        class: 'font-small-4 mr-50'
-                                    }) + 'Excel',
-                                    className: 'dropdown-item',
-                                    exportOptions: {
-                                        columns: [3, 4, 5, 6, 7]
-                                    }
-                                },
-                                {
-                                    extend: 'pdf',
-                                    text: feather.icons['clipboard'].toSvg({
-                                        class: 'font-small-4 mr-50'
-                                    }) + 'Pdf',
-                                    className: 'dropdown-item',
-                                    exportOptions: {
-                                        columns: [3, 4, 5, 6, 7]
-                                    }
-                                },
-                                {
-                                    extend: 'copy',
-                                    text: feather.icons['copy'].toSvg({
-                                        class: 'font-small-4 mr-50'
-                                    }) + 'Copy',
-                                    className: 'dropdown-item',
-                                    exportOptions: {
-                                        columns: [3, 4, 5, 6, 7]
-                                    }
-                                }
-                            ],
-                            init: function(api, node, config) {
-                                $(node).removeClass('btn-secondary');
-                                $(node).parent().removeClass('btn-group');
-                                setTimeout(function() {
-                                    $(node).closest('.dt-buttons').removeClass('btn-group')
-                                        .addClass('d-inline-flex');
-                                }, 50);
-                            }
-                        },
-
-                    ],
-
-                    language: {
-                        paginate: {
-                            // remove previous & next text from pagination
-                            previous: '&nbsp;',
-                            next: '&nbsp;'
-                        }
-                    }
-                });
-                $('div.head-label').html('<h6 class="mb-0">Event List</h6>');
-            }
-
-            // Flat Date picker
-            if (dt_date_table.length) {
-                dt_date_table.flatpickr({
-                    monthSelectorType: 'static',
-                    dateFormat: 'm/d/Y'
-                });
-            }
-
-            // Add New record
-            // ? Remove/Update this code as per your requirements ?
-            var count = 101;
-            $('.data-submit').on('click', function() {
-                var $new_name = $('.add-new-record .dt-full-name').val(),
-                    $new_post = $('.add-new-record .dt-post').val(),
-                    $new_email = $('.add-new-record .dt-email').val(),
-                    $new_date = $('.add-new-record .dt-date').val(),
-                    $new_salary = $('.add-new-record .dt-salary').val();
-
-                if ($new_name != '') {
-                    dt_basic.row
-                        .add({
-                            responsive_id: null,
-                            id: count,
-                            full_name: $new_name,
-                            post: $new_post,
-                            email: $new_email,
-                            start_date: $new_date,
-                            salary: '$' + $new_salary,
-                            status: 5
-                        })
-                        .draw();
-                    count++;
-                    $('.modal').modal('hide');
-                }
-            });
-
-            // Delete Record
-            $('.datatables-basic tbody').on('click', '.delete-record', function() {
-                dt_basic.row($(this).parents('tr')).remove().draw();
-            });
 
 
 
-        });
 
-        $(".myrequesttablecbox tr").click(function() {
-            $(this).addClass('trselected').siblings().removeClass('trselected');
-            value = $(this).find('td:first').html();
-        });
+                <!-- END: Content-->
 
-        $(document).on('keydown', function(e) {
-            if (e.which == 38) {
-                $('.trselected').prev('tr').addClass('trselected').siblings().removeClass('trselected');
-            } else if (e.which == 40) {
-                $('.trselected').next('tr').addClass('trselected').siblings().removeClass('trselected');
-            }
-            $('html, body').scrollTop($('.trselected').offset().top - 100);
-        });
+
+
+
+<script>
+
+$(document).ready(function() {
+    $('.login_btn').click(function() {
+        var current_tr = $(this).closest('tr');
+        var examId = $(this).data('mid'); 
+        var date = current_tr.find('.date').val();
+        var shift = current_tr.find('.shift').val();
+        $('#exampleModal').find('.modal_id').val(examId); 
+        $('#exampleModal').find('.date').val(date); 
+        $('#exampleModal').find('.shift').val(shift); 
+    });
+});
+
+
     </script>
-</body>
-<!-- END: Body-->
-
-</html> --}}
-
-@endsection
+            @endsection

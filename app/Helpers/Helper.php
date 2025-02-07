@@ -59,6 +59,8 @@ class Helper
         echo $status;
     }
 
+    
+
     public static function generateVoucherNumber($book_id)
     {
         $data = NumberPattern::where('organization_id', self::getAuthenticatedUser()->organization_id)->where('book_id', $book_id)->orderBy('id', 'DESC')->first();

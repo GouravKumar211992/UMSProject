@@ -1,14 +1,14 @@
 <?php
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\ums\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Course;
-use App\Models\Result;
-use App\Models\Campuse;
-use App\Models\ExamFee;
-use App\Models\Semester;
-use App\Models\BackPaperBulk;
-use App\Models\AcademicSession;
+use App\Models\ums\Course;
+use App\Models\ums\Result;
+use App\Models\ums\Campuse;
+use App\Models\ums\ExamFee;
+use App\Models\ums\Semester;
+use App\Models\ums\BackPaperBulk;
+use App\Models\ums\AcademicSession;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
@@ -19,7 +19,7 @@ class BackPaperController extends Controller {
 
     public function bulkBackPaper(Request $request){
         $applications = BackPaperBulk::get();
-        return view('admin.exam-paper-approval.bulk-back-paper',compact('applications'));
+        return view('ums.exam.bulk_back_paper',compact('applications'));
     }
 
     public function bulkBackPaperSave(Request $request){

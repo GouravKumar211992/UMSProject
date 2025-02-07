@@ -1,23 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Master;
+namespace App\Http\Controllers\ums\Admin\Master;
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ums\AdminController;
 use Illuminate\Http\Request;
 
-use App\Models\Course;
-use App\Models\Student;
-use App\Models\ExamFee;
-use App\Models\Subject;
-use App\Models\Campuse;
-use App\Models\ExamSchedule;
-use App\Models\Enrollment;
-use App\Models\Application;
-use App\Models\StudentSemesterFee;
-use App\Models\Semester;
-use App\Models\Icard;
-use App\Models\Stream;
-use App\Models\MbbsExamForm;
+use App\Models\ums\Course;
+use App\Models\ums\Student;
+use App\Models\ums\ExamFee;
+use App\Models\ums\Subject;
+use App\Models\ums\Campuse;
+use App\Models\ums\ExamSchedule;
+use App\Models\ums\Enrollment;
+use App\Models\ums\Application;
+use App\models\ums\Category;
+use App\Models\ums\StudentSemesterFee;
+use App\Models\ums\Semester;
+use App\Models\ums\Icard;
+use App\Models\ums\Stream;
+use App\Models\ums\MbbsExamForm;
+
 use Validator;
 
 class ExamFeeController extends AdminController
@@ -36,7 +38,7 @@ class ExamFeeController extends AdminController
                 $q->where('roll_no', 'LIKE', '%'.$keyword.'%');
             });
         }
-		 dd($request->name);
+		//  dd($request->name);
         if(!empty($request->name)){
              dd($request->name);
             $examfees->where('roll_no','LIKE', '%'.$request->name.'%');
@@ -64,9 +66,9 @@ class ExamFeeController extends AdminController
         $campuse = Campuse::all();
         $semester = Semester::select('name')->distinct()->get();
         
-        dd($campuse);
+        // dd($campuse);
 
-        return view('admin.master.examfee.index', [
+        return view('ums.exam.Exam_list', [
             'page_title' => "ExamFee",
             'sub_title' => "records",
             'all_fee' => $examfees,
@@ -138,7 +140,7 @@ class ExamFeeController extends AdminController
             $data['subjects']=MbbsExamForm::where('exam_fee_id',$slug)->get();
             //$data=null;
         }
-        return view('admin.master.examfee.examfee-view',['data'=>$data,'id'=>$id]);
+        return view('ums.exam.View_exam_fee',['data'=>$data,'id'=>$id]);
     } 
 	
 }

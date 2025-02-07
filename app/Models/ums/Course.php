@@ -4,7 +4,7 @@ namespace App\Models\ums;
 // use Auth;
 // use DB;
 
-use App\Models\Semester;
+use App\Models\ums\Semester;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -213,16 +213,19 @@ class Course extends Model
 
 		];
 
-	}	function studying_course_wise_students($batch){
+	}	
+	
+	
+	function studying_course_wise_students($batch){
 		if($batch!='All'){
-			$batchPrefixByBatch = batchPrefixByBatch($batch);
+			// $batchPrefixByBatch = $this->batchPrefixByBatch($batch);
 		}
 		$result_query = Student::select('students.*')
 		->join('enrollments','students.roll_number','enrollments.roll_number')
 		->where('course_id',$this->id)
 		->where('is_student_studing','Yes');
 		if($batch!='All'){
-			$result_query->where('students.roll_number', 'LIKE', $batchPrefixByBatch . '%');
+			// $result_query->where('students.roll_number', 'LIKE', $batchPrefixByBatch . '%');
 		}
 		$result_query->distinct('roll_no');
 
@@ -326,7 +329,6 @@ class Course extends Model
 		->count();
 
 		$total_disable_students = $vi_students + $hi_students  + $ld_oh_ph_students + $others_students;
-
 		
 		return [
 			'all_students' => $all_students,
@@ -355,9 +357,9 @@ class Course extends Model
 
 	function all_course_wise_students($academic_session,$type){
 
-		$batchPrefixByBatch = batchPrefixByBatch($academic_session);
+		// $batchPrefixByBatch = $this->batchPrefixByBatch($academic_session);
 		$results = Result::where('back_status_text','REGULAR')
-		->where('roll_no', 'NOT LIKE', $batchPrefixByBatch . '%')
+		// ->where('roll_no', 'NOT LIKE', $batchPrefixByBatch . '%')
 		->where('semester_final',1)
 		->where('course_id',$this->id)
 		->where('exam_session', $academic_session)
@@ -374,7 +376,7 @@ class Course extends Model
 			->where('academic_session', $academic_session)
 			->where('exam_fees.course_id',$this->id)
 			->where('semester_number','>',1)
-			->where('roll_no', 'NOT LIKE', $batchPrefixByBatch . '%')
+			// ->where('roll_no', 'NOT LIKE', $batchPrefixByBatch . '%')
 			->where('form_type','regular')
 			// ->whereNotNull('bank_name')
 			->distinct('semester')
@@ -383,7 +385,7 @@ class Course extends Model
 			// dd($exam_roll_no_array);
 			$result_query->whereIn('students.roll_number',$exam_roll_no_array);
 		}else{
-			$result_query->where('students.roll_number', 'LIKE', $batchPrefixByBatch . '%');
+			// $result_query->where('students.roll_number', 'LIKE', $batchPrefixByBatch . '%');
 		}
 		$result_query->distinct('roll_no');
 

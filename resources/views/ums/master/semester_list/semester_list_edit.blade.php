@@ -302,26 +302,3 @@
 
     @endsection
     
-<script>
-    
-	function UpdateSemester() {
-		document.getElementById('edit_semester_form').submit();
-	}
-$(document).ready(function(){
-	$('#category_id').change(function() {
-	var university=$('#university').val();
-	var id = $('#category_id').val();
-	$("#course_id").find('option').remove().end();
-	$.ajax({
-        url: "/admin/master/stream/get-course-list",
-        data: {"_token": "{{ csrf_token() }}",university:university ,id: id},
-        type: 'POST',
-        success: function(data,textStatus, jqXHR) {
-        	$('#course_id').append(data);
-        		
-        	
-        }
-    });
-});	
-});		
-</script>

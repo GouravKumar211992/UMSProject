@@ -1,19 +1,19 @@
 <?php
-namespace App\Http\Controllers\Report;
+namespace App\Http\Controllers\ums\Report;
 
 use App\Http\Controllers\Controller;
-use App\Models\Course;
-use App\Models\Result;
-use App\Models\Campuse;
-use App\Models\ExamFee;
-use App\Models\Semester;
-use App\Models\BackPaperBulk;
-use App\Models\AcademicSession;
+use App\Models\ums\Course;
+use App\Models\ums\Result;
+use App\Models\ums\Campuse;
+use App\Models\ums\ExamFee;
+use App\Models\ums\Semester;
+use App\Models\ums\BackPaperBulk;
+use App\Models\ums\AcademicSession;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
 use App\Imports\BackPaperImport;
-use App\Models\ExamType;
+use App\Models\ums\ExamType;
 use Maatwebsite\Excel\Facades\Excel;
 
 class BackReportController extends Controller {
@@ -38,10 +38,11 @@ class BackReportController extends Controller {
         ->orderBy('course_id','ASC')
         ->orderBy('roll_no','ASC')
         // ->limit(10)
-        ->paginate(100);
+        ->paginate(10);
         $title_course_name = Course::whereIn('id',$course_id_array)->distinct('name')->pluck('name')->toArray();
         $title_course_name = implode(',',$title_course_name);
-        return view('report.back-report',compact('academic_session','examType','form_form_data','campuses','courses','title_course_name'));
+      
+        return view('ums.exam.back_paper_report',compact('academic_session','examType','form_form_data','campuses','courses','title_course_name'));
     }
 
     public function regularExamFormReport(Request $request)
@@ -67,11 +68,11 @@ class BackReportController extends Controller {
             ->whereIn('course_id',$course_id_array)
             ->orderBy('course_id','ASC')
             ->orderBy('roll_no','ASC')
-            // ->limit(10)
+            ->limit(10)
             ->get();
         }
         // dd($form_form_data);
-        return view('report.regular-exam-form-report',compact('academic_session','form_type','form_form_data','campuses','courses'));
+        return view('ums.exam.reqular_exam_form_list',compact('academic_session','form_type','form_form_data','campuses','courses'));
     }
 
     public function checkEligibilityBackStudent(Request $request){
@@ -113,7 +114,7 @@ class BackReportController extends Controller {
                 $resultData[] = $result;
             }
         }
-        return view('report.back-paper-eligibility',compact('campuses','courses','academic_sessions','resultData'));
+        return view('ums.exam.check_eligibalty',compact('campuses','courses','academic_sessions','resultData'));
     }
 
 

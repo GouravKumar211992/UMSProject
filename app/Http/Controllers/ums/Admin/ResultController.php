@@ -1,35 +1,36 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\ums\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\ExamType;
+use App\Models\ums\ExamType;
 use App\Models\ExamFee;
-use App\Models\AdmitCard;
-use App\Models\Subject;
+use App\Models\ums\AdmitCard;
+use App\Models\ums\Subject;
 use App\Models\Student;
 use App\Models\Icard;
-use App\Models\Campuse;
-use App\Models\Semester;
+use App\Models\ums\Campuse;
+use App\Models\ums\Semester;
 use App\Models\Stream;
-use App\Models\Course;
-use App\Models\Result;
-use App\Models\Category;
-use App\Models\ExternalMark;
-use App\Models\InternalMark;
-use App\Models\AcademicSession;
-use App\Models\ResultBackupScrutiny;
-use App\Models\PracticalMark;
+use App\Models\ums\Course;
+use App\Models\ums\Result;
+use App\Models\ums\Category;
+use App\Models\ums\ExternalMark;
+use App\Models\ums\InternalMark;
+use App\Models\ums\AcademicSession;
+use App\Models\ums\ResultBackupScrutiny;
+use App\Models\ums\PracticalMark;
 use Carbon\Carbon;
-use Auth;
-use DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Http\Traits\ResultsTrait;
-use App\Models\Grade;
+use App\Models\ums\Grade;
 
 class ResultController extends Controller
 {
-  use ResultsTrait;
+//  use ResultsTrait;
+
 
   public function index()
     {
@@ -138,7 +139,7 @@ class ResultController extends Controller
         $data['campuselist']=$campuse;
         $data['semesterlist']=$semester;
 
-      return view('admin.result.all-results',$data);
+      return view('ums.result.Result_list',$data);
     }
 
     public function getSingleResult(Request $request,$roll_no)

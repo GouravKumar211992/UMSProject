@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\ums\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\ChallengeAllowed;
-use App\Models\Student;
+use App\Models\ums\ChallengeAllowed;
+use App\Models\ums\Student;
 
 class ChallengeAllowedController extends Controller
 {
@@ -17,7 +17,8 @@ class ChallengeAllowedController extends Controller
     public function index()
     {
         $challenges = ChallengeAllowed::orderBy('id','DESC')->get();
-        return view('admin.challenge.show',compact('challenges'));
+        // dd($challenges);
+        return view('ums.challengeform.allowed_students_for_challenge',compact('challenges'));
     }
 
     /**
@@ -99,6 +100,6 @@ class ChallengeAllowedController extends Controller
     {
         $challenge = ChallengeAllowed::where('roll_no',$roll_no)->first();
         $challenge->delete();
-        return back()->with('success','Deleted Successfully');
+        return redirect('allowed_student_for_challenge')->with('success','Deleted Successfully');
     }
 }

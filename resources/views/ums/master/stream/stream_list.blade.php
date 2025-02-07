@@ -8,6 +8,7 @@
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
+        @include('ums.admin.notifications')
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
             <div class="content-header row">
@@ -83,9 +84,9 @@
 																	<span>Edit</span>
 																</button>
                                                                
-																<button class="dropdown-item" href="#" onclick="deleteStream('{{$item->id}}')">
+																<button class="dropdown-item" href="#" onclick="if (window.confirm('Are you sure you want to delete this data?')) { deleteStream('{{$item->id}}'); }">
 																	<i data-feather="trash-2" class="me-50"></i>
-                                                              <span onclick="window.confirm('Are you sure ? delere this data')">Delete</span>                                                                </button>
+                                                              <span >Delete</span>                                                                </button>
                                                                 </button> 
 															</div>
 														</div>
@@ -150,59 +151,59 @@
     </div>
     <!-- END: Content-->
 
-    <div class="sidenav-overlay"></div>
-    <div class="drag-target"></div>
-
-    <!-- BEGIN: Footer-->
-    <footer class="footer footer-static footer-light">
-        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">Copyright &copy; 2024 <a class="ml-25" href="#" target="_blank">Presence 360</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span></p>
-        
-        <div class="footerplogo"><img src="../../../assets/css/p-logo.png" /></div>
-    </footer>
-    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
-    <!-- END: Footer-->
 	
-	 
+    @include('ums.admin.search-model', ['searchTitle' => 'Campus List Search'])
+
     <div class="modal modal-slide-in fade filterpopuplabel" id="filter">
 		<div class="modal-dialog sidebar-sm">
-			<form class="add-new-record modal-content pt-0"> 
+			<form class="add-new-record modal-content pt-0" method="GET" action="{{ url('stream_list') }}"> 
 				<div class="modal-header mb-1">
 					<h5 class="modal-title" id="exampleModalLabel">Apply Filter</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
 				</div>
 				<div class="modal-body flex-grow-1">
 					<div class="mb-1">
-						  <label class="form-label" for="fp-range">Select Date</label>
+						  <label class="form-label" for="fp-range">Name</label>
 <!--                        <input type="text" id="fp-default" class="form-control flatpickr-basic" placeholder="YYYY-MM-DD" />-->
-						  <input type="text" id="fp-range" class="form-control flatpickr-range bg-white" placeholder="YYYY-MM-DD to YYYY-MM-DD" />
+						  <input type="text" name="name" id="fp-range" class="form-control bg-white" value="{{Request::get('name')}}" placeholder="search here" />
 					</div>
 					
 					<div class="mb-1">
-						<label class="form-label">PO No.</label>
-						<select class="form-select">
-							<option>Select</option>
+						<label class="form-label">Campus</label>
+						<select class="form-select" id="campus" name="campus">
+							<option value="">Select</option>
+                                    @foreach($campuselist as $campus)
+                                    
+                                    <option value="{{$campus->id}}" {{ (Request::get('campus') == $campus->id) ? 'selected':'' }}>{{$campus->name}}</option>
+                                    @endforeach
 						</select>
 					</div> 
                     
                     <div class="mb-1">
-						<label class="form-label">Vendor Name</label>
-						<select class="form-select select2">
-							<option>Select</option> 
+						<label class="form-label">Programme Type</label>
+						<select class="form-select select2" id="courseType" name="category_id">
+                            <option value="">Select</option>
+                            @foreach($categories as $category)
+                            
+                            <option value="{{$category->id}}" {{ (Request::get('category_id') == $category->id) ? 'selected':'' }}>{{$category->name}}</option>
+                            @endforeach
 						</select>
 					</div> 
                     
                     <div class="mb-1">
-						<label class="form-label">Status</label>
-						<select class="form-select">
-							<option>Select</option>
-							<option>Open</option>
-							<option>Close</option>
+						<label class="form-label">Name of Programme</label>
+						<select class="form-select" id="course_id" name="course_id">
+							<option value="">Select</option>
+                                    @foreach($courses as $course)
+                                    
+                                    <option value="{{$course->id}}" {{ (Request::get('course_id') == $course->id) ? 'selected':'' }}>{{$course->name}}</option>
+                                    @endforeach
 						</select>
 					</div> 
 					 
 				</div>
 				<div class="modal-footer justify-content-start">
-					<button type="button" class="btn btn-primary data-submit mr-1">Apply</button>
+					<button type="submit" class="btn btn-primary data-submit mr-1">Apply</button>
 					<button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
 				</div>
 			</form>
