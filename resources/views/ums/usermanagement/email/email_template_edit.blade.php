@@ -39,7 +39,8 @@
 			</div>
             <div class="content-body">
                  
-                
+                 
+                @include('ums.admin.notifications')
 				
 				<section id="basic-datatable">
                    
@@ -72,7 +73,7 @@
                                                 </div>
 
                                                 <div class="col-md-5">
-                                                    <input type="text" class="form-control" name="alias" value="{{$selected_user->alias}}">
+                                                    <input type="text" class="form-control" name="alias" value="{{$selected_user->alias}} "required>
                                                 </div>
 
                                             </div>
@@ -83,7 +84,7 @@
                                                 </div>
 
                                                 <div class="col-md-5">
-                                                    <input type="text" class="form-control" name="subject" value="{{$selected_user->subject}}">
+                                                    <input type="text" class="form-control" name="subject" value="{{$selected_user->subject}}" required>
                                                 </div>
 
                                             </div>

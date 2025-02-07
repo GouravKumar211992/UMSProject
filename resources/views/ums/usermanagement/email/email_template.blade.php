@@ -32,7 +32,8 @@
                 </div>
             </div>
             <div class="content-body">
-                 
+                  
+                @include('ums.admin.notifications')
 				<section id="basic-datatable">
                     <div class="row">
                         <div class="col-12">
@@ -59,7 +60,8 @@
 										<td>{{ucfirst($user->alias)}}</td>
                                         <td>{{ucfirst($user->subject)}}</td>
                                         <td>{{ucfirst($user->message)}}</td>
-                                        <td>{{ucfirst($user->status)}}</td>
+                                        <td><span class="badge rounded-pill badge-light-{{ strtolower($user->status) == 'active' ? 'success' : 'danger' }}">{{ucfirst($user->status)}}</span></td>
+
                                                     <td class="tableactionnew">  
                                                         <div class="dropdown">
                                                             <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">

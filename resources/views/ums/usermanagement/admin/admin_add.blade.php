@@ -37,7 +37,7 @@
 			</div>
             <div class="content-body">
                  
-                
+                @include('ums.admin.notifications')
 				
 				<section id="basic-datatable">
                     <div class="row">
@@ -153,11 +153,11 @@
                                                         <div class="col-md-5"> 
                                                             <div class="demo-inline-spacing">
                                                                 <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="status" name="user_status" class="form-check-input" checked="" value="Open">
+                                                                    <input type="radio" id="status" name="user_status" class="form-check-input" checked="" value="Active">
                                                                     <label class="form-check-label fw-bolder" for="user_status">Open</label>
                                                                 </div> 
                                                                 <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio4" name="user_status" class="form-check-input" value="Close">
+                                                                    <input type="radio" id="customColorRadio4" name="user_status" class="form-check-input" value="Inactive">
                                                                     <label class="form-check-label fw-bolder" for="customColorRadio4">Close</label>
                                                                 </div> 
                                                             </div>  

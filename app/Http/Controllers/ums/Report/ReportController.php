@@ -1,31 +1,31 @@
 <?php
 
-namespace App\Http\Controllers\Report;
+namespace App\Http\Controllers\ums\Report;
 
 use Illuminate\Support\Facades\Log;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Enrollment;
-use App\Models\ExamFee;
-use App\Models\Subject;
-use App\Models\Student;
-use App\Models\Phd2023EntranceTest;
-use App\Models\ExamForm;
-use App\Models\Campuse;
-use App\Models\Semester;
-use App\Models\Course;
-use App\Models\Result;
-use App\Models\Category;
-use App\Models\AcademicSession;
-use App\Models\StudentAllFromOldAgency;
-use App\Models\StudentSubject;
-use App\Models\InternalMark;
-use App\Models\Application;
+use App\Models\ums\Enrollment;
+use App\Models\ums\ExamFee;
+use App\Models\ums\Subject;
+use App\Models\ums\Student;
+use App\Models\ums\Phd2023EntranceTest;
+use App\Models\ums\ExamForm;
+use App\Models\ums\Campuse;
+use App\Models\ums\Semester;
+use App\Models\ums\Course;
+use App\Models\ums\Result;
+use App\Models\ums\Category;
+use App\Models\ums\AcademicSession;
+use App\Models\ums\StudentAllFromOldAgency;
+use App\Models\ums\StudentSubject;
+use App\Models\ums\InternalMark;
+use App\Models\ums\Application;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportUser;
 use App\Exports\EnrollmentListExport;
-use App\Models\ExamType;
+use App\Models\ums\ExamType;
 use DB;
 
 class ReportController extends Controller

@@ -150,7 +150,7 @@
                                             @foreach($form_form_data as $index=>$examFee)
                                             
                                                 @foreach($examFee->regularPaperList() as $regularPaper)
-                                                {{dd($regularPaper)}}
+                                                {{-- {{dd($regularPaper)}} --}}
                                                     <tr>
                                                         
                                                         <td>{{++$index}}</td>

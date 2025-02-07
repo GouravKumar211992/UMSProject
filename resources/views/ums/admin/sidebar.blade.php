@@ -171,7 +171,7 @@
         <li><a class="d-flex align-items-center" href="{{ url('/Exam-Schedule') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Exam Schedule</span></a></li>
         <li><a class="d-flex align-items-center" href="{{ url('/Exam-paper-approvel-system') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Exam Papers Approval System</span></a></li>
         <li><a class="d-flex align-items-center" href="{{ url('/check-eligibility') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Back / Final / Special Back Paper Eligibility</span></a></li>
-        <li><a class="d-flex align-items-center" href="{{ url('/mbbs-exam-report') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">MBBS / B.Sc.(Nursing) Exam Form Report</span></a></li>
+        <li><a class="d-flex align-items-center" href="{{ url('/mbbs-bscnursing-exam-report') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">MBBS / B.Sc.(Nursing) Exam Form Report</span></a></li>
     </ul>
 </li>
 

@@ -28,6 +28,8 @@
             <div class="content-header row">
             </div>
             <div class="content-body">
+                 
+                @include('ums.admin.notifications')
                 <section class="app-user-view-billing">
                     <div class="row">
                         <!-- User Sidebar -->

@@ -81,7 +81,7 @@ class Icard extends Model implements HasMedia
             return $this->getMedia('fee_recipt')->first()->getFullUrl();
         }
     }
-	public function registerMediaCollections()
+	public function registerMediaCollections():void	
     {
         $this->addMediaCollection('profile_photo')
             ->singleFile();

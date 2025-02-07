@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Student;
+namespace App\Http\Controllers\ums\Student;
 
 use Session;
 
@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\User;
-use App\Models\MailBox;
-use App\Models\Address;
-use App\Models\Country;
-use App\Models\Currency;
-use App\Models\SocialMedia;
-use App\Models\ServerWelcomeEmail;
+use App\Models\ums\MailBox;
+use App\Models\ums\Address;
+use App\Models\ums\Country;
+use App\Models\ums\Currency;
+use App\Models\ums\SocialMedia;
+use App\Models\ums\ServerWelcomeEmail;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\Guard;
@@ -22,7 +22,7 @@ use Validator;
 use App\Services\Mailers\Mailer;
 use App\Helpers\ConstantHelper;
 use App\Helpers\GeneralHelper;
-use App\Models\Student;
+use App\Models\ums\Student;
 use Mail;
 use Hash;
 use App\Jobs\TrackingEmailFrequency;
@@ -128,7 +128,7 @@ class LoginController extends Controller
             $user->exam_portal = 0;
             $user->save();
 			Auth::guard('student')->login($user);
-			return redirect('student');
+			return redirect('stu-dashboard');
 		}else{
 			return back()->with('error','Invalid ID');
 		}

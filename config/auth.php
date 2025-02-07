@@ -44,7 +44,32 @@ return [
             'driver' => 'session',
             'provider' => 'employees',
         ],
-    ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+
+        'student' => [
+            'driver' => 'session',
+            'provider' => 'students',
+        ],
+        'grievance' => [
+            'driver' => 'session',
+            'provider' => 'grievances',
+        ],
+
+        'faculty' => [
+            'driver' => 'session',
+            'provider' => 'facultys',
+        ],
+        'affiliate' => [
+        'driver' => 'session',
+        'provider' => 'affiliate',
+            ],
+            
+        ],
+
+    
 
     /*
     |--------------------------------------------------------------------------
@@ -72,6 +97,30 @@ return [
         'employees' => [
             'driver' => 'eloquent',
             'model' => App\Models\Employee::class,
+        ],
+        
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\ums\Admin::class,
+        ],
+
+        'students' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\ums\Student::class,
+        ],
+        'grievances' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\ums\Student::class,
+        ],
+
+        'facultys' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\ums\Faculty::class,
+        ],
+
+         'affiliate' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\ums\AffiliateAdmin::class,
         ],
 
         // 'users' => [
@@ -106,7 +155,37 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+        
+        'admins' => [
+            'provider' => 'admins',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+
+        'students' => [
+            'provider' => 'students',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+        'grievances' => [
+            'provider' => 'grievances',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+
+        'facultys' => [
+            'provider' => 'facultys',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+
+        'affiliate' => [
+            'provider' => 'affiliate',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
     ],
+    
 
     /*
     |--------------------------------------------------------------------------

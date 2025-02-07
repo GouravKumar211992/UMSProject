@@ -31,7 +31,8 @@
                 </div>
             </div>
             <div class="content-body">
-                 
+                  
+                @include('ums.admin.notifications')
 				<section id="basic-datatable">
                     <div class="row">
                         <div class="col-12">

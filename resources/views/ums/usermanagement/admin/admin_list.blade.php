@@ -40,7 +40,8 @@
                 
             </div>
             <div class="content-body">
-                 
+                  
+                @include('ums.admin.notifications')
 				<section id="basic-datatable">
                     <div class="row">
                         <div class="col-12">
@@ -79,7 +80,9 @@
                                                         {{date('M dS, Y', strtotime($user->date_of_birth))}} @endif</td>
                                                     <td>{{$user->role}}</td>
                                                     <td>{{date('M dS, Y', strtotime($user->created_at))}}</td>
-                                                    <td><div class="admin-status progStat"><span></span>{{ucfirst($user->status)}}</div></td>
+                                                    {{-- <td><div class="admin-status  badge {{ strtolower($user->status) == 'active' ? 'badge-success' : 'badge-danger' }}">{{ucfirst($user->status)}}</div></td>
+                                                     --}}
+                                                     <td><span class="badge rounded-pill badge-light-{{ strtolower($user->status) == 'active' ? 'success' : 'danger' }}">{{ucfirst($user->status)}}</span></td>
                                                     <td class="tableactionnew">  
                                                         <div class="dropdown">
                                                             <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">

@@ -71,8 +71,9 @@ class ExamScheduleController extends AdminController
 
 
     public function schedule_bulk_uploading(Request $request){
+      // dd($request->all());
     	$request->validate([
-        'impport_file' => 'required',
+        'impport_file' => 'required|file|mimes:xlsx,xls,csv|max:10240',
     ]);
     if($request->hasFile('impport_file')){
       Excel::import(new ExamScheduleImport, $request->file('impport_file'));
@@ -96,7 +97,7 @@ class ExamScheduleController extends AdminController
         $data['semester_id'] = $request->semester;
     	  $data['exams'] = ExamSchedule::where(['courses_id'=>$request->course,'semester_id'=>$request->semester,'year'=>$request->session,'schedule_count'=>$request->schedule_count])->get();
       }
-      dd($data);
+      // dd($data);
      return view('ums.exam.view_time_tables',$data);
     }
     public function get_Semester(Request $request)
@@ -112,7 +113,7 @@ class ExamScheduleController extends AdminController
 		return $html;
 	}
   public function schedule_update(Request $request){
-    //dd($request->all());
+    // dd($request->all());
         $Schedule = ExamSchedule::find($request->id);
         if($Schedule){
           $Schedule->date = $request->date;

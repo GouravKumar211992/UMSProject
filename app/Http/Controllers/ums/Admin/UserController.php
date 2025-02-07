@@ -265,7 +265,7 @@ public function editEmailTemplates(Request $request, $slug)
         ]);
         // dd($request->all());
         $update_category = Admin::where('id', $request->user_id)->update(['name' => $request->name,'mobile' => $request->mobile, 'role' => $request->role,'gender' => $request->gender,'marital_status' => $request->marital,'date_of_birth' => $request->user_dob, 'status' => $request->user_status, 'updated_by' => 1]);
-        return redirect()->route('usermanagement.admin');
+        return redirect()->route('usermanagement.admin')->with('success',' Admin Edit successfully ');
         
     }
 

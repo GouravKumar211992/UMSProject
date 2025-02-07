@@ -88,8 +88,10 @@
                     </div>
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
+        <form method="get" id="form_data" action="{{url('mbbs-bscnursing-exam-report')}}">
+
                     <div class="form-group breadcrumb-right">
-                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="clipboard"></i> GET
+                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0" type="submit"><i data-feather="clipboard"></i> GET
                             REPORT</button>
                         <button class="btn btn-warning btn-sm mb-50 mb-sm-0" onclick="window.location.reload();"><i
                                 data-feather="refresh-cw"></i>
@@ -110,12 +112,13 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Select Back Type---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select data-live-search="" name="form_type" id="" style="border-color: #c0c0c0;" class="form-control">
+                                    <option value="">--Select Back Type--</option>
+                                    @foreach($form_type as $form_type)
+                                    @if($form_type->form_type == 'regular' || $form_type->form_type == 'compartment')
+                                        <option value="{{$form_type->form_type}}" @if($form_type->form_type==Request()->form_type) selected @endif >{{$form_type->form_type}}</option>
+                                        @endif
+                                        @endforeach
                                 </select>
                             </div>
                         </div>
@@ -131,13 +134,12 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Choose Acedemic---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
-                                </select>
+                                <select data-live-search="true" name="academic_session" id="" style="border-color: #c0c0c0;" class="form-control js-example-basic-single " >    
+                                    <option value="">---Choose Acedmic---</option>
+                                    @foreach($academic_session as $academic_session)
+                                    <option value="{{$academic_session->academic_session}}" @if($academic_session->academic_session==Request()->academic_session) selected @endif >{{$academic_session->academic_session}}</option>
+                                    @endforeach
+                                    </select>
                             </div>
                         </div>
 
@@ -161,6 +163,10 @@
                                         class="datatables-basic table myrequesttablecbox tableistlastcolumnfixed newerptabledesignlisthome">
                                         <thead>
                                             <tr>
+                                                <th colspan="15"><span>Form Type:-  {{Request()->form_type}} </span><br>
+                                                <span>Academic Session:-  {{Request()->academic_session}}</span></th>
+                                           </tr>
+                                            <tr>
 
                                                 <th>S.N</th>
                                                 <th>CAMPUS</th>
@@ -179,52 +185,54 @@
                                             </tr>
 
                                         </thead>
-                                        <tbody>
-
-
+                                        <tbody>@php $count =0 @endphp
+                                            @foreach($get_allowed_student_data as $data)
+                                            @php $examFee = $data->getExamData(Request()->form_type,Request()->academic_session); @endphp
+                                            @if($examFee)
+                                            @php $subjectdata = (explode(" ",$examFee->subject));@endphp
+                                            @foreach($subjectdata as $subject_code)
+    
                                             <tr>
-                                                <td>1</td>
-                                                <td>Main Campus</td>
-                                                <td>Bachelor of Science</td>
-                                                <td>John Doe</td>
-                                                <td>123456</td>
-                                                <td>1st Semester</td>
-                                                <td>2024</td>
-                                                <td>Regular</td>
-                                                <td>CS101</td>
-                                                <td>State Bank of India</td>
-                                                <td>SBI0001234</td>
-                                                <td>987654321</td>
-                                                <td>01/01/2024</td>
-                                                <td>Paid</td>
-                                                {{-- <td class="tableactionnew">
-                                                    <div class="dropdown">
-                                                        <button type="button"
-                                                            class="btn btn-sm dropdown-toggle hide-arrow py-0"
-                                                            data-bs-toggle="dropdown">
-                                                            <i data-feather="more-vertical"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="edit" class="me-50"></i>
-                                                                <span>View Detail</span>
-                                                            </a>
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="edit-3" class="me-50"></i>
-                                                                <span>Edit</span>
-                                                            </a>
-
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="trash-2" class="me-50"></i>
-                                                                <span>Delete</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </td> --}}
+                                                <td>{{$count+1}}</td>
+                                                <td>{{$examFee->course->campuse->name}}</td>
+                                                <td>{{$examFee->course->name}}</td>
+                                                <td>{{$data->first_name}}</td>
+                                                <td>{{$data->roll_no}}</td>
+                                                <td>{{$examFee->semesters->name}}</td>
+                                                <td>{{$examFee->academic_session}}</td>
+                                                <td>{{$examFee->form_type}}</td>
+                                                <td>{{$subject_code}}</td>
+                                                <td>{{$examFee->bank_name}}</td>
+                                                <td>{{$examFee->bank_IFSC_code}}</td>
+                                                <td>{{$examFee->receipt_number}}</td>
+                                                <td>{{$examFee->receipt_date}}</td>
+                                                @if($examFee->bank_name)
+                                                <td>{{'SUCCESS'}}</td>
+                                                @else
+                                                <td>{{'NOT PAID'}}</td>
+                                                @endif
                                             </tr>
-
-
-                                        </tbody>
+                                        @endforeach
+                                            @else
+                                            <tr>
+                                                <td>-</td>
+                                                <td>{{$data->first_name}}</td>
+                                                <td>{{$data->roll_no}}</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                            </tr>
+                                            @endif
+                                        @endforeach
+                                    </tbody>
 
 
                                     </table>

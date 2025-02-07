@@ -82,8 +82,8 @@
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
 
-                        <button class="btn  btn-sm mb-50 mb-sm-0 bg-primary text-white" data-bs-toggle="modal" data-bs-target="#searchModal"
-                            > <i data-feather="search"></i>
+                        <button class="btn  btn-sm mb-50 mb-sm-0 bg-primary text-white" data-bs-toggle="modal"
+                            data-bs-target="#searchModal"> <i data-feather="search"></i>
                             Search</button>
                         <button class="btn  btn-sm mb-50 mb-sm-0"
                             onclick="window.location.reload(); "style="background:orange; color:white;"><i
@@ -97,7 +97,7 @@
             <div class="content-body">
 
 
-
+@include('ums.admin.notifications')
                 <section id="basic-datatable">
                     <div class="row">
                         <div class="col-12">
@@ -106,7 +106,7 @@
 
                                 <div class="table-responsive">
                                     <table
-                                        class="datatables-basic table myrequesttablecbox tableistlastcolumnfixed newerptabledesignlisthome">
+                                        class="datatables-basic table">
                                         <thead>
                                             <tr>
                                                 <th>#Sr. No.</th>
@@ -136,59 +136,77 @@
                                                         <td>{{ $fee->student->first_Name }}</td>
                                                         <td>{{ $fee->course ? $fee->course->name : '-' }}</td>
                                                         <td>{{ $fee->academic_session }}</td>
-                                                       <td>
-                                            @if($fee->form_type=='regular')
-                                            {{$fee->semesters?$fee->semesters->name:'-'}}</td>
-                                            @else
-                                            All Semesters
-                                            @endif
-                                        </td>
-                                                        <td>{{ $fee->subject }}</td>
                                                         <td>
-                                                            {{ date('d-m-Y', strtotime($fee->created_at)) }}
-                                                            @if ($fee->deleted_at != null)
-                                                                <br>Deleted on
-                                                                <br>{{ date('d-m-Y', strtotime($fee->deleted_at)) }}
-                                                            @endif
+                                                            @if ($fee->form_type == 'regular')
+                                                                {{ $fee->semesters ? $fee->semesters->name : '-' }}
                                                         </td>
-                                                        <td>{{ $fee->receipt_number }}</td>
-                                                        <td>{{ $fee->fee_amount }}</td>
-                                                        <td>{{ $fee->form_type }}</td>
+                                                    @else
+                                                        All Semesters
+                                                @endif
+                                                </td>
+                                                <td>{{ $fee->subject }}</td>
+                                                <td>
+                                                    {{ date('d-m-Y', strtotime($fee->created_at)) }}
+                                                    @if ($fee->deleted_at != null)
+                                                        <br>Deleted on
+                                                        <br>{{ date('d-m-Y', strtotime($fee->deleted_at)) }}
+                                                    @endif
+                                                </td>
+                                                <td>{{ $fee->receipt_number }}</td>
+                                                <td>{{ $fee->fee_amount }}</td>
+                                                <td>{{ $fee->form_type }}</td>
 
-                                                        <!-- Action column (Edit, View, Delete) -->
-                                                        @if ($fee->deleted_at == null)
-                                                            <td class="tableactionnew" style="z-index:1">
-                                                                <div class="dropdown" style="z-index:6">
-                                                                    <button type="button"
-                                                                        class="btn btn-sm dropdown-toggle hide-arrow py-0"
-                                                                        data-bs-toggle="dropdown">
-                                                                        <i data-feather="more-vertical"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                                        <a class="dropdown-item" href="#">
-                                                                            <i data-feather="edit" class="me-50"></i>
-                                                                            <span>View Detail</span>
-                                                                        </a>
-                                                                        <a class="dropdown-item" href="#">
-                                                                            <i data-feather="edit-3" class="me-50"></i>
-                                                                            <span>Edit</span>
-                                                                        </a>
-                                                                        <a class="dropdown-item" href="#">
-                                                                            <i data-feather="trash-2" class="me-50"></i>
-                                                                            <span>Delete</span>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        @else
-                                                            <td class="text-danger">Disabled Already</td>
-                                                        @endif
-                                                    </tr>
-                                                @endforeach
-                                            @else
-                                                <tr>
-                                                    <td colspan="13" class="text-center">No fees records found</td>
+                                                <!-- Action column (Edit, View, Delete) -->
+                                                @if ($fee->deleted_at == null)
+                                                    <td class="" >
+                                                        <div class="dropdown" >
+                                                            <button type="button"
+                                                                class="btn btn-sm dropdown-toggle hide-arrow py-0"
+                                                                data-bs-toggle="dropdown">
+                                                                <i data-feather="more-vertical"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                @if ($fee->bank_name)
+                                                                    <a href="{{ route('update-student-subjects', [$fee->id]) }}"
+                                                                        class="dropdown-item"><i
+                                                                            class="data-feather"></i>Update Student
+                                                                        Subjects</a>
+                                                                    <br>
+                                                                @endif
+                                                                @if ($fee->admitcard)
+                                                                    <a href="{{ url('admitcard-download') }}?id={{ $fee->id }}"
+                                                                        target="_blank" class="dropdown-item"><i data-feather="eye" class="me-50"></i>View Admit Card</a>
+                                                                @endif
+                                                                @if ($fee->form_type == 'regular')
+                                                                    <a href="{{ url('/master/exam-form/edit') }}/{{ $fee->id }}"
+                                                                        class="dropdown-item"><i data-feather="edit" class="me-50"></i>Edit</a>
+                                                                    <a href="{{ url('/student-login-redirect') }}?roll_no={{ $fee->roll_no }}&exam_id={{ $fee->id }}"
+                                                                        class="dropdown-item" target="_blank"><i data-feather="eye" class="me-50"></i>View</a>
+                                                                @else
+                                                                    <a href="{{ url('/master/exam-edit-back') }}/{{ $fee->id }}"
+                                                                        class="dropdown-item"><i data-feather="edit" class="me-50"></i>Edit</a>
+                                                                @endif
+                                                                @if(!$fee->admitcard)
+                                                                <br/>
+                                                                <a onclick="return confirm('Are you sure?');" href="{{route('delete-regular-exam-form',$fee->id)}}" class="btn btn-info"><i class="iconly-boldCheck"></i> Delete Exam Form &nbsp;</a>
+                                                                <br/>
+                                                                @if($fee->bank_name && $fee->form_type=='regular')
+                                                                <br/>
+                                                                <a href="{{route('delete_exam_form',$fee->id)}}" onclick="return confirm('Are you sure?');" class="dropdown-item"> <i data-feather="trash-2" class="me-50"></i>Payment Reset</a>
+                                                                @endif
+                                                            @endif
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                @else
+                                                    <td >Disabled Already</td>
+                                                @endif
                                                 </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="13" class="text-center">No fees records found</td>
+                                            </tr>
                                             @endif
                                         </tbody>
 
@@ -206,31 +224,36 @@
                     </div>
                     {{-- search modal  --}}
 
-                    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <form class="needs-validation" autocomplete="nope" novalidate>
-                          <div class="modal-content">
-                              <div class="modal-header">
-                                  <h5 class="modal-title" id="searchModalLabel">Search</h5>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                  <!-- Search field in a single column -->
-                                  <div class="mb-3">
-                                      <label for="searchInput" class="form-label">Search</label>
-                                <input type="text" class="form-control searchInput" id="input_keyword" name="search" autocomplete="nope" placeholder="Type here..." maxlength="26">
+                    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <form class="needs-validation" autocomplete="nope" novalidate>
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="searchModalLabel">Search</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Search field in a single column -->
+                                        <div class="mb-3">
+                                            <label for="searchInput" class="form-label">Search</label>
+                                            <input type="text" class="form-control searchInput" id="input_keyword"
+                                                name="search" autocomplete="nope" placeholder="Type here..."
+                                                maxlength="26">
 
-                                  </div>
-                              </div>
-                              <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                  <button type="submit" class="btn btn-primary" id="searchBtn">Search</button>
-                              </div>
-                          </div>
-                        </form>
-                      </div>
-                  </div>
-              
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary" id="searchBtn">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
 
 
 
@@ -247,7 +270,8 @@
                                     <div class="mb-1">
                                         <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
                                         <input type="text" class="form-control dt-full-name"
-                                            id="basic-icon-default-fullname" placeholder="John Doe" aria-label="John Doe" />
+                                            id="basic-icon-default-fullname" placeholder="John Doe"
+                                            aria-label="John Doe" />
                                     </div>
                                     <div class="mb-1">
                                         <label class="form-label" for="basic-icon-default-post">Post</label>

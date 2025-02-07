@@ -130,6 +130,12 @@ use App\Http\Controllers\ums\Report\BackReportController;
 use App\Http\Controllers\ums\Admin\Master\ExamScheduleController;
 use App\Http\Controllers\ums\Admin\BackPaperController;
 use App\Http\Controllers\ums\Admin\ApprovalSystemController;
+use App\Http\Controllers\ums\Report\ReportController;
+use App\Http\Controllers\ums\Student\AdmitCardController;
+use App\Http\Controllers\ums\Student\ExaminationController;
+use App\Http\Controllers\ums\Student\LoginController;
+use App\Http\Controllers\ums\Student\DashboardController;
+use App\Http\Controllers\ums\Student\IcardsController;
 
 
 
@@ -150,6 +156,19 @@ use App\Http\Controllers\ums\Admin\ApprovalSystemController;
 
 
 
+
+
+
+// Route::get('stu-dashboard',function(){
+//     return view('ums.student.student_dashboard');
+// });
+Route::get('view-icard/{id}', [IcardsController::class,'singleIcard'])->name('view-icard');
+		Route::get('icard-form', [IcardsController::class,'icardForm'])->name('icard-form');
+		Route::post('icard-form', [IcardsController::class,'icardForm_Submit'])->name('icard-form-submit');
+
+
+Route::get('/stu-profile', [DashboardController::class,'profile'])->name('student-profile');
+Route::get('/stu-dashboard', [DashboardController::class,'index'])->name('student-dashboard');
 Route::get('/dashboard', function () {
     return view('ums.dashboard');
 });
@@ -262,6 +281,7 @@ Route::get('/user/edit-user/{slug}', [UserController::class,'editUsers']);
 Route::get('/users', [UserController::class,'index'])->name('get-user');
 Route::get('user-dashboard', [UserHomeController::class, 'userDashboardAndProfile'])->name('user.dashboard');
 
+Route::get('/user-password-change/{id}', [UserController::class,'userPasswordChange'])->name('user-password-change');
 
 Route::get('/user-application-form', function () {
     return view('ums.usermanagement.user.application_form');
@@ -628,24 +648,37 @@ Route::get('/internal_mapping_add', function () {
 //     return view('ums.exam.back_paper_report');
 // });
 Route::get('back-paper-report',[BackReportController::class,'index'])->name('back-report');
-
 Route::get('/regular_mark_filling', function () {
     return view('ums.exam.regular_mark_filling');
 });
 Route::get('regular-mark-filling',[RegularMarkFillingController::class,'regularMarkFilling'])->name('regularMarkFilling');
-
-// Route::get('/Exam_list', function () {
-//     return view('ums.exam.Exam_list');
-// });
 Route::get('/Exam-list',[MasterExamFeeAllController::class,'index'])->name('get-examfees');
-Route::get('update_student_subjects/{id}',[ExaminationController::class,'update_student_subjects'])->name('update_student_subjects');;
+Route::get('/master/examfee/delete/{slug}', [MasterExamFeeAllController::class,'resetPayment'])->name('delete_exam_form');
+Route::get('update-student-subjects/{id}',[ExaminationController::class,'update_student_subjects'])->name('update-student-subjects');
+Route::get('admitcard-download/{id}', [AdmitCardController::class,'adminCardView'])->name('download-admit-card');
+Route::get('/master/examfee/delete-regular-exam-form/{slug}', [MasterExamFeeAllController::class,'deleteRegularExamForm'])->name('delete-regular-exam-form');
+Route::get('/master/examfee/view/{slug}', [MasterExamFeeAllController::class,'view_exam_form'])->name('view_exam_form');
+Route::get('admitcard-download', [AdmitCardController::class,'index'])->name('download-admit-card');
+Route::get('/master/exam-edit-back/{slug}', [MasterExamFeeAllController::class,'edit_exam_back_form'])->name('edit-back-exam-form');
+Route::get('/master/exam-edit-back-single/{slug}', [MasterExamFeeAllController::class,'edit_exam_back_form_single'])->name('edit_exam_back_form_single');
+Route::post('/master/exam-edit-back/{slug}', [MasterExamFeeAllController::class,'edit_exam_back_form_post']);
+Route::put('/master/exam-edit-back-update/{slug}', [MasterExamFeeAllController::class,'edit_exam_back_form_update']);
+Route::get('/master/examfee',[MasterExamFeeAllController::class,'index'])->name('get-examfees');
 
-// Route::get('/Exam_list',[ExamFeeController::class,'index']);
+Route::get('/master/exam-form/edit/{slug}', [MasterExamFeeAllController::class,'edit_exam_form'])->name('edit-exam-form');
+	Route::post('/master/exam-form/edit/{slug}', [MasterExamFeeAllController::class,'edit_exam_form_post']);
+    Route::get('student-login-redirect', [StudentController::class,'studentLoginRedirect']);
+		Route::get('exam-form',[ExaminationController::class,'index'])->name('exam-form');
+        Route::get('exam/pay-success', [ExaminationController::class,'paymentSlip']);
+        Route::get('exam/pay-success', [ExaminationController::class,'paymentSlip']);
+        
 
-// Route::get('/check_eligibalty', function () {
-//     return view('ums.exam.check_eligibalty');
-// });
-Route::get('check-eligibility',[BackReportController::class,'checkEligibilityBackStudent'])->name('check-eligibility');
+        Route::get('secret-login/{id}', [LoginController::class,'secretLogin'])->name('student-secret-login');
+		Route::get('show-exam-form/{slug}',[ExaminationController::class,'showRegularExamForm']);
+
+    Route::post('exam-Form',[ExaminationController::class,'examinationForm'])->name('examination-form-submit');
+    Route::get('exam-form-view/{slug}',[ExaminationController::class,'StudentExamformview']);
+    Route::get('check-eligibility',[BackReportController::class,'checkEligibilityBackStudent'])->name('check-eligibility');
 
 Route::get('/Exam_paper_approvel_system', function () {
     return view('ums.exam.Exam_paper_approvel_system');
@@ -656,38 +689,16 @@ Route::post('paper-allow-create',[ApprovalSystemController::class,'store'])->nam
 Route::get('exam-approve-delete/{roll_no}',[ApprovalSystemController::class,'destroy']);
 Route::get('bulk-back-paper', [BackPaperController::class,'bulkBackPaper']);
 Route::post('bulk-back-paper', [BackPaperController::class,'bulkBackPaperSave']);
-
-// Route::get('/Exam-Schedule', function () {
-//     return view('ums.exam.Exam_Schedule');
-// });
 Route::get('Exam-Schedule',[ExamScheduleController::class,'schedule_show'])->name('exam-schedule');
 Route::post('Exam-Schedule',[ExamScheduleController::class,'schedule_post'])->name('exam-schedule');
 // Route::post('exam-schedule-bulk-uploading','Master\ExamScheduleController@schedule_bulk_uploading')->name('exam-schedule-bulk-uploading');
 Route::get('view-time-tables',[ExamScheduleController::class,'timetable'])->name('examtime-table');
 Route ::post('get-semester',[ExamScheduleController::class,'get_Semester'])->name('semester');
-// Route::post('/schedule-update', 'Master\ExamScheduleController@schedule_update')->name('schedule-update');
+Route::post('/schedule-update', [ExamScheduleController::class,'schedule_update'])->name('schedule-update');
+Route::post('exam-schedule-bulk-uploading',[ExamScheduleController::class,'schedule_bulk_uploading'])->name('exam-schedule-bulk-uploading');
 
-
-
-// Route::get('/view-time-tables', function () {
-//     return view('ums.exam.view_time_tables');
-// });
-Route::get('/mbbs_exam_report', function () {
-    return view('ums.exam.mbbs_exam_report');
-});
-
-Route::get('/mbbs_exam_report', function () {
-    return view('ums.exam.mbbs_exam_report');
-});
-// Route::get('/reqular_exam_form_list', function () {
-//     return view('ums.exam.reqular_exam_form_list');
-// });
+Route::get('mbbs-bscnursing-exam-report',[ReportController::class,'mbbsBscNursingReport'])->name('mbbs-bscnursing-exam-report');
 Route::get('/reqular-exam-form-list',[BackReportController::class,'regularExamFormReport']);
-
-// Route::get('/bulk_back_paper', function () {
-//     return view('ums.exam.bulk_back_paper');
-// });
-
 //challengform
 Route::get('/allowed_student_for_challenge', function () {
     return view('ums.challengeform.allowed_students_for_challenge');
@@ -769,13 +780,13 @@ Route::get('grievance',[GrievanceController::class,'complaints']);
 // Route::get('/grievance_complaint_list', function () {
     //     return view('ums.grievance.grievance_complaint_list');
     // });
-    Route::get('grievance-complaint-list',[GrievanceController::class,'complaintList']);
+    Route::get('grievance-complaint-list/',[GrievanceController::class,'complaintList']);
     
     
     // Route::get('/grievance_complaint_details', function () {
         //     return view('ums.grievance.grievance_complaint_details');
         // });
-        Route::get('grievance-complaint-details',[GrievanceController::class,'complaintDetails']);
+            Route::get('grievance-complaint-details',[GrievanceController::class,'complaintDetails']);
 
 
 

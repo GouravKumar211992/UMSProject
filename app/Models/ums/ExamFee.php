@@ -86,16 +86,32 @@ class ExamFee extends Model implements HasMedia
     public function studentSubjects() {
 		return $this->hasMany(StudentSubject::class,'student_semester_fee_id');
 	}
+    // public function regularPaperList() {
+
+	// 	$data = StudentSubject::where('roll_number',$this->roll_no)
+    //     ->where('session',$this->academic_session)
+    //     ->where('course_id',$this->course_id)
+    //     ->where('semester_id',$this->semester)
+    //     ->where('type',$this->form_type)
+    //     ->get();
+    //     // dd($data);
+    //     return $data;
+	// }
     public function regularPaperList() {
-		$data = StudentSubject::where('roll_number',$this->roll_no)
-        ->where('session',$this->academic_session)
-        ->where('course_id',$this->course_id)
-        ->where('semester_id',$this->semester)
-        ->where('type',$this->form_type)
-        ->get();
-        dd($data);
+        // Check if variables are being set correctly
+        // dd($this->roll_no, $this->academic_session, $this->course_id, $this->semester, $this->form_type);
+    
+        $data = StudentSubject::where('roll_number', $this->roll_no)
+            ->where('session', $this->academic_session)
+            ->where('course_id', $this->course_id)
+            ->where('semester_id', $this->semester)
+            ->where('type', $this->form_type)
+            ->get();
+    
+        // dd($data);  // This will output the results of the query
         return $data;
-	}
+    }
+    
 
     public function formdata() {
 		return $this->hasMany(ExamForm::class,'exam_fee_id','id');
@@ -192,8 +208,28 @@ class ExamFee extends Model implements HasMedia
         return $subjects;
     }
 	public function getAdmitCardSubjects()
-    {
-		$batch = batchFunctionReturn($this->roll_no);
+    {  $batch='';
+		$student = Student::where('roll_number',$this->roll_no)->first();
+    $match_rollno = substr($student->roll_number,0,2);
+    if($match_rollno == '16'){
+      $batch= '2016-2017';
+    }elseif($match_rollno == 17){
+        $batch= '2017-2018';
+    }elseif($match_rollno == 18){
+        $batch= '2018-2019';
+    }elseif($match_rollno == 19){
+        $batch= '2019-2020';
+    }elseif($match_rollno == 20){
+        $batch= '2020-2021';
+    }elseif($match_rollno == 21){
+      $batch='2021-2022';
+    }elseif($match_rollno == 22){
+        $batch= '2022-2023';
+    }elseif($match_rollno == 23){
+        $batch= '2023-2024';
+    }elseif($match_rollno == 24){
+        $batch= '2024-2025';
+    }
         $enrollment = Enrollment::where('roll_number',$this->roll_no)->first();
         if(!$enrollment){
             return false;

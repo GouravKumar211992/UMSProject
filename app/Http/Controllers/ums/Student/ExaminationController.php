@@ -1,45 +1,50 @@
 <?php
 
-namespace App\Http\Controllers\Student;
+namespace App\Http\Controllers\ums\Student;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
-use Auth;
-use Validator;
+
+
+
 use App\Scrutiny;
 use App\Challenge;
 use Carbon\Carbon;
-use App\Models\Fee;
-use App\Models\Religion;
-use App\Models\Course;
-use App\Models\Result;
-use App\Models\Stream;
-use App\Models\ExamFee;
-use App\Models\Student;
-use App\Models\Subject;
-use App\Models\Campuse;
-use App\Models\Semester;
-use App\Models\CourseFee;
-use App\Models\Enrollment;
-use App\Models\Application;
-use App\Models\ExamSchedule;
-use App\Models\ExamForm;
-use App\Models\ExamPayment;
-use App\Models\ScribeDetail;
-use App\Models\DisabilityCategory;
-use App\Models\BackPaper;
+use App\Models\ums\Fee;
+use App\Models\ums\Religion;
+use App\Models\ums\Course;
+use App\Models\ums\Result;
+use App\Models\ums\Stream;
+use App\Models\ums\ExamFee;
+use App\Models\ums\Student;
+use App\Models\ums\Subject;
+use App\Models\ums\Campuse;
+use App\Models\ums\Semester;
+use App\Models\ums\CourseFee;
+use App\Models\ums\Enrollment;
+use App\Models\ums\Application;
+use App\Models\ums\ExamSchedule;
+use App\Models\ums\ExamForm;
+use App\Models\ums\ExamPayment;
+use App\Models\ums\ScribeDetail;
+use App\Models\ums\DisabilityCategory;
+use App\Models\ums\BackPaper;
 use Illuminate\Http\Request;
-use App\Models\AcademicSession;
-use App\Models\CastCategory;
+use App\Models\ums\AcademicSession;
+use App\Models\ums\CastCategory;
 use App\Http\Controllers\Controller;
 use App\Models\StudentAllFromOldAgency;
-use App\Models\ChallengeAllowed;
-use App\Models\ApprovalSystem;
+use App\Models\ums\ChallengeAllowed;
+use App\Models\ums\ApprovalSystem;
 use Illuminate\Support\Facades\Artisan;
 use App\Models\ExamSetting;
-use DB;
-use App\Http\Traits\PaymentTraitHDFC;
-use App\Http\Traits\PaymentTrait;
+use Illuminate\Support\Facades\DB;
+
+
+use App\Traits\PaymentTraitHDFC;
+use App\Traits\PaymentTrait;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
-use App\Http\Traits\ResultsTrait;
+use App\Traits\ResultsTrait;
 
 class ExaminationController extends Controller
 {
@@ -126,7 +131,7 @@ class ExaminationController extends Controller
 		}
 		$sessions = AcademicSession::orderBy('academic_session','DESC')->get();
 		
-		return view('student.exam.examination-form',[
+		return view('ums.student.Exam_form',[
       'page_title' => "Exam Form",
       'sub_title' => "Exam Form",
 			'student'=>$student,
@@ -165,7 +170,7 @@ class ExaminationController extends Controller
 			->where('academic_session',$request->accademic_session)
 			->first();
 			if($examData){
-				return redirect('student/exam-form-view/'.$examData->id)->with('message','Form successfully submitted. please click on fill fee button for payment');
+				return redirect('exam-form-view/'.$examData->id)->with('message','Form successfully submitted. please click on fill fee button for payment');
 			}
 			if($this->paperIsOpen($request->all(),0)==false){
 				return back()->with('error',$this->paperIsOpen($request->all(),1));
@@ -395,9 +400,10 @@ class ExaminationController extends Controller
 			// $order_id = $this->createPaymentOrderOnly($slug,$exam_fee_amount);
 			$this->insertPayment($slug,$order_id,$exam_fee_amount);
 		}
-		return view('student.exam.student-exam.examination-form-view',
+		return view('ums.exam.examination-form-view',
 			[
 				'student'=>$student,
+				
 				'form_data'=>$form_data,
 				'subjectList'=>$subjectList,
 				'enrollment'=>$enrollment,
@@ -2207,13 +2213,13 @@ public function scrutinyformviewpost( $slug,Request $request)
         $download = $request->download;
         view()->share(compact('paymentDetails_array','download','examFees'));
         if($request->has('download')){
-            $htmlfile = view('student.exam.success-payment')->render();
+            $htmlfile = view('ums.exam.success_payment')->render();
             $pdf = app()->make('dompdf.wrapper');
             $pdf->loadHTML($htmlfile);
             return $pdf->download('Payment-Slip.pdf');
         }
 
-        return view('student.exam.success-payment');
+        return view('ums.exam.success_payment');
     }
 
 

@@ -76,7 +76,7 @@
                                                     <td>{{$data->complaintCount()}}</td>
                                                     <td>{{$data->status_text}}</td>
                                                     <td>{{$data->created_at}}</td>
-                                                    <td><a href="{{url('grievance_complaint_list')}}?roll_number={{$data->roll_number}}" target="_blank">Action</a></td>
+                                                    <td><a href="{{url('grievance-complaint-list')}}?roll_number={{$data->roll_number}}" target="_blank">Action</a></td>
                                                 </tr>
                                                 @endforeach
                                               </tbody>

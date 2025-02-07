@@ -1,27 +1,28 @@
 <?php
 
-namespace App\Http\Controllers\Student;
+namespace App\Http\Controllers\ums\Student;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ums\AdminController;
  
 use App\Admin;
 use App\Imports\ICardsImport;
 use Maatwebsite\Excel\Facades\Excel;
 
-use App\Models\Student;
-use App\Models\Application;
-use App\Models\Course;
-use App\Models\Category;
-use App\Models\PermanentAddress;
-use App\Models\UploadDocuments;
-use App\Models\Icard;
-use App\Models\Enrollment;
-use App\Models\StudentSemesterFee;
+use App\Models\ums\Student;
+use App\Models\ums\Application;
+use App\Models\ums\Course;
+use App\Models\ums\Category;
+use App\Models\ums\PermanentAddress;
+use App\Models\ums\UploadDocuments;
+use App\Models\ums\Icard;
+use App\Models\ums\Enrollment;
+use App\Models\ums\StudentSemesterFee;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Auth;
-use Validator;
+use Illuminate\Support\Facades\Validator;
+
 
 class IcardsController extends AdminController
 {

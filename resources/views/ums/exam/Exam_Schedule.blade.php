@@ -21,13 +21,13 @@
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right flex-nowrap">
                         <form method="get" id="form_data">
-                      
-                        <button class="btn btn-secondary btn-sm mb-50 mb-sm-0"><i data-feather="arrow-left-circle"></i>Go
-                            Back</button>
+                            <button class="btn btn-secondary btn-sm mb-50 mb-sm-0"><i data-feather="arrow-left-circle"></i>Go
+                                Back</button>
+                                <button class="btn btn-danger   btn-sm mb-50 mb-sm-0" type="button" data-bs-toggle="modal"
+                                data-bs-target="#bulkUploadModal"><i data-feather="upload"></i>Schedule Bulk Upload</button>
                             <button class="btn btn-primary btn-sm mb-50 mb-sm-0" id="submitBtn" type="submit"><i
                                     data-feather="check-circle"></i> Submit</button>
-                            <button class="btn btn-danger  btn-sm mb-50 mb-sm-0" data-bs-toggle="modal"
-                                data-bs-target="#bulkUploadModal"><i data-feather="upload"></i>Schedule Bulk Upload</button>
+
                             <a class="btn btn-info btn-sm mb-50 mb-sm-0" href="{{url('view-time-tables')}}"> <i
                                     data-feather="eye"></i>View Time Tables</a>
 
@@ -496,11 +496,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/your-upload-endpoint" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('exam-schedule-bulk-uploading') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="mb-3">
                             <label for="fileInput" class="form-label">Choose a file to upload</label>
-                            <input class="form-control" type="file" id="fileInput" name="file[]"
-                                accept=".csv, .xlsx, .xls" required>
+                            <input type="file" name="impport_file" class="form-control"
+                                                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         </div>
                         <div class="mb-3">
                             <label for="description" class="form-label">Click Here To Download Format Of Excel
