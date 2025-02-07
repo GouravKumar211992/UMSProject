@@ -41,74 +41,62 @@
 				
 				<section id="basic-datatable">
                     <div class="row">
-                        <div class="col-12">  
-							
-                            <div class="card">
-								 <div class="card-body customernewsection-form"> 
-											 
-											<div class="row">
-												<div class="col-md-12">
-                                                    <div class="newheader border-bottom mb-2 pb-25 d-flex flex-wrap justify-content-between"> 
-														<div>
-                                                            <h4 class="card-title text-theme">Basic Information</h4>
-														    <p class="card-text">Fill the details</p>
-                                                        </div> 
-													</div>
-                                                    
-                                                </div> 
-                                                
-                                                
-                                                <div class="col-md-8"> 
-                                                      
-                              
-                                                    <div class="row align-items-center mb-1">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label">Category Name <span class="text-danger">*</span></label>  
-                                                        </div>  
-
-                                                        <div class="col-md-5"> 
-                                                            <input type="text" class="form-control">
-                                                        </div> 
-                                                    
-                                                     </div> 
-                                                     <div class="row align-items-center mb-1">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label">start time <span class="text-danger">*</span></label>  
-                                                        </div>  
-
-                                                        <div class="col-md-5"> 
-                                                            <input type="time" class="form-control">
-                                                        </div> 
-                                                    
-                                                     </div> 
-                                                     <div class="row align-items-center mb-1">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label">End Time<span class="text-danger">*</span></label>  
-                                                        </div>  
-
-                                                        <div class="col-md-5"> 
-                                                            <input type="time" class="form-control">
-                                                        </div> 
-                                                    
-                                                     </div> 
-                                                    
-                                                     <div class="row align-items-center mb-2">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label">Status</label> 
-                                                        </div>  
-
-                                                        <div class="col-md-5"> 
-                                                            <div class="demo-inline-spacing">
-                                                                <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio3" name="customColorRadio3" class="form-check-input" checked="">
-                                                                    <label class="form-check-label fw-bolder" for="customColorRadio3">Active</label>
-                                                                </div> 
-                                                                <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio4" name="customColorRadio3" class="form-check-input">
-                                                                    <label class="form-check-label fw-bolder" for="customColorRadio4">Inactive</label>
-                                                                </div> 
-                                                            </div>  
-                                                        </div> 
+                        <form action="{{ route('add-period') }}" method="POST">
+                            @csrf
+                            <div class="col-md-8"> 
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-md-3"> 
+                                        <label class="form-label">Period Name <span class="text-danger">*</span></label>  
+                                    </div>  
+                                    <div class="col-md-5"> 
+                                        <input type="text" name="name" class="form-control" required>
+                                    </div> 
+                                </div> 
+                        
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-md-3"> 
+                                        <label class="form-label">Start Time <span class="text-danger">*</span></label>  
+                                    </div>  
+                                    <div class="col-md-5"> 
+                                        <input type="time" name="start_time" class="form-control" required>
+                                    </div> 
+                                </div> 
+                        
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-md-3"> 
+                                        <label class="form-label">End Time<span class="text-danger">*</span></label>  
+                                    </div>  
+                                    <div class="col-md-5"> 
+                                        <input type="time" name="end_time" class="form-control" required>
+                                    </div> 
+                                </div> 
+                        
+                                <div class="row align-items-center mb-2">
+                                    <div class="col-md-3"> 
+                                        <label class="form-label">Status</label> 
+                                    </div>  
+                                    <div class="col-md-5"> 
+                                        <div class="demo-inline-spacing">
+                                            <div class="form-check form-check-primary mt-25">
+                                                <input type="radio" id="active" name="period_status" value="active" class="form-check-input" checked>
+                                                <label class="form-check-label fw-bolder" for="active">Active</label>
+                                            </div> 
+                                            <div class="form-check form-check-primary mt-25">
+                                                <input type="radio" id="inactive" name="period_status" value="inactive" class="form-check-input">
+                                                <label class="form-check-label fw-bolder" for="inactive">Inactive</label>
+                                            </div> 
+                                        </div>  
+                                    </div> 
+                                </div>
+                        
+                                <div class="row align-items-center mb-2">
+                                    <div class="col-md-3"> 
+                                        <button type="submit" class="btn btn-primary">Add Period</button>
+                                    </div>
+                                </div>
+                            </div> 
+                        </form>
+                        
                                                         
 
                                                     </div>

@@ -38,7 +38,8 @@
                 </div>
             </div>
             <div class="content-body">
-                <form id="rollNumberForm">
+                    <form action="{{route('challenge_allowed_create')}} "id="rollNumberForm" method="post">
+                        @csrf
                     <div class="row">
                         <div class="col-md-5 mt-2 mb-2">
                             <div class="row align-items-center mb-1">
@@ -46,7 +47,7 @@
                                     <label class="form-label">Roll Number:<span class="text-danger m-0">*</span></label>
                                 </div>
                                 <div class="col-md-7">
-                                    <input type="text" id="rollNumberInput" name="rollnumber" class="form-control" required>
+                                    <input id="rollNumberInput"  type="text" name="roll_no"class="form-control" required>
                                 </div>
                             </div>
                         </div>
@@ -57,12 +58,10 @@
                                     <label class="form-label">Step:<span class="text-danger m-0">*</span></label>
                                 </div>
                                 <div class="col-md-6">
-                                    <select name="step" id="stepSelect" class="form-control">
-                                        <option value="">---Select---</option>
-                                        <option value="1">Option 1</option>
-                                        <option value="2">Option 2</option>
-                                        <option value="3">Option 3</option>
-                                        <option value="4">Option 4</option>
+                                    <select name="step" class="form-control" required>
+                                        <option value="">Selected</option>
+                                        <option value="1">First Step</option>
+                                        <option value="2">Second Step</option>
                                     </select>
                                 </div>
                                 <div class="col-md-4">
@@ -93,32 +92,36 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <td>1</td>
-                                            <td>2331</td>
-                                            <td>John</td>
-                                            <td>first</td>
-                                            <td class="tableactionnew">
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-                                                        <i data-feather="more-vertical"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        {{-- <a class="dropdown-item" href="#">
-                                                            <i data-feather="edit" class="me-50"></i>
-                                                            <span>View Detail</span>
-                                                        </a> --}}
-                                                        <a class="dropdown-item" href="{{url('challengeform_edit')}}">
-                                                            <i data-feather="edit-3" class="me-50"></i>
-                                                            <span>Edit</span>
-                                                        </a>
-                                                       
-                                                        <a class="dropdown-item" href="#" onclick="window.confirm('Are you sure ? delere this data')">
-                                                            <i data-feather="trash-2" class="me-50"></i>
-                                                            <span>Delete</span>
-                                                        </a> 
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            @if($challenges->count()>0)
+                                            @foreach($challenges as $index=>$challenge)
+                                            <tr>
+                                                <td>{{++$index}}</td>
+                                                <td><input type="hidden" name="roll_no" value="{{$challenge->roll_no}}">{{$challenge->roll_no}}</td>
+                                                <td>{{$challenge->student->full_name}}</td>
+                                                <td>
+                                                    <select class="form-control" onchange="$(this).closest('tr').find('.step_selection').val($(this).val());">
+                                                        <option value="1"  @if($challenge->step==1) selected @endif>First Step</option>
+                                                        <option value="2"  @if($challenge->step==2) selected @endif>Second Step</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <form style="display: inline;margin-right: 15px;float: left;" action="{{route('challenge_allowed_edit',[$challenge->roll_no])}}" method="post">
+                                                    @csrf
+                                                        <input type="hidden" name="step_value" class="step_selection" value="{{$challenge->step}}">
+                                                        <button type="submit" class="btn-sm btn-info">Save</button>
+                                                    </form>
+                                                    {{-- <a onclick="return confirm('Are you sure?')" style="float: left;" class="btn-sm btn-danger" action="{{route('challenge-allowed-delete'.$challenge->roll_no)}}">Delete</a> --}}
+                                                    <a href="javascript:void(0);" onclick="if(confirm('Are you sure?')) document.getElementById('delete-form').submit();" class="btn-sm btn-danger" style="float: left;">Delete
+                                                    <form id="delete-form" action="{{ route('challenge-allowed-delete', $challenge->roll_no) }}" method="POST" style="display: none;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    </form>
+                                                  </a> {{--add method('DELETE')--}}
+                                                   
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>

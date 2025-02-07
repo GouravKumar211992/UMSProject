@@ -11,6 +11,8 @@
 
 
     <!-- BEGIN: Content-->
+    <form id="timetable_form" type="POST" action="#">
+@csrf
     <div class="app-content content ">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -74,14 +76,16 @@
                                                         </div>  
 
                                                         <div class="col-md-5">  
-                                                            <select class="form-select">
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                            </select>
+                                                            <select class="form-select"  name="period_id">
+                                                                @foreach($periods  as $key => $period)
+                                                                <option value="{{$period->id}}">{{$period->name}}</option>
+                                                                @endforeach
+                                                        </select>
+                                                        <span class="text-danger">{{ $errors->first('period_id') }}</span>
+
                                                         </div>
                                                      </div>
+                                                    
           
                                                                            
                                                      <div class="row align-items-center mb-1">
@@ -90,11 +94,15 @@
                                                         </div>  
 
                                                         <div class="col-md-5">  
-                                                            <select class="form-select">
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
+                                                            <select class="form-select" name="day">
+                                                                <option value="">--Select Option--</option>
+                                                                <option value="Monday">Monday</option>
+                                                                <option value="Tuesday">Tuesday</option>
+                                                                <option value="Wednesday">Wednesday</option>
+                                                                <option value="Thursday">Thursday</option>
+                                                                <option value="Friday">Friday</option>
+                                                                <option value="Saturday">Saturday</option>
+                                                                <option value="Sunday">Sunday</option>
                                                             </select>
                                                         </div>
                                                      </div>
@@ -105,67 +113,72 @@
                                                         </div>  
 
                                                         <div class="col-md-5">  
-                                                            <select class="form-select">
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
+                                                            <select class="form-select"  id="course-id" name="course_id">
+                                                                @foreach($courses as $course)
+                                                                <option value="{{$course->id}}">{{$course->name}}</option>
+                                                                @endforeach
                                                             </select>
+                                                            <span class="text-danger">{{ $errors->first('course_id') }}</span>
                                                         </div>
                                                      </div>
                                                     
                                                                           
                                                      <div class="row align-items-center mb-1">
                                                         <div class="col-md-3"> 
-                                                            <label class="form-label">Semester  <span class="text-danger">*</span></label>  
+                                                            <label class="form-label" >Semester  <span class="text-danger">*</span></label>  
                                                         </div>  
 
                                                         <div class="col-md-5">  
-                                                            <select class="form-select">
+                                                            <select class="form-select" id="semester-id" name="semester_id">
+                                                                {{-- <option>Select</option> 
                                                                 <option>Select</option> 
                                                                 <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
+                                                                <option>Select</option>  --}}
                                                             </select>
+                                                            {{ $errors->first('semester_id') }}
                                                         </div>
                                                      </div>
                                      
                                                      <div class="row align-items-center mb-1">
                                                         <div class="col-md-3"> 
-                                                            <label class="form-label">Select Subject <span class="text-danger">*</span></label>  
+                                                            <label class="form-label" name="subject_id" >Select Subject <span class="text-danger">*</span></label>  
                                                         </div>  
 
                                                         <div class="col-md-5">  
-                                                            <select class="form-select">
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
+                                                            <select id="subject-id" class="form-control" name="subject_id">
+                                                                <span class="text-danger">{{ $errors->first('subject_id') }}</span>
                                                             </select>
                                                         </div>
                                                      </div>
 
                                                      <div class="row align-items-center mb-1">
                                                         <div class="col-md-3"> 
-                                                            <label class="form-label">Faculty<span class="text-danger">*</span></label>  
+                                                            <label class="form-label"  name="faculty_id">Faculty<span class="text-danger">*</span></label>  
                                                         </div>  
 
                                                         <div class="col-md-5">  
                                                             <select class="form-select">
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
-                                                                <option>Select</option> 
+                                                                @foreach($facultys as $faculty)
+                                                                <option value="{{$faculty->id}}">{{$faculty->name}}</option>
+                                                                    
+                                                            @endforeach
+                                                            </select>
+                                                            @if ($errors->has('faculty_id'))
+                                                            <span class="text-danger">{{ $errors->first('faculty_id') }}</span>							
+                                                            @endif
                                                             </select>
                                                         </div>
                                                      </div>
                                                      <div class="row align-items-center mb-1">
                                                         <div class="col-md-3"> 
-                                                            <label class="form-label">Room No<span class="text-danger">*</span></label>  
+                                                            <label class="form-label"  name="room_no">Room No<span class="text-danger">*</span></label>
+                                                            @if ($errors->has('room_no'))
+                                                            <span class="text-danger">{{ $errors->first('room_no') }}</span>							
+                                                            @endif  
                                                         </div>  
 
                                                         <div class="col-md-5"> 
-                                                            <input type="text" class="form-control">
+                                                            <input type="text" class="form-control" >
                                                         </div> 
                                                     
                                                      </div>

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
  @extends('ums.admin.admin-meta')
+=======
+@extends('ums.admin.admin-meta')
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 <!-- BEGIN: Body-->
  @section('content')
@@ -65,34 +69,47 @@
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                        
                                                
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td class="fw-bolder text-dark">Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                    <td>B.ASLP
-                                                        (2024-2025)</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">2024-09-07</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">12:00 PM</span></td>
-                                                    <td>01:00 PM-03:00 PM</td>
-                                                    <td>Dr. Shakuntala Misra National Rehabilitation University, Mohaan Road, Lucknow, U.P. Main Campus</td> 
-                                                    <td>118(118)</td> 
-                                                    
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                 
-                                                             <a class="dropdown-item" href="#">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span>Delete</span>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>
-                                                </tr>
+                                                   @if(count($entranceExamData) > 0)
+                                                     @foreach($entranceExamData as $index=>$data)
+                                                     @php
+                                                     $total_applications = $data->total_applications();
+                                                     $generated_roll_number_applications = $data->generated_roll_number_applications();
+                                                     @endphp
+                                                     <tbody>
+						                             	<tr>  
+							                             	<td>{{++$index}}</td>
+							                             	<td class="text-left">{{$data->campus->name}}</td>
+                                                             <td style="width: 150px;">{{isset($data->course) ? $data->course->name :''}}<br>({{$data->session}})</td>
+                                                             <td>{{isset($data->entrance_exam_date) ? $data->entrance_exam_date :''}}</td>
+                                                             <td>{{date('h:i A', strtotime($data->reporting_time))}}</td>
+                                                             <td>{{date('h:i A', strtotime($data->examination_time))}}-{{date('h:i A', strtotime($data->end_time))}}</td>
+                                                             <td class="text-left">{{isset($data->centerName) ? $data->centerName->center_name :''}}</td>
+                                                             <td>{{$total_applications}}({{$generated_roll_number_applications}})</td>
+                                                             <td class="tableactionnew">  
+                                                                 <div class="dropdown">
+                                                                     <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
+                                                                         <i data-feather="more-vertical"></i>
+                                                                     </button>
+                                                                     <div class="dropdown-menu dropdown-menu-end">
+                                                                          
+                                                                      <a class="dropdown-item" href="#">
+                                                                             <i data-feather="trash-2" class="me-50"></i>
+                                                                             <span>Delete</span>
+                                                                         </a>
+                                                                     </div>
+                                                                 </div> 
+                                                             </td>
+						                             	</tr>
+                                                         
+						
+                                                     @endforeach
+                                                     @else
+                                                         <tr>
+                                                             <td colspan="6" class="text-center">NO DATA FOUND</td>
+                                                         </tr>
+                                                     @endif
                                                 
                                             </tbody>
                                         </table>

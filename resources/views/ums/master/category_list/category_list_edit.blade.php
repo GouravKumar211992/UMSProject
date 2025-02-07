@@ -30,12 +30,17 @@
                             {{-- <button onClick="javascript: history.go(-1)" class="btn btn-secondary btn-sm mb-50 mb-sm-0"><i data-feather="arrow-left-circle"></i>Cancel</button>     --}}
    
 							<button onClick="javascript: history.go(-1)" class="btn btn-secondary btn-sm mb-50 mb-sm-0"><i data-feather="arrow-left-circle"></i>Go Back</button>    
-							<button onClick="javascript: history.go(-1)" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle"></i>Update</button> 
+							<button type="submit" form="edit_category_form" onClick="javascript: history.go(-1)" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle"></i>Update</button> 
 						</div>
 					</div>
 				</div>
 			</div>
-            <div class="content-body">
+            <form id="edit_category_form" method="POST" action="{{route('category_list_update')}}">
+            	@csrf
+                @method('PUT')
+		<input type="hidden" name="category_id" value="{{$selected_category->id}}">
+		<input type="hidden" name="category_status" id="category_status" value="">
+                <div class="content-body">
                  
                 
 				
@@ -67,7 +72,7 @@
                                                         </div>  
 
                                                         <div class="col-md-5"> 
-                                                            <input type="text" class="form-control">
+                                                            <input type="text" name="category_name" value="{{$selected_category->name}}" class="form-control">
                                                         </div> 
                                                     
                                                      </div> 
@@ -80,12 +85,15 @@
                                                         <div class="col-md-5"> 
                                                             <div class="demo-inline-spacing">
                                                                 <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio3" name="customColorRadio3" class="form-check-input" checked="">
-                                                                    <label class="form-check-label fw-bolder" for="customColorRadio3">Active</label>
+                                                                    
+                                                                        
+                                                                    
+                                                                    <input type="radio"  id="active" name="group1" class="form-check-input" >
+                                                                    <label class="form-check-label fw-bolder"  for="customColorRadio3">Active</label>
                                                                 </div> 
                                                                 <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio4" name="customColorRadio3" class="form-check-input">
-                                                                    <label class="form-check-label fw-bolder" for="customColorRadio4">Inactive</label>
+                                                                    <input type="radio" id="inactive"  name="group1" class="form-check-input">
+                                                                    <label class="form-check-label fw-bolder"  for="customColorRadio4">Inactive</label>
                                                                 </div> 
                                                             </div>  
                                                         </div> 
@@ -255,6 +263,7 @@
                  
 
             </div>
+            </form>
         </div>
     </div>
     <!-- END: Content-->
@@ -409,5 +418,31 @@
 			</div>
 		</div>
 	</div>
-
+    <script>
+        $(document).ready(function(){
+    
+            var selected_category = {!! json_encode($selected_category) !!};
+    
+            if(selected_category['status'] == 1) {
+                $('#active').prop('checked', true);
+                $('#inactive').prop('checked', false);
+            }
+            else {
+                $('#active').prop('checked', false);
+                $('#inactive').prop('checked', true);
+            }
+        });
+    </script>
+    <script>
+        function submitCat(form) {
+            if(document.getElementById('active').checked) {
+                document.getElementById('category_status').value = 'active';
+            }
+            else {
+                document.getElementById('category_status').value = 'inactive';
+            }
+    
+            document.getElementById('edit_category_form').submit();
+        }
+    </script>
 @endSection

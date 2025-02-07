@@ -43,60 +43,58 @@
 								
 								   
                                 <div class="table-responsive">
-                                        <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID#</th>
-                                                    <th>Period</th>
-                                                    <th>Day</th>
-                                                    <th>Course</th>
-                                                   <th>Semester</th>
-                                                   <th>Subject</th>
-                                                   <th>Faculty</th>
-                                                   <th>Room No</th>
-                                                   <th>Created at</th>
-                                                   <th>Status</th>
-                                                   <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                               
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td class="fw-bolder text-dark">test</td>
-                                                    <td>Tuesday</td>
-                                                    <td>MCA</td>
-                                                    <td>First semester</td>
-                                                    <td>FUNDAMENTAL OF COMPUTERS & EMERGING TECHNOLOGIES</td>
-                                                    <td>GARGI KHARE</td>
-                                                    <td>132</td>
-                                                    <td>Jan 14th, 2025</td>
-                                                    <td>Active</td>
-                                                    
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" href="{{ url('time_table_edit') }}">
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a> 
-                                                                <a class="dropdown-item" href="#" onclick="window.confirm('Are you sure ? delere this data')">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span>Delete</span>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>
-                                                </tr>
-                                                
-                                            </tbody>
-                                        </table>
-                                    </div>
-								
-                            </div>
+                                    <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
+                                        <thead>
+                                            <tr>
+                                                <th>ID#</th>
+                                                <th>Period</th>
+                                                <th>Day</th>
+                                                <th>Course</th>
+                                                <th>Semester</th>
+                                                <th>Subject</th>
+                                                <th>Faculty</th>
+                                                <th>Room No</th>
+                                                <th>Created at</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($all_timetable as $timeTable)
+                                            <tr>
+                                                <td>{{ $timeTable->id }}</td>
+                                                <td>{{ $timeTable->period->name ?? 'N/A' }}</td> <!-- Assuming 'period' is related -->
+                                                <td>{{ $timeTable->day }}</td>
+                                                <td>{{ $timeTable->course->name ?? 'N/A' }}</td> <!-- Assuming 'course' is related -->
+                                                <td>{{ $timeTable->semester->name ?? 'N/A' }}</td> <!-- Assuming 'semester' is related -->
+                                                <td>{{ $timeTable->subject->name ?? 'N/A' }}</td> <!-- Assuming 'subject' is related -->
+                                                <td>{{ $timeTable->faculty->name ?? 'N/A' }}</td> <!-- Assuming 'faculty' is related -->
+                                                <td>{{ $timeTable->room_no }}</td>
+                                                <td>{{ $timeTable->created_at }}</td>
+                                                <td>{{ $timeTable->status == 1 ? 'Active' : 'Inactive' }}</td>
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown">
+                                                            <i data-feather="more-vertical"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu dropdown-menu-end">
+                                                            <a class="dropdown-item" href="{{ url('time_table_edit', $timeTable->id) }} ">
+                                                                <i data-feather="edit" class="me-50"></i>
+                                                                <span>Edit</span>
+                                                            </a>
+                                                            <a class="dropdown-item" href="#" onclick="window.confirm('Are you sure you want to delete this data?')">
+                                                                <i data-feather="trash-2" class="me-50"></i>
+                                                                <span>Delete</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
                         </div>
                     </div>
                     <!-- Modal to add new record -->

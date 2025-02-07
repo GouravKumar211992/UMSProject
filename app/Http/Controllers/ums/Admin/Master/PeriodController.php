@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 
 namespace App\Http\Controllers\Admin\Master;
 
@@ -7,6 +8,15 @@ use App\Models\Period;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\AdminController;
+=======
+namespace App\Http\Controllers\ums\Admin\Master;
+
+use App\Http\Controllers\Controller;
+use App\Models\ums\Period;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Http\Controllers\ums\AdminController;
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 use App\Exports\PeriodExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -34,7 +44,11 @@ class PeriodController extends AdminController
             $periods->where('name','LIKE', '%'.$request->name.'%');
         }
          $periods = $periods->paginate(10);
+<<<<<<< HEAD
         return view('admin.master.period.index', [
+=======
+        return view('ums.master.period_list.period_list', [
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => "Periods",
             'sub_title' => "records",
             'all_periods' => $periods
@@ -44,7 +58,11 @@ class PeriodController extends AdminController
     public function add(Request $request)
     {
         
+<<<<<<< HEAD
         return view('admin.master.period.addperiod', [
+=======
+        return view('ums.master.period_list.period_list', [
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => "Add New",
             'sub_title' => "Period"
         ]);
@@ -82,7 +100,14 @@ class PeriodController extends AdminController
     public function editPeriod(Request $request)
     {
         $request->validate([
+<<<<<<< HEAD
             'name' => 'required'
+=======
+            'name' => 'required',
+            'start_time' => 'required',
+             'end_time' => 'required',
+             'period_status' => 'required'
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
         ]);
         $status = $request['period_status'] == 'active'?1:0;
         $update_edit = Period::where('id', $request->period_id)->update(['name' => $request->name, 'status' => $status, 'time_rang'=>$request->start_time.'-'.$request->end_time]);
@@ -93,14 +118,28 @@ class PeriodController extends AdminController
 
     public function editperiods(Request $request, $slug)
     {
+<<<<<<< HEAD
         $selectedperiod = Period::Where('id', $slug)->first();
 
         return view('admin.master.period.editperiod', [
+=======
+        $selectedperiod = Period::where('id', $slug)->first();
+    
+        if (!$selectedperiod) {
+            return redirect()->route('get-periods')->with('error', 'Period not found.');
+        }
+    
+        return view('ums.master.period_list.period_list_edit', [
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => $selectedperiod->name,
             'sub_title' => "Edit Information",
             'selected_period' => $selectedperiod
         ]);
     }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 
     public function show()

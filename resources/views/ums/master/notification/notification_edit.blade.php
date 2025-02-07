@@ -28,14 +28,17 @@
                     <div class="form-group breadcrumb-right">
                         <button class="btn btn-dark btn-sm mb-50 mb-sm-0" onclick="location.href='{{url('/notification')}}'"> <i data-feather="x"></i> Cancel
                             </button>
-                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0" > <i data-feather="check-circle" style="font-size: 40px;"></i>
+                        <button form="cat_form" type="submit" class="btn btn-primary btn-sm mb-50 mb-sm-0" > <i data-feather="check-circle" style="font-size: 40px;"></i>
                             Submit</button>
 
 
                     </div>
                 </div>
             </div>
-            <div class="content-body bg-white py-4 mb-4 shadow">
+            <form id="cat_form" method="POST" action="{{ route('notification_update', ['update' => $info->id]) }}">
+            @csrf
+            @method('PUT')
+                <div class="content-body bg-white py-4 mb-4 shadow">
                 <div class="row g-0  mt-3 mb-3 text-center">
 
 
@@ -47,7 +50,7 @@
                             </div>
 
                             <div class="col-md-8">
-                                <input type="text" class="form-control" placeholder="Enter notification description
+                                <input type="text" name="notification_description"  value="{{$info->notification_description}}" class="form-control" placeholder="Enter notification description
 ">
                                 
                             </div>
@@ -58,7 +61,7 @@
                             </div>
 
                             <div class="col-md-8">
-                              <input type="date" class="form-control">                        </div>
+                              <input type="date" value="{{$info->notification_start}}" class="form-control" name="notification_start">                        </div>
                         </div>
                         <div class="row align-items-center mb-1">
                             <div class="col-md-3">
@@ -66,7 +69,7 @@
                             </div>
 
                             <div class="col-md-8">
-                              <input type="date" class="form-control">                        </div>
+                              <input type="date" name="notification_end"  class="form-control" value="{{$info->notification_end}}">                        </div>
                         </div>
 
                        
@@ -76,4 +79,34 @@
                 
             </div>
             </div>
+        </form>
     @endsection
+    <script>
+        function submitCourse(form) {
+            document.getElementById('cat_form').submit();
+        }
+        $('.numberOnly').keyup(function() {
+            this.value = this.value.replace(/[^0-9\.]/g, '');
+        });
+        function disableButton() {
+            var btn = document.getElementById('btn');
+            btn.disabled = true;
+            btn.innerText = 'Submitting...'
+        }
+    // 	$(document).ready(function(){
+    // 	$('#campus_id').change(function() {
+    // 		var campus_id=$('#campus_id').val();
+    // 		if(campus_id==''){
+    // 			return false;
+    // 		}
+    // 		$("#course_id").find('option').remove().end();
+    // 		$.ajax({
+    // 			url: "/admin/master/stream-list/"+campus_id,
+    // 			type: 'GET',
+    // 			success: function(data,textStatus, jqXHR) {
+    // 				$('#course_id').append(data);
+    // 			}
+    // 		});
+    // 	});	
+    // });	
+    </script>

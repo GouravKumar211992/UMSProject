@@ -30,7 +30,7 @@
             
 
             <div class="content-body">
-                <form id="rollNumberForm">
+                <form method="get" id="form_data">
                     <div class="row">
                         <div class="col-md-5 mt-2 mb-2">
                             <div class="row align-items-center mb-1">
@@ -38,11 +38,11 @@
                                     <label class="form-label">Campus:<span class="text-danger m-0">*</span></label>
                                 </div>
                                 <div class="col-md-7">
-                                    <select id="rollNumberSelect" name="rollnumber" class="form-control" required>
-                                        <option value="">---Choose Campus---</option>
-                                        <option value="1">224140064</option>
-                                        <option value="2">191050014</option>
-                                        <option value="3">202110021</option>
+                                    <select name="campus_id" id="campus_id" style="border-color: #c0c0c0;" class="form-control" required>
+                                        <option value="">--Choose Campus--</option>
+                                        @foreach($campuses as $campus)
+                                        <option value="{{$campus->id}}" @if(Request()->campus_id==$campus->id) selected @endif >{{$campus->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -54,20 +54,18 @@
                                     <label class="form-label">Session:<span class="text-danger m-0">*</span></label>
                                 </div>
                                 <div class="col-md-6">
-                                    <select name="step" id="stepSelect" class="form-control">
-                                        <option value="">---Choose Session---</option>
-                                        <option value="1">Option 1</option>
-                                        <option value="2">Option 2</option>
-                                        <option value="3">Option 3</option>
-                                        <option value="4">Option 4</option>
+                                    <select name="session" id="session" style="border-color: #c0c0c0;" class="form-control" required>
+                                        <option value="">--Choose Session--</option>
+                                        @foreach($sessions as $session)
+                                        <option value="{{$session->academic_session}}" @if(Request()->session ==$session->academic_session) selected @endif >{{$session->academic_session}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-3">
                                     <button type="submit" class="btn btn-primary btn-sm mb-50 mb-sm-0 w-100">
-                                         <span class="d-inline">Show Data</span>
+                                         <span class="d-inline" value="Show Data">Show Data</span>
                                     </button>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
@@ -99,25 +97,29 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                               
+                                                @foreach($courses as $index=>$course)
+                                                @if($course->semesters->count()>0)
+                                                @php
+                                                $loop_size = (10 - $course->semesters->count());
+                                                $session = '2022-2023';
+                                                if(Request()->session){
+                                                    $session = Request()->session;
+                                                }
+                                                @endphp
                                                 <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    
-                                                    
-                                                    
+                                                    <td>{{++$index}}</td>
+                                                    <td><strong>{{$course->name}}</strong></td>
+            
+                                                    @foreach($course->semesters as $semester)
+                                                    <td>{{$semester->semester_max_marks($session)}}</td>
+                                                    @endforeach
+            
+                                                    @for($i=1;$i<=$loop_size;$i++)
+                                                    <td>-</td>
+                                                    @endfor
                                                 </tr>
-                                                
+                                                @endif
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

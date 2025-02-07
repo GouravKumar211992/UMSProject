@@ -167,7 +167,11 @@
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-end">
                                                                 @if ($fee->bank_name)
+<<<<<<< HEAD
                                                                     <a href="{{ route('update-student-subjects', [$fee->id]) }}"
+=======
+                                                                    <a href="{{ route('update_student_subjects', [$fee->id]) }}"
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
                                                                         class="dropdown-item"><i
                                                                             class="data-feather"></i>Update Student
                                                                         Subjects</a>

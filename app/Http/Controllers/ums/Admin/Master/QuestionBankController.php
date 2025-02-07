@@ -1,6 +1,10 @@
 <?php
 
+<<<<<<< HEAD
 namespace App\Http\Controllers\Admin\Master;
+=======
+namespace App\Http\Controllers\ums\Admin\Master;
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -10,6 +14,7 @@ use PDF;
 
 use App\User;
 use App\Models\Application;
+<<<<<<< HEAD
 use App\Models\Course;
 use App\Models\CourseFee;
 use App\Models\Category;
@@ -20,6 +25,18 @@ use App\Models\Subject;
 use App\Models\Semester;
 use App\Models\Stream;
 use App\Models\QuestionBank;
+=======
+use App\Models\ums\Course;
+use App\Models\ums\CourseFee;
+use App\Models\ums\Category;
+use App\Models\ums\Classe;
+use App\Models\ums\AcademicSession;
+use App\Models\ums\Campuse;
+use App\Models\ums\Subject;
+use App\Models\ums\Semester;
+use App\Models\ums\Stream;
+use App\Models\ums\QuestionBank;
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use Maatwebsite\Excel\Facades\Excel;
 use Validator;
 use Auth;
@@ -64,10 +81,17 @@ class QuestionBankController extends Controller
         $campuses = Campuse::all();
         $sessions=AcademicSession::all();
         $semester = Semester::select('name')->distinct()->get();
+<<<<<<< HEAD
         
         if(Auth::guard('student')->check()){
             $data['quesBankData'] = $quesBankData;
             return view('student/questionbank/view',$data);
+=======
+        // Auth::guard('student')->check()
+        if(true){
+            $data['quesBankData'] = $quesBankData;
+            return view('ums.master.question_bank.question_bank',$data);
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
         }
 
         return view('admin.master.question-bank.index', [
@@ -97,6 +121,12 @@ class QuestionBankController extends Controller
             
         ]);
     }
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     public function addQuestionBank(Request $request)
     {
         // dd($request->all());

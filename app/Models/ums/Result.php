@@ -2,7 +2,11 @@
 
 namespace App\models\ums;
 
+<<<<<<< HEAD
 use App\Models\ums\Semester;
+=======
+use App\Models\Semester;
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;

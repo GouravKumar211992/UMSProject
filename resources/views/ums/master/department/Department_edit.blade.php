@@ -33,14 +33,17 @@
                     <div class="form-group breadcrumb-right">
                         <button class="btn btn-dark btn-sm mb-50 mb-sm-0" onclick="location.href='{{url('department')}}'"> <i data-feather="arrow-left-circle"></i> Go Back
                             </button>
-                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0" > <i data-feather="check-circle" style="font-size: 40px;"></i>
-                            Publish</button>
+                        <button form="edit-department-form" class="btn btn-primary btn-sm mb-50 mb-sm-0" > <i data-feather="check-circle" style="font-size: 40px;"></i>
+                            Update</button>
 
 
                     </div>
                 </div>
             </div>
             <div class="content-body bg-white p-4 shadow">
+            <form id="edit-department-form" action="{{url('department_update',$data->id)}}" method="POST">
+            @csrf
+            @method('PUT')
                 <div class="row gy-0  mt-3 p-2 ">
 
 
@@ -52,7 +55,7 @@
                             </div>
 
                             <div class="col-md-9">
-                               <input type="text" class="form-control" placeholder="Enter Department name">
+                               <input type="text" name="name" value="{{ $data->name }}" class="form-control" placeholder="Enter Department name">
                                 
                             </div>
                         </div>
@@ -62,7 +65,7 @@
                             </div>
 
                             <div class="col-md-9">
-                                <input type="text" class="form-control" placeholder="Enter Head name">                         </div>
+                                <input type="text" name="head" value="{{ $data->head }}" class="form-control" placeholder="Enter Head name">                         </div>
                         </div>
 
                        
@@ -76,7 +79,7 @@
                             </div>
 
                             <div class="col-md-9">
-                              <input type="text" class="form-control" placeholder="Enter Dean name">                         </div>
+                              <input type="text" name="dean" value="{{ $data->dean }}" class="form-control" placeholder="Enter Dean name">                         </div>
                         </div>
 
                         <div class="row align-items-center mb-1">
@@ -85,12 +88,14 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    
-                                    <option value="1">--Select--</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                            <select id="faculty" name="faculty" class="form-control" required>
+                                    <option value="">--SELECT--</option>
+                                    <option value="arts" {{ $data->faculty == 'arts' ? 'selected' : '' }}>Arts</option>
+                                    <option value="special education" {{ $data->faculty == 'special education' ? 'selected' : '' }}>Special Education</option>
+                                    <option value="law" {{ $data->faculty == 'law' ? 'selected' : '' }}>Law</option>
+                                    <option value="commerce &amp; management" {{ $data->faculty == 'commerce & management' ? 'selected' : '' }}>Commerce & Management</option>
+                                    <option value="science &amp; technology" {{ $data->faculty == 'science & technology' ? 'selected' : '' }}>Science & Technology</option>
+                                    <option value="engineering &amp; technology" {{ $data->faculty == 'engineering & technology' ? 'selected' : '' }}>Engineering & Technology</option>
                                 </select>
                             </div>
                         </div>
@@ -108,7 +113,7 @@
                             </div>
 
                             <div class="col-md-9">
-                               <input type="text" class="form-control" placeholder="Enter email name">
+                               <input type="text" name="contact" value="{{ $data->contact}}" class="form-control" placeholder="Enter email name">
                             </div>
                         </div>
                         
@@ -123,7 +128,7 @@
                             </div>
     
                             <div class="col-md-9">
-                              <input type="text" placeholder="Enter email name" class="form-control">
+                              <input type="text" name="email" value="{{ $data->email }}" placeholder="Enter email name" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -142,7 +147,7 @@
                    
             </div>
 
-
+</form>
                
 
             </div>

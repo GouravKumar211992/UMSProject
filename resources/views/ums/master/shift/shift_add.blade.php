@@ -1,4 +1,8 @@
+<<<<<<< HEAD
  @extends('ums.admin.admin-meta');
+=======
+@extends('ums.admin.admin-meta');
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 <!-- BEGIN: Body-->
  @section('content')
      
@@ -9,7 +13,7 @@
    
 
     <!-- BEGIN: Content-->
-    <div class="app-content content ">
+    <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
@@ -27,11 +31,13 @@
                         </div>
                     </div>
                 </div>
+                <form id="cat_form" method="POST" action="{{route('add_shift')}}">
+                    @csrf
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
                         <button class="btn btn-dark btn-sm mb-50 mb-sm-0" onclick="location.href='{{url('/shift_list')}}'"> <i data-feather="x"></i> Cancel
                             </button>
-                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0" > <i data-feather="check-circle" style="font-size: 40px;"></i>
+                        <button type="submit" class="btn btn-primary btn-sm mb-50 mb-sm-0" > <i data-feather="check-circle" style="font-size: 40px;"></i>
                             Submit</button>
 
 
@@ -50,7 +56,7 @@
                             </div>
 
                             <div class="col-md-8">
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control"  name="name">
                                 
                             </div>
                         </div>
@@ -60,7 +66,7 @@
                             </div>
 
                             <div class="col-md-8">
-                              <input type="time" class="form-control">                        </div>
+                              <input type="time" class="form-control" name="start_time">                        </div>
                         </div>
                         <div class="row align-items-center mb-1">
                             <div class="col-md-3">
@@ -68,7 +74,7 @@
                             </div>
 
                             <div class="col-md-8">
-                              <input type="time" class="form-control">                        </div>
+                              <input type="time" class="form-control" name="end_time" >                        </div>
                         </div>
 
                        
@@ -78,6 +84,7 @@
                 
             </div>
             </div>
+        </form>
 
 
                

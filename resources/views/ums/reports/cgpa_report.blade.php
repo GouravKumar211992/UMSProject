@@ -23,8 +23,10 @@
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
-                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="clipboard"></i> Get Report
-                            </button>
+                        <form method="get" id="form_data">
+
+                        <button type="submit" class="btn btn-primary" name="submit_form">Get Report</button>
+                    </button>
                         
 
 
@@ -43,13 +45,12 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Choose Campus---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
-                                </select>
+                                <select name="campus_id"  id="campus_id" style="border-color: #c0c0c0;" class="form-control" onChange="return $('#form_data').submit();">
+                                    <option value="">--Choose Campus--</option>
+                                    @foreach($campuses as $campus)
+                                        <option value="{{$campus->id}}" @if(Request()->campus_id==$campus->id) selected @endif >{{$campus->name}}</option>
+                                        @endforeach
+                                    </select>
                             </div>
                         </div>
 
@@ -59,12 +60,11 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Select---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select data-live-search="true" name="course_id" id="course_id" style="border-color: #c0c0c0;" class="form-control js-example-basic-single " onChange="return $('#form_data').submit();">
+                                <option value="">--Choose Course--</option>
+                                    @foreach($courses as $course)
+                                    <option value="{{$course->id}}" @if(Request()->course_id==$course->id) selected @endif >{{$course->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -79,12 +79,11 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Select Semester---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select data-live-search="true" name="semester_id" id="semester_id" style="border-color: #c0c0c0;" class="form-control js-example-basic-single">
+                                    <option value="">--Select Semester--</option>
+                                    @foreach($semesters as $semester)
+                                        <option value="{{$semester->id}}" @if(Request()->semester_id==$semester->id) selected @endif >{{$semester->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -95,12 +94,11 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Select Academic Session---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select name="academic_session" id="academic_session" style="border-color: #c0c0c0;" class="form-control js-example-basic-single">
+                                    <option value="">--Select Semester--</option>
+                                    @foreach($sessions as $session)
+                                        <option value="{{$session->academic_session}}" @if(Request()->academic_session==$session->academic_session) selected @endif >{{$session->academic_session}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -110,6 +108,8 @@
 
 
                 </div>
+            </form>
+
 
 
                 <section id="basic-datatable">
@@ -142,28 +142,38 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                           
+                                            @foreach($results as $index=>$result)
+                                            @if(!$result->student)
+                                            {{dd($result)}}
+                                            @endif
                                             <tr>
+                                                <td>{{++$index}}</td>
+                                                <td>{{$result->student->enrollment_no}}</td>
+                                                <td>{{$result->roll_no}}</td>
+                                                <td>{{$result->student->full_name}}</td>
+                                                <td>{{$result->student->category}}</td>
+                                                <td>{{$result->student->disabilty_category}}</td>
+                                                <td>{{$result->student->gender}}</td>
+                                                <td>{{$result->student->mobile}}</td>
+                                                <td>{{$result->student->address}}</td>
+                                                <td>{{$result->course_name()}}</td>
+                                                <td>{{Request()->academic_session}}</td>
+                                                @if($result->get_semester_result_single()->total_obtained_marks==0 || $result->get_semester_result_single()->total_required_marks==0)
                                                 <td></td>
-                                                <td class="fw-bolder text-dark"></td>
                                                 <td></td>
-                                                <td></td> 
-                                                <td></td> 
-                                                <td></td> 
-                                                <td></td> 
-                                                <td></td> 
-                                                <td></td> 
-                                                <td></td> 
-                                                
-                                                <td></td> 
-                                                <td></td> 
-                                                <td></td> 
-                                                <td></td> 
-                                                <td></td> 
-                                                
-                                                
+                                                <td></td>
+                                                @else
+                                                <td>{{$result->get_semester_result_single()->total_obtained_marks}}</td>
+                                                <td>{{$result->get_semester_result_single()->total_required_marks}}</td>
+                                                <td>
+                                                    @php $percentage = (($result->get_semester_result_single()->total_obtained_marks * 100) / $result->get_semester_result_single()->total_required_marks); @endphp
+                                                    {{number_format((float)$percentage, 2, '.', '')}}
+                                                </td>
+                                                @endif
+                                                <td>{{$result->get_semester_result_single()->cgpa}}</td>
+                                                <td>@if($result->eligible_for_medal()) Eligible @endif</td>
                                             </tr>
-                                            
+                                            @endforeach
                                         </tbody>
 
 

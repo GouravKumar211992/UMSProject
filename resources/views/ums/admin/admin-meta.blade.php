@@ -41,6 +41,7 @@ data-menu="vertical-menu-modern" data-col="">
 @yield('content')
 
     @include('ums.admin.footer')
+    @include('ums.admin.script')
 
 </body>
 <!-- END: Body-->

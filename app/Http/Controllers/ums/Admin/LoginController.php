@@ -49,6 +49,7 @@ class LoginController extends Controller
     }
 
 
+<<<<<<< HEAD
 	public function login(Request $request){
 
         $this->validate($request, [
@@ -86,6 +87,40 @@ class LoginController extends Controller
 
 	}
 
+=======
+	public function login(Request $request)
+{
+    $this->validate($request, [
+        'email' => ['required', 'string', 'email'],
+        'password' => ['required'],
+    ], [
+        'password.required' => 'Password field is required',
+        // 'g-recaptcha-response.required' => 'Google Captcha field is required.',
+    ]);
+
+    // Fetch all admins with the same email, ordered by created_at in descending order
+    $admins = Admin::where('email', $request->email)->orderBy('created_at', 'desc')->get();
+
+
+
+    // Loop through each admin record and check the password
+    foreach ($admins as $admin) {
+        if (\Hash::check($request->password, $admin->password)) {
+            // If password matches, log the user in and return to admin dashboard
+            \Auth::guard('admin')->login($admin);
+            
+            // Check the status of the user
+            if ($admin->status != 'active') {
+                return view('admin.auth.login', ['errorMsg' => "Your account is deactivated."]);
+            }
+
+            return redirect('admin');
+        }
+    }
+
+    return view('admin.auth.login', ['errorMsg' => "User not found or incorrect password."]);
+}
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 
 

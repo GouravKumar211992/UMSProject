@@ -54,13 +54,15 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                               
+                                               @foreach ($all_semester as $item)
+                                                   
+                                             
                                                 <tr>
                                                     <td>1</td>
-                                                    <td class="fw-bolder text-dark">EIGHTH SEMESTER</td>
-                                                    <td >Non Professional</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Bsc</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">	Dec 30th, 2024</span></td>
+                                                    <td class="fw-bolder text-dark">{{$item->name}}</td>
+                                                    <td >{{isset($item->category) ? $item->category->name : ''}}</td>
+                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">{{isset($item->course) ? $item->course->name :''}}</span></td>
+                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">	{{$item->created_at}}</span></td>
                                                     
                                                     
                                                     <td class="tableactionnew">  
@@ -69,19 +71,20 @@
                                                                 <i data-feather="more-vertical"></i>
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item"href="{{ url('semester_list_edit') }}" >
+                                                                <button class="dropdown-item" href="#"  onclick="editSemester('{{$item->id}}')">
                                                                     <i data-feather="edit" class="me-50"></i>
                                                                     <span>Edit</span>
-                                                                </a> 
-                                                             <a class="dropdown-item" href="#">
+                                                                </button> 
+                                                                <a class="dropdown-item" href="#"  onclick="if (window.confirm('Are you sure you want to delete this data?')) { deleteSemester('{{$item->id}}'); }">
                                                                     <i data-feather="trash-2" class="me-50"></i>
                                                                     <span>Delete</span>
                                                                 </a>
+                                                                
                                                             </div>
                                                         </div> 
                                                     </td>
                                                 </tr>
-                                                
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -244,3 +247,28 @@
 	</div>
 
    @endsection
+
+   <script>
+    // function exportdata() {
+    //      var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
+    //      var fullUrl = "{{url()->full()}}";
+    //      if(fullUrl_count>1){
+    //          fullUrl = fullUrl.split('?')[1];
+    //          fullUrl = fullUrl.replace(/&amp;/g, '&');
+    //          fullUrl = '?'+fullUrl;
+    //     }else{
+    //         fullUrl = '';
+    //     }
+    //     var url = "{{url('admin/master/semester/semester-export')}}"+fullUrl;
+    //     window.location.href = url;
+    // }
+	function editSemester(slug) {
+		var url = "{{url('/semester_list_edit')}}"+"/"+slug;
+        //alert(url);
+		window.location.href = url;
+	}
+    function deleteSemester(slug) {
+        var url = "{{url('semester_list_delete')}}"+"/"+slug;
+        window.location.href = url;
+    }
+   </script>

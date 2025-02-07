@@ -1,10 +1,18 @@
 <?php
 
+<<<<<<< HEAD
 namespace App\Http\Controllers\Admin\Master;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Department;
+=======
+namespace App\Http\Controllers\ums\Admin\Master;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\ums\Department;
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use App\Exports\DepartmentExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Validator;
@@ -14,12 +22,20 @@ class DepartmentController extends Controller
       public function index()
     {
         $data = Department::all();
+<<<<<<< HEAD
         return view('admin.master.department.show',['items'=>$data]);
+=======
+        return view('ums.master.department.department',['items'=>$data]);
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     }
 
     public function addPage()
     {
+<<<<<<< HEAD
         return view('admin.master.department.add');
+=======
+        return view('ums.master.department.department_add');
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     }
 
     public function add(Request $request)
@@ -49,7 +65,11 @@ class DepartmentController extends Controller
     public function edit($id)
     {
         $data = Department::find($id);
+<<<<<<< HEAD
         return view('admin.master.department.edit',['data'=>$data]);
+=======
+        return view('ums.master.department.department_edit',['data'=>$data]);
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     }
      public function delete($id)
     {
@@ -69,7 +89,11 @@ class DepartmentController extends Controller
           $data->email = $request->email;
           $data->updated_at = date('Y-m-d');
           $data->save();
+<<<<<<< HEAD
           return back()->with('success','Update Successfully.');
+=======
+          return redirect('department')->with('success','Update Successfully.');
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
       }
        public function departmentExport(Request $request)
     {

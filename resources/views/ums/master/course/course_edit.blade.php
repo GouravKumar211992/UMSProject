@@ -31,13 +31,20 @@
                         <a class="btn  btn-secondary  btn-sm mb-50 mb-sm-0" href="#">
                             <i data-feather="arrow-left"></i>Go Back
                         </a>  
-                        <a class="btn  btn-primary  btn-sm mb-50 mb-sm-0" href="#">
+                        <button type="submit" form="edit_course_form" class="btn  btn-primary  btn-sm mb-50 mb-sm-0" href="#">
                             <i data-feather="user-plus"></i>Update
-                        </a>  
+                        </button>  
                     </div>
                 </div>
                 
             </div>
+            <form id="edit_course_form" method="POST" action="{{route('course_list_update')}}">
+            	@csrf
+                @method('PUT')
+               
+
+		<input type="hidden" name="course_id" value="{{$selected_course->id}}">
+		<input type="hidden" name="course_status" id="course_status" value="">
             <div class="content-body ">
                 <div class="col-md-12 bg-white p-2 rounded shadow-sm">
                     <form>
@@ -46,7 +53,7 @@
                             <div class="col-md-4 mb-3">
                                 <div class="d-flex align-items-center">
                                     <label class="form-label mb-0 me-2 col-3">Course Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" placeholder="B.Ed. S.E. (VI)">
+                                    <input type="text" name="course_name" class="form-control" value="{{$selected_course->name}}" placeholder="Enter here">
                                 </div>
                             </div>
         
@@ -54,7 +61,7 @@
                             <div class="col-md-4 mb-3">
                                 <div class="d-flex align-items-center">
                                     <label class="form-label mb-0 me-2 col-3">Course Code <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" placeholder="24SS">
+                                    <input type="text" value="{{$selected_course->color_code}}" name="color_code" class="form-control" placeholder="24SS">
                                 </div>
                             </div>
         
@@ -62,8 +69,10 @@
                             <div class="col-md-4 mb-3">
                                 <div class="d-flex align-items-center">
                                     <label class="form-label mb-0 me-2 col-3">Category <span class="text-danger">*</span></label>
-                                    <select class="form-select">
-                                        <option value="">Professional</option>
+                                    <select class="form-select" name="category_id">
+                                        @foreach ($categorylist as $category)
+							<option value="{{$category->id}}" @if($selected_course->category_id == $category->id) selected @endif>{{ ucfirst($category->name) }}</option>
+							@endforeach
                                     </select>
                                 </div>
                             </div>
@@ -72,8 +81,12 @@
                             <div class="col-md-4 mb-3">
                                 <div class="d-flex align-items-center">
                                     <label class="form-label mb-0 me-2 col-3">Campus <span class="text-danger">*</span></label>
-                                    <select class="form-select">
-                                        <option value="">SOCIETY FOR INSTITUTE OF PSYCHOLOGICAL RESEARCH & HEALTH</option>
+                                    <select class="form-select" name="campus_id">
+                                        <option value="">Please select</option>
+                                        @foreach ($campuslist as $campus)
+                                        <option value="{{$campus->id}}" {{ ($selected_course->id && ($selected_course->campus_id == $campus->id)) ? 'selected':'' }}>{{ ucfirst($campus->name) }}</option>
+                                        <option value="{{$campus->id}}">{{ ucfirst($campus->name) }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -82,7 +95,7 @@
                             <div class="col-md-4 mb-3">
                                 <div class="d-flex align-items-center">
                                     <label class="form-label mb-0 me-2 col-3">Course Description <span class="text-danger">*</span></label>
-                                    <textarea class="form-control" rows="3" placeholder="B.Ed. Special Education (Visual Impairment)"></textarea>
+                                    <textarea name="course_description" class="form-control" rows="3" {{$selected_course->course_description}} placeholder="B.Ed. Special Education (Visual Impairment)"></textarea>
                                 </div>
                             </div>
         
@@ -90,7 +103,7 @@
                             <div class="col-md-4 mb-3">
                                 <div class="d-flex align-items-center">
                                     <label class="form-label mb-0 me-2 col-3">Total Number of Semesters <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" placeholder="4">
+                                    <input type="number"  name="total_semester_number" value="{{$selected_course->total_semester_number}}" class="form-control" placeholder="4">
                                 </div>
                             </div>
         
@@ -98,8 +111,14 @@
                             <div class="col-md-4 mb-3">
                                 <div class="d-flex align-items-center">
                                     <label class="form-label mb-0 me-2 col-3">Qualification Required <span class="text-danger">*</span></label>
-                                    <select class="form-select">
-                                        <option value="">10th Or Equivalent, 10+2th Or Equivalent, Graduation</option>
+                                    @php
+						$required_qualification_array = explode(',',$selected_course->required_qualification);
+						@endphp
+                                    <select class="form-select" name="required_qualification_data[]">
+                                        <option value="">Please select</option>
+                                        @foreach ($required_qualification as $rq)
+							<option value="{{$rq->id}}" @if(in_array($rq->id, $required_qualification_array)) selected @endif>{{ ucfirst($rq->name) }}</option>
+							@endforeach
                                     </select>
                                 </div>
                             </div>
@@ -108,8 +127,14 @@
                             <div class="col-md-4 mb-3">
                                 <div class="d-flex align-items-center">
                                     <label class="form-label mb-0 me-2 col-3">Course Group for Admission <span class="text-danger">*</span></label>
-                                    <select class="form-select">
-                                        <option value="">Nothing Selected</option>
+                                    @php
+						$course_group_array = explode(',',$selected_course->course_group);
+						@endphp
+                                    <select class="form-select" name="course_group[]">
+                                        <option value="">Please select</option>
+                                        @foreach ($courses as $course)
+                                        <option value="{{$course->id}}" @if(in_array($course->id, $course_group_array)) selected @endif>{{ ucfirst($course->name) }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -117,8 +142,10 @@
                             <!-- Entrance Exam Roll Number -->
                             <div class="col-md-4 mb-3">
                                 <div class="d-flex align-items-center">
-                                    <label class="form-label mb-0 me-2 col-3">Entrance Exam Roll Number Prefix <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control">
+                                    <label for="name" class="form-label mb-0 me-2 col-3">Entrance Exam Roll Number Prefix <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control"  name="roll_number" value="{{$selected_course->roll_number}}">
+                                    <span class="text-danger">{{ $errors->first('roll_number') }}</span>
+                                    
                                 </div>
                             </div>
         
@@ -126,8 +153,10 @@
                             <div class="col-md-4 mb-3">
                                 <div class="d-flex align-items-center">
                                     <label class="form-label mb-0 me-2 col-3">CUET Required? <span class="text-danger">*</span></label>
-                                    <select class="form-select">
-                                        <option value="">No</option>
+                                    <select class="form-select" name="cuet_status" id="cuet_status">
+                                        <option value="">Please select</option>
+							<option value="Yes" @if($selected_course->cuet_status=='Yes') selected @endif>Yes</option>
+							<option value="No" @if($selected_course->cuet_status=='No') selected @endif>No</option>
                                     </select>
                                 </div>
                             </div>
@@ -136,15 +165,17 @@
                             <div class="col-md-4 mb-3">
                                 <div class="d-flex align-items-center">
                                     <label class="form-label mb-0 me-2 col-3">Visible in Application <span class="text-danger">*</span></label>
-                                    <select class="form-select">
-                                        <option value="">Visible</option>
+                                    <select class="form-select" name="visible_in_application">
+                                        <option value="1" @if($selected_course->visible_in_application == 1) selected @endif>Visible</option>
+								<option value="0" @if($selected_course->visible_in_application == 0) selected @endif>Not Visible</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
-            </div>   
+            </div>  
+            </form> 
  </div>
 </div>
     <!-- END: Content-->
@@ -270,3 +301,30 @@
     
 {{-- </body> --}}
 @endsection
+<script>
+	$(document).ready(function() {
+
+		var selected_course = {
+			{
+				!!json_encode($selected_course) !!
+			}
+		};
+	});
+</script>
+
+<script>
+	function submitCat(form) {
+		document.getElementById('edit_course_form').submit();
+	}
+	// $('.alphaOnly').keyup(function() {
+	// 		this.value = this.value.replace(/[^a-z|A-Z\.]/g, '');
+	// 	});
+		$('.alphanumberOnly').keyup(function() {
+			this.value = this.value.replace(/[^a-z|A-Z|0-9\.]/g, '');
+		});
+		function disableButton() {
+        var btn = document.getElementById('btn');
+        btn.disabled = true;
+        btn.innerText = 'Submitting...'
+    }
+</script>

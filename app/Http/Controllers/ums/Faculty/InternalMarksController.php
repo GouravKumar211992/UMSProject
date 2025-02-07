@@ -1,11 +1,16 @@
 <?php
 
+<<<<<<< HEAD
 namespace App\Http\Controllers\Faculty;
+=======
+namespace App\Http\Controllers\ums\Faculty;
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 use View;
 use Auth;
 use App\User;
 
+<<<<<<< HEAD
 use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use App\Models\BackPaper;
@@ -32,6 +37,34 @@ use App\Models\AwardSheetFile;
 use Carbon\Carbon;
 use App\Exports\InternalMarksExport;
 use App\Models\ExamFee;
+=======
+use App\Http\Controllers\ums\AdminController;
+use Illuminate\Http\Request;
+use App\Models\ums\BackPaper;
+use App\Models\ums\Application;
+use App\Models\ums\Course;
+use App\Models\ums\Category;
+use App\Models\ums\Campuse;
+use App\Models\ums\PermanentAddress;
+use App\Models\ums\UploadDocuments;
+use App\Models\ums\Icard;
+use App\Models\ums\Result;
+use App\Models\ums\Subject;
+use App\Models\ums\Stream;
+use App\Models\ums\MbbsExamForm;
+use App\Models\ums\StudentSubject;
+use App\Models\ums\StudentsemesterFee;
+use App\Models\ums\InternalMark;
+use App\Models\ums\PracticalMark;
+use App\Models\ums\ExternalMark;
+use App\Models\ums\InternalMarksMapping;
+use App\Models\ums\AcademicSession;
+use App\Models\ums\Faculty;
+use App\Models\ums\AwardSheetFile;
+use Carbon\Carbon;
+use App\Exports\InternalMarksExport;
+use App\Models\ums\ExamFee;
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use Maatwebsite\Excel\Facades\Excel;
 use Validator;
 use DB;
@@ -59,7 +92,13 @@ class InternalMarksController extends AdminController
     {
 		$data['sub_code']= $data['sub_name']= $data['date_of_semester']= $data['date_of_assign']= $data['assign_maximum']= $data['mapped_faculty']= $mapped_faculty =$data['mapped_Semesters']=$data['mapped_Subjects']= null;
 		$data['sub_code_name'] = '';
+<<<<<<< HEAD
 		$user=Auth::guard('faculty')->user();
+=======
+		// $user=Auth::guard('faculty')->user();
+		$faculty_id = request()->get('faculty_id', 19); // Default to 46 if 'faculty_id' is not provided in the request
+        $user = Faculty::find($faculty_id);
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 		$mapped_Subjects_query = InternalMarksMapping::select('subjects.name', 'subjects.sub_code', 'subjects.back_fees', 'subjects.scrutiny_fee', 'subjects.challenge_fee', 'subjects.status', 'subjects.subject_type', 'subjects.type', 'subjects.internal_maximum_mark', 'subjects.maximum_mark', 'subjects.minimum_mark', 'subjects.credit', 'subjects.internal_marking_type', 'subjects.combined_subject_name')
 		->join('subjects',function($join){
 			$join->on('subjects.sub_code','internal_marks_mappings.sub_code')
@@ -100,7 +139,13 @@ class InternalMarksController extends AdminController
     	$msg=null;
         $students= [];
 		$data['examTypes'] = StudentSubject::distinct('type')->pluck('type')->toArray();
+<<<<<<< HEAD
 		$user = Auth::guard('faculty')->user();
+=======
+		// $user = Auth::guard('faculty')->user();
+		$faculty_id = request()->get('faculty_id', 19); // Default to 46 if 'faculty_id' is not provided in the request
+        $user = Faculty::find($faculty_id);
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 		if($request->sub_code!=null)
         {
 			$duplicate_roll_no = InternalMark::where('session',$request->session)
@@ -184,7 +229,12 @@ class InternalMarksController extends AdminController
 		$data['date_of_assign']=$request->date_of_semester;
 		$data['internal_maximum']=$request->internal_maximum;
 		$data['assign_maximum']=$request->assign_maximum;
+<<<<<<< HEAD
         return view('faculty.internal.add',$data);
+=======
+		// dd('mapped_semesters',$data);
+        return view('ums.master.faculty.internal_marks_filling',$data);
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     }
     
 
@@ -194,8 +244,17 @@ class InternalMarksController extends AdminController
 		$data['streams'] = Stream::whereIn('id',[50,3,4,5])->orderBy('name','ASC')->get();
 		$data['examTypes'] = StudentSubject::distinct('type')->pluck('type')->toArray();
 		if($request->faculty_id){
+<<<<<<< HEAD
 			$user=Faculty::find($request->faculty_id);
 			Auth::guard('faculty')->login($user);
+=======
+			$faculty_id = request()->get('faculty_id', 46); 
+			$user = Faculty::find($faculty_id);
+			// $user=Faculty::find($request->faculty_id);
+			// Auth::guard('faculty')->login($user);
+			// Default to 46 if 'faculty_id' is not provided in the request
+            //  
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 			$retult_check = Result::where(['course_id'=>$request->course,'semester'=>$request->semester,'subject_code'=>$request->sub_code,'status'=>'1'])->get();
 			//dd($retult_check->count());
 			if($retult_check->count() > 0){
@@ -205,7 +264,13 @@ class InternalMarksController extends AdminController
 				PracticalMark::where(['faculty_id'=>$request->faculty_id,'course_id'=>$request->course,'semester_id'=>$request->semester,'sub_code'=>$request->sub_code])->update(['final_status'=>0]);
 			}
 		}else{
+<<<<<<< HEAD
 			$user=Auth::guard('faculty')->user();
+=======
+			// $user=Auth::guard('faculty')->user();
+			$faculty_id = request()->get('faculty_id', 46); 
+			$user = Faculty::find($faculty_id);
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 		}
 
 		$mapped_Subjects_query =InternalMarksMapping::select('subjects.*')
@@ -276,7 +341,11 @@ class InternalMarksController extends AdminController
 
 		$data['sessions']=AcademicSession::all();
 		$data['selected_course'] = Course::find($request->course);
+<<<<<<< HEAD
         return view('faculty.internal.show',$data);
+=======
+        return view('ums.master.faculty.internal_marks_filling',$data);
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     }
 
 	public function internalMarksDelete(Request $request)
@@ -310,7 +379,11 @@ class InternalMarksController extends AdminController
 		$internal_data=$query->get();
 		$internal_data_first=$query->first();
 		//dd($internal_data);
+<<<<<<< HEAD
 		return view('faculty.internal.internal-mark-preview',['faculty'=>$faculty,'internal_data'=>$internal_data,'internal_data_first'=>$internal_data_first]);
+=======
+		return view('ums.master.faculty.internal_marks_filling',['faculty'=>$faculty,'internal_data'=>$internal_data,'internal_data_first'=>$internal_data_first]);
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 	}
 
 	public function post_internal(Request $request){

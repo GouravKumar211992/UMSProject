@@ -5,7 +5,10 @@
     @endphp
 
     <section class="content-body p-5">
+<<<<<<< HEAD
         @include('ums.admin.notifications')
+=======
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
         <div class="container mt-2">
 
             <div class="card shadow-lg border-0 rounded-lg mb-4">

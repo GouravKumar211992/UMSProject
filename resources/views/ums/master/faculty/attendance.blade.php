@@ -57,6 +57,7 @@
                             <div class="card">
 								
 								   
+<<<<<<< HEAD
                                 <div class="table-responsive">
                                         <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
                                             <thead>
@@ -73,6 +74,22 @@
                                             </thead>
                                                
                                 @foreach($attendence as $key=> $attendences)
+=======
+                                <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr. No.</th>
+                                            <th>Student Name</th>
+                                            <th>Enrollment Number</th>
+                                            <th>Roll No</th>
+                                            <th>Course</th>
+                                            <th>Semester</th>
+                                            <th>Attendance</th>
+                                            <th>Date Of Attendance</th>
+                                        </tr>
+                                    </thead>
+                                    @foreach($attendence as $key=> $attendences)
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
                                 <tbody>
 									<tr>
@@ -91,9 +108,21 @@
 									</tr>
 								</tbody>
                                @endforeach
+<<<<<<< HEAD
                                         </table>
                                     </div>
                             </div>
+=======
+                            </table>
+                        </div>
+                        {{-- {{$attendence->appends(Request()->all())->links('partials.pagination')}} --}}
+
+                                {{-- Pagination Links --}}
+                                {{-- <div class="pagination-container">
+                                    {{ $attendence->links() }}
+                                </div> --}}
+                                
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
                         </div>
                     </div>
                     <!-- Modal to add new record -->

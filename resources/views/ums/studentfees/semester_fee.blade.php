@@ -68,6 +68,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                {{-- @foreach ($collection as $item) --}}
+                                                    
                                                 
                                                 <tr>
                                                     <td>1</td>
@@ -101,6 +103,7 @@
                                                         </div> 
                                                     </td>
                                                 </tr>
+                                                {{-- @endforeach --}}
                                             </tbody>
                                         </table>
                                     </div>

@@ -8,10 +8,11 @@
   
    
     <!-- END: Main Menu-->
-
+ 
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
+        @include('ums.admin.notifications')
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
             <div class="content-header row">
@@ -60,13 +61,16 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                               @foreach ($all_shifts as $item)
+                                                   
                                                
                                                 <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td class="fw-bolder text-dark"></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td>{{$item->id}} </td>
+                                                    <td>{{$item->name}} </td>
+                                                    <td>{{$item->start_time}}</td>
+                                                    <td class="fw-bolder text-dark">{{$item->end_time}}</td>
+                                                    <td>{{$item->created_at}}</td>
+                                                    {{-- <td></td> --}}
                                                     
                                                     <td class="tableactionnew">  
                                                         <div class="dropdown">
@@ -74,11 +78,12 @@
                                                                 <i data-feather="more-vertical"></i>
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" href="{{url('shift_edit')}}" >
+                                                                <a class="dropdown-item" href="{{ route('shift_edit', ['id' => $item->id]) }}"
+                                                                    >
                                                                     <i data-feather="edit" class="me-50"></i>
                                                                     <span>Edit</span>
                                                                 </a> 
-                                                             <a class="dropdown-item" href="#">
+                                                             <a class="dropdown-item" href="{{ route('delete_shift', ['id' => $item->id]) }}">
                                                                     <i data-feather="trash-2" class="me-50"></i>
                                                                     <span>Delete</span>
                                                                 </a>
@@ -86,7 +91,7 @@
                                                         </div> 
                                                     </td>
                                                 </tr>
-                                                
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

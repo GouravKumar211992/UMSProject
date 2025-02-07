@@ -1,11 +1,16 @@
 <?php
 
+<<<<<<< HEAD
 namespace App\Http\Controllers\Affiliate;
+=======
+namespace App\Http\Controllers\ums\Affiliate;
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
 use Auth;
+<<<<<<< HEAD
 use App\Models\Application;
 use App\Models\UploadDocument;
 use App\Models\AffiliateCircular;
@@ -17,14 +22,32 @@ use App\Models\AffiliateAdmin;
 use App\Models\InternalMarksMapping;
 use App\Models\AcademicSession;
 use App\Models\InternalMark;
+=======
+use App\Models\ums\Application;
+use App\Models\ums\UploadDocument;
+use App\Models\ums\AffiliateCircular;
+use App\Models\ums\Address;
+use App\Models\ums\Enrollment;
+use App\Models\ums\Course;
+use App\Models\ums\Campuse;
+use App\Models\ums\AffiliateAdmin;
+use App\Models\ums\AcademicSession;
+use App\Models\ums\InternalMark;
+use App\Models\ums\InternalMarksMapping;
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 //this is for affiliate tr
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\AdminController;
 
 //use App\Models\Course;
+<<<<<<< HEAD
 use App\Models\Semester;
 use App\Models\Subject;
+=======
+use App\Models\ums\Semester;
+use App\Models\ums\Subject;
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use App\Models\Result;
 use App\Models\ExamFormAllow;
 use App\Models\MbbsExamForm;
@@ -79,7 +102,11 @@ class DashboardController extends Controller
     public function information()  
        {
          $files=UploadDocument::paginate(10);
+<<<<<<< HEAD
            return view('affiliate.information',['files'=>$files]);
+=======
+           return view('ums.affiliate_information_view.affiliate_informations_view',['files'=>$files]);
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
        }
     
 

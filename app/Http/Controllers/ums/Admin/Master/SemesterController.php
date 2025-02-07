@@ -1,8 +1,14 @@
 <?php
 
+<<<<<<< HEAD
 namespace App\Http\Controllers\Admin\Master;
 
 use App\Http\Controllers\AdminController;
+=======
+namespace App\Http\Controllers\ums\Admin\Master;
+
+use App\Http\Controllers\ums\AdminController;
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -54,7 +60,11 @@ class SemesterController extends AdminController
         $category = Category::all();
         $course = Course::all();
         $campuse = Campuse::all();
+<<<<<<< HEAD
         return view('admin.master.semester.index', [
+=======
+        return view('ums.master.semester_list.semester_list', [
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => "Semester",
             'sub_title' => "records",
             'all_semester' => $semester,
@@ -69,7 +79,11 @@ class SemesterController extends AdminController
 		$category = Category::all();
         $course = Course::all();
         $campuse = Campuse::all();
+<<<<<<< HEAD
         return view('admin.master.semester.addsemester', [
+=======
+        return view('ums.master.semester_list.semester_list_add', [
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => "Add New",
             'sub_title' => "Semester",
             'categorylist' => $category,
@@ -94,7 +108,11 @@ class SemesterController extends AdminController
 				
         $data = $request->all();
         $semester = $this->create($data);
+<<<<<<< HEAD
         return redirect()->route('get-semester')->with('message','Semester Added Successfully');
+=======
+        return redirect()->route('semester_list')->with('message','Semester Added Successfully');
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     }
 
     public function create(array $data)
@@ -118,7 +136,11 @@ class SemesterController extends AdminController
         ]);
         $update_category = Semester::where('id',$request->semester_id)->update(['program_id' => $request->category_id,'course_id'=>$request->course_id,'name'=>$request->semester_name, 'semester_number'=>$request->semester_number ]);
 		//dd($update_category);
+<<<<<<< HEAD
         return redirect()->route('get-semester')->with('success','Updated Successfully');
+=======
+        return redirect()->route('semester_list')->with('success','Updated Successfully');
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
         
     }
 
@@ -130,8 +152,13 @@ class SemesterController extends AdminController
         $courseList = Course::all();
 		$campuse = Campuse::all();
 		//dd($selectedSemester);
+<<<<<<< HEAD
         return view('admin.master.semester.editsemester',[
             'page_title' => $selectedSemester->name,
+=======
+        return view('ums.master.semester_list.semester_list_edit',[
+            
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'sub_title' => "Edit Information",
             'selected_semester' => $selectedSemester,
              'categorylist' => $categorylist,
@@ -144,7 +171,11 @@ class SemesterController extends AdminController
     public function softDelete(Request $request,$slug) {
         
         Semester::where('id', $slug)->delete();
+<<<<<<< HEAD
         return back()->with('success','Deleted Successfully');
+=======
+        return redirect()->route('semester_list')->with('success','delete Successfully');
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
         
     }
     public function semesterExport(Request $request)

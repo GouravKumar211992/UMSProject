@@ -8,6 +8,7 @@
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
+        @include('ums.admin.notifications')
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
             <div class="content-header row">
@@ -62,24 +63,25 @@
                                                 <th>Action</th>
 											  </tr>
 											</thead>
+                                            @if(count($all_fee) > 0)
+                                            @foreach($all_fee as $fee)
 											<tbody>
 												
                                            
 												  <tr>
-													<td>#5</td>
-													<td>	Dr. Shakuntala Misra National Rehabilitation University</td>
-													<td>B.B.A.</td>
-													<td>
-                                                        2021-2022
-                                                     </td>
-                                                     <td> 60</td>
-                                                     <td>10+2 OR EQUIVALENT</td>
-                                                     <td>Online</td>
-                                                     <td>3</td>
-                                                     <td>	0</td>
-                                                     <td>19000</td>
-                                                     <td>21315</td>
-                                                     <td>135615</td>
+										<td>#{{$fee->id}}</td>
+										<td>{{$fee->course->campuse->name}}</td>
+										<td>{{$fee->course->name}}</td>
+										<td>{{$fee->academic_session}}</td>
+										<td>{{$fee->seat}}</td>
+										<td>{{$fee->basic_eligibility}}</td>
+										<td>{{$fee->mode_of_admission}}</td>
+										<td>{{$fee->course_duration}}</td>
+										<td>{{$fee->tuition_fee_for_divyang_per_sem}}</td>
+										<td>{{$fee->tuition_fee_for_other_per_sem}}</td>
+										<td>{{$fee->payable_fee_for_divyang_per_sem}}</td>
+										<td>{{$fee->payable_fee_for_other_per_sem}}</td>
+                                        <td>
                                                     
 													<td class="tableactionnew">
 														<div class="dropdown">
@@ -87,12 +89,12 @@
 																<i data-feather="more-vertical"></i>
 															</button>
 															<div class="dropdown-menu dropdown-menu-end">
-																<a class="dropdown-item" href="fee_list_edit">
+																<a class="dropdown-item" href="{{route('fee_list_edit',$fee->id)}}">
 																	<i data-feather="edit-3" class="me-50"></i>
 																	<span>Edit</span>
 																</a>
                                                                
-																<a class="dropdown-item" href="#">
+																<a class="dropdown-item" href="{{route('delete_fee',$fee->id)}}">
 																	<i data-feather="trash-2" class="me-50"></i>
                                                           <span onclick="return confirm('Are you sure?');">Delete</span>                                                                </a>
 																</a> 
@@ -100,81 +102,14 @@
 														</div>
 													</td>
 												  </tr>
-												  <tr>
-													<td>#5</td>
-													<td >	Dr. Shakuntala Misra National Rehabilitation University</td>
-													<td>B.B.A.</td>
-													<td>
-                                                        2021-2022
-                                                     </td>
-                                                     <td> 60</td>
-                                                     <td>10+2 OR EQUIVALENT</td>
-                                                     <td>Online</td>
-                                                     <td>3</td>
-                                                     <td>	0</td>
-                                                     <td>19000</td>
-                                                     <td>21315</td>
-                                                     <td>135615</td>
-                                                    
-													<td class="tableactionnew">
-														<div class="dropdown">
-															<button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-																<i data-feather="more-vertical"></i>
-															</button>
-															<div class="dropdown-menu dropdown-menu-end">
-																<a class="dropdown-item" href="#">
-																	<i data-feather="edit-3" class="me-50"></i>
-																	<span>Edit</span>
-																</a>
-                                                               
-																<a class="dropdown-item" href="#">
-																	<i data-feather="trash-2" class="me-50"></i>
-                                                         <span onclick="return confirm('Are you sure?');">Delete</span>                                                                </a>
-																</a> 
-															</div>
-														</div>
-													</td>
-												  </tr>
-												  <tr>
-													<td>#5</td>
-													<td >	Dr. Shakuntala Misra National Rehabilitation University</td>
-													<td>B.B.A.</td>
-													<td>
-                                                        2021-2022
-                                                     </td>
-                                                     <td> 60</td>
-                                                     <td>10+2 OR EQUIVALENT</td>
-                                                     <td>Online</td>
-                                                     <td>3</td>
-                                                     <td>	0</td>
-                                                     <td>19000</td>
-                                                     <td>21315</td>
-                                                     <td>135615</td>
-                                                    
-													<td class="tableactionnew">
-														<div class="dropdown">
-															<button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-																<i data-feather="more-vertical"></i>
-															</button>
-															<div class="dropdown-menu dropdown-menu-end">
-																
-																<a class="dropdown-item" href="#">
-																	<i data-feather="edit-3" class="me-50"></i>
-																	<span>Edit</span>
-																</a>
-                                                               
-																<a class="dropdown-item" href="#">
-																	<i data-feather="trash-2" class="me-50"></i>
-                                                         <span onclick="return confirm('Are you sure?');">Delete</span>                                                                </a>
-																</a> 
-															</div>
-														</div>
-													</td>
-												  </tr>
 												
-												 
 											   </tbody>
-
+                                               @endforeach
+                                               @else
+                                                   <tr>
+                                                       <td colspan="12" class="text-center">NO DATA FOUND</td>
+                                                   </tr>
+                                               @endif
 
 									</table>
 								</div>
@@ -230,59 +165,35 @@
     </div>
     <!-- END: Content-->
 
-    <div class="sidenav-overlay"></div>
-    <div class="drag-target"></div>
-
-    <!-- BEGIN: Footer-->
-    <footer class="footer footer-static footer-light">
-        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">Copyright &copy; 2024 <a class="ml-25" href="#" target="_blank">Presence 360</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span></p>
-        
-        <div class="footerplogo"><img src="../../../assets/css/p-logo.png" /></div>
-    </footer>
-    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
-    <!-- END: Footer-->
+    
 	
-	 
+    @include('ums.admin.search-model', ['searchTitle' => 'Campus List Search'])
+
     <div class="modal modal-slide-in fade filterpopuplabel" id="filter">
 		<div class="modal-dialog sidebar-sm">
-			<form class="add-new-record modal-content pt-0"> 
+			<form id="approveds-form" class="add-new-record modal-content pt-0" method="GET" action="{{ url('fees_list') }}"> 
 				<div class="modal-header mb-1">
 					<h5 class="modal-title" id="exampleModalLabel">Apply Filter</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
 				</div>
 				<div class="modal-body flex-grow-1">
-					<div class="mb-1">
-						  <label class="form-label" for="fp-range">Select Date</label>
-<!--                        <input type="text" id="fp-default" class="form-control flatpickr-basic" placeholder="YYYY-MM-DD" />-->
-						  <input type="text" id="fp-range" class="form-control flatpickr-range bg-white" placeholder="YYYY-MM-DD to YYYY-MM-DD" />
-					</div>
+					
 					
 					<div class="mb-1">
-						<label class="form-label">PO No.</label>
-						<select class="form-select">
-							<option>Select</option>
+						<label class="form-label">Course Name</label>
+						<select class="form-select" name="course">
+							<option value=""></option>
+                                @foreach($courses as $course)
+                                <option value="{{$course->id}}">{{$course->name}}</option>
+                                @endforeach
 						</select>
 					</div> 
                     
-                    <div class="mb-1">
-						<label class="form-label">Vendor Name</label>
-						<select class="form-select select2">
-							<option>Select</option> 
-						</select>
-					</div> 
-                    
-                    <div class="mb-1">
-						<label class="form-label">Status</label>
-						<select class="form-select">
-							<option>Select</option>
-							<option>Open</option>
-							<option>Close</option>
-						</select>
-					</div> 
+                     
 					 
 				</div>
 				<div class="modal-footer justify-content-start">
-					<button type="button" class="btn btn-primary data-submit mr-1">Apply</button>
+					<button type="submit" class="btn btn-primary data-submit mr-1">Apply</button>
 					<button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
 				</div>
 			</form>

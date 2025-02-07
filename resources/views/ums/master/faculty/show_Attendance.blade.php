@@ -9,6 +9,8 @@
  @section('content')
 
     <!-- BEGIN: Content-->
+    <form method="get" href="{{ url('show_Attendance') }}" name="search-attendence" onsubmit="return validateForm()">
+        
     <div class="app-content content ">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -31,9 +33,9 @@
                     <div class="form-group breadcrumb-right"> 
                         
                         <!-- <button class="btn btn-success btn-sm mb-50 mb-sm-0" data-bs-target="#approved" data-bs-toggle="modal"><i data-feather="check-circle" ></i> Assign Team</button> -->
-                        <a class="btn  btn-dark  btn-sm mb-50 mb-sm-0" href="{{ url('admin_list_add') }}">
-                            <i data-feather="check-circle"></i> Submit
-                        </a>  
+                        <input  type="submit" class="btn  btn-dark  btn-sm mb-50 mb-sm-0" >
+                        {{-- <i value="Print" onclick="print()" data-feather="check-circle"></i> Print --}}
+                      
                     </div>
                 </div>
                 
@@ -48,19 +50,18 @@
                                     <label class="form-label">Session:<span class="text-danger m-0">*</span></label>
                                 </div>
                                 <div class="col-md-5"> 
-                                    <select name="step" id="stepSelect" class="form-control">
+                                    <select id="session" name="session" class="form-control">
                                         <option value="">---Select---</option>
-                                        <option value="1">Option 1</option>
-                                        <option value="2">Option 2</option>
-                                        <option value="3">Option 3</option>
-                                        <option value="4">Option 4</option>
+                                        @foreach($sessionsList as $key => $session)
+                                    <option value="{{ $session }}">{{ $session }}</option>
+                                    @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">Date (Optional):</label>
                                 </div>
                                 <div class="col-md-3"> 
-                                    <input type="date" name="date" id="dateInput" class="form-control">
+                                    <input type="date" name="date_of_attendence"  class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -83,11 +84,39 @@
                                                 <th>Attendance</th>
                                             </tr>
                                         </thead>
+                                        @if($searchAttendence)
+
+                                        @foreach($searchAttendence as $key=>$searchAttendences)
+                                            <tbody>
+                                                <tr>
+                                                   <th>{{$key+1}}</th>
+            
+                                                    <th>{{$searchAttendences->students_name}}</th>
+                                                    <th>{{$searchAttendences->enrollment_no}}</th>
+                                                    <th>{{$searchAttendences->roll_no}}</th>
+                                                    <th>{{$searchAttendences->attendence_status}}</th>
+            
+            
+                                                </tr>
+                                            </tbody>
+            
+                                            @endforeach
+                                            @else
+                                            <tr>
+                                                <th>NO DATA FOUND</th>
+                                            </tr>
+                                            @endif
+                                        </table>
+                                    </div>
+                                    {{$searchAttendence->appends(Request()->all())->links('')}}
+            
+                                   
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    </form>
                     <!-- Modal to add new record -->
                     <div class="modal modal-slide-in fade" id="modals-slide-in">
                         <div class="modal-dialog sidebar-sm">

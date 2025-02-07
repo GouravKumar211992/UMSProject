@@ -3,6 +3,7 @@
 
 @section('content')
     <!-- BEGIN: Content-->
+    
     <div class="app-content content ">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -25,251 +26,88 @@
 							</div>
 						</div>
 					</div>
-					<div class="content-header-right text-sm-end col-md-6 mb-50 mb-sm-0">
-						<div class="form-group breadcrumb-right">
-                            <button onClick="javascript: history.go(-1)" class="btn btn-secondary btn-sm mb-50 mb-sm-0"><i data-feather="arrow-left-circle"></i>Cancel</button>    
-   
-							<button onClick="javascript: history.go(-1)" class="btn btn-secondary btn-sm mb-50 mb-sm-0"><i data-feather="arrow-left-circle"></i>Go Back</button>    
-							<button onClick="javascript: history.go(-1)" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle"></i>Publish</button> 
-						</div>
-					</div>
-				</div>
-			</div>
-            <div class="content-body">
-                 
-                
-				
-				<section id="basic-datatable">
-                    <div class="row">
-                        <div class="col-12">  
-							
-                            <div class="card">
-								 <div class="card-body customernewsection-form"> 
-											 
-											<div class="row">
-												<div class="col-md-12">
-                                                    <div class="newheader border-bottom mb-2 pb-25 d-flex flex-wrap justify-content-between"> 
-														<div>
-                                                            <h4 class="card-title text-theme">Basic Information</h4>
-														    <p class="card-text">Fill the details</p>
-                                                        </div> 
-													</div>
-                                                    
-                                                </div> 
-                                                
-                                                
-                                                <div class="col-md-8"> 
-                                                      
-                              
-                                                    <div class="row align-items-center mb-1">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label">Category Name <span class="text-danger">*</span></label>  
-                                                        </div>  
-
-                                                        <div class="col-md-5"> 
-                                                            <input type="text" class="form-control">
-                                                        </div> 
-                                                    
-                                                     </div> 
-                                                    
-                                                     <div class="row align-items-center mb-2">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label">Status</label> 
-                                                        </div>  
-
-                                                        <div class="col-md-5"> 
-                                                            <div class="demo-inline-spacing">
-                                                                <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio3" name="customColorRadio3" class="form-check-input" checked="">
-                                                                    <label class="form-check-label fw-bolder" for="customColorRadio3">Open</label>
-                                                                </div> 
-                                                                <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio4" name="customColorRadio3" class="form-check-input">
-                                                                    <label class="form-check-label fw-bolder" for="customColorRadio4">Close</label>
-                                                                </div> 
-                                                            </div>  
-                                                        </div> 
-                                                        
-
-                                                    </div>
-                                     
-                                     
-                                             {{-- <div class="mt-2">
-                                                <div class="step-custhomapp bg-light mb-0">
-                                                    <ul class="nav nav-tabs my-25 custapploannav" role="tablist"> 
-                                                        <li class="nav-item">
-                                                            <a class="nav-link active" data-bs-toggle="tab" href="#Invoice">Invoice & Order Detail</a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a class="nav-link" data-bs-toggle="tab" href="#Assigned">Assigned Person Detail</a>
-                                                        </li> 
-                                                    </ul> 
-                                                </div>
-
-												 <div class="tab-content pt-2 pb-1 px-1 rounded-3 border">
-                                                    <div class="tab-pane active" id="Invoice"> 
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Invoice No. <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <input type="text" class="form-control"  />
-                                                            </div> 
-                                                         </div>
-
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Invoice Date <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <input type="date" value="2024-09-10" disabled class="form-control"  />
-                                                            </div> 
-                                                            <div class="col-md-3">
-                                                                <a href="#" class="btn btn-sm btn-outline-primary waves-effect">
-                                                                <i data-feather="file-text"></i> View Invoice</a>
-                                                            </div>
-                                                         </div>
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Sales Order Number <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <input type="text" class="form-control"  />
-                                                            </div> 
-                                                         </div>
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Sales Order Date <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <input type="date" value="2024-09-08" disabled class="form-control"  />
-                                                            </div> 
-                                                         </div>
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Customer Ref. No. <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <input type="text" class="form-control"  />
-                                                            </div> 
-                                                         </div>
-                                                    </div>
-                                                     <div class="tab-pane" id="Assigned"> 
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Error Category <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <select class="form-control select2">
-                                                                    <option>Select</option>
-                                                                </select>
-                                                            </div> 
-                                                         </div>
-
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Sub Category 1</label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <select class="form-control select2">
-                                                                    <option>Select</option>
-                                                                </select>
-                                                            </div> 
-                                                         </div>
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Sub Category 2</label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <select class="form-control select2">
-                                                                    <option>Select</option>
-                                                                </select>
-                                                            </div> 
-                                                         </div>
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Responsible Dept. <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <select class="form-control select2">
-                                                                    <option>Select</option>
-                                                                </select>
-                                                            </div> 
-                                                         </div>
-                                                        <div class="row align-items-center mb-1">
-                                                            <div class="col-md-2"> 
-                                                                <label class="form-label">Assigned To <span class="text-danger">*</span></label>  
-                                                            </div>  
-
-                                                            <div class="col-md-3"> 
-                                                                <select class="form-control select2">
-                                                                    <option>Select</option>
-                                                                </select>
-                                                            </div> 
-                                                         </div>
-                                                    </div>
-                                                 </div>
-											  
- 
-											 
-											
-											
-											 
- 
-								
-								</div> --}}
-                                     
-                                     
-                                         {{-- <div class="row mt-2"> 
-                                            <div class="col-md-12">
-                                                 <div class="col-md-4">
-                                                    <div class="mb-1">
-                                                        <label class="form-label">Upload Document</label>
-                                                        <input type="file" class="form-control">
-                                                    </div>
-                                                </div> 
-                                             </div> 
-                                            <div class="col-md-12">
-                                                <div class="mb-1">  
-                                                    <label class="form-label">Incident Description</label> 
-                                                    <textarea type="text" rows="4" class="form-control" placeholder="Enter Remarks here..."></textarea> 
-
-                                                </div>
-                                            </div> 
-                                        </div>  --}}
+                    
+                        <div class="content-header-right text-sm-end col-md-6 mb-50 mb-sm-0">
+                            <div class="form-group breadcrumb-right">
+                                <button onClick="javascript: history.go(-1)" class="btn btn-secondary btn-sm mb-50 mb-sm-0">
+                                    <i data-feather="arrow-left-circle"></i>Cancel</button>    
+                    
+                                <button onClick="javascript: history.go(-1)" class="btn btn-secondary btn-sm mb-50 mb-sm-0">
+                                    <i data-feather="arrow-left-circle"></i>Go Back</button>    
+                    
+                                <button form="cat_form" type="submit" class="btn btn-primary btn-sm mb-50 mb-sm-0">
+                                    <i data-feather="check-circle"></i>Publish</button> 
                             </div>
                         </div>
-                    </div>
+                        <form id="cat_form" method="POST" action="{{ route('category_list_add') }}">
+                            @csrf
+                        <div class="content-body">
+                            <section id="basic-datatable">
+                                <div class="row">
+                                    <div class="col-12">  
+                                        <div class="card">
+                                            <div class="card-body customernewsection-form">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="newheader border-bottom mb-2 pb-25 d-flex flex-wrap justify-content-between"> 
+                                                            <div>
+                                                                <h4 class="card-title text-theme">Basic Information</h4>
+                                                                <p class="card-text">Fill the details</p>
+                                                            </div> 
+                                                        </div>
+                                                    </div> 
                     
-                    </div>
-                </section>
-                 
-
-            </div>
+                                                    <div class="col-md-8"> 
+                                                        <!-- Category Name Field -->
+                                                        <div class="row align-items-center mb-1">
+                                                            <div class="col-md-3"> 
+                                                                <label class="form-label">Category Name <span class="text-danger">*</span></label>  
+                                                            </div>  
+                    
+                                                            <div class="col-md-5"> 
+                                                                <input type="text" name="category_name" class="form-control" required>
+                                                                @if($errors->has('category_name'))
+                                                                    <span class="text-danger">{{ $errors->first('category_name') }}</span>
+                                                                @endif
+                                                            </div> 
+                                                        </div> 
+                    
+                                                        <!-- Status Field -->
+                                                        <div class="row align-items-center mb-2">
+                                                            <div class="col-md-3"> 
+                                                                <label class="form-label">Status</label> 
+                                                            </div>  
+                    
+                                                            <div class="col-md-5"> 
+                                                                <div class="demo-inline-spacing">
+                                                                    <div class="form-check form-check-primary mt-25">
+                                                                        <input type="radio" id="closeStatus" name="category_status" value="inactive" class="form-check-input">
+                                                                        <label class="form-check-label fw-bolder" for="inactive">Active</label>
+                                                                    </div> 
+                                                                    <div class="form-check form-check-primary mt-25">
+                                                                        <input type="radio" id="openStatus" name="category_status" value="active" class="form-check-input" checked>
+                                                                        <label class="form-check-label fw-bolder" for="active">Inactive</label>
+                                                                    </div> 
+                                                                    
+                                                                </div>  
+                                                            </div> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </form>
+                   
         </div>
     </div>
     <!-- END: Content-->
 
-    <div class="sidenav-overlay"></div>
-    <div class="drag-target"></div>
 
-    <!-- BEGIN: Footer-->
-    {{-- <footer class="footer footer-static footer-light">
-        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">Copyright &copy; 2024 <a class="ml-25" href="#" target="_blank">Presence 360</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span></p>
-        
-        <div class="footerplogo"><img src="../../../assets/css/p-logo.png" /></div>
-    </footer>
-    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button> --}}
-    <!-- END: Footer-->
+   
 	
 	
 	  <div class="modal fade" id="attribute" tabindex="-1" aria-labelledby="shareProjectTitle" aria-hidden="true">
@@ -357,11 +195,11 @@
                                 </table>
                             </div>
                 </div>
-
-                <div class="modal-footer justify-content-center">  
+           
+                {{-- <div class="modal-footer justify-content-center">  
                         <button type="reset" class="btn btn-outline-secondary me-1">Cancel</button> 
                     <button type="reset" class="btn btn-primary">Select</button>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -414,5 +252,26 @@
 			</div>
 		</div>
 	</div>
-
+    <script>
+        function submitCat(form) {
+            form.prop('disabled',true);
+    
+            if(document.getElementById('active').checked) {
+                document.getElementById('category_status').value = 'active';
+            }
+            else {
+                document.getElementById('category_status').value = 'inactive';
+            }
+    
+            document.getElementById('cat_form').submit();
+        }
+        $('.alphaOnly').keyup(function() {
+                this.value = this.value.replace(/[^a-z|A-Z\.]/g, '');
+            });
+            function disableButton() {
+            var btn = document.getElementById('submit_btn');
+            btn.disabled = true;
+            btn.innerText = 'Submitting...'
+            }
+    </script>
     @endsection

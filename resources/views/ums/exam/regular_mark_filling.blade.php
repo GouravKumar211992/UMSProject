@@ -150,7 +150,11 @@
                                             @foreach($form_form_data as $index=>$examFee)
                                             
                                                 @foreach($examFee->regularPaperList() as $regularPaper)
+<<<<<<< HEAD
                                                 {{-- {{dd($regularPaper)}} --}}
+=======
+                                                {{dd($regularPaper)}}
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
                                                     <tr>
                                                         
                                                         <td>{{++$index}}</td>

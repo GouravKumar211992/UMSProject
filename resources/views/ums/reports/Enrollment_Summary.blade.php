@@ -9,6 +9,8 @@
 
     <!-- BEGIN: Content-->
     <div class="app-content content ">
+        <form method="get" id="form_data">
+
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
@@ -49,12 +51,11 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Select Session---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select name="campus" id="campus" class="form-control" required>
+                                    <option value="">--Select Campus--</option>
+                                    @foreach($campuses as $campus)
+                                        <option value="{{$campus->id}}" @if(Request()->campus==$campus->id) selected @endif >{{$campus->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -70,23 +71,18 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">---Select Session---</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select name="academic_session" id="academic_session" class="form-control" required>
+                                    <option value="">--Select Session--</option>
+                                    @foreach($sessions as $session)
+                                        <option value="{{$session->academic_session}}" @if(Request()->academic_session==$session->academic_session) selected @endif >{{$session->academic_session}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
-
-                       
-
                     </div>
-                    
-
-
                 </div>
+            </form>
+
 
 
                 <section id="basic-datatable">
@@ -113,53 +109,47 @@
                                         </thead>
                                         <tbody>
 
-
+                                            @if($courses)
+                                            @php
+                                            $i = 0;
+                                            $enrollmentDataTotal = 0;
+                                            $councelledDataTotal = 0;
+                                            $examFormDataTotal = 0;
+                                            @endphp
+                                            @foreach($courses as $course)
+                                            @php
+                                            $enrollmentData = $course->enrollmentData(0,Request()->academic_session);
+                                            $councelledData = $course->councelledData(0,Request()->academic_session);
+                                            $examFormData = $course->examFormCount(1,Request()->academic_session);
+                                            $enrollmentDataTotal = $enrollmentDataTotal + $enrollmentData;
+                                            $councelledDataTotal = $councelledDataTotal + $councelledData;
+                                            $examFormDataTotal = $examFormDataTotal + $examFormData;
+                                            @endphp
                                             <tr>
-                                                <td>1</td>
-                                                <td>Main Campus</td>
-                                                <td>Bachelor of Science (BSc)</td>
-                                                <td>200</td>
-                                                <td>180</td>
-                                                <td>150</td>
-                                                <td>2024</td>
-                                                {{-- <td class="tableactionnew">
-                                                    <div class="dropdown">
-                                                        <button type="button"
-                                                            class="btn btn-sm dropdown-toggle hide-arrow py-0"
-                                                            data-bs-toggle="dropdown">
-                                                            <i data-feather="more-vertical"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="edit" class="me-50"></i>
-                                                                <span>View Detail</span>
-                                                            </a>
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="edit-3" class="me-50"></i>
-                                                                <span>Edit</span>
-                                                            </a>
-
-                                                            <a class="dropdown-item" href="#">
-                                                                <i data-feather="trash-2" class="me-50"></i>
-                                                                <span>Delete</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </td> --}}
+                                                <td>{{++$i}}</td>
+                                                <td>{{$course->campuse->name}}</td>
+                                                <td>{{$course->name}}</td>
+                                                <td>{{$councelledData}}</td>
+                                                <td>{{$enrollmentData}}</td>
+                                                <td>{{$examFormData}}</td>
+                                                <td>{{Request()->academic_session}}</td>
                                             </tr>
-
-
+                                            @endforeach
+                                            @endif
+                                            <tfoot>
+                                            <tr>
+                                                <th colspan="3" class="text-right">Total</th>
+                                                <th>{{$councelledDataTotal}}</th>
+                                                <th>{{$enrollmentDataTotal}}</th>
+                                                <th>{{$examFormDataTotal}}</th>
+                                                <th></th>
+                                            </tr>
+                                            </tfoot>
                                         </tbody>
-
-
                                     </table>
                                 </div>
 
-
-
-
-
-                            </div>
+                  </div>
                         </div>
                     </div>
                     <!-- Modal to add new record -->

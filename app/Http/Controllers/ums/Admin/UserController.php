@@ -169,7 +169,12 @@ class UserController extends AdminController
       
             $user=$this->create($data);
             // dd($data);
+<<<<<<< HEAD
             return redirect('admin-get');
+=======
+      
+            return redirect('admin-get')->with('success','Admin Successfully Added');
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
         
      
     }
@@ -191,7 +196,11 @@ class UserController extends AdminController
         $data = $request->all();
         
          EmailTemplate::create($data);
+<<<<<<< HEAD
         return redirect('/email-template');
+=======
+        return redirect('/email-template')->with('success','Email successFully added');
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     }
    
 
@@ -262,10 +271,19 @@ public function editEmailTemplates(Request $request, $slug)
         $request->validate([
             'name' => 'required',
             'mobile' => 'required|numeric',
+<<<<<<< HEAD
         ]);
         // dd($request->all());
         $update_category = Admin::where('id', $request->user_id)->update(['name' => $request->name,'mobile' => $request->mobile, 'role' => $request->role,'gender' => $request->gender,'marital_status' => $request->marital,'date_of_birth' => $request->user_dob, 'status' => $request->user_status, 'updated_by' => 1]);
         return redirect()->route('usermanagement.admin')->with('success',' Admin Edit successfully ');
+=======
+            
+        ]);
+
+        // dd($request->all());
+        $update_category = Admin::where('id', $request->user_id)->update(['name' => $request->name,'mobile' => $request->mobile, 'role' => $request->role,'gender' => $request->gender,'marital_status' => $request->marital,'date_of_birth' => $request->user_dob, 'status' => $request->user_status, 'updated_by' => 1]);
+        return redirect()->route('usermanagement.admin')->with('success','Edit Successfully');
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
         
     }
 
@@ -306,13 +324,21 @@ public function editEmailTemplates(Request $request, $slug)
     public function softDelete(Request $request,$slug) {
         
         Admin::where('id', $slug)->delete();
+<<<<<<< HEAD
         return redirect('admin-get');
+=======
+        return redirect('admin-get')->with('success','delete Successfully');
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
         
     }
     public function EmailsoftDelete(Request $request,$slug) {
         
         EmailTemplate::where('id', $slug)->delete();
+<<<<<<< HEAD
         return redirect('email-template');
+=======
+        return redirect('email-template')->with('success','delete Successfully');;
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
         
     }
     public function userExport(Request $request)

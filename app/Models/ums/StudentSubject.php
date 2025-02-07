@@ -4,9 +4,13 @@ namespace App\Models\ums;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\DB;
 
 
+=======
+use DB;
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 class StudentSubject extends Model
 {

@@ -56,35 +56,30 @@
                                             </thead>
                                             <tbody>
                                                
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td class="fw-bolder text-dark">SA1901200928</td>
-                                                    <td>1901247129</td>
-                                                    <td>THIRD PROFESSIONAL (PART-II)</td>
-                                                    <td >2023-2024</td>
-                                                    <td >SONIYA GUPTA</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">	7007513779</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-success badgeborder-radius">		Approved</span></td>
-                                                    
-                                                    
-                                                    
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item">
-                                                                    <i data-feather="eye" class="me-50"></i>
-                                                                    <span>View</span>
-                                                                </a> 
-                                                                
-                                                                
-                                                            </div>
-                                                        </div> 
+                                                @foreach($results as $index=>$result)
+                                                <tr>  
+                                                    <td>{{++$index}}</td>
+                                                    <td>{{$result->enrollment_no}}</td>
+                                                    <td>{{$result->roll_no}}</td>
+                                                    <td>{{($result->semesters)?$result->semesters->name:'-'}}</td>
+                                                    <td>{{$result->exam_session}}</td>
+                                                    <td>{{($result->Mbbs)?$result->Mbbs->name:'-'}}</td>
+                                                    <td>{{($result->Mbbs)?$result->Mbbs->mobile:'-'}}</td>
+                                                    <td>{{$result->status_text}}</td>
+                                                    <td>
+                                                        @php
+                                                        $result_query_string = [
+                                                            'course_id' => $result->course_id,
+                                                            'semester_id' => $result->semester,
+                                                            'academic_session' => $result->exam_session,
+                                                            'roll_no' => $result->roll_no,
+                                                        ];
+                                                        $result_query_string = base64_encode(serialize($result_query_string));
+                                                        @endphp
+                                                        <a target="_blank" href="{{url('/admin/mbbs-result')}}?result_query_string={{$result_query_string}}" class="btn-sm btn-success">View</a>
                                                     </td>
-                                                </tr>
-                                                
+                                              </tr>
+                                              @endforeach
                                             </tbody>
                                         </table>
                                     </div>

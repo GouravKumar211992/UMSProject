@@ -11,6 +11,7 @@
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
+        @include('ums.admin.notifications')
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
             <div class="content-header row">
@@ -59,13 +60,14 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                               
+                                                @foreach($items as $item)
                                                 <tr>
-                                                    <td></td>
+                                                    
+                                                    <td>{{$item['id']}}</td>
                                                    
-                                                    <td class="fw-bolder text-dark"></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td class="fw-bolder text-dark">{{$item['notification_description']}}</td>
+                                                    <td>{{$item['notification_start']}}</td>
+                                                    <td>{{$item['notification_end']}}</td>
                                                     
                                                     <td class="tableactionnew">  
                                                         <div class="dropdown">
@@ -73,11 +75,11 @@
                                                                 <i data-feather="more-vertical"></i>
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" href="{{url('notification_edit')}}" >
+                                                                <a class="dropdown-item" onclick="editFee('{{$item->id}}')" >
                                                                     <i data-feather="edit" class="me-50"></i>
                                                                     <span>Edit</span>
                                                                 </a> 
-                                                             <a class="dropdown-item" href="#">
+                                                             <a class="dropdown-item" href="#"  onclick="if (window.confirm('Are you sure you want to delete this data?')) { deleteFee('{{$item->id}}'); }">
                                                                     <i data-feather="trash-2" class="me-50"></i>
                                                                     <span>Delete</span>
                                                                 </a>
@@ -85,7 +87,7 @@
                                                         </div> 
                                                     </td>
                                                 </tr>
-                                                
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -257,3 +259,66 @@
 	</div>
 
   @endsection
+
+  <script>
+	function submitCourse(form) {
+		document.getElementById('cat_form').submit();
+	}
+	$('.numberOnly').keyup(function() {
+		this.value = this.value.replace(/[^0-9\.]/g, '');
+	});
+	function disableButton() {
+        var btn = document.getElementById('btn');
+        btn.disabled = true;
+        btn.innerText = 'Submitting...'
+    }
+// 	$(document).ready(function(){
+// 	$('#campus_id').change(function() {
+// 		var campus_id=$('#campus_id').val();
+// 		if(campus_id==''){
+// 			return false;
+// 		}
+// 		$("#course_id").find('option').remove().end();
+// 		$.ajax({
+// 			url: "/admin/master/stream-list/"+campus_id,
+// 			type: 'GET',
+// 			success: function(data,textStatus, jqXHR) {
+// 				$('#course_id').append(data);
+// 			}
+// 		});
+// 	});	
+// });	
+</script>
+<script>
+
+    function confirm_delete()
+  {
+    var v=confirm('Do you really want to delete this notification');
+    if(v==true)
+     return true;
+    else
+     return false;
+    
+  }
+   function exportdata() {
+        var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
+        var fullUrl = "{{url()->full()}}";
+        if(fullUrl_count>1){
+            fullUrl = fullUrl.split('?')[1];
+            fullUrl = fullUrl.replace(/&amp;/g, '&');
+            fullUrl = '?'+fullUrl;
+       }else{
+           fullUrl = '';
+       }
+       var url = "{{url('admin/master/notification/notification-export')}}"+fullUrl;
+       window.location.href = url;
+   }
+   function editFee(slug) {
+       var url = "{{url('notification_edit')}}"+"/"+slug;
+       window.location.href = url;
+   }
+   function deleteFee(slug) {
+       var url = "{{url('notification_delete')}}"+"/"+slug;
+       window.location.href = url;
+   }
+</script>

@@ -60,154 +60,42 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach ($cards as $index=>$examData)
+                                                
+                                            
                                             <tr>
-                                                <td>1</td>
-                                                <td class="fw-bolder text-dark">HL/2024/001</td>
-                                                <td class="fw-bolder text-dark">APP001</td>
-                                                <td>20-07-2024</td>
-                                                <td>Nishu Garg</td>
-                                                <td>nishu@gmail.com</td>
-                                                <td>9876787656</td>
-                                                <td>Home</td> 
-                                                <td><span class="badge rounded-pill badge-light-danger badgeborder-radius">Pending</span></td> 
-                                                <td>regular</td>
-                                                <td>20-07-2024</td>
+                                                <td>{{++$index}}</td>
+                                                <td class="fw-bolder text-dark">{{$examData->students->enrollment_no}}</td>
+                                                <td class="fw-bolder text-dark">{{$examData->students->roll_number}}</td>
+                                                <td>{{$examData->course->name}}</td>
+                                                <td>{{$examData->semesters->name}}</td>
+                                                <td>{{$examData->students->full_name}}</td>
+                                                <td>{{$examData->students->mobile}}</td>
+                                                <td>{{$examData->students->address}}</td> 
+                                                <td><span class="badge rounded-pill badge-light-danger badgeborder-radius">{{($examData->admitcard)?$examData->admitcard->status:'Pending'}}</span></td> 
+                                                <td>{{$examData->form_type}}</td>
+                                                <td>{{date('d-m-Y',strtotime($examData->created_at))}}</td>
                                                 <td class="tableactionnew">  
                                                   <div class="dropdown">
                                                     <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown" aria-expanded="false">                                                          <i data-feather="more-vertical"></i>
                                                       </button>
                                                       <div class="dropdown-menu dropdown-menu-end">
-                                                          <a class="dropdown-item" href="admit_card_edit">
+                                                          <a class="dropdown-item" onclick="editCourse('{{$examData->id}}')">
                                                               <i data-feather="edit" class="me-50"></i>
                                                               <span>Edit</span>
                                                           </a> 
-                                                           <a class="dropdown-item" href="#">
+                                                           {{-- <a class="dropdown-item" onclick="deleteCourse('{{$examData->id}}')">
                                                               <i data-feather="trash-2" class="me-50"></i>
                                                               <span>Delete</span>
-                                                          </a>
+                                                          </a> --}}
                                                       </div>
                                                   </div> 
                                               </td>
                                                   
                                                
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td class="fw-bolder text-dark">HL/2024/001</td>
-                                                <td class="fw-bolder text-dark">APP001</td>
-                                                <td>20-07-2024</td>
-                                                <td>Kundan Kumar</td>
-                                                <td>nishu@gmail.com</td>
-                                                <td>9876787656</td>
-                                                <td>Term</td> 
-                                                <td><span class="badge rounded-pill badge-light-danger badgeborder-radius">Pending</span></td> 
-                                                <td>regular</td>
-                                                <td>20-07-2024</td>
-                                                <td class="tableactionnew">  
-                                                  <div class="dropdown">
-                                                    <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown" aria-expanded="false">                                                          <i data-feather="more-vertical"></i>
-                                                      </button>
-                                                      <div class="dropdown-menu dropdown-menu-end">
-                                                          <a class="dropdown-item">
-                                                              <i data-feather="edit" class="me-50"></i>
-                                                              <span>Edit</span>
-                                                          </a> 
-                                                           <a class="dropdown-item" href="#">
-                                                              <i data-feather="trash-2" class="me-50"></i>
-                                                              <span>Delete</span>
-                                                          </a>
-                                                      </div>
-                                                  </div> 
-                                              </td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td class="fw-bolder text-dark">HL/2024/001</td>
-                                                <td class="fw-bolder text-dark">APP001</td>
-                                                <td>20-07-2024</td>
-                                                <td>Rahul Upadhyay</td>
-                                                <td>nishu@gmail.com</td>
-                                                <td>9876787656</td>
-                                                <td>Vehicle</td> 
-                                                <td><span class="badge rounded-pill badge-light-danger badgeborder-radius">Pending</span></td> 
-                                                <td>regular</td>
-                                                <td>20-07-2024</td>
-                                                <td class="tableactionnew">  
-                                                  <div class="dropdown">
-                                                    <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown" aria-expanded="false">                                                          <i data-feather="more-vertical"></i>
-                                                      </button>
-                                                      <div class="dropdown-menu dropdown-menu-end">
-                                                          <a class="dropdown-item">
-                                                              <i data-feather="edit" class="me-50"></i>
-                                                              <span>Edit</span>
-                                                          </a> 
-                                                           <a class="dropdown-item" href="#">
-                                                              <i data-feather="trash-2" class="me-50"></i>
-                                                              <span>Delete</span>
-                                                          </a>
-                                                      </div>
-                                                  </div> 
-                                              </td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td class="fw-bolder text-dark">HL/2024/001</td>
-                                                <td class="fw-bolder text-dark">APP001</td>
-                                                <td>20-07-2024</td>
-                                                <td>Ashish Kumar</td>
-                                                <td>nishu@gmail.com</td>
-                                                <td>9876787656</td>
-                                                <td>Home</td> 
-                                                <td><span class="badge rounded-pill badge-light-danger badgeborder-radius">Pending</span></td> 
-                                                <td>regular</td>
-                                                <td>20-07-2024</td>
-                                                <td class="tableactionnew">  
-                                                  <div class="dropdown">
-                                                    <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown" aria-expanded="false">                                                          <i data-feather="more-vertical"></i>
-                                                      </button>
-                                                      <div class="dropdown-menu dropdown-menu-end">
-                                                          <a class="dropdown-item">
-                                                              <i data-feather="edit" class="me-50"></i>
-                                                              <span>Edit</span>
-                                                          </a> 
-                                                           <a class="dropdown-item" href="#">
-                                                              <i data-feather="trash-2" class="me-50"></i>
-                                                              <span>Delete</span>
-                                                          </a>
-                                                      </div>
-                                                  </div> 
-                                              </td>
-                                             
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td class="fw-bolder text-dark">HL/2024/001</td>
-                                                <td class="fw-bolder text-dark">APP001</td>
-                                                <td>20-07-2024</td>
-                                                <td>Inder Singh</td>
-                                                <td>nishu@gmail.com</td>
-                                                <td>9876787656</td>
-                                                <td>Term</td> 
-                                                <td><span class="badge rounded-pill badge-light-danger badgeborder-radius">Pending</span></td> 
-                                                <td>regular</td>
-                                                <td>20-07-2024</td>
-                                                <td class="tableactionnew">  
-                                                  <div class="dropdown">
-                                                    <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown" aria-expanded="false">                                                          <i data-feather="more-vertical"></i>
-                                                      </button>
-                                                      <div class="dropdown-menu dropdown-menu-end">
-                                                          <a class="dropdown-item">
-                                                              <i data-feather="edit" class="me-50"></i>
-                                                              <span>Edit</span>
-                                                          </a> 
-                                                           <a class="dropdown-item" href="#">
-                                                              <i data-feather="trash-2" class="me-50"></i>
-                                                              <span>Delete</span>
-                                                          </a>
-                                                      </div>
-                                                  </div> 
-                                              </td>
-                                            </tr>
+                                            @endforeach
+                                           
 
                                         </tbody>
                                     </table>
@@ -291,3 +179,42 @@
 	</div>
 
 @endsection
+
+{{-- <script>
+    function exportdata() {
+       var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
+            var fullUrl = "{{url()->full()}}";
+            if(fullUrl_count>1){
+                fullUrl = fullUrl.split('?')[1];
+                fullUrl = fullUrl.replace(/&amp;/g, '&');
+                fullUrl = '?'+fullUrl;
+           }else{
+               fullUrl = '';
+           }
+            var url = "{{url('admin/master/admitcard/admitcard-export')}}"+fullUrl;
+           window.location.href = url;
+       }
+   </script> --}}
+  <script>
+    function exportdata() {
+       var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
+        var fullUrl = "{{url()->full()}}";
+        if(fullUrl_count>1){
+            fullUrl = fullUrl.split('?')[1];
+            fullUrl = fullUrl.replace(/&amp;/g, '&');
+            fullUrl = '?'+fullUrl;
+       }else{
+           fullUrl = '';
+       }
+       var url = "{{url('admin/master/course/course-export')}}"+fullUrl;
+       window.location.href = url;
+   }
+   function editCourse(slug) {
+       var url = "{{url('admit-card_edit')}}"+"/"+slug;
+       window.location.href = url;
+   }
+//    function deleteCourse(slug) {
+//        var url = "{{url('admit-card_delete')}}"+"/"+slug;
+//        window.location.href = url;
+//    }
+</script>

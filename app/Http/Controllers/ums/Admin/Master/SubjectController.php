@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 namespace App\Http\Controllers\Admin\Master;
 
 use Illuminate\Http\Request;
@@ -17,6 +18,25 @@ use App\Models\Stream;
 use App\Imports\SubjectBulkUploadImport;
 use App\Models\Result;
 use Maatwebsite\Excel\Facades\Excel;
+=======
+namespace App\Http\Controllers\ums\Admin\Master;
+
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Http\Controllers\ums\AdminController;
+use Validator;
+use App\Models\ums\Subject;
+use App\Models\ums\Category;
+use App\Models\ums\Course;
+use App\Models\ums\Semester;
+use App\Models\ums\Campuse;
+use App\Exports\ums\SubjectExport;
+use App\Models\ums\Stream;
+
+use App\Imports\ums\SubjectBulkUploadImport;
+use App\Models\ums\Result;
+use Maatwebsite\ums\Excel\Facades\Excel;
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 class SubjectController extends AdminController
 {
@@ -62,7 +82,11 @@ class SubjectController extends AdminController
         $campuse = Campuse::all();
 		$semester = Semester::select('name')->distinct()->get();
 		//dd($semester);
+<<<<<<< HEAD
         return view('admin.master.subject.index', [
+=======
+        return view('ums.master.subject_list.subject_list', [
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => "Subject",
             'sub_title' => "records",
             'all_subject' => $subjects,
@@ -288,9 +312,15 @@ class SubjectController extends AdminController
     public function subjectDragDrop(Request $request){
         $where_array = $request->only('course_id','semester_id');
         $compulsory_subjects = Subject::where($where_array)->where('type','compulsory')->get();
+<<<<<<< HEAD
         $optional_subjects = Subject::where($where_array)->where('type','optional')->get();
         $deleted_subjects_union = Subject::where($where_array)->whereNull('type');
         $deleted_subjects = Subject::where($where_array)->onlyTrashed()->union($deleted_subjects_union)->get();
+=======
+        $type_null_subjects_union = Subject::where($where_array)->whereNull('type');
+        $optional_subjects = Subject::where($where_array)->where('type','optional')->union($type_null_subjects_union)->get();
+        $deleted_subjects = Subject::where($where_array)->onlyTrashed()->get();
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
         $semester = Semester::find($request->semester_id);
         return view('admin.master.subject.subject-drag-drop',compact('compulsory_subjects','optional_subjects','deleted_subjects','semester'));
     }

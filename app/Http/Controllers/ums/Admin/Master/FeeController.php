@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 namespace App\Http\Controllers\Admin\Master;
 
 use App\Http\Controllers\AdminController;
@@ -13,6 +14,22 @@ use Maatwebsite\Excel\Facades\Excel;
 use Validator;
 use Auth;
 use DB;
+=======
+namespace App\Http\Controllers\ums\Admin\Master;
+
+use App\Http\Controllers\ums\AdminController;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+
+use App\Models\ums\CourseSession;
+use App\Models\ums\Course;
+use App\Models\ums\AcademicSession;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
+
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use App\Exports\FeeExport;
 
 class FeeController extends AdminController
@@ -40,7 +57,11 @@ class FeeController extends AdminController
         
        $coursemapping = $coursemapping->paginate(10);
         //dd($courseMapping);
+<<<<<<< HEAD
         return view('admin.master.fee.index', [
+=======
+        return view('ums.master.fee_list.fees_list', [
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => "Fee",
             'sub_title' => "records",
             'all_fee' => $coursemapping,
@@ -52,14 +73,28 @@ class FeeController extends AdminController
     {
         $course=Course::get();
 		$session=AcademicSession::get();
+<<<<<<< HEAD
         return view('admin.master.fee.addfee', [
+=======
+        
+        return view('ums.master.fee_list.add_fee_list', [
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => "Add New",
             'sub_title' => "Fee",
 			'courses'=>$course,
 			'sessions'=>$session
         ]);
+<<<<<<< HEAD
     }
 
+=======
+
+        // echo "hello";
+    }
+
+
+
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     public function addCourseSession(Request $request)
     {
  
@@ -79,10 +114,20 @@ class FeeController extends AdminController
 			return back()->withErrors($validator)->withInput($request->all());
 		}
         $data = $request->all();
+<<<<<<< HEAD
         $fee = $this->create($data);
         return redirect()->route('get-fees')->with('message','Fee Details Submitted Successfully');
     }
 
+=======
+        // dd($data);
+        $fee = $this->create($data);
+        return redirect('fees_list')->with('message','Fee Details Submitted Successfully');
+    }
+
+
+
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     public function create(array $data)
     {
 		
@@ -100,8 +145,14 @@ class FeeController extends AdminController
        ]);
     }
 
+<<<<<<< HEAD
     public function editCoursesession(Request $request)
     {
+=======
+    public function editCoursesession(Request $request )
+    {
+
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
        $validator = Validator::make($request->all(),[
         'course_id' => 'required',
 		'academic_session' => 'required'	,
@@ -117,7 +168,11 @@ class FeeController extends AdminController
 		if ($validator->fails()) {    
 			return back()->withErrors($validator);
 		}
+<<<<<<< HEAD
 		//dd($request->all());
+=======
+		// dd($request->fee_id);
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
         //$status = $request['fee_status'] == 'active'?1:0;
         $update_category = CourseSession::where('id', $request->fee_id)->update([
 		'course_id'=>$request->course_id,
@@ -131,30 +186,56 @@ class FeeController extends AdminController
 		'payable_fee_for_divyang_per_sem'=> $request->payable_fee_for_divyang_per_sem,	
 		'payable_fee_for_other_per_sem'=>$request->payable_fee_for_other_per_sem,
        ]);
+<<<<<<< HEAD
         return redirect()->route('get-fees')->with('message','Fee Updated Successfully');
         
     }
 
 
+=======
+        return redirect('fees_list')->with('message','Fee Updated Successfully');
+    }
+
+
+
+
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     public function editcoursesessions(Request $request, $slug)
     {
 		$course=Course::get();
 		$session=AcademicSession::get();
+<<<<<<< HEAD
 		$selectedCourseSession = CourseSession::where('id', $slug)->first();
         //dd($selectedCourseSession);
 		return view('admin.master.fee.editfee', [
+=======
+        $coursemapping = CourseSession::orderBy('id', 'DESC');
+
+		$selectedCourseSession = CourseSession::where('id', $slug)->first();
+        // dd($selectedCourseSession);
+		return view('ums.master.fee_list.fee_list_edit', [
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => $selectedCourseSession->student_id,
             'sub_title' => "Edit Information",
             'selected_fee' => $selectedCourseSession,
 			'courses'=>$course,
+<<<<<<< HEAD
 			'sessions'=>$session
+=======
+			'sessions'=>$session,
+            'all_fee'=> $coursemapping
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
         ]);
     }
 
     public function softDelete(Request $request,$slug) {
         
         CourseSession::where('id', $slug)->delete();
+<<<<<<< HEAD
         return redirect()->route('get-fees');
+=======
+        return redirect('fees_list');
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
         
     }
     public function feeExport(Request $request)

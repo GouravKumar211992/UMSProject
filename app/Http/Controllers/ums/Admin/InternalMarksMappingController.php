@@ -1,14 +1,23 @@
 <?php
 
+<<<<<<< HEAD
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\AdminController;
+=======
+namespace App\Http\Controllers\ums\Admin;
+
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Http\Controllers\ums\AdminController;
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use App\Exports\InternalMarksMappingsExport;
 
 
 use App\User;
+<<<<<<< HEAD
 use App\Models\Application;
 use App\Models\Course;
 use App\Models\CourseFee;
@@ -21,6 +30,20 @@ use App\Models\Subject;
 use App\Models\Semester;
 use App\Models\Stream;
 use App\Models\InternalMarksMapping;
+=======
+use App\Models\ums\Application;
+use App\Models\ums\Course;
+use App\Models\ums\CourseFee;
+use App\Models\ums\Category;
+use App\Models\ums\Classe;
+use App\Models\ums\AcademicSession;
+use App\Models\ums\Faculty;
+use App\Models\ums\Campuse;
+use App\Models\ums\Subject;
+use App\Models\ums\Semester;
+use App\Models\ums\Stream;
+use App\Models\ums\InternalMarksMapping;
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use App\Imports\FacultySubjectBulkUploadImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Validator;
@@ -89,7 +112,11 @@ class InternalMarksMappingController extends AdminController
 		$sessions=AcademicSession::all();
 		$semester = Semester::select('name')->distinct()->get();
         
+<<<<<<< HEAD
         return view('admin.internal.index', [
+=======
+        return view('ums.facultymapingsystem.faculty_mapping', [
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => "Internal Mark Mapping",
             'sub_title' => "records",
             'internals'  => $internals,

@@ -1,10 +1,15 @@
 <?php
 
+<<<<<<< HEAD
 namespace App\Http\Controllers\ums\Student;
+=======
+namespace App\Http\Controllers\Student;
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Campuse;
+<<<<<<< HEAD
 use App\Models\ums\ExamFee;
 use App\Models\ums\ExamForm;
 use App\Models\ums\ExamCenter;
@@ -26,6 +31,28 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Application;
 use Illuminate\Support\Facades\Redirect;
 use App\Traits\ResultsTrait;
+=======
+use App\Models\ExamFee;
+use App\Models\ExamForm;
+use App\Models\ExamCenter;
+use App\Models\Subject;
+use App\Models\AdmitCard;
+use App\Models\Examschedule;
+use App\Models\Student;
+use App\Models\BacklogAdmitcard;
+use App\Models\PhdApplication;
+use App\Models\ScribeDetail;
+use App\Models\PhdScribeDetail;
+use App\Models\MbbsExamForm;
+use App\Models\EntranceExam;
+use App\Models\EntranceExamResult;
+
+use Auth;
+use DB;
+use App\Models\Application;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Traits\ResultsTrait;
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use App\Models\Phd2023Exam;
 
 class AdmitCardController extends Controller
@@ -59,9 +86,15 @@ class AdmitCardController extends Controller
 		$sub_title = "Records";
 		$sessionName = $this->sessionName($examfee->semester,$examfee->academic_session);
 		if($examfee->course_id==49 || $examfee->course_id==64 || $examfee->course_id==95 || $examfee->course_id==96){
+<<<<<<< HEAD
 			return view('ums.exam.mbbs-admitcard-page', compact('page_title','sub_title','examfee','subjects','AdmitCard','student_details','sessionName'));
 		}else{
 			return view('ums.exam.admitcardview', compact('page_title','sub_title','examfee','subjects','AdmitCard','student_details','sessionName','examData_photo'));
+=======
+			return view('student.admitcard.mbbs-admitcard-page', compact('page_title','sub_title','examfee','subjects','AdmitCard','student_details','sessionName'));
+		}else{
+			return view('student.admitcard.admitcardview', compact('page_title','sub_title','examfee','subjects','AdmitCard','student_details','sessionName','examData_photo'));
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 		}
     }
 

@@ -28,7 +28,9 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-								
+                            <form id="stub-form" method="POST" enctype="multipart/form-data" action="{{url('admin/admission/council-save')}}">
+                                @csrf
+                            @php $loop_max = 4; @endphp
 								   
                                 <div class="table-responsive">
                                         <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
@@ -37,6 +39,7 @@
                                                     <th>Sr.No</th>
                                                     <th>Campuse</th>
                                                     <th>Course</th>
+                                                    <th>Roll number</th>
                                                     <th>Application No</th>
                                                     <th>Student Name</th>
                                                     <th>Father Name</th>
@@ -49,73 +52,32 @@
                                                     <th>Counceling</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td class="fw-bolder text-dark">Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">M.B.A.</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">DSMNRU/REQ/24221</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">HARSHIT KUMAR</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">ANIL KUMAR</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">ALKA</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">897107636193</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">9719408244</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">harshit19dohare@gmail.com</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">2002-03-19</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">male</span></td>
-                                                    <td><input type="checkbox" name="counceling[]" value="24221" class="checkbox_style"></td>
-                                                                                                
-                                                </tr>
-                                                <tr>
-                                                <td>2</td>
-                                                    <td class="fw-bolder text-dark">Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">M.B.A.</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">DSMNRU/REQ/24221</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">HARSHIT KUMAR</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">ANIL KUMAR</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">ALKA</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">897107636193</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">9719408244</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">harshit19dohare@gmail.com</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">2002-03-19</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">male</span></td>
-                                                    <td><input type="checkbox" name="counceling[]" value="24221" class="checkbox_style"></td>
-                                                   
-                                                </tr>
-                                                  <tr>
-                                                  <td>3</td>
-                                                    <td class="fw-bolder text-dark">Dr. Shakuntala Misra National Rehabilitation University</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">M.B.A.</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">DSMNRU/REQ/24221</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">HARSHIT KUMAR</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">ANIL KUMAR</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">ALKA</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">897107636193</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">9719408244</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">harshit19dohare@gmail.com</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">2002-03-19</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">male</span></td>
-                                                    <td><input type="checkbox" name="counceling[]" value="24221" class="checkbox_style"></td>
-                                                   
-                                                </tr>
-                                                 <tr>
-                                                 <td>4</td>
-                                                    <td class="fw-bolder text-dark">Hind Mahavidyalaya, Barabanki</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">M.B.A.</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">DSMNRU/REQ/24221</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">HARSHIT KUMAR</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">ANIL KUMAR</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">ALKA</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">897107636193</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">9719408244</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">harshit19dohare@gmail.com</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">2002-03-19</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">male</span></td>
-                                                    <td><input type="checkbox" name="counceling[]" value="24221" class="checkbox_style"></td>
-                                                   
-                                                </tr>
-                                                
-                                            </tbody>
+                                           
+                                            @foreach( $Application_sort as $index => $app)
+                                <tbody>
+									<tr>
+                                        <td>{{$app->id}}</td>
+                                        <td>{{$app->campus->name}}</td>
+                                        <td>{{$app->course->name}}</td>
+                                        <td>{{$app->roll_number}}</td>
+                                        <td>{{$app->application_no}}</td>
+                                        <td>{{$app->first_Name}} {{$app->middle_Name}} {{$app->last_Name}}</td>
+                                        <td>{{$app->father_first_name}}</td>
+                                        <td>{{$app->mother_first_name}}</td>
+                                        <td>{{$app->adhar_card_number}}</td>
+                                        <td>{{$app->mobile}}</td>
+                                        <td>{{$app->email}}</td>
+                                        <td>{{$app->date_of_birth}}</td>
+                                        <td>{{$app->gender}}</td>
+                                        <td><input type="checkbox" name="counceling[]" value="{{$app->id}}" class="checkbox_style" @if($app->enrollment_status ==1) checked disabled @endif></td>
+                                        <!-- <td><input type="hidden" name="application_id" value="{{$app->id}}"></td> -->
+                                        
+                                    </tr>
+								</tbody>
+                                @endforeach
+                                
+
+
                                         </table>
                                     </div>
 								
