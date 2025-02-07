@@ -472,7 +472,11 @@ Route::get('/add_course', [CourseController::class, 'add'])->name('course_list_a
 
 Route::post('/add_course', [CourseController::class, 'addCourse'])->name('course_list_add');
 Route::get('/course_list_edit/{id}', [CourseController::class, 'editcourses'])->name('course_list_edit');
+<<<<<<< HEAD
 Route::PUT('/course_list_update', [CourseController::class, 'editCourse'])->name('course_list_update');
+=======
+Route::put('/course_list_update', [CourseController::class, 'editCourse'])->name('course_list_update');
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 Route::get('/course_list_delete/{id}', [CourseController::class, 'softDelete'])->name('course_list_delete');
 // Route::get('/course_edit', function () {
 //     return view('ums.master.course.course_edit');
@@ -481,9 +485,15 @@ Route::get('/course_list_delete/{id}', [CourseController::class, 'softDelete'])-
 Route::get('/faculty', function () {
     return view('ums.master.faculty');
 });
+<<<<<<< HEAD
 Route::get('/affiliate_circular',[AffiliateCircularController::class,'index'])->name('affiliate_circular');
 Route::get('/affiliate_circular_add',[AffiliateCircularController::class,'addView']);
 Route::post('/affiliate_circular_add',[AffiliateCircularController::class,'add'])->name('affiliate_circular_add');
+=======
+Route::get('/affiliate_circular',[AffiliateCircularController::class,'index']);
+Route::get('/affiliate_circular_add',[AffiliateCircularController::class,'addView']);
+Route::post('/affiliate_circular_add',[AffiliateCircularController::class,'add']);
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 Route::get('/affiliate_circular_edit/{id}',[AffiliateCircularController::class,'edit']);
 Route::get('/affiliate_circular_delete/{id}',[AffiliateCircularController::class,'delete']);
 Route::put('/affiliate_circular_update/{id}',[AffiliateCircularController::class,'update']);
@@ -768,6 +778,7 @@ Route::post('/Bulk_Admit_Card_Approval', [AdmitCardController::class, 'bulk_appr
 Route::get('/admission_list', function () {
     return view('ums.admissions.admission_list');
 });
+<<<<<<< HEAD
 
 Route::get('/council_data', [AdmissionController::class,'counciledData'])->name('council-data');
 
@@ -775,6 +786,17 @@ Route::get('/course_transfer', [CourseSwitchingController::class, 'courseSwitchi
 Route::get('bulk_counselling', [CouncellingController::class, 'bulkCouncelling']);
 Route::get('/admission_counselling', [AdmissionController::class,'applicationCouncil'])->name('admission-counselling');
 Route::POST('/admission_counselling', [AdmissionController::class,'saveCouncil'])->name('admission-counselling_post');
+=======
+// Route::get('/council_data', function () {
+//     return view('ums.admissions.council_data');
+// });
+Route::get('/council_data', [AdmissionController::class,'counciledData'])->name('council-data');
+
+Route::get('/course_transfer', [CourseSwitchingController::class, 'courseSwitching'])->name('course-transfer');
+// Route::get('/council_data', [AdmissionController::class,'counciledData'])->name('council-data');
+Route::get('bulk_counselling', [CouncellingController::class, 'bulkCouncelling']);
+Route::get('/admission_counselling', [AdmissionController::class,'applicationCouncil'])->name('admission-counselling');
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 Route::get('/entrance_exam_schedule', [EntranceExamScheduleController::class, 'index'])->name('entrance-exam-schedule');
 Route::get('/enrolled_student', [AdmissionController::class,'enrolledStudent'])->name('enrolled-student');

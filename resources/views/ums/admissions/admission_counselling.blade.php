@@ -63,6 +63,7 @@
                                                     <th>Counseling</th>
                                                 </tr>
                                             </thead>
+<<<<<<< HEAD
                                             <tbody>
                                                 @foreach($Application_sort as $index => $app)
                                                     <tr>
@@ -84,6 +85,38 @@
                                                     </tr>
                                                 @endforeach
                                             </tbody>
+=======
+                                            @if(count($Application_sort) > 0)
+                                @php $serial_no = ((($current_page - 1) * $per_page) + 1); @endphp
+                                @foreach( $Application_sort as $index => $app)
+
+                                <tbody>
+									<tr>
+                                        <td>{{$serial_no++}}</td>
+                                        <td>{{$app->campus->name}}</td>
+                                        <td>{{$app->course->name}}</td>
+                                        <!-- <td>{{$app->roll_number}}</td> -->
+                                        <td>{{$app->application_no}}</td>
+                                        <td>{{$app->first_Name}} {{$app->middle_Name}} {{$app->last_Name}}</td>
+                                        <td>{{$app->father_first_name}}</td>
+                                        <td>{{$app->mother_first_name}}</td>
+                                        <td>{{$app->adhar_card_number}}</td>
+                                        <td>{{$app->mobile}}</td>
+                                        <td>{{$app->email}}</td>
+                                        <td>{{$app->date_of_birth}}</td>
+                                        <td>{{$app->gender}}</td>
+                                        <td><input type="checkbox" name="counceling[]" value="{{$app->id}}" class="checkbox_style" @if($app->enrollment_status ==1) checked disabled @endif></td>
+                                        <!-- <td><input type="hidden" name="application_id" value="{{$app->id}}"></td> -->
+                                        
+                                    </tr>
+								</tbody>
+                                @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="8" class="text-center">NO DATA FOUND</td>
+                                    </tr>
+                                @endif
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
                                         </table>
                                         
                                     </form>

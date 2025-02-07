@@ -28,7 +28,13 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
+<<<<<<< HEAD
                            
+=======
+                            <form id="stub-form" method="POST" enctype="multipart/form-data" action="{{url('admin/admission/council-save')}}">
+                                @csrf
+                            @php $loop_max = 4; @endphp
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 								   
                                 <div class="table-responsive">
                                         <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
@@ -51,8 +57,11 @@
                                                 </tr>
                                             </thead>
                                            
+<<<<<<< HEAD
                                             @if(count($Application_sort) > 0)
                                             @php $serial_no = ((($current_page - 1) * $per_page) + 1); @endphp
+=======
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
                                             @foreach( $Application_sort as $index => $app)
                                 <tbody>
 									<tr>
@@ -75,6 +84,7 @@
                                     </tr>
 								</tbody>
                                 @endforeach
+<<<<<<< HEAD
                                 @else
                                     <tr>
                                         <td colspan="14" class="text-center">NO DATA FOUND</td>
@@ -87,6 +97,9 @@
                                     </tr>
                                 </tfoot>
                                 @endif
+=======
+                                
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 
                                         </table>

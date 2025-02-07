@@ -44,7 +44,11 @@ class DepartmentController extends Controller
         $data->email = $request->email;
         $data->created_at = date('Y-m-d');
         $data->save();
+<<<<<<< HEAD
         return redirect('get-department')->with('success','Added Successfully.');
+=======
+        return back()->with('success','Added Successfully.');
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     }
     public function edit($id)
     {
@@ -69,7 +73,11 @@ class DepartmentController extends Controller
           $data->email = $request->email;
           $data->updated_at = date('Y-m-d');
           $data->save();
+<<<<<<< HEAD
           return redirect('get-department')->with('success','Update Successfully.');
+=======
+          return redirect('department')->with('success','Update Successfully.');
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
       }
        public function departmentExport(Request $request)
     {
