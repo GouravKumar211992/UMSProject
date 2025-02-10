@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\ums\Admin;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ums\ExamType;
@@ -30,8 +29,7 @@ use App\Models\ums\Grade;
 class ResultController extends Controller
 {
 //  use ResultsTrait;
-
-
+ 
   public function index()
     {
 
@@ -91,56 +89,127 @@ class ResultController extends Controller
     }
 
     public function allResults(Request $request)
-    {
-      if(count($request->all()) > 0){
-        $results = Result::groupBy('back_status_text','exam_session','enrollment_no','semester');
+{
+    $results = Result::query();  // Start building the query
+
+    if(count($request->all()) > 0){
+        
+        // Apply filters based on request
         if($request->search) {
-          $keyword = $request->search;
-          $results->where(function($q) use ($keyword){
-              $q->where('roll_no', 'LIKE', '%'.$keyword.'%');
-          });
+            $keyword = $request->search;
+            $results->where(function($q) use ($keyword){
+                $q->where('roll_no', 'LIKE', '%'.$keyword.'%');
+            });
         }
+
         if(!empty($request->name)){
-          $results->where('roll_no','LIKE', '%'.$request->name.'%');
+            $results->where('roll_no', 'LIKE', '%'.$request->name.'%');
         }
-        if (!empty($request->course_id)) {
-            $results->where('course_id',$request->course_id);
+
+        if(!empty($request->course_id)){
+            $results->where('course_id', $request->course_id);
         }
-        if (!empty($request->campus)) {
-          $enrollment[]=null;
-          $campus=Campuse::find($request->campus);
-          foreach($results->get() as $key=> $result){
-            if($campus->campus_code==campus_name($result->enrollment_no)){
-            $enrollment[]=$result->enrollment_no;
-          }
-          }
-          $results->whereIn('enrollment_no',$enrollment);
+
+        if(!empty($request->campus)) {
+            $enrollment = [];
+            $campus = Campuse::find($request->campus);
+            if ($campus) {
+                foreach ($results->get() as $result) {
+                    if ($campus->campus_code == campus_name($result->enrollment_no)) {
+                        $enrollment[] = $result->enrollment_no;
+                    }
+                }
+                $results->whereIn('enrollment_no', $enrollment);
+            }
         }
+
         if(!empty($request->semester)) {
-            $semester_ids = Semester::where('name',$request->semester)->pluck('id')->toArray();
-            $results->whereIn('semester',$semester_ids);
+            $semester_ids = Semester::where('name', $request->semester)->pluck('id')->toArray();
+            $results->whereIn('semester', $semester_ids);
         }
-      }else{
-        $results = Result::where('course_id',null);
-      }
-      $results = $results
-      ->orderBy('semester_number','ASC')
-      ->orderBy('back_status_text','ASC')
-      ->orderBy('exam_session','DESC')
-      ->paginate(10);
-
-        $category = Category::all();
-        $course = Course::all();
-        $campuse = Campuse::all();
-        $semester = Semester::select('name')->distinct()->get();
-        $data['results'] = $results;
-        $data['categories']=$category;
-        $data['courses']=$course;
-        $data['campuselist']=$campuse;
-        $data['semesterlist']=$semester;
-
-      return view('ums.result.Result_list',$data);
+    } else {
+        // If no filters are applied, set a default filter for null course_id
+        $results->where('course_id', null);
     }
+
+    // Apply aggregation and grouping using selectRaw
+    $results = $results
+    ->selectRaw('MAX(results.id) as id, results.roll_no, results.exam_session, results.back_status_text, results.enrollment_no, results.semester, results.semester_number')
+    ->groupBy('results.roll_no', 'results.exam_session', 'results.back_status_text', 'results.enrollment_no', 'results.semester', 'results.semester_number')
+    ->orderBy('results.semester_number', 'ASC')
+    ->orderBy('results.back_status_text', 'ASC')
+    ->orderBy('results.exam_session', 'DESC')
+    ->limit(10)  
+    ->get();
+
+
+    // Get additional data for the view
+    $category = Category::all();
+    $course = Course::all();
+    $campus = Campuse::all();
+    $semester = Semester::select('name')->distinct()->get();
+
+    // Prepare the data array for the view
+    $data['results'] = $results;
+    $data['categories'] = $category;
+    $data['courses'] = $course;
+    $data['campuselist'] = $campus;
+    $data['semesterlist'] = $semester;
+
+    // Return the view with the data
+    return view('ums.result.Result_list', $data);
+}
+
+    public function view(Request $request)
+    {
+      $roll_number = base64_decode($request->roll_number);
+      $semester_id = $request->id;
+      $result_data = Result::where('roll_no',$roll_number)
+      ->where('semester',$semester_id)
+      ->orderBy('id','DESC')
+      ->first();
+      if(!$result_data){
+        return back()->with('error','Result is not generated');
+      }
+      if($result_data->status==1){
+        return back()->with('error','Result is generated but not approved');
+      }
+  
+      // Artisan::call('command:ResultCGPAUpdateByRollNumber', [
+      // 	'roll_no' => $roll_number,
+      // ]);
+      $result_single = Result::where('roll_no',$roll_number)
+      ->where('semester',$semester_id)
+      ->where('status',2)
+      ->distinct()
+      ->orderBy('back_status','DESC')
+      ->orderBy('exam_session','DESC')
+      ->orderBy('back_status_text','ASC')
+      ->first();
+      $results = $result_single->get_semester_result_for_cgpa(1);
+      if($request->approval_date){
+        foreach($results as $result){
+          $result->approval_date = $request->approval_date;
+          $result->cgpa = $request->cgpa;
+          Result::where('roll_no',$roll_number)->where('semester',$semester_id)->update(['session_name'=>$request->session_name]);
+          $result->save();
+        }
+        return redirect('admin/view-results?id='.$request->id.'&roll_number='.$request->roll_number.'');
+      }
+      $exam_session_details = Result::where('semester',$semester_id)
+      ->where('roll_no',$roll_number)
+      ->where('back_status_text','REGULAR')
+      ->first();
+      // dd($exam_session_details);
+      return view('ums.result.semester_result',compact('results','result_single','exam_session_details'));
+    }
+  
+
+
+
+
+
+
 
     public function getSingleResult(Request $request,$roll_no)
     {

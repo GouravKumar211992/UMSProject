@@ -745,7 +745,7 @@ class AdmissionController extends AdminController
           $current_page = $request->page;
       }
 
-       $Application_sort = Application::with(['campus', 'course'])->paginate(1);
+    //    $Application_sort = Application::with(['campus', 'course'])->paginate(1);
 
 
         return view('ums.admissions.council_data', [

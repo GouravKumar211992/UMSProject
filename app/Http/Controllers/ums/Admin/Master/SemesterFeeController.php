@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Master;
+namespace App\Http\Controllers\ums\Admin\Master;
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ums\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-use App\Models\StudentSemesterFee;
-use App\Models\Semester;
-use App\Models\Enrollment;
-use App\Models\Course;
-use App\Models\ExamForm;
-use App\Models\ExamFee;
+use App\Models\ums\StudentSemesterFee;
+use App\Models\ums\Semester;
+use App\Models\ums\Enrollment;
+use App\Models\ums\Course;
+use App\Models\ums\ExamForm;
+use App\Models\ums\ExamFee;
 use App\Exports\FeeExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Validator;
@@ -28,6 +28,7 @@ class SemesterFeeController extends AdminController
 	
 	public function index(Request $request)
     {
+        
         $semesterfees = StudentSemesterFee::orderBy('id', 'DESC');;
         if($request->search) {
             $keyword = $request->search;
@@ -43,11 +44,12 @@ class SemesterFeeController extends AdminController
         if (!empty($request->course_id)) {
             $semesterfees->where('course_id',$request->course_id);
         }
-       
+        $semesterfees = StudentSemesterFee::with('course', 'semester')->paginate(10);
+
        $course = Course::all();
        $semesterfees = $semesterfees->paginate(10);
 
-            return view('admin.master.semesterfee.index', [
+            return view('ums.studentfees.semester_fee', [
             'page_title' => "SemesterFeeFee",
             'sub_title' => "records",
             'all_fee' => $semesterfees,
@@ -108,7 +110,7 @@ class SemesterFeeController extends AdminController
     public function editfees(Request $request, $slug)
     {
         $selectedFee = StudentSemesterFee::where('id', $slug)->first();
-        return view('admin.master.fee.editfee', [
+        return view('ums.studentfees.edit_semesterfee', [
             'page_title' => $selectedFee->student_id,
             'sub_title' => "Edit Information",
             'selected_fee' => $selectedFee

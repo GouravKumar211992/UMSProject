@@ -31,11 +31,7 @@
     </div>
 </div>
         <div class="submitss text-start me-3 align-item-center">
-            <button class="dt-button buttons-collection btn btn-outline-secondary dropdown-toggle" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="true"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share font-small-4 mr-50"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>Export</span></button>
             <button onclick="window.location.reload()" onclick="javascript: history.go(-1)" class=" mt-1 btn btn-primary btn-sm mb-50 mb-sm-0r waves-effect waves-float waves-light "><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Get Data</button>
-            <button onclick="window.location.reload()" class="btn btn-warning btn-sm mb-50 mb-sm-0r mt-1" type="reset">
-                <i data-feather="refresh-cw"></i> Reset
-            </button>
         </div>
     </div>
 
@@ -43,75 +39,71 @@
     <div class="col-md-12">
         <div class="row align-items-center mb-1">
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Campus <span class="text-danger">*</span></label>
+                <label class="form-label mb-0 me-2 col-3">Campus: <span class="text-danger">*</span></label>
                 <select data-live-search="true" name="campus_id" id="campus_id" style="border-color: #c0c0c0;" class="form-control" onChange="return $('#form_data').submit();">
                     <option value="">--Choose Campus--</option>
-                        @foreach($campuses as $campus)
-                            <option value="{{$campus->id}}" @if(Request()->campus_id==$campus->id) selected @endif >{{$campus->name}}</option>
-                            @endforeach
+                    @foreach($campuses as $campus)
+				<option value="{{$campus->id}}" @if(Request()->campus_id==$campus->id) selected @endif >{{$campus->name}}</option>
+				@endforeach
                         </select>
                         <span class="text-danger">{{ $errors->first('campus_id') }}</span>
-            </div>
+                    </div>
     
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Courses <span class="text-danger">*</span></label>
+                <label class="form-label mb-0 me-2 col-3">COURSES: <span class="text-danger">*</span></label>
                 <select data-live-search="true" name="course" id="course" style="border-color: #c0c0c0;" class="form-control js-example-basic-single " onChange="return $('#form_data').submit();">
 					<option value="">--Choose Course--</option>
-							@foreach($courses as $course)
-								@if(Request()->course==$course->id)
-									@php
-										$course_name = $course->name;
-									@endphp
-								@endif
-								<option value="{{$course->id}}" @if(Request()->course==$course->id) selected @endif >{{$course->name}}</option>
-								@endforeach
+                    @foreach($courses as $course)
+                    @if(Request()->course==$course->id)
+                        @php
+                            $course_name = $course->name;
+                        @endphp
+                    @endif
+                    <option value="{{$course->id}}" @if(Request()->course==$course->id) selected @endif >{{$course->name}}</option>
+                    @endforeach
 							</select>
 							<span class="text-danger">{{ $errors->first('course') }}</span>
             </div>
     
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Semester <span class="text-danger">*</span></label>
+                <label class="form-label mb-0 me-2 col-3">Semester: <span class="text-danger">*</span></label>
                 <select data-live-search="true" name="semester" id="semester" style="border-color: #c0c0c0;" class="form-control js-example-basic-single " onChange="$('#group_name').prop('selectedIndex',0); return $('#form_data').submit();">
                     <option value="">--Select Semester--</option>
                     @foreach($semesters as $semester)
-                        @if(Request()->semester==$semester->id)
-                            @php
-                                $semester_name = $semester->name;
-                            @endphp
-                        @endif
-                    <option value="{{$semester->id}}" @if(Request()->semester==$semester->id) selected @endif >{{$semester->name}}</option>
-                    @endforeach
+                            @if(Request()->semester==$semester->id)
+                                @php
+                                    $semester_name = $semester->name;
+                                @endphp
+                            @endif
+                        <option value="{{$semester->id}}" @if(Request()->semester==$semester->id) selected @endif >{{$semester->name}}</option>
+                        @endforeach
                 </select>
                 <span class="text-danger">{{ $errors->first('semester') }}</span>
             </div>
-
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Result Type <span class="text-danger">*</span></label>
-                <select name="form_type" id="form_type" class="form-control" style="border-color: #c0c0c0;">
-                    <option value="regular" @if(Request()->result_type == 'regular') selected @endif >Regular</option>
-                    <option value="UFM" @if(Request()->result_type == 'UFM') selected @endif >UFM</option>
+                <label class="form-label mb-0 me-2 col-3">Academic Session: <span class="text-danger">*</span></label>
+                <select name="academic_session" id="academic_session" class="form-control" style="border-color: #c0c0c0;" onChange="return $('#form_data').submit();">
+                    @foreach($sessions as $sessionRow)
+						<option value="{{$sessionRow->academic_session}}" @if(Request()->academic_session == $sessionRow->academic_session) selected @endif >{{$sessionRow->academic_session}}</option>
+						@endforeach
                 </select>
                 <span class="text-danger">{{ $errors->first('academic_session') }}</span>
             </div>
         </div>
     </div>
-
     <div class="col-md-12">
         <div class="row align-items-center mb-1">
-            
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Academic Session <span class="text-danger">*</span></label>
-                <select name="academic_session" id="academic_session" class="form-control" style="border-color: #c0c0c0;" onChange="return $('#form_data').submit();">
-                    @foreach($sessions as $sessionRow)
-                    <option value="{{$sessionRow->academic_session}}" @if(Request()->academic_session == $sessionRow->academic_session) selected @endif >{{$sessionRow->academic_session}}</option>
-                    @endforeach
+                <label class="form-label mb-0 me-2 col-3">Result Type: <span class="text-danger">*</span></label>
+                <select name="form_type" id="form_type" class="form-control mt-1" style="border-color: #c0c0c0;">
+                    <option value="regular" @if(Request()->result_type == 'regular') selected @endif >Regular</option>
+                    <option value="UFM" @if(Request()->result_type == 'UFM') selected @endif >UFM</option>
                 </select>
-                <span class="text-danger">{{ $errors->first('academic_session') }}</span>           
+                <span class="text-danger">{{ $errors->first('academic_session') }}</span>
             </div>
-
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Paper Size <span class="text-danger">*</span></label>
-            	<select name="paper_size" id="paper_size" class="form-control" style="border-color: #c0c0c0;">
+                <label class="form-label mb-0 me-2 col-3">Paper Size: <span class="text-danger">*</span></label>
+                <select name="paper_size" id="paper_size" class="form-control" style="border-color: #c0c0c0;">
                     <option value="">Select</option>
                     <!-- <option value="a4">A4</option>
                     <option value="a3">A3</option>
@@ -119,49 +111,45 @@
                     <option value="a1">A1</option>
                     <!-- <option value="a0">A0</option> -->
                 </select>
-                <span class="text-danger">{{ $errors->first('paper_size') }}</span>          
+                <span class="text-danger">{{ $errors->first('paper_size') }}</span>
             </div>
-
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">One Paper Group <span class="text-danger">*</span></label>
+                <label class="form-label mb-0 me-2 col-3">One Page Group <span class="text-danger">*</span></label>
                 <select name="onepagegroup" id="onepagegroup" class="form-control" style="border-color: #c0c0c0;" required>
                     <option value="1" @if(Request()->onepagegroup==1) selected @endif >1</option>
                     <option value="2" @if(Request()->onepagegroup==2) selected @endif >2</option>
                     <option value="3" @if(Request()->onepagegroup==3) selected @endif >3</option>
                     <option value="4" @if(Request()->onepagegroup==4) selected @endif >4</option>
                 </select>
-                <span class="text-danger">{{ $errors->first('onepagegroup') }}</span>          
+                <span class="text-danger">{{ $errors->first('onepagegroup') }}</span>
             </div>
 
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Paper SN# <span class="text-danger">*</span></label>
+                <label class="form-label mb-0 me-2 col-3">Page SN#:<span class="text-danger">*</span></label>
                 <input type="number" name="page_index" class="form-control" style="border-color: #c0c0c0;" value="{{(Request()->page_index)?Request()->page_index:'1'}}">
-            </div>
-        </div>
-    </div>
 
-    <div class="col-md-12">
-        <div class="row align-items-center mb-1">
-            
+            </div>
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">From Serial Number<span class="text-danger">*</span></label>
+                <label class="form-label mb-0 me-2 col-3">From Serial Number:<span class="text-danger">*</span></label>
                 <input type="number" name="from_serial_no" class="form-control" style="border-color: #c0c0c0;" value="{{Request()->from_serial_no}}">
 
             </div>
-
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">To Serial Number<span class="text-danger">*</span></label>
+                <label class="form-label mb-0 me-2 col-3">To Serial Number:<span class="text-danger">*</span></label>
                 <input type="number" name="to_serial_no" class="form-control" style="border-color: #c0c0c0;" value="{{Request()->to_serial_no}}">
+
             </div>
 
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Roll Number <span class="text-danger">*</span></label>
+                <label class="form-label mb-0 me-2 col-3">Roll Number:<span class="text-danger">*</span></label>
                 <input type="text" name="roll_no" class="form-control" style="border-color: #c0c0c0;" value="{{(Request()->roll_no)?Request()->roll_no:''}}">
-                <span class="text-danger">{{ $errors->first('roll_no') }}</span>            </div>
+                <span class="text-danger">{{ $errors->first('roll_no') }}</span>
+
+            </div>
 
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Group List<span class="text-danger">*</span></label>
-                <select name="group_name[]" id="group_name" class="form-control" style="border-color: #c0c0c0;" multiple>
+                <label class="form-label mb-0 me-2 col-3">Group List: <span class="text-danger">*</span></label>
+                <select name="group_name[]" id="group_name" class="form-control mt-1" style="border-color: #c0c0c0; width: 200px; height: 70px;" multiple>
                     <option value="">All</option>
                     @foreach($group_list as $group_index=>$group_row)
                     <option value="{{$group_row}}" @if(Request()->group_name && in_array($group_row,Request()->group_name)) selected @endif >{{++$group_index}}){{$group_row}}</option>
@@ -169,7 +157,7 @@
                 </select>
                 <span class="text-danger">{{ $errors->first('onepagegroup') }}</span>
             </div>
-    
+            
         </div>
         </form>
     </div>
@@ -537,12 +525,12 @@
     <div class="drag-target"></div>
 
     <!-- BEGIN: Footer-->
-    <footer class="footer footer-static footer-light">
+    {{-- <footer class="footer footer-static footer-light">
         <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">Copyright &copy; 2024 <a class="ml-25" href="#" target="_blank">Presence 360</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span></p>
         
         <div class="footerplogo"><img src="../../../assets/css/p-logo.png" /></div>
     </footer>
-    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
+    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button> --}}
     <!-- END: Footer-->
 	
      

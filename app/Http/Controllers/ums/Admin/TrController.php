@@ -202,6 +202,8 @@ class TrController extends  AdminController
 		return view('admin.tr.tr-summary-show-students',compact('results','examType'));
 	}
 
+
+
 	public function universityTrView(Request $request)
     {
 		$sessions = AcademicSession::orderBy('id','DESC')->get();
@@ -261,8 +263,8 @@ class TrController extends  AdminController
 
 		if($request->paper_size!=null && count($full_retult) > 0){
 			$data['download'] = 'pdf';
-            $htmlfile = view('ums.result.Regular_TR_View', $data)->render();
-            $htmlfile = view('ums.result.Regular_TR_View', $data)->render();
+            $htmlfile = view('ums.result.regular_tr_view', $data)->render();
+            $htmlfile = view('ums.result.regular_tr_view', $data)->render();
 			$pdf = app()->make('dompdf.wrapper');
 			$pdf->loadHTML($htmlfile,'UTF-8')
 			->setWarnings(false)
@@ -270,8 +272,11 @@ class TrController extends  AdminController
             return $pdf->download('Regular TR Report For Course '.$semester_details->course->name.' ( '.$semester_details->name.' ) and Academic Session '.$request->academic_session.'.pdf');
         }
 
-		return view('ums.result.Regular_TR_View', $data);
+		return view('ums.result.regular_tr_view', $data);
 	}
+
+
+
 
 	public function batchPrefixByBatch($batch)
 	{

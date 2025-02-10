@@ -3,127 +3,66 @@
 @section('content')
     
 
-{{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click"
-    data-menu="vertical-menu-modern" data-col=""> --}}
   
    
     <div class="app-content content ">
         <h4>Subject Bulk Data</h4>
 
-        <!-- options section -->
-        {{-- <div class="col-md-12">
-        <div class="row align-items-center mb-1">
-            <div class="col-md-4 text-center">
-                <label class="form-label ">Base Rate % <span class="text-danger">*</span></label>
-                <input type="number" value="5" class="form-control ">
-            </div>
-            <div class="col-md-4 text-center">
-                <label class="form-label">Effective from <span class="text-danger">*</span></label>
-                <input type="date" class="form-control">
-            </div>
-            <div class="col-md-4 text-center">
-                <label class="form-label">Additional Input <span class="text-danger">*</span></label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-    </div> --}}
+       
 
         <div class="submitss text-end me-3">
 
 
-            <button class="btn btn-primary btn-sm mb-50 mb-sm-0r " type="reset">
+            <button form="form_data" class="btn btn-primary btn-sm mb-50 mb-sm-0r " type="submit">
                 <i data-feather="check-circle"></i> Submit
             </button>
         </div>
 
 <div class="content-body bg-white p-4 shadow">
-        {{-- <div class="col-md-12  ">
-            <div class="row align-items-center mb-1">
-                <div class="col-md-4 d-flex align-items-center">
-                    <div class="row">
-                    <label class="form-label mb-0 me-2 col-3">Compus <span class="text-danger ">*</span></label>
-                    <select name="DataTables_Table_0_length col-9" aria-controls="DataTables_Table_0" class="form-select">
-                        <option value="7">--Select--</option>
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="75">75</option>
-                        <option value="100">100</option>
-                    </select>
-                    </div>
-                </div>
+<form method="GET" id="form_data" action="{{url('subject_setting')}}">
 
-                <div class="col-md-4 align-items-center">
-                    <div class="row">
-                    <label class="form-label mb-0 me-2 col-3">Course <span class="text-danger">*</span></label>
-                    <select name="DataTables_Table_0_length col-9 " aria-controls="DataTables_Table_0" class="form-select">
-                        <option value="7">All</option>
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="75">75</option>
-                        <option value="100">100</option>
-                    </select>
-                    </div>
-                </div>
-
-                <div class="col-md-4 d-flex align-items-center">
-                    <label class="form-label mb-0 me-2 col-3">Semester <span class="text-danger">*</span></label>
-                    <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                        <option value="7">All</option>
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="75">75</option>
-                        <option value="100">100</option>
-                    </select>
-                </div>
-            </div>
-        </div> --}}
         <div class="col-md-12">
             <div class="row align-items-center mb-1">
                 <!-- Campus Field -->
                 <div class="col-md-4">
                     <label class="form-label mb-0 me-2">Campus <span class="text-danger">*</span></label>
-                    <select name="campus" aria-controls="DataTables_Table_0" class="form-select">
-                        <option value="">--Select--</option>
-                        <option value="7">Campus 1</option>
-                        <option value="10">Campus 2</option>
-                        <option value="25">Campus 3</option>
-                        <option value="50">Campus 4</option>
-                        <option value="75">Campus 5</option>
-                        <option value="100">Campus 6</option>
-                    </select>
+                    <select name="campus_id" style="border-color: #c0c0c0;" class="form-control campus_id" id="campus_id" onchange="this.form.submit()">
+                <option value="">--Select--</option>
+                @foreach($campuses as $campus)
+                <option value="{{$campus->id}}" {{ request('campus_id') == $campus->id ? 'selected' : '' }}>
+                    {{$campus -> name}}
+                </option>
+                @endforeach
+               </select>
                 </div>
         
                 <!-- Course Field -->
                 <div class="col-md-4">
                     <label class="form-label mb-0 me-2">Course <span class="text-danger">*</span></label>
-                    <select name="course" aria-controls="DataTables_Table_0" class="form-select">
-                        <option value="">--Select--</option>
-                        <option value="7">Course 1</option>
-                        <option value="10">Course 2</option>
-                        <option value="25">Course 3</option>
-                        <option value="50">Course 4</option>
-                        <option value="75">Course 5</option>
-                        <option value="100">Course 6</option>
-                    </select>
+                    <select name="course_id" style="border-color: #c0c0c0;" class="form-control course_id" id="course_id" onchange="this.form.submit()">
+                <option value="">--Select--</option>
+                @foreach($courses as $course)
+                <option value="{{$course->id}}" {{ request('course_id') == $course->id ? 'selected' : '' }}>
+                    {{$course->name}}
+                </option>
+                @endforeach
+               </select>
                 </div>
         
                 <!-- Semester Field -->
                 <div class="col-md-4">
                     <label class="form-label mb-0 me-2">Semester <span class="text-danger">*</span></label>
-                    <select name="semester" aria-controls="DataTables_Table_0" class="form-select">
-                        <option value="">--Select--</option>
-                        <option value="7">Semester 1</option>
-                        <option value="10">Semester 2</option>
-                        <option value="25">Semester 3</option>
-                        <option value="50">Semester 4</option>
-                        <option value="75">Semester 5</option>
-                        <option value="100">Semester 6</option>
-                    </select>
+                    <select  name="semester_id" style="border-color: #c0c0c0;" class="form-control semester_id" id="semester_id" onchange="this.form.submit()">
+                <option value="">--Select--</option>
+                @foreach($semesters as $semester)
+                <option value="{{$semester->id}}" {{ request('semester_id') == $semester->id ? 'selected' : '' }}>
+                {{$semester->name}}
+                </option>
+                @endforeach
+            </select>
                 </div>
             </div>
+
         </div>
         
     
@@ -145,14 +84,15 @@
                                 <div class="card-header bg-primary text-white">
                                     Compulsory Papers
                                 </div>
-                                <div class="card-body py-2">
-                                    <h5 class="card-title">Item List 1</h5>
-                                    <ul class="list-group">
-                                        <li class="list-group-item">Item 1A</li>
-                                        <li class="list-group-item">Item 1B</li>
-                                        <li class="list-group-item">Item 1C</li>
-                                    </ul>
-                                </div>
+                                <div id="container1" class="panel-body box-container">
+                    @foreach($subjects as $subject)
+                    @if($subject->type=='compulsory')
+                    <div style="text-wrap: wrap; text-align: left;" class="btn btn-default box-item">
+                        {{$subject->sub_code}} ({{substr($subject->name,0,30)}})
+                    </div>
+                    @endif
+                    @endforeach
+                </div>
                             </div>
                         </div>
 
@@ -162,14 +102,13 @@
                                 <div class="card-header bg-warning text-white">
                                     Optional Papers
                                 </div>
-                                <div class="card-body py-2">
-                                    <h5 class="card-title">Item List 2</h5>
-                                    <ul class="list-group">
-                                        <li class="list-group-item">Item 2A</li>
-                                        <li class="list-group-item">Item 2B</li>
-                                        <li class="list-group-item">Item 2C</li>
-                                    </ul>
-                                </div>
+                                <div id="container2" class="panel-body box-container">
+                    @foreach($subjects as $subject)
+                    <div style="text-wrap: wrap; text-align: left;" class="btn btn-default box-item">
+                        {{$subject->sub_code}}  ({{$subject->name}})</div>
+                   
+                    @endforeach
+                </div>
                             </div>
                         </div>
 
@@ -180,39 +119,25 @@
 
                                     Optional Papers
                                 </div>
-                                <div class="card-body py-2">
-                                    <h5 class="card-title">Item List 3</h5>
-                                    <ul class="list-group">
-                                        <li class="list-group-item">Item 3A</li>
-                                        <li class="list-group-item">Item 3B</li>
-                                        <li class="list-group-item">Item 3C</li>
-                                    </ul>
-                                </div>
+                                <div id="container3" class="panel-body box-container">
+                    @foreach($subjects as $subject)
+                    <div style="text-wrap: wrap; text-align: left;" class="btn btn-default box-item">
+                        {{$subject->sub_code}} ({{$subject->name }})</div>
+                    @endforeach
+                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
 
-
+                </form>
             </div>
         </div>
         <!-- END: Content-->
 
-        <div class="sidenav-overlay"></div>
-        <div class="drag-target"></div>
-
-        <!-- BEGIN: Footer-->
-        <footer class="footer footer-static footer-light">
-            <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">Copyright &copy; 2024
-                    <a class="ml-25" href="#" target="_blank">Presence 360</a><span
-                        class="d-none d-sm-inline-block">, All rights Reserved</span></span></p>
-
-            <div class="footerplogo"><img src="../../../assets/css/p-logo.png" /></div>
-        </footer>
-        <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
-        <!-- END: Footer-->
-
+        
+      
 
 
         <div class="modal fade" id="reallocate" tabindex="-1" aria-labelledby="shareProjectTitle"

@@ -23,17 +23,18 @@
                         </div>
                     </div>
                 </div>
-                <form id="fee_form" method="POST" action="{{ url('/submit-fee-form') }}">
-                    @csrf
+               
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
-                        <button type="submit" class=" btn btn-primary btn-sm mb-50 mb-sm-0 waves-effect waves-float waves-light "><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Submit </button>
+                        <button type="submit" form="fee_form" class=" btn btn-primary btn-sm mb-50 mb-sm-0 waves-effect waves-float waves-light "><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Submit </button>
                         <button class="btn btn-warning btn-sm mb-50 mb-sm-0" onclick="window.location.reload();" ><i data-feather="refresh-cw"></i>
                             Reset</button> 
 
                     </div>
                 </div>
             </div>
+            <form id="fee_form" method="POST" action="{{ url('/submit-fee-form') }}">
+                @csrf
             <div class="content-body bg-white p-4 shadow">
 
                                  
@@ -127,7 +128,7 @@
               </div>
         </div>
     </div>
-    
+            </div> 
 </form>
 				
 				<section id="basic-datatable">

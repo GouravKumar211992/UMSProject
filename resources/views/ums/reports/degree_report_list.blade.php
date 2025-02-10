@@ -2,8 +2,24 @@
 @extends('ums.admin.admin-meta')
 
 @section('content')
+@php $course_name = ''; @endphp
 {{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col=""> --}}
-
+    <style>
+        @media print{
+            .dt-buttons,
+            .dataTables_filter,
+            #form_data{
+                display:none;
+            }
+        }
+        table th{
+            vertical-align: top !important;
+        }
+        table td,
+        table th{
+            border: 1px solid #000 !important;
+        }
+    </style>
 
     <!-- BEGIN: Content-->
     <div class="app-content content ">
@@ -76,10 +92,10 @@
                 </div>
         <div class="col-sm-3">
                     <span style="color: black;">Session:</span>
-                    <select data-live-search="true" name="session" id="session" class="form-control">
-                        <option value="">--Select Session--</option>
+                    <select name="session" id="session" style="border-color: #c0c0c0;" class="form-control" required>
+                        <option value="">--Choose Session--</option>
                         @foreach($sessions as $session)
-                            <option value="{{$session}}" @if(Request()->session==$session) selected @endif >{{$session}}</option>
+                        <option value="{{$session->academic_session}}" @if(Request()->session ==$session->academic_session) selected @endif >{{$session->academic_session}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -134,6 +150,14 @@
                                                     <th>ALTERNATE CONTACT NO.</th>
                                                     <th>LATERAL</th>
                                                     <th>BACK IN SEM / YEAR</th>
+                                                    @for($i=1;$i<=$loop_max;$i++)
+                                                    <th><?php echo $i ?> SEM / YEAR RESULT STATUS</th>
+                                                    <th><?php echo $i ?> SEM / YEAR QP</th>
+                                                    <th><?php echo $i ?> SEM / YEAR SGPA</th>
+                                                    <th><?php echo $i ?> SEM / YEAR OBT. MARKS</th>
+                                                    <th><?php echo $i ?> SEM / YEAR MAX MARKS</th>
+                                                    <th><?php echo $i ?> SEM / YEAR CREDIT</th>
+                                                    @endfor
                                                     <th>TOTAL OBT. MARKS</th>
                                                     <th>TOTAL MAX MARKS</th>
                                                     <th>TOTAL QP</th>
@@ -142,7 +166,7 @@
                                                     <th>ELIGIBLE</th>
                                                     <th>PERCENTAGE</th>
                                                     <th>UG / PG</th>
-                                                    <th>Image</th>
+                                                    <th class="text-center remove_image">Image</th> 
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -427,6 +451,49 @@
 		</div>
 	</div>
 
+    <script>
+        $(document).ready( function () {
+         $('#myTable22').DataTable( {
+             dom: 'Bfrtip',
+             "bPaginate": false,
+             buttons: [
+                 'excel', 'pdf', 'print'
+             ]
+         } );
+     
+         $('.photo_download_image').click(function(){
+             $('.photo_download').each(function( index ) {
+                 alert();
+                 var current_href = $(this).attr('href');
+                 var roll_no = $(this).data('roll_no');
+                 var a = $("<a>")
+                     .attr("href", current_href)
+                     .attr("download", roll_no+".jpg")
+                     .appendTo("body");
+     
+                 a[0].click();
+     
+                 a.remove();
+             });
+         });
+     
+     });
+     
+     $('#dd').on('click', function(e){
+         var html = "<html><head><meta charset='utf-8' /></head><body>" + document.getElementsByTagName("table")[0].outerHTML + "</body></html>";
+         var blob = new Blob([html], { type: "application/vnd.ms-excel" });
+         var a = document.getElementById("dd");
+         // Use URL.createObjectURL() method to generate the Blob URL for the a tag.
+         a.href = URL.createObjectURL(blob);
+         var selmonth = $("#month option:selected").text();
+         var selyear = $("#year option:selected").text();
+         var show_agreement_type = $("#agreement_type option:selected").text();
+         $('.show_agreement_type').text(show_agreement_type);
+         // Set the download file name.
+         a.download = "{{$course_name}} Degree_Report.xls";
+     });
+     
+     </script>
    
 {{-- </body> --}}
 @endsection

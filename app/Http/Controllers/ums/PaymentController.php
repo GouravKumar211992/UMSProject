@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\ums;
+use App\Http\Controllers\Controller;
 use Mail;
 use Illuminate\Http\Request;
-use App\Payment;
-use App\Models\ApplicationPayment;
-use App\Models\Application;
+use App\Models\ums\Payment;
+use App\Models\ums\ApplicationPayment;
+use App\Models\ums\Application;
 use Auth;
 use Razorpay\Api\Api;
 use Carbon\Carbon;
@@ -72,7 +73,7 @@ class PaymentController extends Controller
 			$this->updatePayment($application_id,$paymentDetails->order_id);
 		}
 		$application = Application::where('id',$application_id)->first();
-        return view('payments.application-success-payment',compact('application','paymentDetails'));
+        return view('ums.usermanagement.user.application-success-payment',compact('application','paymentDetails'));
     }
 
 	public function paymentSave(Request $request){

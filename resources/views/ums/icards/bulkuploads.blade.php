@@ -29,7 +29,7 @@
                     <a class="btn btn-dark btn-sm me-2" href="#">
                         <i data-feather="plus-circle"></i> Bulk ID Cards
                     </a>
-                    <a class="btn btn-warning btn-sm me-2" href="#">
+                    {{-- <a class="btn btn-warning btn-sm me-2" href="#">
                         <i data-feather="plus-circle"></i> Bulk Photos
                     </a>
                     <a class="btn btn-primary btn-sm me-2" href="#">
@@ -37,7 +37,7 @@
                     </a>
                     <a class="btn btn-info btn-sm me-2" href="#">
                         <i data-feather="plus-circle"></i> Bulk Fee Receipt
-                    </a>
+                    </a> --}}
                     <div class="d-flex align-items-center ">
                         <label for="upload-file" class="btn btn-success btn-sm me-2">
                             <i data-feather="upload"></i> Upload File
@@ -63,21 +63,7 @@
 <div class="drag-target"></div>
 
 <!-- BEGIN: Footer -->
-<footer class="footer footer-static footer-light">
-    <p class="clearfix mb-0">
-        <span class="float-md-left d-block d-md-inline-block mt-25">
-            Copyright &copy; 2024 
-            <a class="ml-25" href="#" target="_blank">Presence 360</a>
-            <span class="d-none d-sm-inline-block">, All rights Reserved</span>
-        </span>
-    </p>
-    <div class="footerplogo">
-        <img src="../../../assets/css/p-logo.png" alt="Logo" />
-    </div>
-</footer>
-<button class="btn btn-primary btn-icon scroll-top" type="button">
-    <i data-feather="arrow-up"></i>
-</button>
+
 <!-- END: Footer -->
 
 <div class="modal modal-slide-in fade filterpopuplabel" id="filter">

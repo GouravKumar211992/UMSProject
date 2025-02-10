@@ -80,7 +80,9 @@ class SettingController extends Controller
 
     public function admissionSettingEdit(Request $request) // extra created//
     {   
-
+        if ($request->isMethod('post')) {
+          
+        }
         // $admission_open_couse_wise = admission_open_couse_wise(1,$request->type);
     //  dd($admission_open_couse_wise);
         $campuses = Campuse::get();

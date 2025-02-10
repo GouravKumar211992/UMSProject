@@ -4,6 +4,7 @@
 
     <div class="app-content content ">
         <div class="content-overlay"></div>
+        {{-- @include('ums.admin.notifications') --}}
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
              <div class="content-header row">
@@ -17,26 +18,38 @@
                         </div>
                     </div>
                 </div> 
-				 <div class="content-header-right text-sm-end col-md-6 mb-50 mb-sm-0">
-                    <div class="form-group breadcrumb-right"> 
-                        <td><a href="#"><img src="resume.png" /></a>Click here to download!</td>                           
-                        <div class="upload-btn">
-                            <label for="course_switching_file" class="btn btn-primary btn-sm">
-                            Upload File
-                            </label>
-                            <input type="file" name="course_switching_file" id="course_switching_file" 
-                                   class="custom-file-input" 
-                                   accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-                          </div>
-                            
-                    </div>
-                </div>
+				
             
                   
                 
             </div>
             <div class="content-body dasboardnewbody">
-                 
+                <form method="POST" action=""  enctype="multipart/form-data">
+                    @csrf
+                    <div class="row" style="margin-top:-30px">
+                        <div class="content-header-right text-sm-end col-md-12 mb-50 mb-sm-0">
+                            <div class="form-group breadcrumb-right">
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    <i data-feather="check-circle"></i> Add file
+                                </button>
+                                {{-- <span class="text-danger">{{ $errors->first('subject') }}</span> --}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-1" style="margin-top: 30px">
+                        
+                        
+                        <div class="col-md-2 ms-4">
+                            <label class="form-label">Upload File Here<span class="text-danger m-0">*</span></label>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="file" name="course_switching_file"class="form-control" required  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                            {{-- <span class="text-danger">{{ $errors->first('semester') }}</span> --}}
+                        </div>
+                    </div>
+                    <div class="col-md-2 ms-4 mb-2"><a class="btn btn-info" target="_blank" href="{{asset('bulk-uploading/CourseSwitchingDataFormat.xlsx')}}">Download</a></div>
+                    
+                </form>
                 <!-- ChartJS section start -->
                 <section id="chartjs-chart">
                     <div class="row">

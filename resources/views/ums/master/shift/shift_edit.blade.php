@@ -8,7 +8,7 @@
 
   
     <!-- BEGIN: Content-->
-    <div class="app-content content ">
+    <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
@@ -29,18 +29,65 @@
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
                         <button class="btn btn-dark btn-sm mb-50 mb-sm-0" onclick="location.href='{{url('/shift_list')}}'"> <i data-feather="x"></i> Cancel
+<<<<<<< HEAD
+                        </button>
+                        <button type="submit" form="edit_shift_form" class="btn btn-primary btn-sm mb-50 mb-sm-0"> <i data-feather="check-circle" style="font-size: 40px;"></i>
+=======
                             </button>
                         <button type="submit" form="edit_shift_form" class="btn btn-primary btn-sm mb-50 mb-sm-0" > <i data-feather="check-circle" style="font-size: 40px;"></i>
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
                             Submit</button>
-
-
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
+    
+            <!-- Form starts here -->
+=======
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             <form action="{{route('update_shift')}}" method="POST" id="edit_shift_form">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="shift_id" value="{{$selected_shift->id}}">
+<<<<<<< HEAD
+                <div class="content-body bg-white py-4 mb-4 shadow">
+                    <div class="container">
+                        <div class="row g-0 mt-3 mb-3 text-center">
+                            <div class="col-md-12 text-center">
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-md-3">
+                                        <label class="form-label">Shift Name<span class="text-danger m-0">*</span></label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" id="course_name" name="name" value="{{$selected_shift->name}}" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-md-3">
+                                        <label class="form-label">Start Time<span class="text-danger m-0">*</span></label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="time" name="start_time" value="{{$selected_shift->start_time}}" id="start_time" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-md-3">
+                                        <label class="form-label">End Time<span class="text-danger m-0">*</span></label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="time" name="end_time" value="{{$selected_shift->end_time}}" id="end_time" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- Form ends here -->
+        </div>
+    </div>
+    
+=======
             <div class="content-body bg-white py-4 mb-4 shadow">
                 <div class="row g-0  mt-3 mb-3 text-center ">
 
@@ -86,6 +133,7 @@
 
                
 
+>>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
            
           
             

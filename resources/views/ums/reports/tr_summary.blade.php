@@ -185,7 +185,7 @@
                                                                 @endif
                                                     
                                                                 @if($form_type == 'regular')
-                                                                    <a class="dropdown-item" target="_blank" href="{{url('university-tr-view')}}{{$regular_tr_show_url}}" onClick="return confirm('Are you sure?\nYou want to Show TR')">
+                                                                    <a class="dropdown-item" target="_blank" href="{{url('regular_tr_view')}}{{$regular_tr_show_url}}" onClick="return confirm('Are you sure?\nYou want to Show TR')">
                                                                         <i data-feather="eye" class="me-50"></i>
                                                                         <span>Show TR</span>
                                                                     </a>

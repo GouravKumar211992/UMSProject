@@ -1,5 +1,5 @@
+@extends('ums.admin.admin-meta')
 
-@extends('admin.admin-meta')
 @section('content');
     
 {{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col=""> --}}

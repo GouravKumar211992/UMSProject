@@ -193,22 +193,25 @@
                                                         <div class="col-md-3"> 
                                                             <label class="form-label">Status</label> 
                                                         </div>  
-
+                                                    
                                                         <div class="col-md-5"> 
                                                             <div class="demo-inline-spacing">
                                                                 <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio3" name="customColorRadio3" class="form-check-input" id="active" checked="">
-                                                                    <label class="form-check-label fw-bolder" for="customColorRadio3">ACTIVE</label>
+                                                                    <input type="radio" id="active" name="timetable_status" value="active" class="form-check-input" {{ $selected_timetable->status == 1 ? 'checked' : '' }}>
+                                                                    <label class="form-check-label fw-bolder" for="active">ACTIVE</label>
                                                                 </div> 
                                                                 <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio4" name="customColorRadio3" id="inactive" class="form-check-input">
-                                                                    <label class="form-check-label fw-bolder" for="customColorRadio4">INACTIVE</label>
+                                                                    <input type="radio" id="inactive" name="timetable_status" value="inactive" class="form-check-input" {{ $selected_timetable->status == 0 ? 'checked' : '' }}>
+                                                                    <label class="form-check-label fw-bolder" for="inactive">INACTIVE</label>
                                                                 </div> 
-                                                                @if ($errors->has('group1'))
-                                                                <span class="text-danger">{{ $errors->first('group1') }}</span>
+                                                                @if ($errors->has('timetable_status'))
+                                                                    <span class="text-danger">{{ $errors->first('timetable_status') }}</span>
                                                                 @endif
                                                             </div>  
-                                                        </div>  
+                                                        </div>
+                                                    </div>
+                                                     
+                                     
                                      
                                              {{-- <div class="mt-2">
                                                 <div class="step-custhomapp bg-light mb-0">

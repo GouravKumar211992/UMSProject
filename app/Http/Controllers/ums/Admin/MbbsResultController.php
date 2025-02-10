@@ -20,87 +20,75 @@ class MbbsResultController extends Controller
      * @return \Illuminate\Http\Response
      */
     
+     private function batchArray() {
+        return ['2023-2024AUG', '2023-2024JUL', '2023-2024', '2022-2023', '2021-2022','2020-2021','2019-2020','2018-2019','2017-2018','2016-2017','2015-2016','2014-2015']; 
+    }
     public function mbbsResult(Request $request){
         $campus_ids = [4,6];
-		$course_id = $request->course_id;
-		$semester_id = $request->semester_id;
-		$batch = $request->batch;
+        $course_id = $request->course_id;
+        $semester_id = $request->semester_id;
+        $batch = $request->batch;
         $roll_no = $request->roll_no;
+    
         if($request->result_query_string){
             $result_query_string = (object)unserialize(base64_decode($request->result_query_string));
             $course_id = $result_query_string->course_id;
             $semester_id = $result_query_string->semester_id;
-            $batch = batchFunctionReturn($result_query_string->roll_no);
+            $batch = $this->batchPrefixByBatch($result_query_string->roll_no); 
             $roll_no = $result_query_string->roll_no;
         }
-        $campuses = Campuse::whereIn('id',$campus_ids)
-        ->get();
-		$courses = Course::withoutTrashed()
-        ->whereIn('campus_id',$campus_ids)
-        ->orderBy('name')
-        ->get();
-		$semesters = Semester::withoutTrashed()
-        ->where('course_id',$course_id)
-        ->orderBy('semester_number')
-        ->get();
-		// if(Auth::guard('admin')->check()==false){
-		// 	return back()->with('error','Not Allowed');
-		// }
+    
+        $campuses = Campuse::whereIn('id',$campus_ids)->get();
+        $courses = Course::withoutTrashed()->whereIn('campus_id',$campus_ids)->orderBy('name')->get();
+        $semesters = Semester::withoutTrashed()->where('course_id',$course_id)->orderBy('semester_number')->get();
+    
         $students = array();
-        $batchPrefix = batchPrefixByBatch($batch);
-        if($course_id!='' && $semester_id!='' && $batch!=''){
-            
-        // $array_roll_no = [
-        //     '1901247001',
-        //     '1901247010',
-        //     '1901247018',
-        //     '1901247044',
-        // ];
-
+        $batchPrefix = $this->batchPrefixByBatch($batch); 
+    
+        if(!empty($course_id) && !empty($semester_id) && !empty($batch)){
             $students_query = Result::select('roll_no','course_id','semester')
-//            ->where('exam_session',$batch)
-            ->where('roll_no','LIKE',$batchPrefix.'%')
-            // ->whereIn('roll_no',$array_roll_no)
-            ->where('course_id',$course_id)
-            ->where('semester',$semester_id)
-            ->where('status',2);
-        //     if(Auth::guard('admin')->check()==true){
-        //         $students_query->whereIn('result_type',['new','old']);
-        // }
-            // else{
-            //     $students_query->where('result_type','new');
-            // }
-            if($roll_no!=''){
+                ->where('roll_no','LIKE',$batchPrefix.'%')
+                ->where('course_id',$course_id)
+                ->where('semester',$semester_id)
+                ->where('status',2);
+    
+            if(!empty($roll_no)){
                 $students_query->where('roll_no',$roll_no);
             }
-            // if($request->exam_type==3){
-            //     $students_query->where('scrutiny',$request->exam_type);
-            // }
+    
             $students = $students_query->distinct('roll_no','course_id','semester')
-            ->orderBy('roll_no')
-            // ->limit(5)
-            ->get();
+                ->orderBy('roll_no')
+                ->get();
+    
             foreach($students as $student){
                 $exam_year_array = Result::where('roll_no',$student->roll_no)
-                ->where('semester',$student->semester)
-                ->where('roll_no','LIKE',$batchPrefix.'%')
-                ->first();
+                    ->where('semester',$student->semester)
+                    ->where('roll_no','LIKE',$batchPrefix.'%')
+                    ->first();
+                
                 $result_single = Result::where('roll_no',$student->roll_no)
-                ->where('semester',$student->semester)
-                ->where('roll_no','LIKE',$batchPrefix.'%')
-                ->orderBy('subject_code','ASC')
-                ->orderBy('back_status','DESC')
-                ->orderBy('exam_session','DESC')
-                ->distinct()
-                ->first();
-                $results = $result_single->get_semester_result(1);
+                    ->where('semester',$student->semester)
+                    ->where('roll_no','LIKE',$batchPrefix.'%')
+                    ->orderBy('subject_code','ASC')
+                    ->orderBy('back_status','DESC')
+                    ->orderBy('exam_session','DESC')
+                    ->distinct()
+                    ->first();
+                
+                $results = $result_single ? $result_single->get_semester_result(1) : [];
+    
                 $student->exam_year_array = $exam_year_array;
                 $student->result_single = $result_single;
                 $student->results = $results;
-            }   
-		}
-		return view('ums.master.mbbsparanursing.mbbs_result',compact('students','campuses','courses','semesters','batch','batchPrefix'));
-	}
+            }
+        }
+        $batches = $this->batchArray();
+        return view('ums.reports.Mbbs_bulk_result',compact('students','campuses','courses','semesters','batch','batchPrefix','batches'));
+    }
+    
+    private function batchPrefixByBatch($batch) {
+        return substr($batch, 0, 4); 
+    }
 	
 	
 

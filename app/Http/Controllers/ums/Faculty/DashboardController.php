@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Faculty;
+namespace App\Http\Controllers\ums\Faculty;
 
 use View;
 use Auth;
 use App\User;
 use Illuminate\Http\Request;
 use App\Helpers\ConstantHelper;
-use App\Http\Controllers\AdminController;
-use App\Models\Address;
-use App\Models\Faculty;
-use App\Models\InternalMarksMapping;
-use App\Models\StudentSubject;
-use App\Models\HolidayCalenderModel;
-use App\Models\AcademicSession;
-use App\Models\InternalMark;
+use App\Http\Controllers\ums\AdminController;
+use App\Models\ums\Address;
+use App\Models\ums\Faculty;
+use App\Models\ums\InternalMarksMapping;
+use App\Models\ums\StudentSubject;
+use App\Models\ums\HolidayCalenderModel;
+use App\Models\ums\AcademicSession;
+use App\Models\ums\InternalMark;
 
 class DashboardController extends AdminController
 {
@@ -128,9 +128,9 @@ class DashboardController extends AdminController
         ]);
     }
 
-    public function holidayCalenderForFaculty()
-   {
-       $holidayCalendor = HolidayCalenderModel::all();
-       return view('faculty.holiday_calender',['holidayCalendor'=>$holidayCalendor]);
-   }
+	public function holidayCalenderForFaculty()
+	{
+		$holidayCalendor = HolidayCalenderModel::all();
+		return view('ums.master.faculty.holiday_calender',['holidayCalendor'=>$holidayCalendor]);
+	}
 }

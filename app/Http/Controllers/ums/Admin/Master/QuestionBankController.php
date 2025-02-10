@@ -87,7 +87,7 @@ class QuestionBankController extends Controller
         $programs = Category::all();
         $sessions=AcademicSession::all();
         
-        return view('admin.master.question-bank.add',[
+        return view('ums.master.question_bank.add_question_bank',[
             'page_title' => "Internal Mark Mapping",
             'sub_title' => "Add",
             'campuses'  => $campuses,
@@ -110,10 +110,10 @@ class QuestionBankController extends Controller
             'branch_id' => 'required',
             'session' => 'required',
             'question_bank_file' => 'nullable|mimes:pdf|max:1024',
-            'synopsis_file' => 'nullable|mimes:pdf|max:1024',
-            'thysis_file' => 'nullable|mimes:pdf|max:1024',
-            'journal_paper_file' => 'nullable|mimes:pdf|max:1024',
-            'seminar_file' => 'nullable|mimes:pdf|max:1024',
+            // 'synopsis_file' => 'nullable|mimes:pdf|max:1024',
+            // 'thysis_file' => 'nullable|mimes:pdf|max:1024',
+            // 'journal_paper_file' => 'nullable|mimes:pdf|max:1024',
+            // 'seminar_file' => 'nullable|mimes:pdf|max:1024',
         ]);
         if(!$valid){
             return back()->withInput();
@@ -143,7 +143,7 @@ class QuestionBankController extends Controller
         }
         $mapping->save();
         // dd($mapping);
-        return redirect()->route('question-bank-list')->with('message','New Question Bank Added');
+        return redirect()->route('question_bank')->with('message','New Question Bank Added');
     }
 
     public function get_Subject(Request $request)

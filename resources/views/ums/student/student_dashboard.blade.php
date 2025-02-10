@@ -5,6 +5,7 @@
     @endphp
 
     <section class="content-body p-5">
+        @include('ums.admin.notifications')
         <div class="container mt-2">
 
             <div class="card shadow-lg border-0 rounded-lg mb-4">
@@ -65,7 +66,7 @@
                                                                 <i class="fas fa-id-card me-2"></i>View ID Card
                                                             </a>
                                                         @else
-                                                            <a hidden href="{{ route('icard-form') }}"
+                                                            <a hidden href="{{ route('icard-form',['type' => 'student'])  }}"
                                                                 class="btn btn-primary">
                                                                 <i class="fas fa-plus me-2"></i>ID Card Form
                                                             </a>

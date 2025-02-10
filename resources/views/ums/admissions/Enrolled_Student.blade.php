@@ -20,7 +20,7 @@
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
                         <button class="btn btn-warning btn-sm mb-50 mb-sm-0" data-bs-target="#filter" data-bs-toggle="modal"><i data-feather="filter"></i> Filter</button> 
-						<a class="btn btn-primary btn-sm mb-50 mb-sm-0" href="#"> Remove pagination</a> 
+						{{-- <a class="btn btn-primary btn-sm mb-50 mb-sm-0" href="#"> Remove pagination</a>  --}}
                         <button class="btn btn-warning box-shadow-2 btn-sm me-1 mb-sm-0 mb-50" onclick="window.location.reload();"><i data-feather="refresh-cw"></i> Reset</button>
                         <a class="btn btn-primary btn-sm mb-50 mb-sm-0" href="{{ url('enrollment_summary')}}"> Enrollment Summary</a> 
 

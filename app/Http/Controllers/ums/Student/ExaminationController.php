@@ -170,7 +170,7 @@ class ExaminationController extends Controller
 			->where('academic_session',$request->accademic_session)
 			->first();
 			if($examData){
-				return redirect('student/exam-form-view/'.$examData->id)->with('message','Form successfully submitted. please click on fill fee button for payment');
+				return redirect('exam-form-view/'.$examData->id)->with('message','Form successfully submitted. please click on fill fee button for payment');
 			}
 			if($this->paperIsOpen($request->all(),0)==false){
 				return back()->with('error',$this->paperIsOpen($request->all(),1));
@@ -374,7 +374,7 @@ class ExaminationController extends Controller
 		}
 		$student = Student::where('roll_number',$examfee->roll_no)->first();
 		$subject = Subject::whereIn('sub_code',explode(' ',$examfee->subject))->get();
-		return view('student.exam.exam-fee-details',compact('student','subject','examfee','slug','amount'));
+		return view('ums.exam.exam-fee-details',compact('student','subject','examfee','slug','amount'));
 	}
 	public function StudentExamformview( $slug,Request $request)
 	{
@@ -400,7 +400,7 @@ class ExaminationController extends Controller
 			// $order_id = $this->createPaymentOrderOnly($slug,$exam_fee_amount);
 			$this->insertPayment($slug,$order_id,$exam_fee_amount);
 		}
-		return view('ums.student.Exam_form',
+		return view('ums.exam.examination-form-view',
 			[
 				'student'=>$student,
 				
@@ -465,7 +465,7 @@ class ExaminationController extends Controller
 			$payment->updated_at = date('Y-m-d H:s:i');
 			$payment->save();
 		}
-		return redirect('student/exam/pay-success?id='.$request->exam_fee_id)->with('message','Details Successfully Saved');
+		return redirect('/exam/pay-success?id='.$request->exam_fee_id)->with('message','Details Successfully Saved');
 	}
 	
 	public function update_student_subjects(Request $request)
@@ -2213,13 +2213,13 @@ public function scrutinyformviewpost( $slug,Request $request)
         $download = $request->download;
         view()->share(compact('paymentDetails_array','download','examFees'));
         if($request->has('download')){
-            $htmlfile = view('student.exam.success-payment')->render();
+            $htmlfile = view('ums.exam.success_payment')->render();
             $pdf = app()->make('dompdf.wrapper');
             $pdf->loadHTML($htmlfile);
             return $pdf->download('Payment-Slip.pdf');
         }
 
-        return view('student.exam.success-payment');
+        return view('ums.exam.success_payment');
     }
 
 

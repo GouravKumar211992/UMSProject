@@ -38,8 +38,12 @@ class InternalMarksMappingController extends AdminController
     { 
     	
     	// dd($request->all());
-        $internals = InternalMarksMapping::orderBy('id', 'DESC');
+        // $internals = InternalMarksMapping::orderBy('id', 'DESC')->get();
 		//dd($internals[0]->subjects);
+
+		$internals = InternalMarksMapping::query();
+		$internals->orderBy('id','DESC');
+
         if ($request->search) {
             $keyword = $request->search;
             $internals->where(function ($q) use ($keyword) {
@@ -100,27 +104,32 @@ class InternalMarksMappingController extends AdminController
             'courses'  => $courses,
             'programs'  => $programs,
             'sessions'  => $sessions,
-			 'semesters'  => $semester
+			'semesters'  => $semester
         ]);
     }
 	public function add()
 	{
 		$facultys=Faculty::all();
-		$campuses=Campuse::all();
+		$campuses = Campuse::all();
 		$subjects=Subject::all();
 		$programs = Category::all();
 		$sessions=AcademicSession::all();
+		$courses = Course::all();
+		$branches= Stream::all();
+		$semesters= Semester::all();
 		
-		return view('admin.internal.add',[
+		return view('ums.facultymapingsystem.internal_mapping_add',[
             'page_title' => "Internal Mark Mapping",
             'sub_title' => "Add",
             'facultys'  => $facultys,
-            'campuses'  => $campuses,
+            'campuses' => $campuses, 
             'subjects'  => $subjects,
             'sessions'  => $sessions,
-            'programs'  => $programs
-           
-			
+            'programs'  => $programs,
+			'courses' => $courses,
+			'branches' => $branches, 
+			'semesters' => $semesters
+          	
         ]);
 	}
 	public function add_mapping(Request $request)
@@ -170,7 +179,7 @@ class InternalMarksMappingController extends AdminController
 			$mapping->permissions = $request->permissions;
 		}
 		$mapping->save();
-		return redirect()->route('internal-list')->with('message','New Mapping Added');
+		return back()->with('message','New Mapping Added');
 	}
 
 	public function get_Subject(Request $request)
@@ -206,7 +215,7 @@ class InternalMarksMappingController extends AdminController
 	 public function softDelete(Request $request,$slug) {
         
         InternalMarksMapping::where('id', $slug)->delete();
-        return redirect()->route('internal-list')->with('message','Mapping Deleted Succesfully');
+        return back()->with('message','Mapping Deleted Succesfully');
         
     }
 
@@ -217,9 +226,9 @@ class InternalMarksMappingController extends AdminController
 //		dd($selected_internal);
 		 $category = Category::all();
          $course = Course::all();
-		$facultys=Faculty::all();
-		$campuses=Campuse::all();
-		$subjects=Subject::where('course_id',$selected_internal->course_id)
+		 $facultys=Faculty::all();
+		 $campuses=Campuse::all();
+		 $subjects=Subject::where('course_id',$selected_internal->course_id)
 							->where('semester_id',$selected_internal->semester_id)
 							->orderBy('name','asc')
 							->get();
@@ -227,7 +236,7 @@ class InternalMarksMappingController extends AdminController
 		$classes=Stream::all();
          $sessions=AcademicSession::all();
          $semester = Semester::get();
-       return view('admin.internal.edit',[
+       return view('ums.facultymapingsystem.internal_mapping_edit',[
        	'selected_internal'=>$selected_internal,
        	'categorylist'      => $category,
        	'courseList'        => $course,
@@ -242,30 +251,26 @@ class InternalMarksMappingController extends AdminController
 	}
 	 public function update(Request $request)
     { 
-		//dd($request->all());
-        $request->validate([
-            'program' => 'required',
-            'course' => 'required',
-            'branch' => 'required',
-            'semester' => 'required',
-            'subject' => 'required',
-            'faculty' => 'required',
-            'session' => 'required',
-            'campuse_id' => 'required',
-            'permissions' => 'required',
-        ]);
+        // $request->validate([
+        //     'program' => 'required',
+        //     'course' => 'required',
+        //     'branch' => 'required',
+        //     'semester' => 'required',
+        //     'subject' => 'required',
+        //     'faculty' => 'required',
+        //     'session' => 'required',
+        //     'campuse_id' => 'required',
+        //     'permissions' => 'required',
+        // ]);
 		
-		$mapping = InternalMarksMapping::where('id',$request->internal_id)->first();
+		$mapping = InternalMarksMapping::where('id', $request->internal_id)->first();
+
 		$mapping->program_id=$request->program;
 		$mapping->course_id=$request->course;
 		
 		$mapping->semester_id=$request->semester;
 		$mapping->sub_code=$request->subject;
-		if($request->faculty){
-			$mapping->faculty_id=$request->faculty;
-		}else{
-			$mapping->faculty_id=$Faculty->id;
-		}
+		$mapping->faculty_id=$request->faculty;
 		$mapping->class_id=$request->branch;
 		$mapping->session=$request->session;
 		$mapping->campuse_id=$request->campuse_id;
@@ -293,6 +298,4 @@ class InternalMarksMappingController extends AdminController
 		}
         return back()->with('success','Records Saved!');
     }
-
-
 }

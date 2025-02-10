@@ -69,7 +69,7 @@
                             <div class="col-md-4 mb-3">
                                 <div class="d-flex align-items-center">
                                     <label class="form-label mb-0 me-2 col-3">Category <span class="text-danger">*</span></label>
-                                    <select class="form-select" name="category_id">
+                                    <select class="form-select" name="category_id" id="category_id" required>
                                         @foreach ($categorylist as $category)
 							<option value="{{$category->id}}" @if($selected_course->category_id == $category->id) selected @endif>{{ ucfirst($category->name) }}</option>
 							@endforeach
@@ -81,12 +81,11 @@
                             <div class="col-md-4 mb-3">
                                 <div class="d-flex align-items-center">
                                     <label class="form-label mb-0 me-2 col-3">Campus <span class="text-danger">*</span></label>
-                                    <select class="form-select" name="campus_id">
-                                        <option value="">Please select</option>
+                                    <select class="form-select" name="campus_id" id="campus_id">
                                         @foreach ($campuslist as $campus)
-                                        <option value="{{$campus->id}}" {{ ($selected_course->id && ($selected_course->campus_id == $campus->id)) ? 'selected':'' }}>{{ ucfirst($campus->name) }}</option>
-                                        <option value="{{$campus->id}}">{{ ucfirst($campus->name) }}</option>
-                                        @endforeach
+							<option value="{{$campus->id}}" {{ ($selected_course->id && ($selected_course->campus_id == $campus->id)) ? 'selected':'' }}>{{ ucfirst($campus->name) }}</option>
+							<option value="{{$campus->id}}">{{ ucfirst($campus->name) }}</option>
+							@endforeach
                                     </select>
                                 </div>
                             </div>
@@ -95,7 +94,7 @@
                             <div class="col-md-4 mb-3">
                                 <div class="d-flex align-items-center">
                                     <label class="form-label mb-0 me-2 col-3">Course Description <span class="text-danger">*</span></label>
-                                    <textarea name="course_description" class="form-control" rows="3" {{$selected_course->course_description}} placeholder="B.Ed. Special Education (Visual Impairment)"></textarea>
+                                    <textarea name="course_description" class="form-control" rows="3" {{$selected_course->course_description}} placeholder="write here"></textarea>
                                 </div>
                             </div>
         
@@ -130,7 +129,7 @@
                                     @php
 						$course_group_array = explode(',',$selected_course->course_group);
 						@endphp
-                                    <select class="form-select" name="course_group[]">
+                                    <select class="form-select" name="course_group[]"  id="course_group" multiple>
                                         <option value="">Please select</option>
                                         @foreach ($courses as $course)
                                         <option value="{{$course->id}}" @if(in_array($course->id, $course_group_array)) selected @endif>{{ ucfirst($course->name) }}</option>
@@ -297,7 +296,33 @@
 			</form>
 		</div>
 	</div>
-
+    <script>
+        $(document).ready(function() {
+    
+            var selected_course = {
+                {
+                    !!json_encode($selected_course) !!
+                }
+            };
+        });
+    </script>
+    
+    <script>
+        function submitCat(form) {
+            document.getElementById('edit_course_form').submit();
+        }
+        // $('.alphaOnly').keyup(function() {
+        // 		this.value = this.value.replace(/[^a-z|A-Z\.]/g, '');
+        // 	});
+            $('.alphanumberOnly').keyup(function() {
+                this.value = this.value.replace(/[^a-z|A-Z|0-9\.]/g, '');
+            });
+            function disableButton() {
+            var btn = document.getElementById('btn');
+            btn.disabled = true;
+            btn.innerText = 'Submitting...'
+        }
+    </script>
     
 {{-- </body> --}}
 @endsection

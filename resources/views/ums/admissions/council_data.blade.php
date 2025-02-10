@@ -15,7 +15,7 @@
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right"> 
-                    <button class="btn btn-primary btn-sm mb-50 mb-sm-0" ><i></i>Remove Pagination</button> 
+                    {{-- <button class="btn btn-primary btn-sm mb-50 mb-sm-0" ><i></i>Remove Pagination</button>  --}}
 							<button class="btn btn-primary btn-sm mb-50 mb-sm-0" data-bs-target="#filter" data-bs-toggle="modal"><i data-feather="filter"></i> Filter</button> 
 							<!-- <button class="btn btn-success btn-sm mb-50 mb-sm-0" data-bs-target="#approved" data-bs-toggle="modal"><i data-feather="check-circle" ></i> Assign Team</button> -->
                             <button class="btn btn-warning box-shadow-2 btn-sm me-1 mb-sm-0 mb-50" onclick="window.location.reload();"><i data-feather="refresh-cw"></i>Reset</button>  
@@ -28,9 +28,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                            <form id="stub-form" method="POST" enctype="multipart/form-data" action="{{url('admin/admission/council-save')}}">
-                                @csrf
-                            @php $loop_max = 4; @endphp
+                           
 								   
                                 <div class="table-responsive">
                                         <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
@@ -53,6 +51,8 @@
                                                 </tr>
                                             </thead>
                                            
+                                            @if(count($Application_sort) > 0)
+                                            @php $serial_no = ((($current_page - 1) * $per_page) + 1); @endphp
                                             @foreach( $Application_sort as $index => $app)
                                 <tbody>
 									<tr>
@@ -75,7 +75,18 @@
                                     </tr>
 								</tbody>
                                 @endforeach
-                                
+                                @else
+                                    <tr>
+                                        <td colspan="14" class="text-center">NO DATA FOUND</td>
+                                    </tr>
+                                @endif
+                                @if(Request()->filter_course && Request()->academic_session && count($Application_sort) > 0)
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="14"><a href="{{route('bulk-enrollment-submit',['course_id'=>Request()->filter_course,'academic_session'=>Request()->academic_session])}}" class="btn btn-success" onclick="return comfirm('Are you sure about the bulk enrollment?');">Click Here to Bulk Enrollment Generation of the Current Selected Course and Acacemic Year</a></td>
+                                    </tr>
+                                </tfoot>
+                                @endif
 
 
                                         </table>
@@ -237,5 +248,96 @@
 	</div>
 
    
-
+    <script>
+        function exportdata() {
+             var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
+             var fullUrl = "{{url()->full()}}";
+             if(fullUrl_count>1){
+                 fullUrl = fullUrl.split('?')[1];
+                 fullUrl = fullUrl.replace(/&amp;/g, '&');
+                 fullUrl = '?'+fullUrl;
+            }else{
+                fullUrl = '';
+            }
+            var url = "{{url('admin/master/campus/campus-export')}}"+fullUrl;
+            window.location.href = url;
+        }
+        function editCourse(slug) {
+            var url = "{{url('admin/master/campus/edit-campus')}}"+"/"+slug;
+            window.location.href = url;
+        }
+        function deleteCourse(slug) {
+            var url = "{{url('admin/master/campus/delete-model-trim')}}"+"/"+slug;
+            window.location.href = url;
+        }
+        $(document).ready(function() {
+        $('.alphaOnly').keyup(function() {
+                this.value = this.value.replace(/[^a-z|^A-Z\.]/g, '');
+            });
+        
+            $('#dd').on('click', function(e){
+    
+                var html = "<html><head><meta charset='utf-8' /></head><body>" + document.getElementsByTagName("table")[0].outerHTML + "</body></html>";
+                var blob = new Blob([html], { type: "application/vnd.ms-excel" });
+                var a = document.getElementById("dd");
+                // Use URL.createObjectURL() method to generate the Blob URL for the a tag.
+                a.href = URL.createObjectURL(blob);
+    
+                var selmonth = $("#month option:selected").text();
+                var selyear = $("#year option:selected").text();
+                var show_agreement_type = $("#agreement_type option:selected").text();
+                $('.show_agreement_type').text(show_agreement_type);
+                
+                // Set the download file name.
+                a.download = "Application_Report.xls";
+            });
+        });
+    
+         $(document).ready(function(){
+            $('#program').change(function() {
+                    var course_type = $('#program').val();
+                    var campuse_id = $('#type').val();
+                // console.log('campuse id>>>>>>>>>>>',course_type);
+                //  $("#course").find('option').remove().end();
+                    var formData = {
+                        program: course_type,
+                        campuse_id: campuse_id,
+                        "_token": "{{ csrf_token() }}"
+                    }; //Array 
+                    $.ajax({
+                        url: "{{route('course_list')}}",
+                        type: "POST",
+                        data: formData,
+                        success: function(data, textStatus, jqXHR) {
+                            $('#course').html(data);
+                            console.log(data);
+                        },
+                    });
+            });
+    
+            $('#filter_program').change(function() {
+                    var course_type = $('#filter_program').val();
+                    var campuse_id = $('#campus').val();
+                // console.log('campuse id>>>>>>>>>>>',course_type);
+                //  $("#course").find('option').remove().end();
+                    var formData = {
+                        program: course_type,
+                        campuse_id: campuse_id,
+                        "_token": "{{ csrf_token() }}"
+                    }; //Array 
+                    $.ajax({
+                        url: "{{route('course_list')}}",
+                        type: "POST",
+                        data: formData,
+                        success: function(data, textStatus, jqXHR) {
+                            $('#filter_course').html(data);
+                            console.log(data);
+                        },
+                    });
+            });
+            
+    
+    
+    });
+    </script>
 @endsection

@@ -198,52 +198,23 @@
 	 
     <div class="modal modal-slide-in fade filterpopuplabel" id="filter">
 		<div class="modal-dialog sidebar-sm">
-			<form class="add-new-record modal-content pt-0"> 
+			<form class="add-new-record modal-content pt-0" id="approveds-form" method="GET" novalidate action="{{url('shift_list')}}"> 
+                @csrf
 				<div class="modal-header mb-1">
-					<h5 class="modal-title" id="exampleModalLabel">Apply Filter</h5>
+					<h5 class="modal-title" id="exampleModalLabel">List of Shift</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
 				</div>
 				<div class="modal-body flex-grow-1">
 					<div class="mb-1">
-						  <label class="form-label" for="fp-range">Select Date Range</label>
-						  <input type="text" id="fp-range" class="form-control flatpickr-range" placeholder="YYYY-MM-DD to YYYY-MM-DD" />
-					</div>
-					
-					<div class="mb-1">
-						<label class="form-label">Select Incident No.</label>
-						<select class="form-select select2">
-							<option>Select</option>
-						</select>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Shift Name</label>
+                            <input type="text" name="name" value="{{Request :: get('name')}}" class="form-control selectpicker">
+                        </div>
 					</div> 
-                    
-                    <div class="mb-1">
-						<label class="form-label">Select Customer</label>
-						<select class="form-select select2">
-							<option>Select</option>
-						</select>
-					</div> 
-                    
-                    <div class="mb-1">
-						<label class="form-label">Assigned To</label>
-						<select class="form-select select2">
-							<option>Select</option>
-						</select>
-					</div> 
-                    
-                    <div class="mb-1">
-						<label class="form-label">Status</label>
-						<select class="form-select">
-							<option>Select</option> 
-							<option>Open</option>
-							<option>Close</option>
-							<option>Re-Allocatted</option>
-						</select>
-					</div> 
-					 
+                  
 				</div>
 				<div class="modal-footer justify-content-start">
-					<button type="button" class="btn btn-primary data-submit mr-1">Apply</button>
-					<button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary">Apply Filters</button>
 				</div>
 			</form>
 		</div>

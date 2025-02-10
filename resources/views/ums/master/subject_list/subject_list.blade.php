@@ -12,6 +12,7 @@
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
+        @include('ums.admin.notifications')
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
             <div class="content-header row">
@@ -86,7 +87,13 @@
                                                     <td>{{$subject->status}}</td>
                                                     <td>{{$subject->subject_type}}</</td>
                                                     <td>{{date('M dS, Y', strtotime($subject->created_at))}}</td>
-                                                    <td>10</td>
+                                                    <td>
+                                                        @if($subject->status == 0)
+                                                        <span class="badge rounded-pill badge-light-danger">Inactive</span>
+                                                        @else
+                                                        <span class="badge rounded-pill badge-light-success">Active</span>
+                                                        @endif
+                                                    </td>
                                                     
                                                     <td class="tableactionnew">  
                                                         <div class="dropdown">
@@ -94,15 +101,19 @@
                                                                 <i data-feather="more-vertical"></i>
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" href="{{url('/subject_list_edit')}}">
+                                                                <a class="dropdown-item" onclick="editSubject('{{$subject->id}}')">
+
                                                                     <i data-feather="edit" class="me-50"></i>
                                                                     <span>Edit</span>
                                                                 </a> 
                                                                 
-                                                                </a> <a class="dropdown-item" href="#" onclick="window.confirm('Are you Sure ? delete this data ')">
+                                                                </a>
+                                                               
+                                                                 <a class="dropdown-item" href="#" onclick="deleteSubject('{{$subject->id}}')">
                                                                     <i data-feather="trash-2" class="me-50"></i>
                                                                     <span>Delete</span>
                                                                 </a>
+                                                             
                                                             </div>
                                                         </div> 
                                                     </td>
@@ -215,4 +226,31 @@
 	</div>
 
 {{-- </body> --}}
+<script>
+    function exportdata() {
+         var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
+         var fullUrl = "{{url()->full()}}";
+         if(fullUrl_count>1){
+             fullUrl = fullUrl.split('?')[1];
+             fullUrl = fullUrl.replace(/&amp;/g, '&');
+             fullUrl = '?'+fullUrl;
+        }else{
+            fullUrl = '';
+        }
+        var url = "{{url('admin/master/subject/subject-export')}}"+fullUrl;
+        window.location.href = url;
+    }
+    function editSubject(slug) {
+        if(slug) {
+            var url = "{{route('edit-subject-form', ['slug' => ':slug'])}}".replace(':slug', slug);
+            window.location.href = url;
+        } else {
+            alert("Invalid subject slug");
+        }
+    }
+	function deleteSubject(slug) {
+        var url = "{{route('delete-subject-form', ['slug' => ':slug'])}}".replace(':slug', slug);
+        window.location.href = url;
+    }
+</script>
 @endsection
