@@ -35,11 +35,7 @@ class DashboardController extends AdminController
         // Auth::guard('student')->logout();
         // return redirect('exam/login?exam_portal=1')->with('error','You are not authorized');
         $data['icard'] = Icard::where('enrolment_number',Auth::guard('student')->user()->enrollment_no)->first();
-<<<<<<< HEAD
-        return view('ums.student.student_dashboard',$data)->with('success','Login Successfully');
-=======
         return view('ums.student.student_dashboard',$data);
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     }
     public function profile()
     {

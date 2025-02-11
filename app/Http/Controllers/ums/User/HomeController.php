@@ -49,6 +49,10 @@ class HomeController extends Controller
 
 	public function userDashboardAndProfile(Request $request)
 {
+	if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->role!=1){
+		Auth::logout();
+		return redirect('admission-portal')->with('error','Please login first');
+	}
     $user = Auth::user();
     
     // Dashboard-related variables
@@ -119,7 +123,7 @@ class HomeController extends Controller
         'student_semster' => $student_semster,
         'course_type' => $user->course_type,
         'user_data' => $data['user_data'],
-        'profile_data' => $data,
+        'data' => $data,
         'address' => $combineAddress,
         'notifications' => $notifications,
     ]);
@@ -288,13 +292,14 @@ class HomeController extends Controller
 		if($request->course_id!=null){
 			$data['programm_type_id'] = Course::join('categories', 'courses.category_id', '=', 'categories.id')->select('categories.id','categories.name')->where('courses.id',$request->course_id)->first()->id;
 		}
-	   return view('frontend.index.application-form',$data);
+		// dd($data);
+	   return view('ums.usermanagement.user.application_form',$data);
     }
 
     public function education_single_row(Request $request){
     	$user=Auth::user();
 		$data['next_rows'] = ($request->rows+1);
-		$returnHTML = view('frontend.index.application-form.education-single-row')->with($data)->render();
+		$returnHTML = view('ums.usermanagement.user.frontend.index.application-form.education-single-row')->with($data)->render();
 		return response()->json(array('success' => true, 'html'=>$returnHTML));
 }
 
@@ -1099,7 +1104,7 @@ class HomeController extends Controller
 		$data['correspondence_address'] = ApplicationAddress::where(['application_id'=>$request->application_id,'address_type'=>'correspondence'])->first();
 		// dd($data['applicationEducation']);
 		if($user->course_type == 0){
-		 return view('frontend.index.view-application-form',$data);
+		 return view('ums.usermanagement.user.view-application-form',$data);
 		}else{
 		 return view('student.phdadmitcard.phd_application_form_view',$data);
 		}

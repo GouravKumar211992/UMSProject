@@ -237,7 +237,7 @@
                                                         </tr>
                                                         <tr>
                                                            
-                                                            @if (true)
+                                                            @if (!Auth::guard('student')->user())
                                                                 <th class="thcenter hidden-print">Action</th>
                                                             @endif
                                                             <th class="thcenter">COURSE</th>
@@ -248,8 +248,8 @@
                                                         </tr>
                                                         @foreach ($exams as $exam)
                                                             <tr class="auto-style18 thcenter">
-                                                                {{-- !Auth::guard('student')->user() --}}
-                                                                @if (true)
+                                                               
+                                                                @if ( !Auth::guard('student')->user())
                                                                     <td class="hidden-print"><a href="#!"
                                                                             data-bs-toggle="modal"
 

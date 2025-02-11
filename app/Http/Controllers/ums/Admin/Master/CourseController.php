@@ -1,19 +1,5 @@
 <?php
 
-<<<<<<< HEAD
-namespace App\Http\Controllers\Admin\Master;
-
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use App\Http\Controllers\AdminController;
-
-use App\Models\Course;
-use App\Models\RequiredQualification;
-use App\Models\Category;
-use App\Models\Campuse;
-use App\Models\Subject;
-use App\Models\Semester;
-=======
 namespace App\Http\Controllers\ums\Admin\Master;
 
 use Illuminate\Http\Request;
@@ -26,7 +12,6 @@ use App\Models\ums\Category;
 use App\Models\ums\Campuse;
 use App\Models\ums\Subject;
 use App\Models\ums\Semester;
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use App\Exports\CourseExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Auth;
@@ -65,11 +50,7 @@ class CourseController extends AdminController
         
         $categories = Category::all();
         $campuses = Campuse::all();        
-<<<<<<< HEAD
-        return view('admin.master.course.index', [
-=======
         return view('ums.master.course.course_list', [
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => "Courses",
             'sub_title' => "records",
             'all_courses' => $courses,
@@ -84,11 +65,7 @@ class CourseController extends AdminController
         $category = Category::all();
         $campus = Campuse::all();
         $required_qualification = RequiredQualification::all();
-<<<<<<< HEAD
-        return view('admin.master.course.addcourse', [
-=======
         return view('ums.Master.course.add_course', [
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => "Add New",
             'sub_title' => "Course",
             'categorylist' => $category,
@@ -116,11 +93,7 @@ class CourseController extends AdminController
         $course = new Course();
         $course->fill($data);
         $course->save();
-<<<<<<< HEAD
-        return redirect('admin/master/course/')->with('success','Saved Successfully');
-=======
         return redirect()->route('course_list')->with('success','Saved Successfully');
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     }
 
     public function editCourse(Request $request)
@@ -152,11 +125,7 @@ class CourseController extends AdminController
         ];
                 
         Course::where('id', $request->course_id)->update($cate_array);
-<<<<<<< HEAD
-        return back()->with('success','Done');
-=======
         return redirect()->route('course_list')->with('success','Saved Successfully');
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     }
 
 
@@ -170,11 +139,7 @@ class CourseController extends AdminController
         $courses = Course::where('campus_id', $selectedCourse->campus_id)
         ->orderBy('name','ASC')
         ->get();
-<<<<<<< HEAD
-        return view('admin.master.course.editcourse', [
-=======
         return view('ums.master.course.course_edit', [
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => $selectedCourse->name,
             'sub_title' => "Edit Information",
             'categorylist' => $category,
@@ -234,11 +199,7 @@ class CourseController extends AdminController
     public function softDelete(Request $request,$slug) {
         
         Course::where('id', $slug)->delete();
-<<<<<<< HEAD
-        return redirect('admin/master/course/')->with('success','Deleted Successfully');
-=======
         return redirect('course_list')->with('success','Deleted Successfully');
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
         
     }
     public function courseExport(Request $request)

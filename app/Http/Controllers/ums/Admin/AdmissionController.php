@@ -1,37 +1,5 @@
 <?php
 
-<<<<<<< HEAD
-namespace App\Http\Controllers\Admin;
-
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use App\Http\Controllers\AdminController;
-
-use App\User;
-use App\Models\Application;
-use App\Models\CourseType;
-use App\Models\EducationDetails;
-use App\Models\StudentDetails;
-use App\Models\PermanentAddress;
-use App\Models\UploadDocuments;
-use App\Models\PersonalInformations;
-use App\Models\PaymentDetails;
-use App\Models\Course;
-use App\Models\CourseFee;
-use App\Models\Category;
-use App\Models\Student;
-use App\Models\Subject;
-use App\Models\Semester;
-use App\Models\Enrollment;
-use App\Models\AcademicSession;
-use App\Models\EnrollmentSubject;
-use App\Exports\AdmissionExport;
-use App\Models\Campuse;
-use App\Models\Icard;
-use App\Models\StudentSemesterFee;
-use App\Models\StudentSubject;
-use App\Models\CourseSubject;
-=======
 namespace App\Http\Controllers\ums\Admin;
 
 use Illuminate\Http\Request;
@@ -62,7 +30,6 @@ use App\Models\ums\Icard;
 use App\Models\ums\StudentSemesterFee;
 use App\Models\ums\StudentSubject;
 use App\Models\ums\CourseSubject;
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use Maatwebsite\Excel\Facades\Excel;
 use Validator;
 use Auth;
@@ -692,11 +659,7 @@ class AdmissionController extends AdminController
         if($request->page){
             $current_page = $request->page;
         }
-<<<<<<< HEAD
-        return view('admin.admission.admission-council', [
-=======
         return view('ums.admissions.admission_counselling', [
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => "Campuse",
             'sub_title' => "records",
             'applications' => $Application,
@@ -723,67 +686,6 @@ class AdmissionController extends AdminController
     public function counciledData(Request $request)
     {
       // dd($request->all());
-<<<<<<< HEAD
-        $campuses = Campuse::get();
-        $courses = Course::get();
-        $programs = Category::all();
-        $academic_sessions = AcademicSession::all();
-        $cast_category = Application::where('user_id','!=',0)
-          ->distinct('category')
-          ->pluck('category')
-          ->toArray();
-
-        $Application_query = Application::where('user_id','!=',0);
-        
-          $Application = $Application_query->where('enrollment_status',1)
-          ->where('payment_status',1)
-          ->where('deleted_at',null);
-
-
-        if($request->search) {
-            $keyword = $request->search;
-            $Application->where(function($q) use ($keyword){
-                $q->where('first_Name', 'LIKE', '%'.$keyword.'%')
-                ->orWhere('adhar_card_number', 'LIKE', '%'.$keyword.'%')
-                ->orWhere('email','LIKE','%'.$keyword.'%')
-                ->orWhere('mobile','LIKE','%'.$keyword.'%');
-            });
-        }
-          
-          if (!empty($request->course)) {
-            $Application->where('counselled_course_id',$request->course);
-          }
-          if (!empty($request->campus)) {
-            $Application->where('campuse_id',$request->campus);
-          }
-          if (!empty($request->filter_course)) {
-            $Application->where('counselled_course_id',$request->filter_course);
-          }
-          if (!empty($request->academic_session)) {
-            $Application->where('academic_session',$request->academic_session);
-          }
-          
-        $per_page = 10000;
-        if($request->remove_pagination != 'all'){
-          $per_page = 10;
-        }
-        $Application = $Application->paginate($per_page);
-        foreach($Application as $Application_row){
-          $Application_row->equivalent_percentage = ($Application_row->latestEducationDetails)?$Application_row->latestEducationDetails->equivalent_percentage:'';
-        }
-        $Application_sort = $Application;
-        if($request->education_order == 'ASC'){
-          $Application_sort = $Application->sortBy('equivalent_percentage');
-        }
-        if($request->education_order == 'DESC'){
-          $Application_sort = $Application->sortByDesc('equivalent_percentage');
-        }
-        $current_page = 1;
-        if($request->page){
-            $current_page = $request->page;
-        }
-        return view('admin.admission.counciled-data', [
-=======
       $campuses = Campuse::get();
       $courses = Course::get();
       $programs = Category::all();
@@ -847,7 +749,6 @@ class AdmissionController extends AdminController
 
 
         return view('ums.admissions.council_data', [
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => "Campuse",
             'sub_title' => "records",
             'applications' => $Application,
@@ -859,11 +760,8 @@ class AdmissionController extends AdminController
             'cast_category' => $cast_category,
             'per_page' => $per_page,
             'current_page' => $current_page,
-<<<<<<< HEAD
-=======
             
             
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
         ]);
     }
 
@@ -919,11 +817,7 @@ class AdmissionController extends AdminController
         if($request->page){
             $current_page = $request->page;
         }
-<<<<<<< HEAD
-        return view('admin.admission.enrolled-student', [
-=======
         return view('ums.admissions.enrolled_student', [
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => "Campuse",
             'sub_title' => "records",
             'applications' => $Application,

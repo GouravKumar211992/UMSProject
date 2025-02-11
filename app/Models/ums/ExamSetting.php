@@ -46,21 +46,12 @@ class ExamSetting extends Model implements HasMedia
         }
     }
 
-<<<<<<< HEAD
-    public function registerMediaCollections()
-    {
-
-        $this->addMediaCollection('paper_doc_url')
-            ->singleFile();
-     }
-=======
     // public function registerMediaCollections()
     // {
 
     //     $this->addMediaCollection('paper_doc_url')
     //         ->singleFile();
     //  }
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 
 }

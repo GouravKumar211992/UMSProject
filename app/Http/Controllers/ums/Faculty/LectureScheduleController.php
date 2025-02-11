@@ -1,17 +1,5 @@
 <?php
 
-<<<<<<< HEAD
-namespace App\Http\Controllers\Faculty;
-
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Timetable;
-use App\Models\faculty;
-use App\Models\Course;
-use App\Models\Period;
-use App\Models\Subject;
-use App\Models\Semester;
-=======
 namespace App\Http\Controllers\UMS\Faculty;
 
 use App\Http\Controllers\Controller;
@@ -22,7 +10,6 @@ use App\Models\ums\Course;
 use App\Models\ums\Period;
 use App\Models\ums\Subject;
 use App\Models\ums\Semester;
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use Auth;
 
 class LectureScheduleController extends Controller
@@ -30,17 +17,11 @@ class LectureScheduleController extends Controller
     public function lectureSchedule(Request $request)
     {
         $periods=Period::all();
-<<<<<<< HEAD
-		$user=Auth::guard('faculty')->user()->id;
-        //dd($periods);
-		$weekDays     = Timetable::WEEK_DAYS;
-=======
 		// $user=Auth::guard('faculty')->user()->id;
         //dd($periods);
         $faculty_id = request()->get('faculty_id'); // Default to 46 if 'faculty_id' is not provided in the request
         $user = Faculty::find($faculty_id);
 		$weekDays= Timetable::WEEK_DAYS;
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
         $timetables=Timetable::with('period')->where('faculty_id',$user)->get();
 		$recordSet = array();
 		foreach($timetables as $timeT) {
@@ -54,20 +35,12 @@ class LectureScheduleController extends Controller
 
 
        // dd($timetables);
-<<<<<<< HEAD
-        return view('faculty.lecture-schedule.lecture-schedule-view',
-		['periods'=>$periods,
-		'timetables'=>$timetables,
-		'weekDays'=>$weekDays,
-		'recordSet'=>$recordSet
-=======
         return view('ums.master.faculty.time_table_add',
 		['periods'=>$periods,
 		'timetables'=>$timetables,
 		'weekDays'=>$weekDays,
 		'recordSet'=>$recordSet,
         
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 		]
 		);
     }
@@ -104,30 +77,13 @@ class LectureScheduleController extends Controller
         // }
          $timetables = $timetables->paginate(10);
          //dd($timetables);
-<<<<<<< HEAD
-        return view('faculty.time-table.index', [
-=======
         return view('ums.master.faculty.time_table_add', [
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => "Timetable",
             'sub_title' => "records",
             'all_timetable' => $timetables
         ]);
 
     }
-<<<<<<< HEAD
-public function add(Request $request)
-    {
-        $periods = Period::all();
-        $courses = Course::all();
-        $facultys = faculty::all();
-    //    dd($facultys);
-        return view('faculty.time-table.addtimetable', [
-            'page_title' => "Add New",
-            'sub_title' => "Timetable",
-        ])->withPeriods($periods)->withCourses($courses)->withFacultys($facultys);
-    }
-=======
      public function add(Request $request)
      {
         $periods = Period::all();
@@ -142,7 +98,6 @@ public function add(Request $request)
     
     //working........
 
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
   public function addTimetable(Request $request)
     {
         $request->validate([

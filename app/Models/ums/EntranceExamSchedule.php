@@ -1,18 +1,10 @@
 <?php
-<<<<<<< HEAD
-
-namespace App\models\ums;
-=======
 namespace App\Models\Ums;
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 use Illuminate\Database\Eloquent\Model;
 
 class EntranceExamSchedule extends Model
 {
-<<<<<<< HEAD
-    //
-=======
     // Explicitly defining the table name
     protected $table = 'entrance_exam_schedules';
 
@@ -32,5 +24,4 @@ class EntranceExamSchedule extends Model
 
     // If your table does not have timestamps
     // public $timestamps = false;
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 }

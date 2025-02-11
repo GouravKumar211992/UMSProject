@@ -62,22 +62,22 @@
         @endif
 	@endif
 	@php 
-function like($str, $searchTerm) {
-    $searchTerm = strtolower($searchTerm);
-    $str = strtolower($str);
-    $pos = strpos($str, $searchTerm);
-    if ($pos === false)
-        return false;
-    else
-        return true;
-}
-$affiliate=0;
-$found = like($form_data->enrollment_no, 'SA'); //returns true
-$found1 = like($form_data->enrollment_no, 'DSMNRU21A'); //returns true
+// function like($str, $searchTerm) {
+//     $searchTerm = strtolower($searchTerm);
+//     $str = strtolower($str);
+//     $pos = strpos($str, $searchTerm);
+//     if ($pos === false)
+//         return false;
+//     else
+//         return true;
+// }
+// $affiliate=0;
+// $found = like($form_data->enrollment_no, 'SA'); //returns true
+// $found1 = like($form_data->enrollment_no, 'DSMNRU21A'); //returns true
 
-if($found || $found1){
-    $affiliate=1;
-}
+// if($found || $found1){
+//     $affiliate=1;
+// }
 $affiliate=1;
 @endphp
 	@if($form_data->bank_name==null)

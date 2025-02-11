@@ -1,28 +1,5 @@
 <?php
 
-<<<<<<< HEAD
-namespace App\Http\Controllers\Student;
-
-
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Http\Controllers\AdminController;
-
-use App\Models\SemesterFee;
-use App\Models\StudentSemesterFee;
-use App\Models\Semester;
-use App\Models\Subject;
-use App\Models\Enrollment;
-use App\Models\Course;
-use App\Models\Icard;
-use App\Models\Category;
-use App\Exports\FeeExport;
-use App\Models\Application;
-use App\Models\CourseFee;
-use App\Models\ExamFee;
-use App\Models\Result;
-use App\Models\StudentSubject;
-=======
 namespace App\Http\Controllers\ums\Student;
 
 
@@ -44,7 +21,6 @@ use App\Models\ums\CourseFee;
 use App\Models\ums\ExamFee;
 use App\Models\ums\Result;
 use App\Models\ums\StudentSubject;
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use Maatwebsite\Excel\Facades\Excel;
 use Validator;
 use Auth;

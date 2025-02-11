@@ -168,10 +168,10 @@
                                                         <td>{{ $user->email }}</td>
                                                         <td>{{ $user->mobile }}</td>
                                                         <td>{{ date('M dS, Y', strtotime($user->created_at)) }}</td>
-                                                        <td>
+                                                        
                                                             <td><span class="badge rounded-pill badge-light-{{ strtolower($user->status) == 'active' ? 'success' : 'warning' }}">{{ucfirst($user->status)}}</span></td>
 
-                                                        </td>
+                                                        
                                                         <td class="tableactionnew">
                                                             <div class="dropdown">
                                                                 <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown">

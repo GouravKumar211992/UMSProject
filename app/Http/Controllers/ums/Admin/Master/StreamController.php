@@ -1,17 +1,5 @@
 <?php
 
-<<<<<<< HEAD
-namespace App\Http\Controllers\Admin\Master;
-
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use App\Http\Controllers\AdminController;
-
-use App\Models\Course;
-use App\Models\Category;
-use App\Models\Stream;
-use App\Models\Campuse;
-=======
 namespace App\Http\Controllers\ums\Admin\Master;
 
 use Illuminate\Http\Request;
@@ -22,7 +10,6 @@ use App\Models\ums\Course;
 use App\Models\ums\Category;
 use App\Models\ums\Stream;
 use App\Models\ums\Campuse;
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use App\Exports\StreamExport;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -68,11 +55,7 @@ class StreamController extends AdminController
         $category = Category::all();
         $course = Course::all();
         $campuse = Campuse::all();
-<<<<<<< HEAD
-        return view('admin.master.stream.index', [
-=======
         return view('ums.master.stream.stream_list', [
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => "Stream",
             'sub_title' => "records",
             'all_stream' => $streams,
@@ -88,11 +71,7 @@ class StreamController extends AdminController
         $course = Course::all();
         $campuse = Campuse::all();
 
-<<<<<<< HEAD
-        return view('admin.master.stream.addstream', [
-=======
         return view('ums.master.stream.add_stream_list', [
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => "Add New",
             'sub_title' => "Stream",
             'categorylist' => $category,
@@ -110,11 +89,7 @@ class StreamController extends AdminController
         ]);
         $data = $request->all();
         $stream = $this->create($data);
-<<<<<<< HEAD
-        return redirect()->route('get-stream')->with('success','Added Successfully.');
-=======
         return redirect()->route('stream_list')->with('success','Added Successfully.');
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     }
 
     public function create(array $data)
@@ -141,11 +116,7 @@ class StreamController extends AdminController
         ]);
 		$stream_code=Course::where(['id'=>$request->course_id])->first();
         $update_category = Stream::where('id', $request->stream_id)->update(['name' => $request->stream_name, 'category_id' => $request->category_id,'course_id' => $request->course_id,'stream_code'=>$stream_code->color_code, 'updated_by' => 1]);
-<<<<<<< HEAD
-        return redirect()->route('get-stream')->with('success','Updated Successfully.');
-=======
         return redirect()->route('stream_list')->with('success','Updated Successfully.');
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     }
 
 
@@ -155,11 +126,7 @@ class StreamController extends AdminController
         $category = Category::all();
         $course = Course::all();
 		 $campuse = Campuse::all();
-<<<<<<< HEAD
-        return view('admin.master.stream.editstream', [
-=======
         return view('ums.master.stream.stream_list_edit', [
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title'        => $selectedStream->name,
             'sub_title'         => "Edit Information",
             'categorylist'      => $category,
@@ -193,11 +160,7 @@ class StreamController extends AdminController
     public function softDelete(Request $request,$slug) {
         
         Stream::where('id', $slug)->delete();
-<<<<<<< HEAD
-        return redirect()->route('get-stream')->with('success','Deleted Successfully.');
-=======
         return redirect()->route('stream_list')->with('success','Deleted Successfully.');
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
         
     }
     public function getCourseList(Request $request)

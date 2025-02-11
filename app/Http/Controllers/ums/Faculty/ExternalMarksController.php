@@ -1,45 +1,21 @@
 <?php
 
-<<<<<<< HEAD
-namespace App\Http\Controllers\Faculty;
-
-=======
 namespace App\Http\Controllers\UMS\Faculty;
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use View;
 use Auth;
 use App\User;
 
-<<<<<<< HEAD
-use App\Http\Controllers\AdminController;
-use Illuminate\Http\Request;
-use App\Models\Campuse;
-use App\Models\BackPaper;
-use App\Models\Stream;
-use App\Models\Course;
-=======
 use App\Http\Controllers\UMS\AdminController;
 use Illuminate\Http\Request;
 use App\Models\ums\Campuse;
 use App\Models\ums\BackPaper;
 use App\Models\ums\Stream;
 use App\Models\ums\Course;
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use App\Models\Category;
 use App\Models\PermanentAddress;
 use App\Models\UploadDocuments;
 use App\Models\Icard;
 use App\Models\Result;
-<<<<<<< HEAD
-use App\Models\Subject;
-use App\Models\StudentSubject;
-use App\Models\StudentsemesterFee;
-use App\Models\InternalMarksMapping;
-use App\Models\AcademicSession;
-use App\Models\ExternalMark;
-use App\Models\MbbsExamForm;
-use App\Models\AwardSheetFile;
-=======
 use App\Models\ums\Subject;
 use App\Models\ums\StudentSubject;
 use App\Models\ums\StudentsemesterFee;
@@ -51,7 +27,6 @@ use App\Models\AwardSheetFile;
 use App\Models\ums\Semester;
 use App\Models\ums\ExamType;
 use App\Models\ums\Faculty;
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use Carbon\Carbon;
 use Validator;
 
@@ -65,37 +40,16 @@ class ExternalMarksController extends AdminController
     }
 	 public function index()
     {
-<<<<<<< HEAD
-		$faculty_id=Auth::guard('faculty')->user()->id;
-		$external_marks = ExternalMark::select('external_marks.roll_number','external_marks.sub_code','external_marks.enrollment_number','external_marks.semester_marks','external_marks.total_marks','external_marks.student_name','external_marks.total_marks_words',)
-		->join('internal_marks_mappings','internal_marks_mappings.sub_code','external_marks.sub_code')
-=======
 		// $faculty_id = $faculty_id ?? 46;
 		// $faculty_id=Auth::guard('faculty')->user()->id;
 		$external_marks = ExternalMark::select('external_marks.roll_number','external_marks.sub_code','external_marks.enrollment_number','external_marks.semester_marks','external_marks.total_marks','external_marks.student_name','external_marks.total_marks_words',)
 		->join('internal_marks_mappings','internal_marks_mappings.sub_code','external_marks.sub_code')
 		// ->join('semesters', 'semesters.id', '=', 'internal_marks_mappings.semester_id') // Joining semesters
 		// ->join('courses', 'courses.id', '=', 'internal_marks_mappings.course_id') 
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 		->where('external_marks.faculty_id',$faculty_id)
 		->orderBy('external_marks.id','DESC')
 		->distinct()
 		->paginate(50);
-<<<<<<< HEAD
-        //dd($external_marks);
-
-		
-		return view('faculty.external.index', [
-            'external_marks' => $external_marks
-        ]);
-    } 
-	public function external(Request $request)
-    {
-		$data['streams'] = Stream::whereIn('id',[50,3,4,5])->orderBy('name','ASC')->get();
-		$data['examTypes'] = StudentSubject::distinct('type')->pluck('type')->toArray();
-		$data['sub_code']= $data['sub_name']= $data['date_of_semester']= $data['date_of_assign']= $data['external_maximum']= $data['mapped_faculty']= $mapped_faculty =$data['mapped_Semesters']= null;
-		$user=Auth::guard('faculty')->user();
-=======
         // dd($external_marks);
 
 		return view('ums.master.faculty.external_marks', [
@@ -113,7 +67,6 @@ class ExternalMarksController extends AdminController
 		// $user=Auth::guard('faculty')->user();
 		$faculty_id = request()->get('faculty_id', 46); // Default to 46 if 'faculty_id' is not provided in the request
         $user = Faculty::find($faculty_id);
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 		$mapped_Subjects_query = InternalMarksMapping::select('subjects.name', 'subjects.sub_code', 'subjects.back_fees', 'subjects.scrutiny_fee', 'subjects.challenge_fee', 'subjects.status', 'subjects.subject_type', 'subjects.type', 'subjects.internal_maximum_mark', 'subjects.maximum_mark', 'subjects.minimum_mark', 'subjects.credit', 'subjects.internal_marking_type', 'subjects.combined_subject_name')
 		->join('subjects',function($join){
 			$join->on('subjects.sub_code','internal_marks_mappings.sub_code')
@@ -133,15 +86,9 @@ class ExternalMarksController extends AdminController
 		->distinct()
 		->where('faculty_id',$user->id)
 		->get();
-<<<<<<< HEAD
-		$data['selected_course'] = Course::find($request->course);
-		$data['mapped_Semesters']=InternalMarksMapping::select('semesters.name','semesters.id','internal_marks_mappings.semester_id')
-		->join('semesters','semesters.id','internal_marks_mappings.semester_id')
-=======
 		$data['selected_course'] = Course::with('Campuse')->find($request->course);
 		$data['mapped_Semesters']=InternalMarksMapping::select('semesters.name','semesters.id','internal_marks_mappings.semester_id')
 		->join('semesters','semesters.id','=','internal_marks_mappings.semester_id')
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 		->distinct()
 		->where('faculty_id',$user->id)
 		->where('internal_marks_mappings.course_id',$request->course)
@@ -201,23 +148,12 @@ class ExternalMarksController extends AdminController
         $data['students'] = $students;
 		$data['sub_code']=$request->sub_code;
 		$data['subject']=$subject;
-<<<<<<< HEAD
-		$sub_name = Subject::withTrashed()->where('sub_code', $request->sub_code)->first();
-		$data['sub_name']=$sub_name;
-=======
 		$sub_code_name = Subject::withTrashed()->where('sub_code', $request->sub_code)->first();
 		$data['sub_code_name']=$sub_code_name;
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 		$data['external_maximum']=$request->external_maximum;
 		$data['date_of_semester']=$request->date_of_semester;
 		$data['mapped_faculty'] = $mapped_faculty;
 		$data['campuses'] = Campuse::all();
-<<<<<<< HEAD
-        return view('faculty.external.add',$data);
-    }
-	public function externalMarksShow(Request $request)
-    {
-=======
 		
 		// dd($data['mapped_Semesters']);
 		
@@ -226,7 +162,6 @@ class ExternalMarksController extends AdminController
 	public function externalMarksShow(Request $request)
     {
 		$data = [];
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 		$data['streams'] = Stream::whereIn('id',[50,3,4,5])->orderBy('name','ASC')->get();
 		$data['examTypes'] = StudentSubject::distinct('type')->pluck('type')->toArray();
 		$user=Auth::guard('faculty')->user();
@@ -257,10 +192,7 @@ class ExternalMarksController extends AdminController
 		->where('course_id',$request->course)
 		->first();
 		$data['mapped_faculty'] = $mapped_faculty;
-<<<<<<< HEAD
-=======
 
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 		$marks = [];
 		if($request->course == 64){
 			$marks = ExternalMark::where('session',$request->session)
@@ -307,13 +239,9 @@ class ExternalMarksController extends AdminController
 		$data['sessions']=AcademicSession::all();
 		$data['selected_course'] = Course::find($request->course);
 		$data['campuses_single'] = Campuse::where('id', $request->campuse_id)->first();
-<<<<<<< HEAD
-        return view('faculty.external.show',$data);
-=======
 	
 		dd($data);
         return view('ums.master.faculty.external_marks',$data);
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     }
 	public function externalMarksDelete(Request $request)
     {
@@ -331,14 +259,11 @@ class ExternalMarksController extends AdminController
 		}
 		return back()->with('success','Records deleted successfully');
 	}
-<<<<<<< HEAD
-=======
 	 // Define the batchArray function here
 	//  private function batchArray()
 	//  {
 	// 	 return ['Batch01', 'Batch02', 'Batch03', 'Batch04'];  // Example static array
 	//  }
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 	public function external_submit(Request $request)
 	{
 		$user=Auth::guard('faculty')->user();
@@ -397,11 +322,8 @@ class ExternalMarksController extends AdminController
 		//dd($request->course_id,$request->semester_id,$request->sub_code);
 		return back()->with('success','Marks Filled Successfully');
 	}
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 	public function post_external(Request $request){
 		
 		$validator = Validator::make($request->all(), [
@@ -491,9 +413,6 @@ class ExternalMarksController extends AdminController
 		}
 		return back()->with('error','Some Error Occurred');
 	}
-<<<<<<< HEAD
-=======
 
 	
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 }

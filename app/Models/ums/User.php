@@ -2,7 +2,7 @@
 
 namespace App\models\ums;
 
-use Laravel\Passport\HasApiTokens;
+// use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use  Notifiable;
     use SoftDeletes;
 
     /**

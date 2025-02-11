@@ -9,22 +9,14 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 use Illuminate\Notifications\Notifiable;
-<<<<<<< HEAD
-use Laravel\Passport\HasApiTokens;
-=======
 // use Laravel\Passport\HasApiTokens;
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Str;
 
 
 class Student extends Authenticatable implements HasMedia
 {
-<<<<<<< HEAD
-    use HasApiTokens, Notifiable, SoftDeletes, InteractsWithMedia;
-=======
     use  Notifiable, SoftDeletes, InteractsWithMedia;
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
     // protected $guard = 'students';
     protected $table = 'students';

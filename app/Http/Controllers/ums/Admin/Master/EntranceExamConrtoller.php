@@ -1,20 +1,5 @@
 <?php
 
-<<<<<<< HEAD
-namespace App\Http\Controllers\Admin\Master;
-
-use App\Http\Controllers\AdminController;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-
-use App\Models\Course;
-use App\Models\Category;
-use App\Models\Semester;
-use App\Models\Campuse;
-use App\Models\ExamCenter;
-use App\Models\AcademicSession;
-use App\Models\EntranceExamAdmitCard;
-=======
 namespace App\Http\Controllers\ums\Admin\Master;
 
 
@@ -29,7 +14,6 @@ use App\Models\ums\Campuse;
 use App\Models\ums\ExamCenter;
 use App\Models\ums\AcademicSession;
 use App\Models\ums\EntranceExamAdmitCard;
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use App\Exports\SemesterExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Auth;
@@ -74,11 +58,7 @@ class EntranceExamConrtoller extends AdminController
         $category = Category::all();
         $course = Course::all();
         $campuse = Campuse::all();
-<<<<<<< HEAD
-        return view('admin.master.entrance-exam-allow.index', [
-=======
         return view('ums.master.entrance_exam.entrance_exam', [
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => "Semester",
             'sub_title' => "records",
             'entranceExamData' => $entranceExam,
@@ -95,11 +75,7 @@ class EntranceExamConrtoller extends AdminController
         $campuse = Campuse::all();
         $sessions = AcademicSession::orderBy('id','DESC')->limit(1)->get();
         $examcenter = ExamCenter::all();
-<<<<<<< HEAD
-        return view('admin.master.entrance-exam-allow.add_entrance_exam_schedule', [
-=======
         return view('ums.master.entrance_exam.Entrance_exam_add', [
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => "Add New",
             'sub_title' => "Semester",
             'categorylist' => $category,

@@ -65,16 +65,17 @@
 }
 </style>
 @endsection
+{{-- {{dd($AdmitCard)}} --}}
 @if($AdmitCard)
 
 @php
 if($examfee->enrollment){
 	$icard = $examfee->enrollment->icard;
     if(!$icard){
-        $icard = \App\Models\Student::where('roll_number',$examfee->roll_no)->first();
+        $icard = \App\Models\ums\Student::where('roll_number',$examfee->roll_no)->first();
     }
 }else{
-	$icard = \App\Models\MbbsExamForm::where('rollno',$examfee->roll_no)->first();
+	$icard = \App\Models\ums\MbbsExamForm::where('rollno',$examfee->roll_no)->first();
 }
 @endphp
 <center>

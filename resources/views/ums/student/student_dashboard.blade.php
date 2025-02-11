@@ -5,10 +5,7 @@
     @endphp
 
     <section class="content-body p-5">
-<<<<<<< HEAD
         @include('ums.admin.notifications')
-=======
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
         <div class="container mt-2">
 
             <div class="card shadow-lg border-0 rounded-lg mb-4">
@@ -24,7 +21,7 @@
                                 <p class="text-muted mb-0 lead">Nice to have you back, what an exciting day! Get ready and
                                     continue your lesson today.</p>
                             </div>
-                           
+
                         </div>
                         @if ($student->exam_portal == 0)
                             <div class="text-end">
@@ -52,8 +49,8 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-12  ">
-                                                <div class="ps-lg-4 " >
-                                                    <div class="d-flex flex-column gap-3  " >
+                                                <div class="ps-lg-4 ">
+                                                    <div class="d-flex flex-column gap-3  ">
                                                         <h3 class="text-primary mb-0">{{ $student->enrollment_no }}</h3>
                                                         <h5 class="text-dark">Roll Number: {{ $student->roll_number }}</h5>
                                                         <h5 class="text-dark">Course:
@@ -64,12 +61,12 @@
                                                             ({{ $student->enrollments->course->campuse->campus_code }})
                                                         </p>
                                                         @if ($icard && $icard->father_mobile != null)
-                                                            <a href="{{ route('view-icard', [$icard->id]) }}" target="_blank"
-                                                                class="btn btn-primary">
+                                                            <a href="{{ route('view-icard', [$icard->id]) }}"
+                                                                target="_blank" class="btn btn-primary">
                                                                 <i class="fas fa-id-card me-2"></i>View ID Card
                                                             </a>
                                                         @else
-                                                            <a hidden href="{{ route('icard-form') }}"
+                                                            <a hidden href="{{ route('icard-form'), }}"
                                                                 class="btn btn-primary">
                                                                 <i class="fas fa-plus me-2"></i>ID Card Form
                                                             </a>
@@ -126,9 +123,9 @@
                                 </div>
                             </div> --}}
 
-   
-   
-            {{-- <div class="col-md" >
+
+
+                            {{-- <div class="col-md" >
                 <div class="card shadow-lg">
                     <div class="card-header">
                         <h5>Student Performance</h5>
@@ -148,14 +145,14 @@
                     </div>
                 </div>
             </div> --}}
-        </div>
-    </div>
-
-    <!-- Scripts -->
-              </div>
-                    @endif
+                        </div>
                 </div>
+
+                <!-- Scripts -->
             </div>
+            @endif
+        </div>
+        </div>
         </div>
     </section>
 
@@ -229,7 +226,6 @@
                 }]
             });
         }
-       
     </script>
-              
+
 @endsection

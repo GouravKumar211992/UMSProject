@@ -506,7 +506,7 @@
                         <div class="mb-3">
                             <label for="description" class="form-label">Click Here To Download Format Of Excel
                                 File</label>
-                            <a href="#" class="btn btn-primary">Download</a>
+                            <a href="{{ asset('bulk-uploading/ExamScheduleImport.xlsx') }}" class="btn btn-primary">Download</a>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

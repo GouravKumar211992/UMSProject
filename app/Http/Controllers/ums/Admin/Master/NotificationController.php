@@ -1,18 +1,10 @@
 <?php
 
-<<<<<<< HEAD
-namespace App\Http\Controllers\Admin\Master;
-
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Notification;
-=======
 namespace App\Http\Controllers\ums\Admin\Master;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ums\Notification;
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\NotificationExport;
 
@@ -24,16 +16,12 @@ class NotificationController extends Controller
    public function index()
    {  	
    	   $data=Notification::all();
-<<<<<<< HEAD
-   	 return view('admin.master.notification.show',['items'=>$data]);
-=======
    	 return view('ums.master.notification.notification',['items'=>$data]);
    }
    public function index2()
    {  	
    	   $data=Notification::all();
    	 return view('ums.master.faculty.notification',['items'=>$data]);
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
    }
     public function add(Request $request)
    { 
@@ -56,11 +44,7 @@ class NotificationController extends Controller
     public function edit($id)
    {
    	  $data=Notification::find($id);
-<<<<<<< HEAD
-   	 return view('admin.master.notification.edit-notification',['info'=>$data]);
-=======
    	 return view('ums.master.notification.notification_edit',['info'=>$data]);
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
    }
     public function delete($id)
    {

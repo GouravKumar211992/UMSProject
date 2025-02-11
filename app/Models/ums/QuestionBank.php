@@ -27,25 +27,6 @@ class QuestionBank extends Model implements HasMedia
         'question_bank_file',
     ];
 
-<<<<<<< HEAD
-    public function registerMediaCollections()
-    {
-
-        $this->addMediaCollection('question_bank_file')
-            ->singleFile();
-        $this->addMediaCollection('synopsis_file')
-            ->singleFile();
-        $this->addMediaCollection('thysis_file')
-            ->singleFile();
-        $this->addMediaCollection('journal_paper_file')
-            ->singleFile();
-        $this->addMediaCollection('seminar_file')
-            ->singleFile();
-
-        $this->addMediaCollection('domicile_cirtificate')
-            ->singleFile();
-     }
-=======
     // public function registerMediaCollections()
     // {
 
@@ -63,7 +44,6 @@ class QuestionBank extends Model implements HasMedia
     //     $this->addMediaCollection('domicile_cirtificate')
     //         ->singleFile();
     //  }
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 
     public function Campuse() {

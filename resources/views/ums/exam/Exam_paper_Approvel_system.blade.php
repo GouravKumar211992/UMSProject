@@ -116,11 +116,11 @@
                             </div>
 
                             <div class="col-md-9">
-<<<<<<< HEAD
+
                               <input type="text" placeholder="Enter the roll number" class="form-control roll_no" value="{{Request()->roll_no}}" placeholder="Enter the roll number" required onblur="setUrl()" name="roll_no" required>
-=======
-                              <input type="text" placeholder="Enter the roll number" class="form-control roll_no" value="{{Request()->roll_no}}" placeholder="Enter the roll number" required onblur="setUrl()" required>
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
+
+                       
+
                             </div>
                         </div>
 

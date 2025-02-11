@@ -1,4 +1,5 @@
 @extends("ums.admin.admin-meta")
+
 @section("content")
 
 
@@ -94,10 +95,10 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select data-live-search="true" name="semester_id" id="semester_id" style="border-color: #c0c0c0;" class="form-control js-example-basic-single">
-                                    <option value="">--Select Semester--</option>
-                                    @foreach($semesters as $semester)
-                                        <option value="{{$semester->id}}" @if(Request()->semester_id==$semester->id) selected @endif >{{$semester->name}}</option>
+                                <select name="batch" class="batch form-control">
+                                    <option value="">--Select--</option>
+                                    @foreach(batchArray() as $batch)
+                                    <option value="{{$batch}}" @if(Request()->batch==$batch) selected @endif >{{$batch}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -155,35 +156,33 @@
                                             <td>
                                                 <input type="text" name="subject_name[]" class="subject_name position_style form-control text-left" style="width: 100%;" value="{{$result->subject_name}}">
                                                 <hr>
-                                                <span class="text-info fa fa-eye" style="cursor: pointer;" data-toggle="modal" data-target="#myModal{{$serial_no}}"> Suggetions</span>
-                                                        <!-- Modal -->
-                                                        <div id="myModal{{$serial_no}}" class="modal fade" role="dialog">
-                                                        <div class="modal-dialog">
-                                
-                                                            <!-- Modal content-->
-                                                            <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title">Subject Suggetions</h4>
-                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <table class="table table-hover">
-                                                                    @foreach($subjectSuggetions as $subjectSuggetion)
-                                                                    <tr>
-                                                                        <td>{{$result->subject_code}}</td>
-                                                                        <td>{{$subjectSuggetion}}</td>
-                                                                        <td><input type="button" data-subject="{{$subjectSuggetion}}" onclick="setSubjectSuggetion($(this))" value="User This" class="btn btn-sm btn-success"  data-dismiss="modal"></td>
-                                                                    </tr>
-                                                                    @endforeach
-                                                                </table>
-                                                            </div>
-                                                            <!-- <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                            </div> -->
-                                                            </div>
-                                
-                                                        </div>
-                                                        </div>
+                                               <!-- Button to trigger modal -->
+<span class="text-info fa fa-eye" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#myModal{{$serial_no}}"> Suggestions</span>
+
+<!-- Modal -->
+<div id="myModal{{$serial_no}}" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel{{$serial_no}}" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary ">
+        <h4 class="modal-title text-white">Subject Suggestions</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover">
+          @foreach($subjectSuggetions as $subjectSuggetion)
+          <tr>
+            <td class="border">{{$result->subject_code}}</td>
+            <td class="border">{{$subjectSuggetion}}</td>
+            <td class="border"><input type="button" data-subject="{{$subjectSuggetion}}" onclick="setSubjectSuggetion($(this))" value="Use This" class="btn btn-sm btn-success" data-bs-dismiss="modal"></td>
+          </tr>
+          @endforeach
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
                                             </td>
                                             <td>
                                                 <button type="button" class="brn btn-sm btn-info" onclick="marksheetSubjectNameUpdate($(this))">Update Subject Name Batch Wise</button>
@@ -258,17 +257,7 @@
     </div>
     <!-- END: Content-->
 
-    <div class="sidenav-overlay"></div>
-    <div class="drag-target"></div>
-
-    <!-- BEGIN: Footer-->
-    <footer class="footer footer-static footer-light">
-        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">Copyright &copy; 2024 <a
-                    class="ml-25" href="#" target="_blank">Presence 360</a><span
-                    class="d-none d-sm-inline-block">, All rights Reserved</span></span></p>
-
-        <div class="footerplogo"><img src="../../../assets/css/p-logo.png" /></div>
-    </footer>
+   
     <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
     <!-- END: Footer-->
 
@@ -415,11 +404,13 @@
 
          }
 
-         function setSubjectSuggetion($this){
-            var subject = $this.data('subject');
-            $this.closest('tr.main-tr').find('.subject_name').val(subject);
-            // alert($this.closest('tr.main-tr').find('.subject_name').val());
-         }
-    </script> --}}
+        </script> --}}
+        <script>
+        function setSubjectSuggetion($this){
+           var subject = $this.data('subject');
+           $this.closest('tr.main-tr').find('.subject_name').val(subject);
+           // alert($this.closest('tr.main-tr').find('.subject_name').val());
+        }
+    </script>
 
 @endsection

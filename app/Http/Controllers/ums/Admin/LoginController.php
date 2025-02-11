@@ -49,45 +49,6 @@ class LoginController extends Controller
     }
 
 
-<<<<<<< HEAD
-	public function login(Request $request){
-
-        $this->validate($request, [
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required'],
-            // 'g-recaptcha-response' => 'required|recaptchav3:adminportal,0.5',
-
-		],
-		[
-			'password.required' => 'Password field is required',
-			'g-recaptcha-response.required' => 'Google Captcha field is required.',
-			// 'g-recaptcha-response.validate' => 'Google Captcha field is not validated.',
-		]); 
-
-        $credentials = $request->only('email', 'password');
-        $credentials['password'] = $request->password;
-
-        $remember = $request->has('remember') ? true : false;
-
-        if (Auth::guard('admin')->attempt($credentials,$remember)) {
-            $userData = Admin::where('email', '=', $request->email)
-                ->first();
-
-            if ($userData && $userData->status != 'active') {
-                $errorMsg = "Your account is deactivated.";
-                return view('admin.auth.login', array('errorMsg' => $errorMsg));
-            }
-
-            return redirect('admin');
-        } else {
-            $errorMsg = "Incorrect Username Or Password";
-            return view('admin.auth.login', array('errorMsg' => $errorMsg));
-        }
-
-
-	}
-
-=======
 	public function login(Request $request)
 {
     $this->validate($request, [
@@ -120,7 +81,6 @@ class LoginController extends Controller
 
     return view('admin.auth.login', ['errorMsg' => "User not found or incorrect password."]);
 }
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 
 

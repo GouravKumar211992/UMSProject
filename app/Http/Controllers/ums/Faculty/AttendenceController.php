@@ -1,10 +1,6 @@
 <?php
 
-<<<<<<< HEAD
-namespace App\Http\Controllers\ums\Faculty;
-=======
 namespace app\Http\Controllers\UMS\Faculty;
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 use View;
 use Auth;
@@ -14,19 +10,11 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-<<<<<<< HEAD
-use App\Models\InternalMarksMapping;
-use App\Models\InternalMark;
-use App\Models\StudentSubject;
-use App\Models\ums\Attendence;
-use App\Models\AcademicSession;
-=======
 use App\Models\ums\InternalMarksMapping;
 use App\Models\ums\InternalMark;
 use App\Models\ums\StudentSubject;
 use App\Models\ums\Attendence;
 use App\Models\ums\AcademicSession;
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use Validator;
 
 
@@ -58,19 +46,11 @@ class AttendenceController extends Controller
        if (!empty($request->roll_no)) {
            // dd($request->date_of_attendence);
             $attendence->where('roll_no',$request->roll_no);
-<<<<<<< HEAD
-           // dd($attendence->get());
-        }
-        $attendence=$attendence->paginate(10);
-
-        // dd($attendence);
-=======
         }
        
         // dd($attendence);
         $attendence=$attendence->paginate(10);
         
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     return view('ums.master.faculty.attendance',[
         'attendence'=>$attendence,
 
@@ -168,19 +148,11 @@ class AttendenceController extends Controller
     }
     public function searchAttendence(Request $request)
     {
-<<<<<<< HEAD
-        $sessionsList=Attendence::groupBy('session')->get()->pluck('session')->toArray();
-        // dd($sessionsList);
-        $searchAttendence=Attendence::where('session',$request->session)->where('date_of_attendence',$request->date_of_attendence)->paginate(10);
-        //echo( $searchAttendence);
-        return view('faculty.attendence.view',[
-=======
         $sessionsList=Attendence::select('session')->groupBy('session')->get()->pluck('session')->toArray();
         // dd($sessionsList);
         $searchAttendence=Attendence::where('session',$request->session)->where('date_of_attendence',$request->date_of_attendence)->paginate(10);
         //echo( $searchAttendence);
         return view('ums.master.faculty.show_Attendance',[
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'searchAttendence'=>$searchAttendence,
             'sessionsList' => $sessionsList,
         ]);
@@ -191,8 +163,4 @@ class AttendenceController extends Controller
         return Excel::download(new AttendencesExport($request), 'Attendances.xlsx');
 
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7

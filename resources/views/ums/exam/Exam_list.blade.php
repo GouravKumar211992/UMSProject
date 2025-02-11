@@ -97,7 +97,7 @@
             <div class="content-body">
 
 
-@include('ums.admin.notifications')
+                @include('ums.admin.notifications')
                 <section id="basic-datatable">
                     <div class="row">
                         <div class="col-12">
@@ -105,8 +105,7 @@
 
 
                                 <div class="table-responsive">
-                                    <table
-                                        class="datatables-basic table">
+                                    <table class="datatables-basic table">
                                         <thead>
                                             <tr>
                                                 <th>#Sr. No.</th>
@@ -158,8 +157,8 @@
 
                                                 <!-- Action column (Edit, View, Delete) -->
                                                 @if ($fee->deleted_at == null)
-                                                    <td class="" >
-                                                        <div class="dropdown" >
+                                                    <td class="">
+                                                        <div class="dropdown">
                                                             <button type="button"
                                                                 class="btn btn-sm dropdown-toggle hide-arrow py-0"
                                                                 data-bs-toggle="dropdown">
@@ -167,43 +166,51 @@
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-end">
                                                                 @if ($fee->bank_name)
-<<<<<<< HEAD
                                                                     <a href="{{ route('update-student-subjects', [$fee->id]) }}"
-=======
-                                                                    <a href="{{ route('update_student_subjects', [$fee->id]) }}"
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
-                                                                        class="dropdown-item"><i
-                                                                            class="data-feather"></i>Update Student
+                                                                        class="dropdown-item"><i data-feather="upload"
+                                                                            class="me-50"></i>Update Student
                                                                         Subjects</a>
-                                                                    <br>
+                                                                    
                                                                 @endif
                                                                 @if ($fee->admitcard)
                                                                     <a href="{{ url('admitcard-download') }}?id={{ $fee->id }}"
-                                                                        target="_blank" class="dropdown-item"><i data-feather="eye" class="me-50"></i>View Admit Card</a>
+                                                                        target="_blank" class="dropdown-item"><i
+                                                                            data-feather="eye" class="me-50"></i>View Admit
+                                                                        Card</a>
                                                                 @endif
                                                                 @if ($fee->form_type == 'regular')
                                                                     <a href="{{ url('/master/exam-form/edit') }}/{{ $fee->id }}"
-                                                                        class="dropdown-item"><i data-feather="edit" class="me-50"></i>Edit</a>
+                                                                        class="dropdown-item"><i data-feather="edit"
+                                                                            class="me-50"></i>Edit</a>
                                                                     <a href="{{ url('/student-login-redirect') }}?roll_no={{ $fee->roll_no }}&exam_id={{ $fee->id }}"
-                                                                        class="dropdown-item" target="_blank"><i data-feather="eye" class="me-50"></i>View</a>
+                                                                        class="dropdown-item" target="_blank"><i
+                                                                            data-feather="eye" class="me-50"></i>View</a>
                                                                 @else
                                                                     <a href="{{ url('/master/exam-edit-back') }}/{{ $fee->id }}"
-                                                                        class="dropdown-item"><i data-feather="edit" class="me-50"></i>Edit</a>
+                                                                        class="dropdown-item"><i data-feather="edit"
+                                                                            class="me-50"></i>Edit</a>
                                                                 @endif
-                                                                @if(!$fee->admitcard)
-                                                                <br/>
-                                                                <a onclick="return confirm('Are you sure?');" href="{{route('delete-regular-exam-form',$fee->id)}}" class="btn btn-info"><i class="iconly-boldCheck"></i> Delete Exam Form &nbsp;</a>
-                                                                <br/>
-                                                                @if($fee->bank_name && $fee->form_type=='regular')
-                                                                <br/>
-                                                                <a href="{{route('delete_exam_form',$fee->id)}}" onclick="return confirm('Are you sure?');" class="dropdown-item"> <i data-feather="trash-2" class="me-50"></i>Payment Reset</a>
+                                                                @if (!$fee->admitcard)
+                                                                  
+                                                                    <a onclick="return confirm('Are you sure?');"
+                                                                        href="{{ route('delete-regular-exam-form', $fee->id) }}"
+                                                                        class="dropdown-item"><i data-feather="trash"
+                                                                            class="me-50"></i> Delete Exam Form
+                                                                        &nbsp;</a>
+                                                                  
+                                                                    @if ($fee->bank_name && $fee->form_type == 'regular')
+                                                                      
+                                                                        <a href="{{ route('delete_exam_form', $fee->id) }}"
+                                                                            onclick="return confirm('Are you sure?');"
+                                                                            class="dropdown-item"> <i data-feather="trash-2"
+                                                                                class="me-50"></i>Payment Reset</a>
+                                                                    @endif
                                                                 @endif
-                                                            @endif
                                                             </div>
                                                         </div>
                                                     </td>
                                                 @else
-                                                    <td >Disabled Already</td>
+                                                    <td>Disabled Already</td>
                                                 @endif
                                                 </tr>
                                             @endforeach

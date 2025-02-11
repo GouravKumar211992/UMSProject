@@ -94,9 +94,7 @@ class StudentPromotion extends Command
 
         }
     }
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
+
 }

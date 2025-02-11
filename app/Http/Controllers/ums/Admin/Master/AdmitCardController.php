@@ -95,11 +95,7 @@ class AdmitCardController extends AdminController
 
         $cards = $cards->paginate(10);
         $semester = Semester::select('name')->distinct()->get();
-<<<<<<< HEAD
-        return view('admin.master.admitcard.card-list', [
-=======
         return view('ums.admitcard.admit_card_list', [
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => "Admit Card",
             'sub_title' => "records",
             'cards' => $cards,
@@ -180,11 +176,7 @@ class AdmitCardController extends AdminController
             ]);
         }
 
-<<<<<<< HEAD
-        return view('ums.exam.', [
-=======
         return view('ums.exam.addadmitcard', [
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => "Admit Card",
             'sub_title' => "records",
             'examfee' => $examfee,
@@ -263,11 +255,7 @@ class AdmitCardController extends AdminController
     public function editcourses(Request $request, $slug)
     {
         $selectedCampuse = Campuse::where('id', $slug)->first();
-<<<<<<< HEAD
-        return view('admin.master.course.editcourse', [
-=======
         return view('ums.admitcard.admit_card_edit', [
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
             'page_title' => $campuses->name,
             'sub_title' => "Edit Information",
             'selected_campuse' => $campuses,
@@ -333,11 +321,7 @@ class AdmitCardController extends AdminController
         if ($request->paper_type && $request->course && $request->semester && $request->session && $request->center && $request->month && $request->year && $request->save_admit_card) {
             $this->bulk_approve_post($request);
         }
-<<<<<<< HEAD
-        return view('admin.master.admitcard.bulk-approve', ['campuses' => $campuses, 'courses' => $courses, 'semesters' => $semesters, 'sessions' => $sessions, 'centers' => $centers]);
-=======
         return view('ums.admitcard.Bulk_Admit_Card_Approval', ['campuses' => $campuses, 'courses' => $courses, 'semesters' => $semesters, 'sessions' => $sessions, 'centers' => $centers]);
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     }
     public function bulk_approve_post(Request $request)
     {

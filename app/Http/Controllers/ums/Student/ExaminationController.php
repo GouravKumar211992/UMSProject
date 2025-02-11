@@ -374,7 +374,7 @@ class ExaminationController extends Controller
 		}
 		$student = Student::where('roll_number',$examfee->roll_no)->first();
 		$subject = Subject::whereIn('sub_code',explode(' ',$examfee->subject))->get();
-		return view('student.exam.exam-fee-details',compact('student','subject','examfee','slug','amount'));
+		return view('ums.exam.exam-fee-details',compact('student','subject','examfee','slug','amount'));
 	}
 	public function StudentExamformview( $slug,Request $request)
 	{
@@ -465,7 +465,7 @@ class ExaminationController extends Controller
 			$payment->updated_at = date('Y-m-d H:s:i');
 			$payment->save();
 		}
-		return redirect('student/exam/pay-success?id='.$request->exam_fee_id)->with('message','Details Successfully Saved');
+		return redirect('/exam/pay-success?id='.$request->exam_fee_id)->with('message','Details Successfully Saved');
 	}
 	
 	public function update_student_subjects(Request $request)

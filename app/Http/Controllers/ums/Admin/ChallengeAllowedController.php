@@ -1,20 +1,11 @@
 <?php
 
-<<<<<<< HEAD
-namespace App\Http\Controllers\Admin;
-
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\ChallengeAllowed;
-use App\Models\Student;
-=======
 namespace App\Http\Controllers\ums\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ums\ChallengeAllowed;
 use App\Models\ums\Student;
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 class ChallengeAllowedController extends Controller
 {
@@ -26,12 +17,8 @@ class ChallengeAllowedController extends Controller
     public function index()
     {
         $challenges = ChallengeAllowed::orderBy('id','DESC')->get();
-<<<<<<< HEAD
-        return view('admin.challenge.show',compact('challenges'));
-=======
         // dd($challenges);
         return view('ums.challengeform.allowed_students_for_challenge',compact('challenges'));
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     }
 
     /**
@@ -113,10 +100,6 @@ class ChallengeAllowedController extends Controller
     {
         $challenge = ChallengeAllowed::where('roll_no',$roll_no)->first();
         $challenge->delete();
-<<<<<<< HEAD
-        return back()->with('success','Deleted Successfully');
-=======
         return redirect('allowed_student_for_challenge')->with('success','Deleted Successfully');
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     }
 }

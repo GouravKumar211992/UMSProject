@@ -5,8 +5,9 @@ use Session;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\models\ums\User;
 
-use App\User;
+
 use App\Models\ums\MailBox;
 use App\Models\ums\Address;
 use App\Models\ums\Country;
@@ -18,13 +19,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
-use Validator;
+
+
 use App\Services\Mailers\Mailer;
 use App\Helpers\ConstantHelper;
 use App\Helpers\GeneralHelper;
 use App\Models\ums\Student;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Mail;
-use Hash;
+
 use App\Jobs\TrackingEmailFrequency;
 
 
@@ -742,7 +746,7 @@ class LoginController extends Controller
         $student = Student::where(['email' => Auth::guard('student')->user()->email])->first();
         // dd($student);
         $data = array(
-        'password'=> \Hash::make($request->new_password),
+        'password'=> Hash::make($request->new_password),
          );
         
         if($student){

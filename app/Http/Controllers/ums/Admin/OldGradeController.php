@@ -1,15 +1,5 @@
 <?php
 
-<<<<<<< HEAD
-namespace App\Http\Controllers\admin;
-
-use Illuminate\Http\Request;
-use App\Http\Controllers\AdminController;
-use App\Models\GradeOldAllowedSemester;
-use App\Models\Campuse;
-use App\Models\Course;
-use App\Models\Semester;
-=======
 namespace App\Http\Controllers\ums\admin;
 
 use Illuminate\Http\Request;
@@ -18,7 +8,6 @@ use App\Models\ums\GradeOldAllowedSemester;
 use App\Models\ums\Campuse;
 use App\Models\ums\Course;
 use App\Models\ums\Semester;
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 use App\Models\AcademicSession;
 
 
@@ -44,19 +33,11 @@ class OldGradeController extends AdminController
             $grade->semester_id = $request->semester_id;
             $grade->academic_session = $request->academic_session;
             $grade->save();
-<<<<<<< HEAD
-            return redirect('admin/oldgrade')->with('success','Added Successfully');
-        }
-    }
-
-  return view('admin.master.old-grade.oldgrade', compact(
-=======
             return redirect('old_grading')->with('success','Added Successfully');
         }
     }
 
   return view('ums.master.grading.old_grading', compact(
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
       'campuses',
       'courses',
       'semesters',
@@ -70,11 +51,7 @@ class OldGradeController extends AdminController
     $grade = GradeOldAllowedSemester::find($request->id);
     if($grade){
         $grade->delete();
-<<<<<<< HEAD
-        return redirect('admin/oldgrade')->with('success','Deleted Successfully');
-=======
         return redirect('old_grading')->with('success','Deleted Successfully');
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
     }
  }
 

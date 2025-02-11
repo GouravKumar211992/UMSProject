@@ -71,9 +71,8 @@ class ExamScheduleController extends AdminController
 
 
     public function schedule_bulk_uploading(Request $request){
-      // dd($request->all());
     	$request->validate([
-        'impport_file' => 'required|file|mimes:xlsx,xls,csv|max:10240',
+        'impport_file' => 'required',
     ]);
     if($request->hasFile('impport_file')){
       Excel::import(new ExamScheduleImport, $request->file('impport_file'));

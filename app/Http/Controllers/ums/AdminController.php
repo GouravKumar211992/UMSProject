@@ -1,16 +1,8 @@
-<<<<<<< HEAD
-<?php namespace App\Http\Controllers\ums;
-use App\Http\Controllers\Controller;
-use Auth;
-
-class AdminController extends Controller {
-=======
 <?php 
 namespace App\Http\Controllers\ums;
 use Auth;
 
 class AdminController extends UmsController  {
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
     /**
      * Initializer.

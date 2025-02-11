@@ -2,9 +2,11 @@
 
 namespace App\models\ums;
 
+use App\Models\ums\Course;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Mockery\Matcher\Subset;
+
 use Spatie\MediaLibrary\HasMedia;  // Keep this
 use Spatie\MediaLibrary\InteractsWithMedia;
 use DB;
@@ -86,32 +88,17 @@ class ExamFee extends Model implements HasMedia
     public function studentSubjects() {
 		return $this->hasMany(StudentSubject::class,'student_semester_fee_id');
 	}
-    // public function regularPaperList() {
-
-	// 	$data = StudentSubject::where('roll_number',$this->roll_no)
-    //     ->where('session',$this->academic_session)
-    //     ->where('course_id',$this->course_id)
-    //     ->where('semester_id',$this->semester)
-    //     ->where('type',$this->form_type)
-    //     ->get();
-    //     // dd($data);
-    //     return $data;
-	// }
     public function regularPaperList() {
-        // Check if variables are being set correctly
-        // dd($this->roll_no, $this->academic_session, $this->course_id, $this->semester, $this->form_type);
-    
-        $data = StudentSubject::where('roll_number', $this->roll_no)
-            ->where('session', $this->academic_session)
-            ->where('course_id', $this->course_id)
-            ->where('semester_id', $this->semester)
-            ->where('type', $this->form_type)
-            ->get();
-    
-        // dd($data);  // This will output the results of the query
+		$data = StudentSubject::where('roll_number',$this->roll_no)
+        ->where('session',$this->academic_session)
+        ->where('course_id',$this->course_id)
+        ->where('semester_id',$this->semester)
+        ->where('type',$this->form_type)
+        ->get();
+        // dd($data);
+        
         return $data;
-    }
-    
+	}
 
     public function formdata() {
 		return $this->hasMany(ExamForm::class,'exam_fee_id','id');
