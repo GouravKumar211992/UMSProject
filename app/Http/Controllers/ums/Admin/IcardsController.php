@@ -9,13 +9,13 @@ use App\Http\Controllers\ums\AdminController;
 use App\Admin;
 use App\Imports\ICardsImport;
 use Maatwebsite\Excel\Facades\Excel;
-
-use App\Models\Student;
-use App\Models\Application;
-use App\Models\Course;
-use App\Models\Category;
-use App\Models\PermanentAddress;
-use App\Models\UploadDocuments;
+use App\Models\ums\Student;
+use App\Models\ums\Application;
+use App\Models\ums\ExamFee;
+use App\Models\ums\Course;
+use App\Models\ums\Category;
+use App\Models\ums\PermanentAddress;
+use App\Models\ums\UploadDocuments;
 use App\Models\ums\Icard;
 use App\Models\ums\Result;
 use Illuminate\Support\Facades\Storage;
@@ -42,7 +42,7 @@ class IcardsController extends AdminController
 		//return redirect('admin/bulk-icard-print?id='.$request->id);
         $data['icard'] = Icard::find($request->id);
        
-        return view('ums.admin.cards.single_icard',$data);
+        return view('ums.icards.single_icard',$data);
     }
 
     public function singleIcardDelete(Request $request){
@@ -50,29 +50,37 @@ class IcardsController extends AdminController
         return back()->with('success','Deleted Successfully');
     }
 
-    public function bulkIcardPrint(Request $request){
+    public function bulkIcardPrint(Request $request) {
         $campus_id = 1;
-        $roll_nos = Result::where('semester_final',1)
-            ->join('courses','courses.id','results.course_id')
-            ->where('campus_id',$campus_id)
+    
+        
+        $roll_nos = Result::where('semester_final', 1)
+            ->join('courses', 'courses.id', '=', 'results.course_id')
+            ->where('campus_id', $campus_id)
             ->distinct()
             ->pluck('roll_no')
             ->toArray();
-		$query = Icard::select('icards.*')
-        ->join('exam_fees','exam_fees.roll_no','icards.roll_no')
-        ->join('results','results.roll_no','icards.roll_no')
-        ->join('courses','courses.id','results.course_id');
-		if($request->id){
-			$query = $query->whereId($request->id);
-		}
-		$query = $query->where('courses.campus_id',$campus_id)
-            ->whereNotIn('results.roll_no',$roll_nos)
+    
+        
+        $query = Icard::select('icards.*')
+            ->join('exam_fees', 'exam_fees.roll_no', '=', 'icards.roll_no')
+            ->join('results', 'results.roll_no', '=', 'icards.roll_no')
+            ->join('courses', 'courses.id', '=', 'results.course_id');
+    
+        
+        if ($request->id) {
+            $query->where('icards.id', $request->id);
+        }
+    
+       
+        $query = $query->where('courses.campus_id', $campus_id)
+            ->whereNotIn('results.roll_no', $roll_nos)
             ->distinct('icards.roll_no')
-            ->paginate(500);
-            // ->count();
-            // dd($query);
-		$data['icards'] = $query;
-        return view('admin.cards.bulk-icard',$data);
+            ->limit(10) 
+            ->get(); 
+    
+        $data['icards'] = $query;
+        return view('ums.icards.bulk_icard_print', $data);
     }
 
     public function bulkIcardsSave(Request $request)
@@ -95,7 +103,7 @@ class IcardsController extends AdminController
     public function bulkIcardsFiles(Request $request, $type)
     {
 
-        return view('admin.cards.bulk-icards-files',[
+        return view('ums.icards.bulk_icard_print',[
 			'type' => $type
 		]);
     }

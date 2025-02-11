@@ -3,6 +3,7 @@
     
 
     <!-- BEGIN: Content-->
+    <form method="get" id="form_data">
     <div class="app-content content ">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -23,7 +24,7 @@
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
-                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle" ></i>Get Report
+                        <button  type="submit" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle" ></i>Get Report
                             </button>
                             <button class="btn btn-warning box-shadow-2 btn-sm me-1 mb-sm-0 mb-50"><i data-feather="refresh-cw"></i>Reset</button>
                     </div>
@@ -38,12 +39,16 @@
                                 <label class="form-label">Campus Name:<span class="text-danger m-0">*</span></label>
                             </div>
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
+                                <select name="campus" id="campus" class="form-control" onchange="$('#form_data').submit()">
                                     <option value="">---Select Campus---</option>
-                                    <option value="1">DU</option>
-                                    <option value="2">JNU</option>
-                                    <option value="3">AMU</option>
-                                    <option value="4">Amity</option>
+                                    @foreach($campuses as $campus)
+                            @if(Request()->campus == $campus->id)
+                            <option value="{{ $campus->id }}" selected>{{ $campus->name }}</option>
+                            @php $campus_name = $campus->name; @endphp
+                            @else
+                            <option value="{{ $campus->id }}" >{{ $campus->name }}</option>
+                            @endif
+                        @endforeach
                                 </select>
                             </div>
                         </div>
@@ -56,12 +61,11 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select name="selcet" id="" class="form-control">
-                                    <option value="">2023-2024</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                                <select name="academic_session" id="academic_session" class="form-control" required>
+                                    <option value="2023-2024" @if(Request()->academic_session == '2023-2024') selected @endif>
+                                        2023-2024
+                                    </option>
+                                   
                                 </select>
                             </div>
                         </div>
@@ -98,26 +102,31 @@
                                         </thead>
                                         <tbody>
 
-
+                                            @if($courses)
+                                            @php
+                                           $index = 0;
+                                         
+                                            @endphp
+                                            @foreach($courses as $index => $course)
+                                            @php $course_wise_students = $course->course_wise_students(Request()->academic_session); @endphp
                                             <tr>
-                                                <td>1</td>
-                                                <td>2023-2024</td>
-                                                <td>BCA</td>
-                                                <td>21</td>
-                                                <td>34</td>
-                                                <td>Uttarpradesh</td>
-                                                <td>Delhi</td>
-                                                <td>BCA</td>
-                                                <td>21</td>
-                                                <td>34</td>
-                                                <td>Uttarpradesh</td>
-                                                <td>Delhi</td>
-                                                
-                                               
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>{{ Request()->academic_session }}</td>
+                                                <td>{{ $course->name}}</td>
+                                                <td>{{ $course_wise_students['male_students']}}</td>
+                                                <td>{{ $course_wise_students['female_students']}}</td>
+                                                <td>{{ $course_wise_students['all_students']}}</td>
+                                                <td>{{ $course_wise_students['within_state_students']}}</td>
+                                                <td>{{ $course_wise_students['outside_state_students']}}</td>
+                                                <td>{{ $course_wise_students['outside_country_students']}}</td>
+                                                <td>{{ $course_wise_students['inside_country_students']}}</td>
+                                                <td>{{ $course_wise_students['gen_students']}}</td>
+                                                <td>{{ $course_wise_students['ews_students']}}</td>
+                                                <td>{{ $course_wise_students['socially_challenged_students']}}</td>
+                                                <!-- Add more columns as needed -->
                                             </tr>
-                                           
-
-                                        </tbody>
+                                            @endforeach
+                                            @endif                                        </tbody>
 
 
                                     </table>

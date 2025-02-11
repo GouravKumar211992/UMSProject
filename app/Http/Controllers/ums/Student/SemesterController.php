@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Student;
+namespace App\Http\Controllers\ums\Student;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ums\AdminController;
 
 use App\Models\SemesterFee;
-use App\Models\StudentSemesterFee;
-use App\Models\Semester;
-use App\Models\Subject;
-use App\Models\Enrollment;
-use App\Models\Course;
-use App\Models\Icard;
-use App\Models\Category;
+use App\Models\ums\StudentSemesterFee;
+use App\Models\ums\Semester;
+use App\Models\ums\Subject;
+use App\Models\ums\Enrollment;
+use App\Models\ums\Course;
+use App\Models\ums\Icard;
+use App\Models\ums\Category;
 use App\Exports\FeeExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Validator;

@@ -1,4 +1,7 @@
+@extends('ums.admin.admin-meta')
+@section('content')
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 @extends('ums.admin.admin-meta')
 =======
@@ -7,36 +10,38 @@
 @section('content');
     
 {{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col=""> --}}
+=======
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 
-    <!-- BEGIN: Content-->
-
-    <div class="app-content content ">
-
-
-      <div class="content-header row">
-            <div class="content-header-left col-md-5 mb-2">
-                <div class="row breadcrumbs-top">
-                    <div class="col-12">
-                        {{-- <h2 class="content-header-title float-start mb-0">Setting</h2> --}}
-                        <div class="breadcrumb-wrapper">
-                            <ol class="breadcrumb">
-                                {{-- <li class="breadcrumb-item"><a href="dashboard">Home</a></li>  
-                                <li class="breadcrumb-item active">Open Admission Form </li> --}}
-                            </ol>
-                        </div>
+    <div class="content-header row">
+        <div class="content-header-left col-md-5 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <div class="breadcrumb-wrapper">
+                        <ol class="breadcrumb">
+                            <!-- Breadcrumbs can be added here -->
+                        </ol>
                     </div>
                 </div>
             </div>
-            <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
-                <div class="form-group breadcrumb-right">
-                    <button class="btn btn-primary btn-sm mb-50 mb-sm-0" onclick="history.go(-1)" ><i data-feather="arrow-left"></i>Go back</button>
-                    <button class="btn btn-warning btn-sm mb-50 mb-sm-0" onclick="window.location.reload();" ><i data-feather="refresh-cw"></i>
-                        Reset</button> 
-                </div>
+        </div>
+        <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
+            <div class="form-group breadcrumb-right">
+                <button class="btn btn-primary btn-sm mb-50 mb-sm-0" onclick="history.go(-1)" >
+                    <i data-feather="arrow-left"></i>Go back
+                </button>
+                <button class="btn btn-warning btn-sm mb-50 mb-sm-0" onclick="window.location.reload();" >
+                    <i data-feather="refresh-cw"></i> Reset
+                </button> 
             </div>
         </div>
+    </div>
 
-
+    <!-- Add Semester Fee Form -->
+    <form method="POST" action="{{ route('student-semesterfee') }}">
+        @csrf
         <section class="col-md-12 connectedSortable">
             <div class="row">
                 <!-- Student ID Input -->
@@ -47,6 +52,7 @@
                         <span class="text-danger"></span>
                     </div>
                 </div>
+
                 <!-- Course Code Input -->
                 <div class="col-md-4">
                     <div class="form-group position-relative custom-form-group inner-formnew">
@@ -55,6 +61,7 @@
                         <span class="text-danger"></span>
                     </div>
                 </div>
+
                 <!-- Semester Dropdown -->
                 <div class="col-md-4">
                     <div class="form-group position-relative custom-form-group inner-formnew">
@@ -79,6 +86,7 @@
                         <span class="text-danger"></span>
                     </div>
                 </div>
+
                 <!-- Receipt Date Input -->
                 <div class="col-md-4">
                     <div class="form-group position-relative custom-form-group inner-formnew">
@@ -87,6 +95,7 @@
                         <span class="text-danger"></span>
                     </div>
                 </div>
+
                 <!-- Receipt Number Input -->
                 <div class="col-md-4">
                     <div class="form-group position-relative custom-form-group inner-formnew">
@@ -97,18 +106,14 @@
                 </div>
             </div>
         </section>
-    </div>
-    
-    
 
-<!-- options section end-->
+        <!-- Submit Button -->
+        <div class="col-md-12 text-center mt-3">
+            <button type="submit" class="btn btn-success">Submit Fee</button>
+        </div>
+    </form>
 
-    <!-- END: Content-->
+</div>
+<!-- END: Content-->
 
-  
-   
-
-
-{{-- </body> --}}
 @endsection
-

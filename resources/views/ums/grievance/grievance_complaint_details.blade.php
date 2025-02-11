@@ -22,12 +22,12 @@
                                         @endforeach
                                     </table>
                                     <br>
-                                    <div class="row">
-                                        <div class="col-md-7">
-                                            <input name="complaint" id="message-input" class="form-control" rows="2">
+                                    <div class="row pt-1 rounded-3 " style="border: 1px solid #c0c0c0;height: 65px;">
+                                        <div class="col-md-7" >
+                                            <input name="complaint " id="message-input" class="form-control mt-0 " placeholder="Enter complaint" rows="2" >
                                         </div>
                                         <div class="col-md-5">
-                                            <select name="status" class="form-control" style="border: 1px solid #c0c0c0;height: 55px;">
+                                            <select name="status" class="form-control" >
                                                 {{-- @foreach($data as $dataRow) --}}
                                                 <option value="0" @if(isset($dataRow) && $dataRow->status == 0) selected @endif>Pending</option>
                                                 <option value="1" @if(isset($dataRow) && $dataRow->status == 1) selected @endif>Under Process</option>

@@ -65,7 +65,11 @@
 }
 </style>
 @endsection
+<<<<<<< HEAD
 {{-- {{dd($AdmitCard)}} --}}
+=======
+<!-- {{dd($AdmitCard)}} -->
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 @if($AdmitCard)
 
 @php

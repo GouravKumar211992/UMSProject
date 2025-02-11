@@ -35,62 +35,55 @@
             <div class="col-12">
                 <div class="card">
                     <div class="table-responsive">
-                        <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
-                            <thead>
-                                <tr>
-                                    <th>ID#</th>
-                                    <th>Enrollment No.</th>
-                                    <th>Roll No.</th>
-                                    <th>Semester</th>
-                                    <th>Academic Year</th>
-                                    <th>Student Name</th>
-                                    <th>Mobile Number</th>
-                                    <th>Result Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td class="fw-bolder text-dark">SA1901200928</td>
-                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">1901247129</span></td>
-                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">THIRD PROFESSIONAL (PART-II)</span></td>
-                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">2023-2024</span></td>
-                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">SONIYA GUPTA</span></td>
-                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">7007513779</span></td>
-                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Approved</span></td>
-                                    <td>
-                                        <a target="_blank" href="http://64.227.161.177/admin/mbbs-result?result_query_string=YTo0OntzOjk6ImNvdXJzZV9pZCI7aTo0OTtzOjExOiJzZW1lc3Rlcl9pZCI7aToxMDtzOjE2OiJhY2FkZW1pY19zZXNzaW9uIjtzOjk6IjIwMjMtMjAyNCI7czo3OiJyb2xsX25vIjtzOjEwOiIxOTAxMjQ3MTI5Ijt9" class="btn-sm btn-success">View</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td class="fw-bolder text-dark">05-Sep-2024</td>
-                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">THIRD PROFESSIONAL (PART-II)</span></td>
-                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">2023-2024</span></td>
-                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">SONIYA GUPTA</span></td>
-                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">7007513779</span></td>
-                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Approved</span></td>
-                                    <td>
-                                        <a target="_blank" href="http://64.227.161.177/admin/mbbs-result?result_query_string=YTo0OntzOjk6ImNvdXJzZV9pZCI7aTo0OTtzOjExOiJzZW1lc3Rlcl9pZCI7aToxMDtzOjE2OiJhY2FkZW1pY19zZXNzaW9uIjtzOjk6IjIwMjMtMjAyNCI7czo3OiJyb2xsX25vIjtzOjEwOiIxOTAxMjQ3MTI5Ijt9" class="btn-sm btn-success">View</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td class="fw-bolder text-dark">05-Sep-2024</td>
-                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">THIRD PROFESSIONAL (PART-II)</span></td>
-                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">2023-2024</span></td>
-                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">SONIYA GUPTA</span></td>
-                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">7007513779</span></td>
-                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Approved</span></td>
-                                    <td>
-                                        <a target="_blank" href="http://64.227.161.177/admin/mbbs-result?result_query_string=YTo0OntzOjk6ImNvdXJzZV9pZCI7aTo0OTtzOjExOiJzZW1lc3Rlcl9pZCI7aToxMDtzOjE2OiJhY2FkZW1pY19zZXNzaW9uIjtzOjk6IjIwMjMtMjAyNCI7czo3OiJyb2xsX25vIjtzOjEwOiIxOTAxMjQ3MTI5Ijt9" class="btn-sm btn-success">View</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
+    <thead>
+        <tr>
+            <th>ID#</th>
+            <th>Enrollment No.</th>
+            <th>Roll No.</th>
+            <th>Semester</th>
+            <th>Academic Year</th>
+            <th>Student Name</th>
+            <th>Mobile Number</th>
+            <th>Result Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(!empty($results) && count($results) > 0)
+            @foreach($results as $index => $result)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $result->enrollment_no }}</td>
+                    <td>{{ $result->roll_no }}</td>
+                    <td>{{ optional($result->semester_details)->name ?? '-' }}</td>
+                    <td>{{ $result->exam_session }}</td>
+                    <td>{{ optional($result->student)->full_name ?? '-' }}</td>
+                    <td>{{ optional($result->student)->mobile ?? '-' }}</td>
+                    <td>{{ $result->status_text }}</td>
+                    <td class="tableactionnew">
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown">
+                                <i data-feather="more-vertical"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <!-- View Button -->
+                                <a class="dropdown-item" href="{{ url('/all_mbbs_result/view/' . $result->id) }}">
+                                    <i data-feather="eye" class="me-50"></i>
+                                    <span>View</span>
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+        @else
+            <tr>
+                <td colspan="9" class="text-center">No data found</td>
+            </tr>
+        @endif
+    </tbody>
+</table>
                         <br>
                      
                     </div>

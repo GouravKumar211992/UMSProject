@@ -85,16 +85,14 @@
                                                         <div class="col-md-5"> 
                                                             <div class="demo-inline-spacing">
                                                                 <div class="form-check form-check-primary mt-25">
-                                                                    
-                                                                        
-                                                                    
-                                                                    <input type="radio"  id="active" name="group1" class="form-check-input" >
-                                                                    <label class="form-check-label fw-bolder"  for="customColorRadio3">Active</label>
+                                                                    <input type="radio" id="customColorRadio3" name="category_status" class="form-check-input" value="active" {{ $selected_category->status == 1 ? 'checked' : '' }}>
+                                                                    <label class="form-check-label fw-bolder" for="customColorRadio3">Active</label>
                                                                 </div> 
+                                            
                                                                 <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="inactive"  name="group1" class="form-check-input">
-                                                                    <label class="form-check-label fw-bolder"  for="customColorRadio4">Inactive</label>
-                                                                </div> 
+                                                                    <input type="radio" id="customColorRadio4" name="category_status" class="form-check-input" value="inactive" {{ $selected_category->status == 0 ? 'checked' : '' }}>
+                                                                    <label class="form-check-label fw-bolder" for="customColorRadio4">Inactive</label>
+                                                                </div>
                                                             </div>  
                                                         </div> 
                                                         

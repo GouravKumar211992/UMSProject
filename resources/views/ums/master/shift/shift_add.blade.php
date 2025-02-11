@@ -31,19 +31,20 @@
                         </div>
                     </div>
                 </div>
-                <form id="cat_form" method="POST" action="{{route('add_shift')}}">
-                    @csrf
+                
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
                         <button class="btn btn-dark btn-sm mb-50 mb-sm-0" onclick="location.href='{{url('/shift_list')}}'"> <i data-feather="x"></i> Cancel
                             </button>
-                        <button type="submit" class="btn btn-primary btn-sm mb-50 mb-sm-0" > <i data-feather="check-circle" style="font-size: 40px;"></i>
+                        <button type="submit" form="cat_form" class="btn btn-primary btn-sm mb-50 mb-sm-0" > <i data-feather="check-circle" style="font-size: 40px;"></i>
                             Submit</button>
 
 
                     </div>
                 </div>
             </div>
+            <form id="cat_form" method="POST" action="{{route('add_shift')}}">
+                @csrf
             <div class="content-body bg-white py-4 mb-4  shadow">
                 <div class="row g-0  mt-3 mb-3 text-center ">
 
@@ -83,8 +84,9 @@
                     </div>
                 
             </div>
-            </div>
         </form>
+            </div>
+        
 
 
                

@@ -24,7 +24,7 @@ use App\Models\ums\AdmitCard;
 use App\Models\ums\ExamForm;
 use App\Models\ums\AcademicSession;
 use App\Models\ums\ExamFormAllow;
-use App\Models\Scrutiny;
+use App\Models\ums\Scrutiny;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -320,7 +320,7 @@ class ExamFeeAllController extends AdminController
         $course = Course::all();
 		$semester = Semester::select('name')->distinct()->get();
       
-       return view('admin.Student-form.index', [
+       return view('ums.studentform.challengeForm', [
             'page_title' => "Challenge Form",
             'sub_title' => "records",
             'scrutinies' => $scrutiny,

@@ -3,7 +3,11 @@
                 <div class="navbar-container d-flex content">
                     <div class="bookmark-wrapper d-flex align-items-center"> 
                         <ul class="nav navbar-nav headerlogo">
+<<<<<<< HEAD
                             <li><img src="{{asset('img/logo.jpg')}}" /></li>
+=======
+                            <li><img src="{{asset('img/logo.png')}}" /></li>
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
                         </ul>
                         <ul class="nav navbar-nav left-baricontop"> 
                             <li class="nav-item">

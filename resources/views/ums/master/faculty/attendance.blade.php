@@ -55,6 +55,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
+<<<<<<< HEAD
 								
 								   
 <<<<<<< HEAD
@@ -123,8 +124,43 @@
                                 </div> --}}
                                 
 >>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
+=======
+                                <div class="table-responsive">
+                                    <table id="attendanceTable" class="datatables-basic table myrequesttablecbox loanapplicationlist">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr. No.</th>
+                                                <th>Student Name</th>
+                                                <th>Enrollment Number</th>
+                                                <th>Roll No</th>
+                                                <th>Course</th>
+                                                <th>Semester</th>
+                                                <th>Attendance</th>
+                                                <th>Date Of Attendance</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($attendence as $key => $attendences)
+                                                <tr>
+                                                    <th>{{$key+1}}</th>
+                                                    <th>{{$attendences->students_name}}</th>
+                                                    <th>{{$attendences->enrollment_no}}</th>
+                                                    <th>{{$attendences->roll_no}}</th>
+                                                    <th>{{$attendences->course->name}}</th>
+                                                    <th>{{$attendences->semester->name}}</th>
+                                                    <th>{{$attendences->attendence_status}}</th>
+                                                    <th>{{date('d M,Y', strtotime($attendences->date_of_attendence))}}</th>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
                         </div>
                     </div>
+                </section>
+                
                     <!-- Modal to add new record -->
                     <div class="modal modal-slide-in fade" id="modals-slide-in">
                         <div class="modal-dialog sidebar-sm">

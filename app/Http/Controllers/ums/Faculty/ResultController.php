@@ -1,15 +1,30 @@
 <?php
 
-namespace App\Http\Controllers\Faculty;
-
+namespace App\Http\Controllers\ums\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Enrollment;
+use App\Models\ums\ExamType;
 use App\Models\ExamFee;
-use App\Models\AdmitCard;
-use App\Models\Subject;
-use App\Models\Result;
-
+use App\Models\ums\AdmitCard;
+use App\Models\ums\Subject;
+use App\Models\Student;
+use App\Models\Icard;
+use App\Models\ums\Campuse;
+use App\Models\ums\Semester;
+use App\Models\Stream;
+use App\Models\ums\Course;
+use App\Models\ums\Result;
+use App\Models\ums\Category;
+use App\Models\ums\ExternalMark;
+use App\Models\ums\InternalMark;
+use App\Models\ums\AcademicSession;
+use App\Models\ums\ResultBackupScrutiny;
+use App\Models\ums\PracticalMark;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Http\Traits\ResultsTrait;
+use App\Models\ums\Grade;
 class ResultController extends Controller
 {
     public function index()
@@ -66,4 +81,73 @@ class ResultController extends Controller
     {
      return view('admin/exam/examtime-table');
     }
+    public function allResults(Request $request)
+{
+    $results = Result::query();  // Start building the query
+
+    if(count($request->all()) > 0){
+        
+        // Apply filters based on request
+        if($request->search) {
+            $keyword = $request->search;
+            $results->where(function($q) use ($keyword){
+                $q->where('roll_no', 'LIKE', '%'.$keyword.'%');
+            });
+        }
+
+        if(!empty($request->name)){
+            $results->where('roll_no', 'LIKE', '%'.$request->name.'%');
+        }
+
+        if(!empty($request->course_id)){
+            $results->where('course_id', $request->course_id);
+        }
+
+        if(!empty($request->campus)) {
+            $enrollment = [];
+            $campus = Campuse::find($request->campus);
+            if ($campus) {
+                foreach ($results->get() as $result) {
+                    if ($campus->campus_code == campus_name($result->enrollment_no)) {
+                        $enrollment[] = $result->enrollment_no;
+                    }
+                }
+                $results->whereIn('enrollment_no', $enrollment);
+            }
+        }
+
+        if(!empty($request->semester)) {
+            $semester_ids = Semester::where('name', $request->semester)->pluck('id')->toArray();
+            $results->whereIn('semester', $semester_ids);
+        }
+    } else {
+        // If no filters are applied, set a default filter for null course_id
+        $results->where('course_id', null);
+    }
+
+    // Apply aggregation and grouping using selectRaw
+    $results = $results
+        ->selectRaw('MAX(results.id) as id, results.roll_no, results.exam_session, results.back_status_text, results.enrollment_no, results.semester, results.semester_number')
+        ->groupBy('results.roll_no', 'results.exam_session', 'results.back_status_text', 'results.enrollment_no', 'results.semester', 'results.semester_number')
+        ->orderBy('results.semester_number', 'ASC')
+        ->orderBy('results.back_status_text', 'ASC')
+        ->orderBy('results.exam_session', 'DESC')
+        ->paginate(10);
+
+    // Get additional data for the view
+    $category = Category::all();
+    $course = Course::all();
+    $campus = Campuse::all();
+    $semester = Semester::select('name')->distinct()->get();
+
+    // Prepare the data array for the view
+    $data['results'] = $results;
+    $data['categories'] = $category;
+    $data['courses'] = $course;
+    $data['campuselist'] = $campus;
+    $data['semesterlist'] = $semester;
+
+    // Return the view with the data
+    return view('ums.result.Result_list', $data);
+}
 }

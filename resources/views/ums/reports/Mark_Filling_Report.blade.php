@@ -9,7 +9,7 @@
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
-          <div class="content-header row">
+            <div class="content-header row">
             <div class="content-header-left col-md-5 mb-2">
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
@@ -23,13 +23,14 @@
                     </div>
                 </div>
             </div>
+            <form method="get" id="form_data">
             <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                 <div class="form-group breadcrumb-right"> 
-                    
+
                     <!-- <button class="btn btn-success btn-sm mb-50 mb-sm-0" data-bs-target="#approved" data-bs-toggle="modal"><i data-feather="check-circle" ></i> Assign Team</button> -->
-                    <a class="btn  btn-primary  btn-sm mb-50 mb-sm-0" href="" name="submit_form" type="submit">
+                    <button class="btn btn-primary btn-sm mb-50 mb-sm-0" type="submit" name="submit_form">
                         <i data-feather="check-circle"></i> Get Report
-                    </a>  
+                    </button>
                     <button class="btn   btn-warning btn-sm mb-50 mb-sm-0" data-bs-target="#filter" data-bs-toggle="modal">
                          Manage Subjects
                     </button> 
@@ -39,7 +40,6 @@
             </div>
             
         </div>
-        <form method="get" id="form_data">
     
                 <div class="customernewsection-form poreportlistview p-1">
                     <div class="row"> 
@@ -68,7 +68,7 @@
                         <div class="col-md-3">
                             <div class="mb-1 mb-sm-0"> 
                                 <label class="form-label">Semester Type:</label>
-                                <select data-live-search="true" name="semester_type" id="semester_type" style="border-color: #c0c0c0;" class="form-control js-example-basic-single">
+                            	<select data-live-search="true" name="semester_type" id="semester_type" style="border-color: #c0c0c0;" class="form-control js-example-basic-single">
                                     <option value="">--Select Semester--</option>
                                     <option value="all" @if(Request()->semester_type=='all') selected @endif >All</option>
                                     <option value="odd" @if(Request()->semester_type=='odd') selected @endif >Odd</option>
@@ -95,13 +95,15 @@
                                     @foreach($sessions as $session)
                                         <option value="{{$session->academic_session}}" @if(Request()->academic_session == $session->academic_session) selected @endif >{{$session->academic_session}}</option>
                                     @endforeach
-                                </select>                           
+                                </select>                         
                              </div>
                         </div>
                     </div>
                 </div>
-            </form>
 
+            </form>
+        </div>
+   
             <div class="content-body dasboardnewbody">
                 <form method="post" id="saveSequence">
                     <input type="hidden" name="semester_id" value="{{Request()->semester_id}}">
@@ -135,57 +137,53 @@
                                                 <th>Practical</th>
                                             </tr>
                                         </thead>
-         <tbody>
-         @php 
-        $serial_no = 0; 
-        $internalMark_total = 0;
-        $externalMark_total = 0;
-        $practicalMark_total = 0;
-        $all_count_total = 0;
-    @endphp
-    {{-- @DD($subjects); --}}
-
-    @foreach( $subjects as $subject)
-    @php $mark_filed_details = $subject->mark_filed_details(Request()->academic_session); @endphp
+  <tbody>
     @php 
-        $serial_no = $serial_no + 1;
-        $internalMark_total = $internalMark_total + $mark_filed_details->internalMark;
-        $externalMark_total = $externalMark_total + $mark_filed_details->externalMark;
-        $practicalMark_total = $practicalMark_total + $mark_filed_details->practicalMark;
-        $all_count_total = $all_count_total + $mark_filed_details->all_count;
-    @endphp
-        <tr>  
-            <td>
-                <input type="text" name="position[]" class="position position_style border-0" value="{{$subject->position}}">
-                <input type="hidden" name="sub_code[]" value="{{$subject->sub_code}}">
-            </td>
-            <td>{{$subject->semester->name}}</td>
-            <td class="text-center"><a href="{{url('admin/master/subject/edit-subject')}}/{{$subject->id}}" target="_blank">{{$subject->sub_code}}</a></td>
-            <td>{{$subject->name}}</td>
-            <td>{{$subject->internal_maximum_mark}}</td>
-            <td>{{$subject->maximum_mark}}</td>
-            <td>{{$subject->credit}}</td>
-            <td class="text-center">{{$mark_filed_details->internalMark}}</td>
-            <td class="text-center">{{$mark_filed_details->externalMark}}</td>
-            <td class="text-center">{{$mark_filed_details->practicalMark}}</td>
-            {{-- <td class="text-center"><a href="{{route('filledMarkDetails',['academic_session'=>Request()->academic_session, 'semester_id'=>$subject->semester_id, 'sub_code'=>$subject->sub_code])}}" target="_blank">{{$mark_filed_details->all_count}}</a></td> --}}
-            <td class="text-center">{{$mark_filed_details->all_count}}</td>
+    $serial_no = 0; 
+    $internalMark_total = 0;
+    $externalMark_total = 0;
+    $practicalMark_total = 0;
+    $all_count_total = 0;
+@endphp
 
-        </tr>
-        @endforeach
-    </tbody>
-    <tfoot>
-    <tr>
-        <th colspan="7" class="text-right">Total</th>
-        <th class="text-center">{{$internalMark_total}}</th>
-        <th colspan="2" class="text-center">{{($externalMark_total + $practicalMark_total)}}</th>
-        <th class="text-center">{{$all_count_total}}</th>
+@foreach( $subjects as $subject)
+@php $mark_filed_details = $subject->mark_filed_details(Request()->academic_session); @endphp
+@php 
+    $serial_no = $serial_no + 1;
+    $internalMark_total = $internalMark_total + $mark_filed_details->internalMark;
+    $externalMark_total = $externalMark_total + $mark_filed_details->externalMark;
+    $practicalMark_total = $practicalMark_total + $mark_filed_details->practicalMark;
+    $all_count_total = $all_count_total + $mark_filed_details->all_count;
+@endphp
+    <tr>  
+        <td class="text-center">
+            <input type="text" name="position[]" class="position position_style form-control-plaintext text-center" value="{{$subject->position}}">
+            <input type="hidden" name="sub_code[]" value="{{$subject->sub_code}}">
+        </td>
+        <td>{{$subject->semester->name}}</td>
+        <td class="text-center"><a href="{{url('subject_list_edit')}}/{{$subject->id}}" target="_blank">{{$subject->sub_code}}</a></td>
+        <td>{{$subject->name}}</td>
+        <td>{{$subject->internal_maximum_mark}}</td>
+        <td>{{$subject->maximum_mark}}</td>
+        <td>{{$subject->credit}}</td>
+        <td class="text-center">{{$mark_filed_details->internalMark}}</td>
+        <td class="text-center">{{$mark_filed_details->externalMark}}</td>
+        <td class="text-center">{{$mark_filed_details->practicalMark}}</td>
+        <td class="text-center"><a href="{{route('filledMarkDetails',['academic_session'=>Request()->academic_session, 'semester_id'=>$subject->semester_id, 'sub_code'=>$subject->sub_code])}}" target="_blank">{{$mark_filed_details->all_count}}</a></td>
     </tr>
-    </tfoot>
+    @endforeach
 </tbody>
-
-                                        
+<tfoot>
+<tr>
+    <th colspan="7" class="text-right">Total</th>
+    <th class="text-center">{{$internalMark_total}}</th>
+    <th colspan="2" class="text-center">{{($externalMark_total + $practicalMark_total)}}</th>
+    <th class="text-center">{{$all_count_total}}</th>
+</tr>
+</tfoot>
+</tbody>                    
                 </table>
+            </form>
                 </div>
 								
 								  

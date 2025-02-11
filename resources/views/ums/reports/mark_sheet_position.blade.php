@@ -2,16 +2,15 @@
 
 @section("content")
 
-
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
-        <div class="content-wrapper container-xxl p-0">
+        <div class="content-wrapper container-xxl p-0 bg-white p-2">
             <div class="content-header row">
                 <div class="content-header-left col-md-5 mb-2">
                     <div class="row breadcrumbs-top">
-                        <div class="col-12">
+                        <div class="col-12 ">
                             <h2 class="content-header-title float-start mb-0">Report</h2>
                             <div class="breadcrumb-wrapper">
                                 <ol class="breadcrumb">
@@ -24,7 +23,7 @@
                     </div>
                 </div>
                 <form method="get" id="form_data">
-                <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
+                <div class="content-header-right text-sm-end col-md-12 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
                         <button class="btn btn-primary btn-sm mb-50 mb-sm-0" name="submit_form" type="submit"><i data-feather="check-circle" ></i> Get Report
                             </button>
@@ -156,8 +155,43 @@
                                             <td>
                                                 <input type="text" name="subject_name[]" class="subject_name position_style form-control text-left" style="width: 100%;" value="{{$result->subject_name}}">
                                                 <hr>
+<<<<<<< HEAD
                                                <!-- Button to trigger modal -->
 <span class="text-info fa fa-eye" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#myModal{{$serial_no}}"> Suggestions</span>
+=======
+                                                {{-- <span class="text-info fa fa-eye" style="cursor: pointer;" data-toggle="modal" data-target="#myModal{{$serial_no}}"> Suggetions</span>
+                                                        <!-- Modal -->
+                                                        <div id="myModal{{$serial_no}}" class="modal fade" role="dialog">
+                                                        <div class="modal-dialog">
+                                
+                                                            <!-- Modal content-->
+                                                            <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Subject Suggetions</h4>
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <table class="table table-hover">
+                                                                    @foreach($subjectSuggetions as $subjectSuggetion)
+                                                                    <tr>
+                                                                        <td>{{$result->subject_code}}</td>
+                                                                        <td>{{$subjectSuggetion}}</td>
+                                                                        <td><input type="button" data-subject="{{$subjectSuggetion}}" onclick="setSubjectSuggetion($(this))" value="User This" class="btn btn-sm btn-success"  data-dismiss="modal"></td>
+                                                                    </tr>
+                                                                    @endforeach
+                                                                </table>
+                                                            </div>
+                                                            <!-- <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div> -->
+                                                            </div>
+                                
+                                                        </div>
+                                                        </div> --}}
+
+
+                                                        <span class="text-info fa fa-eye" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#myModal{{$serial_no}}"> Suggestions</span>
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 
 <!-- Modal -->
 <div id="myModal{{$serial_no}}" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel{{$serial_no}}" aria-hidden="true">
@@ -181,8 +215,12 @@
     </div>
   </div>
 </div>
+<<<<<<< HEAD
 
 
+=======
+                                                        
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
                                             </td>
                                             <td>
                                                 <button type="button" class="brn btn-sm btn-info" onclick="marksheetSubjectNameUpdate($(this))">Update Subject Name Batch Wise</button>
@@ -257,9 +295,14 @@
     </div>
     <!-- END: Content-->
 
+<<<<<<< HEAD
    
     <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
     <!-- END: Footer-->
+=======
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 
 
     <div class="modal modal-slide-in fade filterpopuplabel" id="filter">

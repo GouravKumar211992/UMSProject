@@ -13,11 +13,16 @@ $preferance_courses = [114,113,123,118,119,117,120];
                 <div class="content-header-left col-md-5 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">Application report</h2>
-                            <div class="breadcrumb-wrapper">
+                            <h2 class="content-header-title float-start mb-0">Report</h2>
+                            <div class="breadcrumb-wrapper col-12">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>  
-                                    <li class="breadcrumb-item active">Incident List</li>
+                                    <li class="breadcrumb-item"><a href="dashboard">Home</a></li>  
+                                    <li class="breadcrumb-item active ">
+                                        @if(Request()->sitting=='true')
+                                        Admission Entrance Sitting Plan
+                                        @else
+                                        Application Report
+                                        @endif</li>
                                 </ol>
                             </div>
                         </div>
@@ -25,13 +30,11 @@ $preferance_courses = [114,113,123,118,119,117,120];
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right"> 
-                      <button class="btn btn-primary btn-sm mb-50 mb-sm-0 " data-bs-target="#filter" data-bs-toggle="modal"><i data-feather="filter"></i> Filter</button> 
-                      <button class="btn btn-warning box-shadow-2 btn-sm me-1 mb-sm-0 mb-50" onClick="window.location.reload()"><i data-feather="refresh-cw"></i>reset</button>
-                      <button class="btn btn-warning box-shadow-2 btn-sm me-1 mb-sm-0 mb-50"></i>remove pagination</button>
-                      <button class="btn btn-warning box-shadow-2 btn-sm me-1 mb-sm-0 mb-50">show sitting plan</button>
-                      {{-- <button class="btn btn-warning box-shadow-2 btn-sm me-1 mb-sm-0 mb-50">excel export</button> --}}
-							<!-- <button class="btn btn-success btn-sm mb-50 mb-sm-0" data-bs-target="#approved" data-bs-toggle="modal"><i data-feather="check-circle" ></i> Assign Team</button> -->
-                            <a class="btn btn-dark btn-sm mb-50 mb-sm-0" href="{{Request::fullUrl()}}?multiple_application=@if(Request()->multiple_application=='true') false @else true @endif"><i data-feather="file-text"></i>Show Multiple Courses applied data</a>
+                        <button class="btn btn-warning btn-sm me-1  mb-50 mb-sm-0 " data-bs-target="#filter" data-bs-toggle="modal"><i data-feather="filter"></i> Filter</button> 
+                        <button class="btn btn-danger box-shadow-2 btn-sm me-1 mb-sm-0 mb-50" onClick="window.location.reload()"><i data-feather="refresh-cw"></i>reset</button>
+                        <a class="btn btn-success box-shadow-2 btn-sm me-1 mb-sm-0 mb-50" href="{{ Request::fullUrl() }}?sitting=@if(Request()->sitting=='true') false @else true @endif">Show sitting plan</a>
+                        
+                        <a class="btn btn-dark btn-sm mb-50 mb-sm-0" href="{{Request::fullUrl()}}?multiple_application=@if(Request()->multiple_application=='true') false @else true @endif"><i data-feather="file-text"></i>Show Multiple Courses applied data</a>
 
                     </div>
                     
@@ -80,6 +83,7 @@ $preferance_courses = [114,113,123,118,119,117,120];
                                 <option value="2023-2024" @if($academic_session=='2023-2024') selected @endif>2023-2024</option>
                                 <option value="2022-2023" @if($academic_session=='2022-2023') selected @endif>2022-2023</option>
                             </select>
+                            
                           </div>
                       </div> 
                       <div class="col-md-3">
@@ -99,9 +103,6 @@ $preferance_courses = [114,113,123,118,119,117,120];
                           <div class="d-flex gap-1 mt-2">
                               <button class="btn btn-primary btn-sm" type="submit" name="submit_form">
                                   Get Report
-                              </button>
-                              <button class="btn btn-warning btn-sm" href="#">
-                                  Remove Image
                               </button>
                           </div>
                       </div>
