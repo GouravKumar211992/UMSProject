@@ -14,6 +14,7 @@
     <title>Dashboard</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../assets/css/favicon.png">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     {{-- <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600;700" rel="stylesheet"> --}}
 
     @include('ums.admin.header')
@@ -36,10 +37,7 @@
 
     @yield('content')
     @include('ums.admin.footer')
-<<<<<<< HEAD
-=======
     @include('ums.admin.script')
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 </body>
 <!-- END: Body-->

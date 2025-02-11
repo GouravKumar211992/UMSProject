@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\Helper;
+use App\Http\Controllers\ums\Admin\Master\FacultyController;
 use App\Http\Controllers\DPRTemplateController;
 use App\Http\Controllers\DocumentDriveController;
 use App\Http\Controllers\ErpDprMasterController;
@@ -49,7 +50,7 @@ use App\Http\Controllers\ums\Admin\Master\EntranceExamScheduleController;
 use App\Http\Controllers\ums\Admin\Master\ExamCenterController;
 use App\Http\Controllers\ums\Admin\ApprovalSystemController;
 use App\Http\Controllers\ums\Admin\Master\ExamScheduleController;
-use App\Http\Controllers\ums\Admin\Master\faculty\NotificationController;
+use App\Http\Controllers\ums\Admin\Master\NotificationController as FacultyNotificationController;
 use App\Http\Controllers\ums\Report\BackReportController;
 use App\Http\Controllers\ums\Report\RegularMarkFillingController;
 use App\Http\Controllers\ums\Admin\MbbsTrController;
@@ -86,6 +87,7 @@ use App\Http\Controllers\FixedAsset\IssueTransferController;
 use App\Http\Controllers\FixedAsset\InsuranceController;
 use App\Http\Controllers\FixedAsset\MaintenanceController;
 use App\Http\Controllers\ums\Student\LoginController;
+use App\Http\Controllers\ums\Faculty\LoginController as FacultyLoginController;
 use App\Http\Controllers\ums\Student\DashboardController as StudentDashboardController;
 use App\Http\Controllers\ums\Student\IcardsController as StudentIcardsController;
 
@@ -189,6 +191,9 @@ use App\Http\Controllers\PurchaseReturnController;
 
 
 
+
+
+
 Route::post('login', [UmsHomeController::class,'enquery_login'])->name('enquery-login');
 Route::get('/dashboard', function () {
     return view('ums.dashboard');
@@ -206,13 +211,14 @@ Route::get('/admin-meta', function () {
 Route ::post('/get-state',[UserHomeController::class,'get_state']);
 Route ::post('/get-district',[UserHomeController::class,'get_district']);
 Route ::post('/application-course-list',[UserHomeController::class,'applicationCourseList']);
-Route::get('education-single-row', [UserHomeController::class,'education_single_row'])->name('education-single-row');
+Route::get('/education-single-row', [UserHomeController::class,'education_single_row'])->name('education-single-row');
+Route::get('entrance-admit-card/{id}', [UserHomeController::class,'entranceAdmitCard']);
 
 
 //faculty 
-Route::get('/faculty_dashboard', function () {
-    return view('ums.master.faculty.faculty_dashboard');
-});
+// Route::get('faculty-dashboard', function () {
+//     return view('ums.master.faculty.faculty_dashboard');
+// });
 Route::get('/faculty_edit', function () {
     return view('ums.master.faculty.faculty_edit');
 });
@@ -264,8 +270,14 @@ Route::post('external_marks', [ExternalMarksController::class, 'externalMarksSho
 // Route::get('/internal_marks', function () {
 //     return view('ums.master.faculty.internal_marks_filling');
 // });
-Route::get('internal_marks', [InternalMarksController::class, 'internal']);
+Route::get('/internal-marks-list', [InternalMarksController::class,'index'])->name('internal-marks-list');
+
+Route::get('internal-marks', [InternalMarksController::class, 'internal']);
 // Route::get('internal_marks', [InternalMarksController::class, 'internal']);
+
+Route::get('/internal-marks-show', 'InternalMarksController@internalMarksShow')->name('internal-marks-show');
+Route::post('/internal-marks-show', 'InternalMarksController@internal_submit');
+Route::get('/internal-marks/internal-marks-export', 'InternalMarksController@internalMarksExport')->name('internalMarksExport');
 
 // Route::get('/practical_marks_filling', function () {
 //     return view('ums.master.faculty.practical_marks');
@@ -273,7 +285,7 @@ Route::get('internal_marks', [InternalMarksController::class, 'internal']);
 Route::get('practical_marks_filling', [PracticalMarksController::class, 'practicalMarksShow']);
 
 //usermanagement
-Route::get('secret-login/{id}', [LoginController::class,'secretLogin'])->name('student-secret-login');
+Route::get('secret-login/{id}', [FacultyLoginController::class,'secretLogin'])->name('secret-login');
 
 Route::get('view-icard/{id}', [StudentIcardsController::class,'singleIcard'])->name('view-icard');
 		Route::get('icard-form/{type}', [StudentIcardsController::class,'icardForm'])->name('icard-form');
@@ -506,9 +518,12 @@ Route::get('/course_list_delete/{id}', [CourseController::class, 'softDelete'])-
 //     return view('ums.master.course.course_edit');
 // });
 
-Route::get('/faculty', function () {
-    return view('ums.master.faculty');
-});
+// Route::get('/faculty', function () {
+//     return view('ums.master.faculty');
+// });
+Route::get('/faculty',[FacultyController::class,'index'])->name('faculty');
+
+
 Route::get('/affiliate_circular',[AffiliateCircularController::class,'index']);
 Route::get('/affiliate_circular_add',[AffiliateCircularController::class,'addView']);
 Route::post('/affiliate_circular_add',[AffiliateCircularController::class,'add']);
@@ -832,10 +847,7 @@ Route::get('/admission_list', function () {
 Route::get('/council_data', [AdmissionController::class,'counciledData'])->name('council-data');
 
 Route::get('/course_transfer', [CourseSwitchingController::class, 'courseSwitching'])->name('course-transfer');
-<<<<<<< HEAD
-=======
 Route::POST('/course_transfer', [CourseSwitchingController::class, 'courseSwitchingSave']);
->>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 Route::get('bulk_counselling', [CouncellingController::class, 'bulkCouncelling']);
 Route::get('/admission_counselling', [AdmissionController::class,'applicationCouncil'])->name('admission-counselling');
 Route::POST('/admission_counselling', [AdmissionController::class,'saveCouncil'])->name('admission-counselling_post');
@@ -882,11 +894,6 @@ Route::get('grievance-complaint-list',[GrievanceController::class,'complaintList
 Route::get('grievance',[GrievanceController::class,'complaints']);
 Route::get('grievance-complaint-details',[GrievanceController::class,'complaintDetails']);
 Route::post('grievance-complaint-details',[GrievanceController::class,'complaintDetailsSave'])->name('complaintDetails.add');
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 
 
 
@@ -2695,9 +2702,7 @@ Route::put('/course_list_update', [CourseController::class, 'editCourse'])->name
 Route::get('/course_list_delete/{id}', [CourseController::class, 'softDelete'])->name('course_list_delete');
 
 
-Route::get('/faculty', function () {
-    return view('ums.master.faculty');
-});
+
 Route::get('/affiliate_circular',[AffiliateCircularController::class,'index']);
 Route::get('/affiliate_circular_add',[AffiliateCircularController::class,'addView']);
 Route::post('/affiliate_circular_add',[AffiliateCircularController::class,'add']);
@@ -2882,10 +2887,12 @@ Route::get('/regular_exam_form_report',[ReportController::class , 'regularPaperR
 //dhan and manish
 
 //danish
-Route::get('/faculty_dashboard', function () {
-    return view('ums.master.faculty.faculty_dashboard');
-});
+// Route::get('/faculty_dashboard', function () {
+//     return view('ums.master.faculty.faculty_dashboard');
+// });
 // Route::get('/faculty_dashboard', [FacultyController::class,'index']);
+Route::get('student-secret-login/{id}', [LoginController::class,'secretLogin'])->name('student-secret-login');
+
 
 Route::get('/faculty_edit', function () {
     return view('ums.master.faculty.faculty_edit');
@@ -2893,10 +2900,10 @@ Route::get('/faculty_edit', function () {
 Route::get('/faculty_add', function () {
     return view('ums.master.faculty.faculty_add');
 });
-Route::get('/facultynotification', [NotificationController::class, 'index2']);
+// Route::get('/facultynotification', [NotificationController::class, 'index2']);
 
 Route::get('/Holiday', [FacultyDashboardController::class, 'holidayCalenderForFaculty']);
-// Route::get('/faculty', [FacultyDashboardController::class, 'index']);
+Route::get('/faculty-dashboard', [FacultyDashboardController::class, 'index']);
 
 Route::get('/time_table', [TimetableController::class, 'index']);
 

@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Faculty;
+namespace App\Http\Controllers\ums\Faculty;
 
 use Session;
 
@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\User;
-use App\Models\MailBox;
-use App\Models\Address;
-use App\Models\Country;
-use App\Models\Currency;
-use App\Models\SocialMedia;
-use App\Models\ServerWelcomeEmail;
+use App\Models\ums\MailBox;
+use App\Models\ums\Address;
+use App\Models\ums\Country;
+use App\Models\ums\Currency;
+use App\Models\ums\SocialMedia;
+use App\Models\ums\ServerWelcomeEmail;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\Guard;
@@ -22,7 +22,7 @@ use Validator;
 use App\Services\Mailers\Mailer;
 use App\Helpers\ConstantHelper;
 use App\Helpers\GeneralHelper;
-use App\Models\Faculty;
+use App\Models\ums\Faculty;
 use Mail;
 use Hash;
 
@@ -83,9 +83,10 @@ class LoginController extends Controller
 
 	public function secretLogin($id,Request $request){
 		$user = Faculty::find($id);
+        // dd($user);
 		if($user){
 			Auth::guard('faculty')->login($user);
-			return redirect('faculty');
+			return redirect('faculty-dashboard');
 		}else{
 			return back()->with('error','Invalid ID');
 		}

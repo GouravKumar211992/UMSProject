@@ -1425,7 +1425,7 @@ class HomeController extends Controller
 		if(!$entranceExamData){
 			return back()->with('error','Admit card is not generated');
 		}
-		return view('frontend.index.entrance_admit_card',compact('admitcard','entranceExamData'));
+		return view('ums.usermanagement.user.frontend.index.entrance_admit_card',compact('admitcard','entranceExamData'));
     }
 
     public function delApplication($id,Request $request){

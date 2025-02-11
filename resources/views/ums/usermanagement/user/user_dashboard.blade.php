@@ -265,7 +265,7 @@
                                                                             class="btn btn-info">View and Print Admit Card</a>
                                                                     @endif
                                                                     @if (admission_open_couse_wise($application->course_id, 2, $application->academic_session))
-                                                                        <br>
+                                                                        
                                                                         <a href="{{ route('view-application-form', ['application_id' => $application->id, 'edit' => 'true']) }}"
                                                                             class="btn-sm btn-primary">Edit Application</a>
                                                                     @endif

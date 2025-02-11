@@ -62,6 +62,7 @@
                     enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     <div class="invalid-feedback text-danger error_application"></div>
+
                     <div class="row">
                         <div class="col-md-12 mb-2">
                             <label for="">Application For <span class="text-danger">(Please click the correct
@@ -101,77 +102,6 @@
                         </div>
                     </div>
 
-                            <div class="invalid-feedback text-danger application_for_application"></div>
-                            </p>
-
-                        </div>
-                    </div>
-                    <div class="row college_name">
-                        <div class="col-md-4 mb-5">
-                            <label for="">College Name<span class="text-danger">*</span></label>
-                            <select class="form-control" name="campus_id" id="campus_id">
-                                <option value="">--Select College Name--</option>
-                                @foreach ($colleges as $college)
-                                    <option value="{{ $college->id }}" @if ($course_single && $course_single->campus_id == $college->id) selected @endif>
-                                        {{ $college->name }}</option>
-                                @endforeach
-                            </select>
-                            <div class="invalid-feedback text-danger college_name_application"></div>
-                        </div>
-                    </div> --}}
-                    
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div
-                                class="newheader border-bottom mb-2 pb-25 d-flex flex-wrap justify-content-between">
-                                <div>
-                                    <h4 class="card-title text-theme">
-                                        Application For <span class="text-danger">(Please click the correct
-                                            box)</span>
-                                    </h4>
-                                    <p class="card-text">
-                                    <div class="newboxciradio">
-                                        <input type="radio" class="filled-in application_for" name="collage"
-                                            value="1" id="applicatio_for1" checked>
-                                        <label for="applicatio_for1" class="form-check-label me-3">
-                                            <strong>IN DSMNRU CAMPUS</strong><span class="text-danger">*</span>
-                                        </label>
-
-                                        <input type="radio" class="filled-in application_for" name="collage"
-                                            value="2" id="check">
-                                        <label for="check" class="form-check-label">
-                                            <strong>AFFILIATED COLLEGE</strong><span class="text-danger">*</span>
-                                            <i class="text-danger">(Admissions are subject to the approval of the
-                                                program from RCI and affiliation by DSMNRU)</i>
-                                        </label>
-                                    </div>
-                                    <div class="invalid-feedback text-danger application_for_application"></div>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-8" style="display: none" id="select">
-                            <div class="row align-items-center mb-1 exisitng">
-                                <div class="col-md-3">
-                                    <label class="form-label">
-                                        College Name<span class="text-danger">*</span>
-                                    </label>
-                                </div>
-                                <div class="col-md-5">
-                                    <select class=" form-control select2" name="campus_id" id="campus_id">
-                                        <option value="">--Select College Name--</option>
-                                        @foreach ($colleges as $college)
-                                            <option value="{{ $college->id }}"
-                                                @if ($course_single && $course_single->campus_id == $college->id) selected @endif>
-                                                {{ $college->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
 
                     <div class="row mb-5">
                         <div class="col-md-12">
@@ -184,8 +114,8 @@
                                     <select class="form-control" name="academic_session" id="academic_session">
                                         <!-- <option value="">--Select Academic Session--</option> -->
                                         <!-- <option value="2022-2023">2022-2023</option> -->
-                                        <!-- <option value="2023-2024">2023-2024</option> -->
-                                        <option value="2024-2025">2024-2025</option>
+                                        <option value="2023-2024">2023-2024</option>
+                                        <!-- <option value="2024-2025">2024-2025</option> -->
                                     </select>
                                     <div class="invalid-feedback text-danger academic_session_application"></div>
                                 </div>
@@ -285,6 +215,625 @@
                                 <input type="text" class="form-control numbersOnly" name="student_mobile"
                                     maxlength="10" value="{{ Auth::user()->mobile }}" readonly />
                                 <div class="invalid-feedback text-danger student_mobile_application"></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row mb-2">
+
+                        <div class="col-md-6">
+                            <h5 class="front-form-head no-bg pl-0 font-weight-bold"> Father's Name<span
+                                    class="text-danger">*</span></h5>
+                            <input type="text" class="form-control uppercase" name="father_name" maxlength="30"
+                                autocomplete="__away" />
+                            <div class="invalid-feedback text-danger father_name_application"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="front-form-head no-bg pl-0 font-weight-bold"> Father's Mobile Number<span
+                                    class="text-danger">*</span></h5>
+                            <input type="text" class="form-control numbersOnly" name="father_mobile" maxlength="10"
+                                autocomplete="__away" />
+                            <div class="invalid-feedback text-danger father_mobile_application"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-2">
+
+                        <div class="col-md-6">
+                            <h5 class="front-form-head no-bg pl-0 font-weight-bold"> Mother's Name<span
+                                    class="text-danger">*</span></h5>
+                            <input type="text" class="form-control uppercase" name="mother_name" maxlength="30"
+                                autocomplete="__away" />
+                            <div class="invalid-feedback text-danger mother_name_application"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="front-form-head no-bg pl-0 font-weight-bold"> Mother's Mobile Number</h5>
+                            <input type="text" class="form-control numbersOnly" name="mother_mobile" maxlength="10"
+                                autocomplete="__away" />
+                            <div class="invalid-feedback text-danger mother_mobile_application"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-5">
+                        <div class="col-md-12">
+                            <h5 class="front-form-head">Personal Information</h5>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <div class="form-group">
+                                <label>Gender<span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <select class="form-control" id="gender" name="gender">
+
+                                <option value="">--Select Gender--</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Transgender">Transgender</option>
+                            </select>
+                            <div class="invalid-feedback text-danger gender_application"></div>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <div class="form-group">
+                                <label>Religion<span class="text-danger">*</span></label>
+                                <div class="form-group" id="religion1" style="margin-top: 20px;" hidden>
+                                    <label>Enter Your Religion<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <select class="form-control" id="religion">
+                                <option value="">--Select Religion--</option>
+                                <option value="Hindu">Hindu</option>
+                                <option value="Muslim">Muslim</option>
+                                <option value="Sikh">Sikh</option>
+                                <option value="Christian">Christian</option>
+                                <option value="Other">Other</option>
+
+                            </select>
+                            <input type="text" class="filled-in" name="religion" value="" id="religion2"
+                                autocomplete="__away" hidden>
+                            <div class="invalid-feedback text-danger religion_application"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-2 mb-2">
+                            <div class="form-group">
+                                <label>Marital Status<span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <select class="form-control" id="marital_status" name="marital_status">
+                                <option value="">--Select Marital Status--</option>
+                                <option value="Married">Married</option>
+                                <option value="Unmarried">Unmarried</option>
+                                <option value="Divorcee">Divorcee</option>
+                            </select>
+                            <div class="invalid-feedback text-danger marital_status_application"></div>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <div class="form-group">
+                                <label>Blood Group<span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <select class="form-control" id="blood_group" name="blood_group">
+
+                                <option value="">--Select Option--</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <!--option value="NA">NA</option-->
+                            </select>
+
+
+                            <div class="invalid-feedback text-danger blood_group_application"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-2 mb-2">
+                            <div class="form-group">
+                                <label>Nationality<span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <select class="form-control" id="nationality">
+                                <option value="Indian" selected>Indian</option>
+                                <option value="Others">Others</option>
+                            </select>
+                            <div class="invalid-feedback text-danger nationality_application"></div>
+                        </div>
+                        <div class="col-md-2 mb-2" id="nationality1" hidden>
+                            <div class="form-group">
+                                <label>Enter Your Nationality<span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-2" id="nationality11" hidden>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="nationality" value="Indian"
+                                    value="In" id="nationality_value" autocomplete="__away" />
+                                <div class="invalid-feedback text-danger nationality_application"></div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="col-md-2 mb-2">
+                            <div class="form-group">
+                                <label>Domicile<span class="text-danger">*</span></label>
+                                <div class="form-group" id="domicile_cirtificate1" style="margin-top: 20px;" hidden>
+                                    <label>Upload Your Domicile<span class="text-danger">*</span></label>
+                                </div>
+                                <div class="form-group" id="domicile1" style="margin-top: 20px;" hidden>
+                                    <label>Enter Your Domicile<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <select class="form-control" id="domicile">
+
+                                <option value=>--Select Domicile--</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                <option value="Others">Others</option>
+                            </select>
+                            <input type="text" class="filled-in" name="domicile" id="domicile2"
+                                autocomplete="__away" hidden>
+                            <div class="invalid-feedback text-danger domicile_application"></div>
+                            <input type="file" class="form-control" name="domicile_cirtificate" value=""
+                                id="domicile_cirtificate2" autocomplete="__away" hidden accept="image/*">
+                            <div class="invalid-feedback text-danger domicile_cirtificate_application"></div>
+                        </div>
+
+                        <div class="col-md-2 mb-2">
+                            <div class="form-group">
+                                <label>DSMNRU Student ?<span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <select class="form-control" id="enrollment" name="dsmnru_student">
+                                <option value="">--Select Option--</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                            <div class="invalid-feedback text-danger dsmnru_student_application"></div>
+                        </div>
+                        <div class="col-md-2 mb-2" id="enrollment1" hidden>
+                            <div class="form-group">
+                                <label>Enter Your Enrollment Number<span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-2" id="enrollment11" hidden>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="enrollment_number"
+                                    id="enrollment_value" autocomplete="__away" />
+                                <div class="invalid-feedback text-danger enrollment_number_application"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="clearfix"></div>
+                        <div class="col-md-4 mb-2 hidden">
+                            <div class="form-group">
+                                <label>Sub Category</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-2 hidden">
+                            <div class="form-group">
+                                <select class="form-control" name="sub_category">
+                                    <option>Select</option>
+                                    <option>Son/Daughter/Spouse of Teachers'/Employees' of DSMNRU</option>
+                                    <option>Physically Handicapped</option>
+                                    <option>Dependent of Freedom Fighter</option>
+                                    <option>Defence Personnel</option>
+                                    <option>Sports</option>
+                                    <option>NCC ‘B’ / NSS Certified
+                                </select>
+                                <div class="invalid-feedback text-danger sub_category_application"></div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="col-md-2 mb-2">
+                            <div class="form-group">
+                                <label>Aadhar Number<span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <input type="text" name="adhar_card_number" class="form-control numbersOnly"
+                                maxlength="12" />
+                            <div class="invalid-feedback text-danger adhar_card_number_application"></div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <h5 class="front-form-head">Category <code>(File can be uploaded only in JPG,PNG or PDF format
+                                    from 200KB to 500KB)</code></h5>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-2 mb-2">
+                                <div class="form-group">
+                                    <label>Category<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <select class="form-control" id="category" name="category"
+                                    onChange="check_caste_certificate_number($(this).val())">
+                                    <option value="">--Select Category--</option>
+                                    <option value="General">General</option>
+                                    <option value="OBC">OBC</option>
+                                    <option value="SC">SC</option>
+                                    <option value="ST">ST</option>
+                                    <option value="EWS">EWS</option>
+                                </select>
+                                <div class="invalid-feedback text-danger category_application"></div>
+                            </div>
+                            <div class="col-md-2 mb-2 certificate_no_text" id="certificate_no1" style="display:none;">
+                                <div class="form-group">
+                                    <label>Certificate Number<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-2 certificate_no_text" id="certificate_no" style="display:none;">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="caste_certificate_number"
+                                        autocomplete="__away" maxlength="15" />
+                                    <div class="invalid-feedback text-danger caste_certificate_number_application"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 mb-2 certificate_no_text" id="certificate_no3" style="display:none;">
+                                <div class="form-group">
+                                    <label>Upload Caste Certificate<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-2 certificate_no_text" id="certificate_no3" style="display:none;">
+                                <div class="form-group">
+                                    <input type="file" class="form-control" name="upload_caste_certificate"
+                                        accept="image/*" autocomplete="__away" maxlength="15" />
+                                    <div class="invalid-feedback text-danger upload_caste_certificate_application"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 mb-2">
+                                <div class="form-group">
+                                    <label>DSMNRU Employee<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <select class="form-control" id="dsmnru_employee" name="dsmnru_employee"
+                                    onChange="open_dsmnru_relationship($(this).val())">
+                                    <option value="">--Select Option--</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                                <div class="invalid-feedback text-danger dsmnru_employee_application"></div>
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <div class="col-md-2 mb-2 dsmnru_relationship" hidden>
+                                <div class="form-group">
+                                    <label>DSMNRU Designation<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-2 dsmnru_relationship" hidden>
+                                <input type="text" class="form-control" name="dsmnru_relation" id="dsmnru_relation">
+                                <div class="invalid-feedback text-danger dsmnru_relation_application"></div>
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <div class="col-md-2 mb-2">
+                                <div class="form-group">
+                                    <label>DSMNRU Employee Ward<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <select class="form-control" id="dsmnru_employee_ward" name="dsmnru_employee_ward"
+                                    onChange="set_name_and_relation($(this))">
+                                    <option value="">--Select Option--</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                                <div class="invalid-feedback text-danger dsmnru_employee_ward_application"></div>
+                            </div>
+
+                            <div class="row ward_emp_name_and_relation" style="display:none;">
+                                <div class="clearfix"></div>
+
+                                <div class="col-md-2 mb-2">
+                                    <div class="form-group">
+                                        <label>DSMNRU Employee Name<span class="text-danger">*</span></label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <input type="text" class="form-control" name="ward_emp_name"
+                                        autocomplete="__away" />
+                                    <div class="invalid-feedback text-danger ward_emp_name_application"></div>
+                                </div>
+
+                                <div class="col-md-2 mb-2">
+                                    <div class="form-group">
+                                        <label>Relation With DSMNRU Employee<span class="text-danger">*</span></label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <input type="text" class="form-control" name="ward_emp_relation"
+                                        autocomplete="__away" />
+                                    <div class="invalid-feedback text-danger ward_emp_relation_application"></div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-2 mb-2">
+                                <div class="form-group">
+                                    <label>Disability<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <select class="form-control" id="disability" name="disability"
+                                    onChange="disability_cat_open($(this).val())">
+                                    <option value="">--Select Option--</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                                <div class="invalid-feedback text-danger disability_application"></div>
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <div class="col-md-2 mb-2 disability_category_box" hidden>
+                                <div class="form-group">
+                                    <label>Disability Category<span class="text-danger ">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2 disability_category_box" hidden>
+                                <select class="form-control " id="disability_category" name="disability_category"
+                                    onChange="change_disability_category($(this).val())">
+                                    <option value="">--Select Option--</option>
+                                    @foreach ($disabilities as $disability)
+                                        @if ($disability->short_name != 'NA')
+                                            <option
+                                                value="{{ $disability->disability_category }}-{{ $disability->short_name }}">
+                                                {{ $disability->disability_category }}-{{ $disability->short_name }}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback text-danger disability_category_application"></div>
+                            </div>
+
+                            <div class="col-md-2 mb-2 disability_certificate_no_text" id="certificate_no1"
+                                style="display:none;">
+                                <div class="form-group">
+                                    <label>Percentage of Disability<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-2 disability_certificate_no_text" id=""
+                                style="display:none;">
+                                <div class="form-group">
+                                    <input type="text" class="form-control numbersOnly percentage_type"
+                                        placeholder="%" name="percentage_of_disability" maxlength="5"
+                                        autocomplete="__away" maxlength="18" />
+                                    <div class="invalid-feedback text-danger percentage_of_disability_application"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <div class="col-md-2 mb-2 disability_certificate_no_text" id="certificate_no1"
+                                style="display:none;">
+                                <div class="form-group">
+                                    <label>UDID Number</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-2 disability_certificate_no_text" id="certificate_no"
+                                style="display:none;">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="udid_number" autocomplete="__away"
+                                        maxlength="18" />
+                                    <div class="invalid-feedback text-danger udid_number_application"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 mb-2 disability_certificate_no_text" id="certificate_no3"
+                                style="display:none;">
+                                <div class="form-group">
+                                    <label>Upload Disability Certificate<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-2 disability_certificate_no_text" id="certificate_no3"
+                                style="display:none;">
+                                <div class="form-group">
+                                    <input type="file" class="form-control" name="upload_disability_certificate"
+                                        accept="image/*" autocomplete="__away" />
+                                    <div class="invalid-feedback text-danger upload_disability_certificate_application">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div class="col-md-2 mb-2">
+                                <div class="form-group">
+                                    <label>Freedom Fighter Dependent<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <select class="form-control" id="freedom_fighter_dependent"
+                                    name="freedom_fighter_dependent">
+                                    <option value="">--Select Option--</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                                <div class="invalid-feedback text-danger freedom_fighter_dependent_application"></div>
+                            </div>
+
+
+                            <div class="col-md-2 mb-2" id="freedom_fighter_dependent1" hidden>
+                                <div class="form-group">
+                                    <label>Upload Cirtificate<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2" id="freedom_fighter_dependent11" hidden>
+                                <div class="form-group">
+                                    <input type="file" class="form-control" name="freedom_fighter_dependent_file"
+                                        accept="image/*" id="freedom_fighter_dependent_value" autocomplete="__away" />
+                                    <div class="invalid-feedback text-danger freedom_fighter_dependent_file_application">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-2 mb-2">
+                                <div class="form-group">
+                                    <label>NCC<br>(C-Certificate)<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <select class="form-control" id="ncc_cirtificate" name="ncc">
+
+                                    <option value="">--Select Option--</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+
+                                <div class="invalid-feedback text-danger ncc_application"></div>
+                            </div>
+
+                            <div class="col-md-2 mb-2" id="ncc_cirtificate1" hidden>
+                                <div class="form-group">
+                                    <label>Upload NCC Cirtificate<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2" id="ncc_cirtificate11" hidden>
+                                <div class="form-group">
+                                    <input type="file" class="form-control" name="ncc_cirtificate" accept="image/*"
+                                        id="ncc_cirtificate_value" autocomplete="__away" />
+                                    <div class="invalid-feedback text-danger ncc_cirtificate_application"></div>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div class="col-md-2 mb-2">
+                                <div class="form-group">
+                                    <label>NSS <br /> (240 hrs and 1 camp)<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <select class="form-control" id="nss_cirtificate" name="nss">
+
+                                    <option value="">--Select Option--</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                                <div class="invalid-feedback text-danger nss_application"></div>
+                            </div>
+
+                            <div class="col-md-2 mb-2" id="nss_cirtificate1" hidden>
+                                <div class="form-group">
+                                    <label>Upload NSS Cirtificate<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2" id="nss_cirtificate11" hidden>
+                                <div class="form-group">
+                                    <input type="file" class="form-control" name="nss_cirtificate" accept="image/*"
+                                        id="nss_cirtificate_value" autocomplete="__away" />
+                                    <div class="invalid-feedback text-danger nss_cirtificate_application"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-2 mb-2">
+                                <div class="form-group">
+                                    <label>Sports<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <select class="form-control" id="sports" name="sports">
+
+                                    <option value="">--Select Option--</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                                <div class="invalid-feedback text-danger sports_application"></div>
+                            </div>
+
+                            <div class="col-md-2 mb-2" id="sports1" hidden>
+                                <div class="form-group">
+                                    <label>Sport Level<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2" id="sports11" hidden>
+                                <div class="form-group">
+                                    <select class="form-control" id="nss_cirtificate" name="sport_level">
+                                        <option value="">--Select Option--</option>
+                                        <option value="National">National</option>
+                                        <option value="State">State</option>
+                                        <option value="International">International</option>
+                                    </select>
+                                    <div class="invalid-feedback text-danger sport_level_application"></div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-2 mb-2" id="sportt_cirtificate1" hidden>
+                                <div class="form-group">
+                                    <label>Upload Sport Cirtificate<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2" id="sportt_cirtificate11" hidden>
+                                <div class="form-group">
+                                    <input type="file" class="form-control" name="sportt_cirtificate"
+                                        id="sportt_cirtificate1_value" accept="image/*" autocomplete="__away" />
+                                    <div class="invalid-feedback text-danger sportt_cirtificate_application"></div>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div class="col-md-2 mb-2">
+                                <div class="form-group">
+                                    <label>Hostel Facility Required<span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <select class="form-control" id="hostal_options" name="hostel_facility_required">
+
+                                    <option value="">--Select Option--</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                                <div class="invalid-feedback text-danger sports_application"></div>
+                            </div>
+
+                            <div class="col-md-2 mb-2" id="hostal_options1" hidden>
+                                <div class="form-group">
+                                    <label>How many years staying in DSMNRU Hostel<span
+                                            class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2" id="hostal_options11" hidden>
+                                <div class="form-group">
+                                    <input type="text" class="form-control numbersOnly" name="hostel_for_years"
+                                        maxlength="2" id="hostel_distence1_value" autocomplete="__away" />
+
+                                    <div class="invalid-feedback text-danger hostal_options_application"></div>
+                                </div>
+
                             </div>
                         </div>
                         <div class="col-md-2 mb-2" id="hostel_distence1" hidden>
@@ -1284,7 +1833,7 @@
                     'X-CSRF-Token': $('meta[name=_token]').attr('content')
                 },
                 type: 'GET',
-                url: "{{ route('education-single-row') }}?rows=" + $('.educationtable tbody tr').length,
+                url: "{{ url('education-single-row') }}?rows=" + $('.educationtable tbody tr').length,
                 success: function(data) {
                     console.log(data.html);
                     $('.educationtable tbody tr:last').after(data.html);

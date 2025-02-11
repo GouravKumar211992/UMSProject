@@ -1,4 +1,6 @@
 @extends('ums.master.faculty.faculty-meta')
+
+
      <!-- BEGIN: Content-->
      @section('content')
   
@@ -25,24 +27,29 @@
                  </div>
                  <div class="content-header-right col-md-6 col-8">
                     <div class="row d-flex flex-column align-items-center text-center">
+                        <form method="get" name="faculty_data">
                         <div class="col-md-5 ms-auto"> 
                             <div class="form-group row mb-3 align-item-center">
                                 <label for="sessionSelect" class="form-label  flex-nowrap   col-md-6 mt-1">Select Session</label>
-                                <select name="session" id="sessionSelect" class="form-select w-auto">
-                                    <option value="">Select Session</option>
-                                    <option value="1">Session 1</option>
-                                    <option value="2">Session 2</option>
-                                    <option value="3">Session 3</option>
-                                    <option value="4">Session 4</option>
-                                    <option value="5">Session 5</option>
-                                    <option value="6">Session 6</option>
-                                </select>
+                                <select class="form-control" name="session" id="session" onChange="$('.show_data').trigger('click')">
+                                    <option value="">--Select Session--</option>
+                                    @foreach($sessions as $session)
+                                    <option value="{{$session->academic_session}}"@if(Request()->session==$session->academic_session) selected @endif>{{$session->academic_session}}</option>
+                                    @endforeach
+                                    </select>
                             </div>
                         </div>
+                        <input type="submit" class="btn btn-primary  show_data" >
+                    </form>
                     </div>
-                 </div>
+                  
+                       
+                       
+                 
              </div>
-              
+             <div class="col-sm-6 textM-right">
+                <p>Showing results till <strong>{{date('d-m-Y')}}</strong> </p>
+            </div>
             
              <div class="content-body dasboardnewbody">
                
@@ -54,7 +61,7 @@
                             <div class="holiday-box p-5" style=" border-left: 10px solid #A0BC8B;">
                                 <div><span style="background: rgba(160, 188, 139, 0.2); color: #A0BC8B;">Papers</span></div>
                                 <div>
-                                    <h3 class="fw-lighter">1</h3>
+                                    <h3 class="fw-lighter">{{$mapped_papers}}</h3>
                                     <h5>Alloted</h5>
                                 </div>
                             </div>
@@ -64,7 +71,7 @@
                             <div class="holiday-box p-5" style="border-left: 10px solid #62C3C0;">
                                 <div><span style="background: rgba(110, 230, 226, 0.2); color: #62C3C0;">Students</span></div>
                                 <div>
-                                    <h3 class="fw-lighter">1</h3>
+                                    <h3 class="fw-lighter">{{$student_count}}</h3>
                                     <h5>Total</h5>
                                 </div>
                             </div>
@@ -74,7 +81,7 @@
                             <div class="holiday-box p-5">
                                 <div><span style="background: rgba(168, 139, 151, 0.2); color: #A88B97;">Marks Filled</span></div>
                                 <div>
-                                    <h3 class="fw-lighter">100</h3>
+                                    <h3 class="fw-lighter">{{$internal_marks_filled}}</h3>
                                     <h5>Total</h5>
                                 </div>
                             </div>
@@ -84,7 +91,7 @@
                             <div class="holiday-box p-5" style="border-left: 10px solid #E3C852;">
                                 <div><span style="background: rgba(227, 200, 82, 0.2); color: #E3C852;">Mark Filling</span></div>
                                 <div>
-                                    <h3 class="fw-lighter">2408</h3>
+                                    <h3 class="fw-lighter">{{$pending}}</h3>
                                     <h5>Pending</h5>
                                 </div>
                             </div>

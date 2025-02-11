@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\ums\Faculty;
 
-use View;
-use Auth;
-use App\User;
+use App\models\ums\User;
+use Illuminate\Support\Facades\View;
+
+
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Helpers\ConstantHelper;
 use App\Http\Controllers\ums\AdminController;
@@ -26,68 +29,108 @@ class DashboardController extends AdminController
         View::share('submenu_id', 'NA');
     }
 
-    public function index(Request $request)
-    {
-		$user=Auth::guard('faculty')->user()->id;
-		if($request->session){
-			//dd($request->session);
-		$mapped_papers=InternalMarksMapping::where('faculty_id',$user)
-							->orderBy('id', 'DESC')->get();
+    // public function index(Request $request)
+    // {
+	// 	$user=Auth::guard('faculty')->user()->id;
+	// 	if($request->session){
+	// 		// dd($request->session);
+	// 	$mapped_papers=InternalMarksMapping::where('faculty_id',$user)
+	// 						->orderBy('id', 'DESC')->get();
 							
-		$student=StudentSubject::join("internal_marks_mappings",function($join){
-            $join->on("internal_marks_mappings.sub_code","=","student_subjects.sub_code")
-                ->on("internal_marks_mappings.course_id","=","student_subjects.course_id")
-                ->on("internal_marks_mappings.semester_id","=","student_subjects.semester_id");
-					})
-					->select('student_subjects.roll_number')
-					->distinct()
-					->where('internal_marks_mappings.faculty_id',$user)
-					->where('student_subjects.session',$request->session);
-					//dd($student->get());
-		$internalmark=InternalMark::where('session',$request->session)
-					->where('faculty_id',$user)->get();
-		$duplicate_roll_no = InternalMark::where(['faculty_id'=>$user,'session'=>$request->session])
-				->pluck('roll_number')
-				->toArray();
-		$session=AcademicSession::get();
-		$internal_marks_filled=InternalMark::where(['faculty_id'=>$user,'session'=>$request->session])
-			->get();
-		$paper_code=$mapped_papers->pluck('sub_code')->toArray();
+	// 	$student=StudentSubject::join("internal_marks_mappings",function($join){
+    //         $join->on("internal_marks_mappings.sub_code","=","student_subjects.sub_code")
+    //             ->on("internal_marks_mappings.course_id","=","student_subjects.course_id")
+    //             ->on("internal_marks_mappings.semester_id","=","student_subjects.semester_id");
+	// 				})
+	// 				->select('student_subjects.roll_number')
+	// 				->distinct()
+	// 				->where('internal_marks_mappings.faculty_id',$user)
+	// 				->where('student_subjects.session',$request->session);
+	// 				// dd($student->get());
+	// 	$internalmark=InternalMark::where('session',$request->session)
+	// 				->where('faculty_id',$user)->get();
+	// 	$duplicate_roll_no = InternalMark::where(['faculty_id'=>$user,'session'=>$request->session])
+	// 			->pluck('roll_number')
+	// 			->toArray();
+	// 	$session=AcademicSession::get();
+	// 	$internal_marks_filled=InternalMark::where(['faculty_id'=>$user,'session'=>$request->session])
+	// 		->get();
+	// 	$paper_code=$mapped_papers->pluck('sub_code')->toArray();
 
-		$data['mapped_papers']=count($mapped_papers);
-		$data['student_count']=count($student->get());
-		$data['sessions']=$session;
-		$data['internal_marks_filled']=count($internal_marks_filled);
-		$pending = $student->whereNotIn('roll_number',$duplicate_roll_no);
-		$data['pending']=count($pending->get());
-        return view('faculty.dashboard.index',$data);
-		}
-		$mapped_papers=InternalMarksMapping::where('faculty_id',$user)
-							->orderBy('id', 'DESC')->get();
-		$student=StudentSubject::join("internal_marks_mappings",function($join){
-            $join->on("internal_marks_mappings.sub_code","=","student_subjects.sub_code")
-                ->on("internal_marks_mappings.course_id","=","student_subjects.course_id")
-				->on("internal_marks_mappings.semester_id","=","student_subjects.semester_id");
-				})
-			->select('student_subjects.roll_number')
-			->distinct()
-			->where('internal_marks_mappings.faculty_id',$user);
-		//dd($student->get());
-		$internal_marks_filled=InternalMark::where('faculty_id',$user)->get();
-		$duplicate_roll_no = InternalMark::where(['faculty_id'=>$user])->pluck('roll_number')->toArray();
-		//dd($duplicate_roll_no);
-		$paper_code=$mapped_papers->pluck('sub_code')->toArray();
-		$total_student=$student;
-		$session=AcademicSession::get();
-		//dd($student[0]);
-		$data['mapped_papers']=count($mapped_papers);
-		$data['student_count']=count($student->get());
-		$data['sessions']=$session;
-		$data['internal_marks_filled']=count($internal_marks_filled);
-		$pending = $student->whereNotIn('roll_number',$duplicate_roll_no);
-		$data['pending']=count($pending->get());
-        return view('faculty.dashboard.index',$data);
+	// 	$data['mapped_papers']=count($mapped_papers);
+	// 	$data['student_count']=count($student->get());
+	// 	$data['sessions']=$session;
+	// 	$data['internal_marks_filled']=count($internal_marks_filled);
+	// 	$pending = $student->whereNotIn('roll_number',$duplicate_roll_no);
+	// 	$data['pending']=count($pending->get());
+    //     return view('ums.master.faculty.faculty_dashboard',$data);
+	// 	}
+	// 	$mapped_papers=InternalMarksMapping::where('faculty_id',$user)
+	// 						->orderBy('id', 'DESC')->get();
+	// 	$student=StudentSubject::join("internal_marks_mappings",function($join){
+    //         $join->on("internal_marks_mappings.sub_code","=","student_subjects.sub_code")
+    //             ->on("internal_marks_mappings.course_id","=","student_subjects.course_id")
+	// 			->on("internal_marks_mappings.semester_id","=","student_subjects.semester_id");
+	// 			})
+	// 		->select('student_subjects.roll_number')
+	// 		->distinct()
+	// 		->where('internal_marks_mappings.faculty_id',$user);
+	// 	//dd($student->get());
+	// 	$internal_marks_filled=InternalMark::where('faculty_id',$user)->get();
+	// 	$duplicate_roll_no = InternalMark::where(['faculty_id'=>$user])->pluck('roll_number')->toArray();
+	// 	//dd($duplicate_roll_no);
+	// 	$paper_code=$mapped_papers->pluck('sub_code')->toArray();
+	// 	$total_student=$student;
+	// 	$session=AcademicSession::get();
+	// 	dd($student[0]);
+	// 	$data['mapped_papers']=count($mapped_papers);
+	// 	$data['student_count']=count($student->get());
+	// 	$data['sessions']=$session;
+	// 	$data['internal_marks_filled']=count($internal_marks_filled);
+	// 	$pending = $student->whereNotIn('roll_number',$duplicate_roll_no);
+	// 	$data['pending']=count($pending->get());
+	// 	// dd($data);
+    //     return view('ums.master.faculty.faculty_dashboard',$data);
+    // }
+	public function index(Request $request)
+{
+    $user = Auth::guard('faculty')->user()->id;
+    $mapped_papers = InternalMarksMapping::where('faculty_id', $user)
+        ->orderBy('id', 'DESC')
+        ->get();
+
+
+    $student = StudentSubject::join("internal_marks_mappings", function ($join) {
+        $join->on("internal_marks_mappings.sub_code", "=", "student_subjects.sub_code")
+            ->on("internal_marks_mappings.course_id", "=", "student_subjects.course_id")
+            ->on("internal_marks_mappings.semester_id", "=", "student_subjects.semester_id");
+    })
+        ->select('student_subjects.roll_number')
+        ->distinct()
+        ->where('internal_marks_mappings.faculty_id', $user);
+    if ($request->session) {
+        $student->where('student_subjects.session', $request->session);
     }
+    $internalmark = InternalMark::where('session', $request->session)
+        ->where('faculty_id', $user)
+        ->get();
+    $duplicate_roll_no = InternalMark::where(['faculty_id' => $user, 'session' => $request->session])
+        ->pluck('roll_number')
+        ->toArray();
+    $session = AcademicSession::get();
+    $internal_marks_filled = InternalMark::where(['faculty_id' => $user, 'session' => $request->session])
+        ->get();
+    $paper_code = $mapped_papers->pluck('sub_code')->toArray();
+    $data['mapped_papers'] = count($mapped_papers);
+    $data['student_count'] = count($student->get());
+    $data['sessions'] = $session;
+    $data['internal_marks_filled'] = count($internal_marks_filled);
+    $pending = $student->whereNotIn('roll_number', $duplicate_roll_no);
+    $data['pending'] = count($pending->get());
+
+    return view('ums.master.faculty.faculty_dashboard', $data);
+}
+
 
     public function profile()
     {

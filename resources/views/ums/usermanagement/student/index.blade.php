@@ -179,7 +179,7 @@
                                                                         <i data-feather="edit" class="me-50"></i>
                                                                         <span>Change Email</span>
                                                                     </a>
-                                                                    <a class="dropdown-item"  href="{{url('secret-login/'.$student->id)}}">
+                                                                    <a class="dropdown-item"  href="{{url('student-secret-login/'.$student->id)}}">
                                                                         <i data-feather="home" class="me-50"></i>
                                                                         <span>Dashboard</span>
                                                                     </a>

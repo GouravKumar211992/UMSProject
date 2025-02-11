@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Master;
+namespace App\Http\Controllers\ums\Admin\Master;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Faculty;
-use App\Models\Campuse;
+use App\Models\ums\Faculty;
+use App\Models\ums\Campuse;
 use Validator;
 use App\Exports\FacultyExport;
 use App\Models\AcademicSession;
@@ -22,6 +22,7 @@ class FacultyController extends Controller
 {
   public function index(Request $request)
   { 
+    // echo"hello";
    $data = Faculty::orderBy('id', 'DESC');
         if($request->search) {
             $keyword = $request->search;
@@ -35,9 +36,9 @@ class FacultyController extends Controller
             $data->where('name','LIKE', '%'.$request->name.'%');
             $data->orWhere('email','LIKE', '%'.$request->name.'%');
         }
-    
-    $data=$data->paginate(10);
-    return view('admin.master.faculty.show',['items'=>$data]);
+        $data=$data->paginate(10);
+        // dd($data);
+    return view('ums.master.faculty',['items'=>$data]);
   }
 
   public function add_faculty(Request $request){

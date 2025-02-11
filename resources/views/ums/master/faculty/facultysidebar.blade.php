@@ -3,7 +3,7 @@
     <div class="main-menu-content newmodulleftmenu">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
             <li class="nav-item">
-                <a class="d-flex align-items-center" href="faculty_dashboard">
+                <a class="d-flex align-items-center" href="faculty-dashboard">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid">
                         <rect x="3" y="3" width="7" height="7"></rect>
                         <rect x="14" y="3" width="7" height="7"></rect>
@@ -25,7 +25,7 @@
                     <span class="menu-title text-truncate">Internal Marks Filling</span>
                 </a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="{{ url('/internal_marks') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Internal Marks List</span></a></li>
+                    <li><a class="d-flex align-items-center" href="{{ url('/internal-marks-list') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Internal Marks List</span></a></li>
                 </ul>
             </li>
 

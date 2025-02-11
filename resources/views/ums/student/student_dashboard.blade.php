@@ -66,11 +66,7 @@
                                                                 <i class="fas fa-id-card me-2"></i>View ID Card
                                                             </a>
                                                         @else
-<<<<<<< HEAD
-                                                            <a hidden href="{{ route('icard-form'), }}"
-=======
                                                             <a hidden href="{{ route('icard-form',['type' => 'student'])  }}"
->>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
                                                                 class="btn btn-primary">
                                                                 <i class="fas fa-plus me-2"></i>ID Card Form
                                                             </a>
