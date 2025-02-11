@@ -103,12 +103,13 @@ class Result extends Model implements HasMedia
 			->where('course_id',$this->course_id)
 			->orderBy('semester_number','DESC')
 			->first();
-		if($semeser->id == $this->semester){
+		if($semeser && $semeser->id == $this->semester){
 			return 1;
 		}else{
 			return 0;
 		}
     }
+	
 
 
 	public function getCgpaAttribute($value)

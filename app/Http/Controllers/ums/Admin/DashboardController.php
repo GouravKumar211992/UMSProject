@@ -162,4 +162,5 @@ class DashboardController extends AdminController
         ->first();        
         return view('admin.dashboard.profile',['adminData' => $admins]);
     }
+    
 }

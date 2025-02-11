@@ -175,7 +175,7 @@ class StudentController extends AdminController
             $user->save();
 			Auth::guard('student')->login($user);
             if($request->exam_id){
-                return redirect('/master/examfee/view/'.$request->exam_id);
+                return redirect('exam-form-view/'.$request->exam_id);
             }
 		}
         return back()->with('error','Invalid Student');

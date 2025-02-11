@@ -1,13 +1,13 @@
-{{-- @if(Request()->segment(1)=='admin')
-@php $layout_check = 'admin.layouts.app'; @endphp
-@php $layout_check = 'student.layouts.app1'; @endphp
+@if(Request()->segment(1)=='admin')
+@php $layout_check = 'ums.admin.layouts.app'; @endphp
+@php $layout_check = 'ums.student.layouts.app1'; @endphp
 @elseif(Request()->segment(1)=='student')
-@php $layout_check = 'student.layouts.app1'; @endphp
+@php $layout_check = 'ums.student.layouts.app1'; @endphp
 @else
-@php $layout_check = 'student.layouts.app1'; @endphp
+@php $layout_check = 'ums.student.layouts.app1'; @endphp
 @endif
 
-@extends($layout_check) --}}
+@extends($layout_check)
 
 {{-- Web site Title --}} 
 @section('title') Admit Card Download :: @parent @stop 
@@ -65,6 +65,7 @@
 }
 </style>
 @endsection
+<!-- {{dd($AdmitCard)}} -->
 @if($AdmitCard)
 
 @php
@@ -77,11 +78,13 @@ if($examfee->enrollment){
 	$icard = \App\Models\ums\MbbsExamForm::where('rollno',$examfee->roll_no)->first();
 }
 @endphp
-<p style="text-align: center; margin-top: 0px; cursor: pointer; margin-bottom: 0px;"><button onclick="window.print();" class="noPrint"> <img src="{{asset('assets\frontend\images\print.png')}}" style="height: 12px; margin-top: 2px;"> Print</button></p>
+<center>
+<button onclick="window.print();" class="" style="padding: 10px 15px ;background:green; border:none; margin:5px; color:white;"> Print</button>
+</center>
 <center>
 <div class="pae_conainter">
 
-        <p style="text-align: center; margin-bottom: 0px; margin-top: 0px;"><img src="{{asset('assets\frontend\images\cerlogo.png')}}" alt=""></p>
+        <p style="text-align: center; margin-bottom: 0px; margin-top: 0px;"><img src="{{asset('img\cerlogo.png')}}" alt=""></p>
         <p class="headingfontsize"><b>{{$icard->program}} Supplementry / Regular Examination {{$AdmitCard->current_exam_session}}</b></p>
         <h3 style="text-align: center;  margin-bottom: 0px; margin-top: 0px; line-height: 5px;">ADMIT CARD [{{strtoupper($AdmitCard->current_exam_session)}}]</h3>
 

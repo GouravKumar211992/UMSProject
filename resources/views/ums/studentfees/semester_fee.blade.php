@@ -40,7 +40,7 @@
 							<button class="btn btn-primary btn-sm mb-50 mb-sm-0" data-bs-target="#filter" data-bs-toggle="modal"><i data-feather="filter"></i> Filter</button> 
                             <button class="btn btn-warning box-shadow-2 btn-sm me-1 mb-sm-0 mb-50"><i data-feather="refresh-cw"></i>reset</button>
 							<!-- <button class="btn btn-success btn-sm mb-50 mb-sm-0" data-bs-target="#approved" data-bs-toggle="modal"><i data-feather="check-circle" ></i> Assign Team</button> -->
-                            <a class="btn btn-dark btn-sm mb-50 mb-sm-0" href="incident-add.html"><i data-feather="file-text"></i> Add semester fee </a>  
+                            <a class="btn btn-dark btn-sm mb-50 mb-sm-0" href="{{url('add_semesterfee') }}"><i data-feather="file-text"></i> Add semester fee </a>  
                     </div>
                 </div>
             </div>
@@ -63,47 +63,37 @@
                                                     <th>Semester to</th>
                                                     <th>Semester fee</th>
                                                     <th>reciept Number</th>
+                                                    <th>Receipt Date</th>
+                                                    <th>Receipt Doc</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {{-- @foreach ($collection as $item) --}}
-                                                    
-                                                
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td class="fw-bolder text-dark">1234</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">IT</span></td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Shivangi</span></td>
-                                                    <td>VMM Pvt Ltd</td>
-                                                    <td>Description will come here</td> 
-                                                    <td><span class="badge rounded-pill badge-light-warning badgeborder-radius">Open</span></td>  
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" href="{{url('semesterfee_edit')}}" >
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a> 
-                                                                {{-- <a class="dropdown-item" href="incident-view.html">
-                                                                    <i data-feather="eye" class="me-50"></i>
-                                                                    <span>View Detail</span> --}}
-                                                                {{-- </a> <a class="dropdown-item" data-bs-toggle="modal" href="#reallocate">
-                                                                    <i data-feather="copy" class="me-50"></i>
-                                                                    <span>Re-Allocate</span> --}}
-                                                                </a> <a class="dropdown-item" href="#">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span>Delete</span>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>
-                                                </tr>
-                                                {{-- @endforeach --}}
+        
+
+                                            @foreach($all_fee as $fee)
+                                <tbody>
+									<tr>  
+										<td>#{{$fee->id}}</td>
+										<td>{{$fee->enrollment_no}}</td>
+										<td>{{($fee->course)?$fee->course->name:'-'}}</td>
+										<td>{{($fee->semester)?$fee->semester->name:'-'}}</td>
+										<td>{{$fee->semester_fee}}</td>
+										<td>{{$fee->receipt_number}}</td>
+										<td>{{$fee->receipt_date}}</td>
+										<td>@if($fee->payment_file)<a target="_blank" href="{{$fee->payment_file}}">View Doc</a>@endif</td>
+										<td>{{($fee->status==1)?'Active':'Inactive'}}</td>
+										<td>
+                                            @if($fee->status!=1)
+                                            <a href="{{route('approve-semester-fee',$fee->id)}}"  class="btn-md btn-add"><i class="iconly-boldCheck"></i> Approve</a>
+                                            @endif
+                                            <a href="{{route('edit-fee',$fee->id)}}"  class="btn-md btn-add" hidden><i class="fa fa-pencil" ></i> Edit</a>
+                                        	<br/><br/><a href="{{route('delete-fee',$fee->id)}}" hidden class="btn-md btn-add"><i class="fa fa-trash"></i> Delete</a>
+                                        </td>
+									</tr>
+								</tbody>
+                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -159,12 +149,7 @@
     <div class="drag-target"></div>
 
     <!-- BEGIN: Footer-->
-    <footer class="footer footer-static footer-light">
-        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">Copyright &copy; 2024 <a class="ml-25" href="#" target="_blank">Presence 360</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span></p>
-        
-        <div class="footerplogo"><img src="../../../assets/css/p-logo.png" /></div>
-    </footer>
-    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
+  
     <!-- END: Footer-->
 	
      

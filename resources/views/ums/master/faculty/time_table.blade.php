@@ -63,16 +63,26 @@
                                             @foreach($all_timetable as $timeTable)
                                             <tr>
                                                 <td>{{ $timeTable->id }}</td>
-                                                <td>{{ $timeTable->period->name ?? 'N/A' }}</td> <!-- Assuming 'period' is related -->
+                                                <td>{{ $timeTable->period->name ?? 'N/A' }}</td> 
                                                 <td>{{ $timeTable->day }}</td>
-                                                <td>{{ $timeTable->course->name ?? 'N/A' }}</td> <!-- Assuming 'course' is related -->
-                                                <td>{{ $timeTable->semester->name ?? 'N/A' }}</td> <!-- Assuming 'semester' is related -->
-                                                <td>{{ $timeTable->subject->name ?? 'N/A' }}</td> <!-- Assuming 'subject' is related -->
-                                                <td>{{ $timeTable->faculty->name ?? 'N/A' }}</td> <!-- Assuming 'faculty' is related -->
+                                                <td>{{ $timeTable->course->name ?? 'N/A' }}</td> 
+                                                <td>{{ $timeTable->semester->name ?? 'N/A' }}</td> 
+                                                <td>{{ $timeTable->subject->name ?? 'N/A' }}</td>
+                                                <td>{{ $timeTable->faculty->name ?? 'N/A' }}</td>
                                                 <td>{{ $timeTable->room_no }}</td>
                                                 <td>{{ $timeTable->created_at }}</td>
-                                                <td>{{ $timeTable->status == 1 ? 'Active' : 'Inactive' }}</td>
                                                 <td>
+                                                    @if ($timeTable->status == 1)
+                                                        <!-- Active Status Badge -->
+                                                        <span class="badge rounded-pill badge-light-success">Active</span>
+                                                    @else
+                                                        <!-- Inactive Status Badge -->
+                                                        <span class="badge rounded-pill badge-light-danger">Inactive</span>
+                                                    @endif
+                                                </td>
+                                                {{-- <td>{{ $timeTable->status == 1 ? 'Active' : 'Inactive' }}</td> --}}
+                                                <td>
+                                                   
                                                     <div class="dropdown">
                                                         <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown">
                                                             <i data-feather="more-vertical"></i>
@@ -82,12 +92,13 @@
                                                                 <i data-feather="edit" class="me-50"></i>
                                                                 <span>Edit</span>
                                                             </a>
-                                                            <a class="dropdown-item" href="#" onclick="window.confirm('Are you sure you want to delete this data?')">
+                                                            <a  class="dropdown-item"  onclick="deleteCat({{$timeTable->id}})">
                                                                 <i data-feather="trash-2" class="me-50"></i>
                                                                 <span>Delete</span>
                                                             </a>
                                                         </div>
                                                     </div>
+                                                </form>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -251,4 +262,22 @@
 			</form>
 		</div>
 	</div>
+
+    <script>
+
+    
+function deleteCat(slug) {
+    
+    var confirmDelete = confirm('Do you really want to delete this data?');
+    
+  
+    if (confirmDelete) {
+        var url = "{{ url('time_table_delete') }}" + "/" + slug;
+        window.location.href = url; 
+    } else {
+        return false;
+    }
+}
+     
+</script>
 @endsection

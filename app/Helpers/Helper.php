@@ -38,7 +38,7 @@ use App\Models\OrganizationBookParameter;
 use App\Models\OrganizationGroup;
 use App\Models\PLGroups;
 use App\Models\RecoveryLoan;
-use App\Models\User;
+use App\Models\ums\User;
 use App\Models\Voucher;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;

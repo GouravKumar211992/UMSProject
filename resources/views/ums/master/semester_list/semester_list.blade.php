@@ -195,57 +195,71 @@
 	 
     <div class="modal modal-slide-in fade filterpopuplabel" id="filter">
 		<div class="modal-dialog sidebar-sm">
-			<form class="add-new-record modal-content pt-0"> 
+			<form class="add-new-record modal-content pt-0" id="approveds-form" method="GET" novalidate action="{{url('semester_list')}}"> 
+                @csrf
 				<div class="modal-header mb-1">
-					<h5 class="modal-title" id="exampleModalLabel">Apply Filter</h5>
+					<h5 class="modal-title" id="exampleModalLabel">List of Semesters</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
 				</div>
 				<div class="modal-body flex-grow-1">
 					<div class="mb-1">
+<<<<<<< HEAD
 						  <label class="form-label" for="fp-range">Select Date Range</label>
 						  <input type="text" id="fp-range" class="form-control " placeholder="YYYY-MM-DD to YYYY-MM-DD" />
+=======
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Name</label>
+                            <input type="text" name="name" class="form-control" value="{{Request::get('name')}}">
+                        </div>
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 					</div>
 					
 					<div class="mb-1">
-						<label class="form-label">Select Incident No.</label>
-						<select class="form-select select2">
-							<option>Select</option>
-						</select>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Campus</label>
+                            <select class="form-control selectpicker" id="campus" name="campus">
+                                <option value="">Select</option>
+                                @foreach($campuselist as $campus)
+                                
+                                <option value="{{$campus->id}}" {{ (Request::get('campus') == $campus->id) ? 'selected':'' }}>{{$campus->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
 					</div> 
                     
                     <div class="mb-1">
-						<label class="form-label">Select Customer</label>
-						<select class="form-select select2">
-							<option>Select</option>
-						</select>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2">Programme Type</label>
+                            <select class="form-control selectpicker" id="courseType" name="category_id">
+                                <option value="">Select</option>
+                                @foreach($categories as $category)
+                                
+                                <option value="{{$category->id}}" {{ (Request::get('category_id') == $category->id) ? 'selected':'' }}>{{$category->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
 					</div> 
                     
                     <div class="mb-1">
-						<label class="form-label">Assigned To</label>
-						<select class="form-select select2">
-							<option>Select</option>
-						</select>
-					</div> 
-                    
-                    <div class="mb-1">
-						<label class="form-label">Status</label>
-						<select class="form-select">
-							<option>Select</option> 
-							<option>Open</option>
-							<option>Close</option>
-							<option>Re-Allocatted</option>
-						</select>
-					</div> 
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect3">Name of Programme</label>
+                             <select class="form-control selectpicker" id="course_id" name="course_id">
+                                <option value="">Select</option>
+                                @foreach($courses as $course)
+                                
+                                <option value="{{$course->id}}" {{ (Request::get('course_id') == $course->id) ? 'selected':'' }}>{{$course->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+					</div>  
 					 
 				</div>
 				<div class="modal-footer justify-content-start">
-					<button type="button" class="btn btn-primary data-submit mr-1">Apply</button>
-					<button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary">Apply Filters</button>
 				</div>
 			</form>
 		</div>
 	</div>
-
    @endsection
 
    <script>

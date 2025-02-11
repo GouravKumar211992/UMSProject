@@ -5,8 +5,9 @@
 
     <!-- BEGIN: Main Menu-->
     <div class="app-content content ">
-        <form method="post" id="form_data" action="" enctype="multipart/form-data">
-            @csrf
+    <form method="post" id="form_data" action="{{ route('open-exam-form') }}" enctype="multipart/form-data">
+    @csrf
+          
         <div class="content-header row">
             <div class="content-header-left col-md-5 mb-2">
                 <div class="row breadcrumbs-top">
@@ -202,12 +203,7 @@
     <div class="drag-target"></div>
 
     <!-- BEGIN: Footer-->
-    <footer class="footer footer-static footer-light">
-        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">Copyright &copy; 2024 <a class="ml-25" href="#" target="_blank">Presence 360</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span></p>
-        
-        <div class="footerplogo"><img src="../../../assets/css/p-logo.png" /></div>
-    </footer>
-    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
+
     <!-- END: Footer-->
 	
      

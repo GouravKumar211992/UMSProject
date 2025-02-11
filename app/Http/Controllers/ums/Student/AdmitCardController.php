@@ -1,15 +1,31 @@
 <?php
 
+<<<<<<< HEAD
 namespace App\Http\Controllers\ums\Student;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ums\Campuse;
+=======
+
+namespace App\Http\Controllers\ums\Student;
+
+
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Campuse;
+use App\Models\ums\Course;
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 use App\Models\ums\ExamFee;
 use App\Models\ums\ExamForm;
 use App\Models\ums\ExamCenter;
 use App\Models\ums\Subject;
 use App\Models\ums\AdmitCard;
+<<<<<<< HEAD
+=======
+use App\models\ums\Application as UmsApplication;
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 use App\Models\ums\Examschedule;
 use App\Models\ums\Student;
 use App\Models\ums\BacklogAdmitcard;
@@ -18,13 +34,22 @@ use App\Models\ums\ScribeDetail;
 use App\Models\ums\PhdScribeDetail;
 use App\Models\ums\MbbsExamForm;
 use App\Models\ums\EntranceExam;
+<<<<<<< HEAD
 use App\Models\ums\EntranceExamResult;
+=======
+use Illuminate\Support\Facades\DB;
 
-use Auth;
-use DB;
+
+use App\Models\ums\EntranceExamResult;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
+
 use App\Models\Application;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Traits\ResultsTrait;
+use App\Traits\ResultsTrait;
+
 use App\Models\Phd2023Exam;
 
 class AdmitCardController extends Controller
@@ -35,32 +60,40 @@ class AdmitCardController extends Controller
     {
       $examfee = ExamFee::where('id',$request->id)->first();
 	  
-		if(!$examfee){
-			return back()->with('error','Invalid Exam ID.');
+	  if(!$examfee){
+		  return back()->with('error','Invalid Exam ID.');
 		}
 		if($examfee->bank_name==null){
 			return back()->with('error','Payment Not Done.');
 		}
 		// if($examfee->payment() && $examfee->payment()->txn_status=='SUCCESS'){
-		// }else{
-		// 	return redirect('exam-form/payment/'.$examfee->id)->with('error','Please Fill Your Fees Details');
-		// }
-		$student_details = Student::where('roll_number',$examfee->roll_no)->first();
-		$examData_photo = $examfee;
-		$AdmitCard = AdmitCard::has('center')->where('exam_fees_id',$examfee->id)
-		->orderBy('id','desc')
-		->first();
-        $subjects = [];
-        if($AdmitCard){
-			$subjects = $examfee->getAdmitCardSubjects();
-		}
-		$page_title = "Admit Card";
-		$sub_title = "Records";
-		$sessionName = $this->sessionName($examfee->semester,$examfee->academic_session);
-		if($examfee->course_id==49 || $examfee->course_id==64 || $examfee->course_id==95 || $examfee->course_id==96){
-			return view('student.admitcard.mbbs-admitcard-page', compact('page_title','sub_title','examfee','subjects','AdmitCard','student_details','sessionName'));
+			// }else{
+				// 	return redirect('exam-form/payment/'.$examfee->id)->with('error','Please Fill Your Fees Details');
+				// }
+				$student_details = Student::where('roll_number',$examfee->roll_no)->first();
+				$examData_photo = $examfee;
+				$AdmitCard = AdmitCard::has('center')->where('exam_fees_id',$examfee->id)
+				->orderBy('id','desc')
+				->first();
+				$subjects = [];
+				if($AdmitCard){
+					$subjects = $examfee->getAdmitCardSubjects();
+				}
+				$page_title = "Admit Card";
+				$sub_title = "Records";
+				$sessionName = $this->sessionName($examfee->semester,$examfee->academic_session);
+				if($examfee->course_id==49 || $examfee->course_id==64 || $examfee->course_id==95 || $examfee->course_id==96){
+					
+					// dd($AdmitCard);
+					dd($examfee->id);
+			return view('ums.exam.mbbs-admitcard-page', compact('page_title','sub_title','examfee','subjects','AdmitCard','student_details','sessionName'));
 		}else{
+<<<<<<< HEAD
 			return view('ums.admitcard.admitcardview', compact('page_title','sub_title','examfee','subjects','AdmitCard','student_details','sessionName','examData_photo'));
+=======
+			return view('ums.exam.admitcardview', compact('page_title','sub_title','examfee','subjects','AdmitCard','student_details','sessionName','examData_photo'));
+
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 		}
     }
 
@@ -212,7 +245,7 @@ class AdmitCardController extends Controller
 		return view('student.admitcard.admit-card-portal');
 	}
 	public function phd_admitcard(Request $request){
-		$admitcard = Application::join('phd_2023_entrance_test','phd_2023_entrance_test.application_no','applications.application_no')
+		$admitcard = UmsApplication::join('phd_2023_entrance_test','phd_2023_entrance_test.application_no','applications.application_no')
 		->select('applications.*',DB::raw('phd_2023_entrance_test.roll_number as entrance_roll_number'),DB::raw('phd_2023_entrance_test.subject as subject'))
 		->where('phd_2023_entrance_test.roll_number',$request->roll_number)
 		->first();
@@ -238,7 +271,7 @@ class AdmitCardController extends Controller
 		if(!$request->email){
 			return back()->with('error','Please provide Application Number');
 		}
-		$application = Application::join('phd_2023_entrance_test','phd_2023_entrance_test.application_no','applications.application_no')
+		$application = UmsApplication::join('phd_2023_entrance_test','phd_2023_entrance_test.application_no','applications.application_no')
 		->select('applications.*',DB::raw('phd_2023_entrance_test.roll_number as entrance_roll_number'),DB::raw('phd_2023_entrance_test.subject as subject'))
 		->where('applications.email',$request->email)
 		->where('applications.course_id','94')

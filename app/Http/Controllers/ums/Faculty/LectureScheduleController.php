@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\UMS\Faculty;
+namespace App\Http\Controllers\ums\Faculty;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ class LectureScheduleController extends Controller
         $periods=Period::all();
 		// $user=Auth::guard('faculty')->user()->id;
         //dd($periods);
-        $faculty_id = request()->get('faculty_id'); // Default to 46 if 'faculty_id' is not provided in the request
+        $faculty_id = request()->get('faculty_id',46); // Default to 46 if 'faculty_id' is not provided in the request
         $user = Faculty::find($faculty_id);
 		$weekDays= Timetable::WEEK_DAYS;
         $timetables=Timetable::with('period')->where('faculty_id',$user)->get();
@@ -89,11 +89,12 @@ class LectureScheduleController extends Controller
         $periods = Period::all();
         $courses = Course::all();
         $facultys = faculty::all();
+        $subjects= Subject::all();
      //    dd($facultys);
         return view('ums.master.faculty.time_table_add', [
             'page_title' => "Add New",
             'sub_title' => "Timetable",
-        ])->withPeriods($periods)->withCourses($courses)->withFacultys($facultys);
+        ])->withPeriods($periods)->withCourses($courses)->withFacultys($facultys)->withSubject($subjects);
      }
     
     //working........
@@ -167,6 +168,7 @@ class LectureScheduleController extends Controller
         'subject_id' => $request->subject_id,
         'faculty_id' => $request->faculty_id,
         'room_no' => $request->room_no,
+        'subject_id' => $request->subject_id,
 
         'status' => $status]);
         return redirect()->route('get-timetables')->with('success','Update Successfully.');
@@ -183,11 +185,12 @@ class LectureScheduleController extends Controller
             $courses = Course::all();
             $facultys = faculty::all();
             $semesters = Semester::all();
-        return view('faculty.time-table.edittimetable', [
+            $subjects = Subject::all();
+        return view('ums.master.faculty.time_table_edit', [
             'page_title' => $selectedtimetable->name,
             'sub_title' => "Edit Information",
             'selected_timetable' => $selectedtimetable
-        ])->withPeriods($periods)->withCourses($courses)->withFacultys($facultys)->withSemesters($semesters);
+        ])->withPeriods($periods)->withCourses($courses)->withFacultys($facultys)->withSemesters($semesters)->withSubjects($subjects);
     }
 
  public function softDelete(Request $request,$slug) {

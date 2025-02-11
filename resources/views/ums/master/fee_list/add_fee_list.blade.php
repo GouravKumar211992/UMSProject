@@ -24,6 +24,7 @@
                     </div>
                 </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
                
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
@@ -35,6 +36,12 @@
                     <div class="form-group breadcrumb-right">
                         <button type="submit" class=" btn btn-primary btn-sm mb-50 mb-sm-0 waves-effect waves-float waves-light "><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Submit </button>
 >>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
+=======
+               
+                <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
+                    <div class="form-group breadcrumb-right">
+                        <button type="submit" form="fee_form" class=" btn btn-primary btn-sm mb-50 mb-sm-0 waves-effect waves-float waves-light "><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Submit </button>
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
                         <button class="btn btn-warning btn-sm mb-50 mb-sm-0" onclick="window.location.reload();" ><i data-feather="refresh-cw"></i>
                             Reset</button> 
 
@@ -137,10 +144,14 @@
         </div>
     </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
             </div> 
 =======
     
 >>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
+=======
+            </div> 
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 </form>
 				
 				<section id="basic-datatable">

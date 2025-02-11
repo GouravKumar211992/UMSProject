@@ -10,6 +10,7 @@
         @media print{
             .print_hidden{
                 display:none;
+                
             }
         }
     </style>

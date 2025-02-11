@@ -27,8 +27,10 @@
                     <div class="form-group breadcrumb-right"> 
                       <button class="btn btn-primary btn-sm mb-50 mb-sm-0" data-bs-target="#filter" data-bs-toggle="modal"><i data-feather="filter"></i> Filter</button> 
 
-                        <button class="btn btn-warning box-shadow-2 btn-sm  mb-sm-0 mb-50"><i data-feather="refresh-cw"></i>Reset</button>
-                           
+                      <a href="campus_list" class="btn btn-warning box-shadow-2 btn-sm mb-sm-0 mb-50">
+                        <i data-feather="refresh-cw"></i>Reset
+                      </a>
+                                                 
                             <!-- <button class="btn btn-success btn-sm mb-50 mb-sm-0" data-bs-target="#approved" data-bs-toggle="modal"><i data-feather="check-circle" ></i> Assign Team</button> -->
                              
                     </div>
@@ -59,7 +61,7 @@
                                             <tbody>
                                                 @if(count($enrollments) > 0)
                                                 @foreach($enrollments as $index => $enrollment)
-                                                <tbody>
+                                               
                                                     <tr>  
                                                         <td>{{++$index}}</td>
                                                         <td>{{$enrollment->enrollment->enrollment_no}}</td>

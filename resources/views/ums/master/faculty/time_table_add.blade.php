@@ -11,8 +11,9 @@
 
 
     <!-- BEGIN: Content-->
-    <form id="timetable_form" type="POST" action="#">
-@csrf
+    <form id="timetable_form" method="POST" action="{{ route('time-table-add') }}">
+        <input type="hidden" name="timetable_status" id="timetable_status" value="">
+        @csrf
     <div class="app-content content ">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -39,8 +40,10 @@
 						<div class="form-group breadcrumb-right">
                             <button onClick="javascript: history.go(-1)" class="btn btn-secondary btn-sm mb-50 mb-sm-0"><i data-feather="arrow-left-circle"></i>Cancel</button>    
    
-							<button onClick="javascript: history.go(-1)" class="btn btn-secondary btn-sm mb-50 mb-sm-0"><i data-feather="arrow-left-circle" onclick="history.go(-1)"></i>Go Back</button>    
-							<button onClick="javascript: history.go(-1)" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle"></i>Publish</button> 
+                            <button class="btn btn-secondary btn-sm mb-50 mb-sm-0" onclick="history.go(-1)">
+                                <i data-feather="arrow-left-circle"></i> Go Back
+                            </button>
+                            <button  type="submit"  href="javascript:void(0)" onclick="submitCat()" class="btn btn-primary btn-sm mb-50 mb-sm-0"><i data-feather="check-circle"></i>Publish</button> 
 						</div>
 					</div>
 				</div>
@@ -76,13 +79,12 @@
                                                         </div>  
 
                                                         <div class="col-md-5">  
-                                                            <select class="form-select"  name="period_id">
+                                                            <select class="form-select"  id="period_id" name="period_id">
                                                                 @foreach($periods  as $key => $period)
                                                                 <option value="{{$period->id}}">{{$period->name}}</option>
                                                                 @endforeach
-                                                        </select>
-                                                        <span class="text-danger">{{ $errors->first('period_id') }}</span>
-
+                                                            </select>
+                                                            <span class="text-danger">{{ $errors->first('period_id') }}</span>
                                                         </div>
                                                      </div>
                                                     
@@ -130,12 +132,12 @@
 
                                                         <div class="col-md-5">  
                                                             <select class="form-select" id="semester-id" name="semester_id">
+                                                                <option>Select Semester</option> 
                                                                 {{-- <option>Select</option> 
-                                                                <option>Select</option> 
                                                                 <option>Select</option> 
                                                                 <option>Select</option>  --}}
                                                             </select>
-                                                            {{ $errors->first('semester_id') }}
+                                                            <span class="text-danger">{{ $errors->first('semester_id') }}</span>
                                                         </div>
                                                      </div>
                                      
@@ -157,10 +159,12 @@
                                                         </div>  
 
                                                         <div class="col-md-5">  
-                                                            <select class="form-select">
+                                                            <select class="form-select" id="faculty-id" name="faculty_id" readonly>
                                                                 @foreach($facultys as $faculty)
-                                                                <option value="{{$faculty->id}}">{{$faculty->name}}</option>
-                                                                    
+                                                                <option value="{{$faculty->id}}"
+                                                                    @if(Auth::guard('faculty')->check() && Auth::guard('faculty')->user()->id == $faculty->id) selected @endif>
+                                                                    {{$faculty->name}}
+                                                                </option>
                                                             @endforeach
                                                             </select>
                                                             @if ($errors->has('faculty_id'))
@@ -170,15 +174,18 @@
                                                         </div>
                                                      </div>
                                                      <div class="row align-items-center mb-1">
-                                                        <div class="col-md-3"> 
-                                                            <label class="form-label"  name="room_no">Room No<span class="text-danger">*</span></label>
-                                                            @if ($errors->has('room_no'))
-                                                            <span class="text-danger">{{ $errors->first('room_no') }}</span>							
-                                                            @endif  
-                                                        </div>  
-
+                                                        <div class="col-md-3">
+                                                            <label for="room_no" class="form-label">Room No <span class="text-danger">*</span></label>
+                                                            {{-- <input type="text" class="form-control" value="{{ old('room_no') }}" required> --}}
+                                                            
+                                                        </div>
+                                                        
+                                                        
                                                         <div class="col-md-5"> 
-                                                            <input type="text" class="form-control" >
+                                                            <input type="text" class="form-control"  id="room_no" name="room_no" >
+                                                            @if ($errors->has('room_no'))
+                                                                <span class="text-danger">{{ $errors->first('room_no') }}</span>
+                                                            @endif
                                                         </div> 
                                                     
                                                      </div>
@@ -190,13 +197,16 @@
                                                         <div class="col-md-5"> 
                                                             <div class="demo-inline-spacing">
                                                                 <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio3" name="customColorRadio3" class="form-check-input" checked="">
-                                                                    <label class="form-check-label fw-bolder" for="customColorRadio3">Open</label>
+                                                                    <input type="radio"  name="group1" type="radio" id="active" class="form-check-input" checked="">
+                                                                    <label class="form-check-label fw-bolder" for="customColorRadio3">Active</label>
                                                                 </div> 
                                                                 <div class="form-check form-check-primary mt-25">
-                                                                    <input type="radio" id="customColorRadio4" name="customColorRadio3" class="form-check-input">
-                                                                    <label class="form-check-label fw-bolder" for="customColorRadio4">Close</label>
+                                                                    <input type="radio" name="group1" type="radio" id="inactive" class="form-check-input">
+                                                                    <label class="form-check-label fw-bolder" for="customColorRadio4">Inactive</label>
                                                                 </div> 
+                                                                @if ($errors->has('group1'))
+                                                                <span class="text-danger">{{ $errors->first('group1') }}</span>
+                                                                @endif
                                                             </div>  
                                                         </div>  
                                      
@@ -515,5 +525,76 @@
 	</div>
 
     <!-- BEGIN: Vendor JS-->
+    <!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+        
+                    $('#course-id').on('change', function () {
+                        //alert('hi')
+                        var idCourse = this.value;
+                        $("#semester-id").html('');
+                        $.ajax({
+                            url: "{{route('fetch-semester')}}",
+                            type: "POST",
+                            data: {
+                                course_id: idCourse,
+                                _token: '{{csrf_token()}}'
+                            },
+                            dataType: 'json',
+                            success: function (result) {
+                                $('#semester-id').html('<option value="">Select Semester</option>');
+                                $.each(result.semester, function (key, value) {
+                                    $("#semester-id").append('<option value="' + value
+                                        .id + '">' + value.name + '</option>');
+                                });
+                                $('#subject-id').html('<option value="">Firstly Select Semester</option>');
+                            }
+                        });
+                    });
+                });
+        </script>
+        <script>
+            $(document).ready(function () {
+        
+                    $('#semester-id').on('change', function () {
+                        //alert('hi')
+                        var idSemester = this.value;
+                        $("#subject-id").html('');
+                        $.ajax({
+                            url: "{{url('fetch-subject')}}",
+                            type: "POST",
+                            data: {
+                                semester_id: idSemester,
+                                _token: '{{csrf_token()}}'
+                            },
+                            dataType: 'json',
+                            success: function (result) {
+                                $('#subject-id').html('<option value="">Select Subject</option>');
+                                $.each(result.subject, function (key, value) {
+                                    $("#subject-id").append('<option value="' + value
+                                        .id + '">' + value.name + '</option>');
+                                });
+                                $('#child-id').html('<option value="">Firstly Select Subject</option>');
+                            }
+                        });
+                    });
+                });
+            </script>
+           <script>
+            function submitCat() {
+                // Check which radio button is selected and set its value to the hidden input
+                if(document.getElementById('active').checked) {
+                    document.getElementById('timetable_status').value = 'active';
+                } else if(document.getElementById('inactive').checked) {
+                    document.getElementById('timetable_status').value = 'inactive';
+                }
+        
+                // Submit the form
+                document.getElementById('timetable_form').submit();
+            }
+        </script>
     
    @endsection

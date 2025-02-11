@@ -63,7 +63,7 @@
                             <i data-feather="edit" class="me-50"></i>
                             <span>Edit</span>
                         </a>
-                        <a class="dropdown-item" href="{{ url('/department_faculty/delete/' . $item->id) }}" onclick="return confirm('Are you sure you want to delete this item?');">
+                        <a class="dropdown-item" href="{{ url('/department_faculty/delete/' . $item->id) }}" onclick="return confirm('Are you sure you want to delete this item?')">
                             <i data-feather="trash-2" class="me-50"></i>
                             <span>Delete</span>
                         </a>

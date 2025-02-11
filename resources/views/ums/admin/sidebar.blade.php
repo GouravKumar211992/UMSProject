@@ -23,7 +23,7 @@
                     <li><a class="d-flex align-items-center" href="{{ url('/users') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">User List</span></a></li>
                     <li><a class="d-flex align-items-center" href="{{ url('/students') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Student List</span></a></li>
                     <li><a class="d-flex align-items-center" href="{{ url('/student-hindi-name') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Student Name (Hindi/English)</span></a></li>
-                    <li><a class="d-flex align-items-center" href="{{ url('/') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Enrollment List</span></a></li>
+                    <li><a class="d-flex align-items-center" href="{{ url('#') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Enrollment List</span></a></li>
                     <li><a class="d-flex align-items-center" href="{{ url('/email-template') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Email Template</span></a></li>
                 </ul>
             </li>

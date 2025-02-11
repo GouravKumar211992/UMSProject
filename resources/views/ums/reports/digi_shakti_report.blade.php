@@ -93,6 +93,7 @@
 
                                                 @if(count($students) > 0)
                                                 @foreach( $students as $key => $student_details )
+                                                {{-- @dd($student_details) --}}
                                                 @php $studentData = $student_details->studentData; @endphp
                                                 @php $course = $student_details->course; @endphp
                                                     <tr>

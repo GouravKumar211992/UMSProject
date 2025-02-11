@@ -166,14 +166,15 @@ class AdmitCardController extends AdminController
             });
             $subjects = $subjects->sortByDesc('date_order');
             //dd($subjects);
-            return view('ums.exam.mbbs-admitcard-page', [
-                'page_title' => "Admit Card",
-                'sub_title' => "records",
-                'examfee' => $examfee,
-                'subjects' => $subjects,
-                'AdmitCard' => $AdmitCard,
-                'examFee_old' => $examFee_old,
-            ]);
+            // return view('ums.exam.mbbs-admitcard-page', [
+            //     'page_title' => "Admit Card",
+            //     'sub_title' => "records",
+            //     'examfee' => $examfee,
+            //     'subjects' => $subjects,
+            //     'AdmitCard' => $AdmitCard,
+            //     'examFee_old' => $examFee_old,
+            // ]);
+            return view('ums.exam.mbbs-admitcard-page');
         }
 
         return view('ums.exam.addadmitcard', [

@@ -79,7 +79,7 @@
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
                         {{-- <button class="btn btn-warning btn-sm mb-50 mb-sm-0" data-bs-target="#filter" data-bs-toggle="modal"><i data-feather="filter"></i> Filter</button>  --}}
-						<a class="btn btn-primary btn-sm mb-50 mb-sm-0" href="bulk_icard_print"><i data-feather="plus-circle"></i>Bulk icard</a> 
+						<a class="btn btn-primary btn-sm mb-50 mb-sm-0" href="{{ url('bulk_icard_print') }}"><i data-feather="plus-circle"></i>Bulk icard</a> 
                     </div>
                 </div>
             </div>
@@ -130,14 +130,13 @@
                                         <i data-feather="more-vertical"></i>
                                       </button>
                                       <div class="dropdown-menu dropdown-menu-end">
-                                      {{-- <a  target="_new" class="dropdown-item"href="{{route('single-icard',[$student->id])}}"> --}}
-                                  <i data-feather="edit" class="me-50"></i>
-                                         <span>View Icard</span>
-                                             </a>
+                                      <a target="_new" href="{{route('view-icard',[$student->id])}}">View iCard</a>                                  <i data-feather="edit" class="me-50"></i>
                                          
-                                        <a class="dropdown-item" href="{{route('single-icard-delete',[$student->id])}}" onclick="window.confirm('Are you sure ? delete this data')">
-                                          <i data-feather="trash-2" class="me-50"></i>
-                                          <span>Delete</span>
+                                             </a>
+                                         <br>
+                                             <a onClick="return confirm('Are you sure?');" href="{{route('single-icard-delete',[$student->id])}}">Delete</a>
+                                             <i data-feather="trash-2" class="me-50"></i>
+                                          
                                         </a>
                                       </div>
                                     </div>
@@ -173,12 +172,7 @@
     <div class="drag-target"></div>
 
     <!-- BEGIN: Footer-->
-    <footer class="footer footer-static footer-light">
-        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">Copyright &copy; 2024 <a class="ml-25" href="#" target="_blank">Presence 360</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span></p>
-        
-        <div class="footerplogo"><img src="../../../assets/css/p-logo.png" /></div>
-    </footer>
-    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
+
     <!-- END: Footer-->
 	
 	 

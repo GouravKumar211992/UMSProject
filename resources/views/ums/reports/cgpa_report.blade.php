@@ -15,7 +15,7 @@
                             <div class="breadcrumb-wrapper">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                    <li class="breadcrumb-item active">cgpa</li>
+                                    <li class="breadcrumb-item active">Medal Report</li>
                                 </ol>
                             </div>
                         </div>
@@ -130,6 +130,7 @@
                                                 <th>Category</th>
                                                 <th>Disability</th>
                                                 <th>Gender</th>
+                                                <th>Number</th>
                                                 <th>Address</th>
                                                 <th>Programme Name</th>
                                                 <th>Academic Session</th>

@@ -3,57 +3,103 @@
 @section('content')
     
 
-{{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click"
-    data-menu="vertical-menu-modern" data-col=""> --}}
   
    
     <div class="app-content content ">
         <h4>Subject Bulk Data</h4>
 
+<<<<<<< HEAD
         <div class="submitss text-end me-3">
 
 
             <button type="submit" form="form_data" class="btn btn-primary btn-sm mb-50 mb-sm-0r " type="reset">
+=======
+       
+
+        <div class="submitss text-end me-3">
+
+
+            <button form="form_data" class="btn btn-primary btn-sm mb-50 mb-sm-0r " type="submit">
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
                 <i data-feather="check-circle"></i> Submit
             </button>
         </div>
 
 <div class="content-body bg-white p-4 shadow">
+<<<<<<< HEAD
        <form method="GET" id="form_data" action="">
+=======
+<form method="GET" id="form_data" action="{{url('subject_setting')}}">
+
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
         <div class="col-md-12">
             <div class="row align-items-center mb-1">
                 <!-- Campus Field -->
                 <div class="col-md-4">
                     <label class="form-label mb-0 me-2">Campus <span class="text-danger">*</span></label>
+<<<<<<< HEAD
                     <select name="campus_id" aria-controls="DataTables_Table_0" class="form-select" id="campus_id" required onchange="getCourseList()">
                         <option value="">--Select--</option>
                         @foreach($campuses as $campus)
                         <option value="{{ $campus->id }}" @if($campus->id == Request()->campus_id) selected @endif>{{ $campus->name }}</option>
                         @endforeach
                     </select>
+=======
+                    <select name="campus_id" style="border-color: #c0c0c0;" class="form-control campus_id" id="campus_id" onchange="this.form.submit()">
+                <option value="">--Select--</option>
+                @foreach($campuses as $campus)
+                <option value="{{$campus->id}}" {{ request('campus_id') == $campus->id ? 'selected' : '' }}>
+                    {{$campus -> name}}
+                </option>
+                @endforeach
+               </select>
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
                 </div>
                 
                 <!-- Course Field -->
                 <div class="col-md-4">
                     <label class="form-label mb-0 me-2">Course <span class="text-danger">*</span></label>
+<<<<<<< HEAD
                     <select name="course_id" aria-controls="DataTables_Table_0" class="form-select" id="course_id" onchange="getSemesterList()" required>
                         <option value="">--Select--</option>
                         <!-- Courses will be dynamically loaded here -->
                     </select>
+=======
+                    <select name="course_id" style="border-color: #c0c0c0;" class="form-control course_id" id="course_id" onchange="this.form.submit()">
+                <option value="">--Select--</option>
+                @foreach($courses as $course)
+                <option value="{{$course->id}}" {{ request('course_id') == $course->id ? 'selected' : '' }}>
+                    {{$course->name}}
+                </option>
+                @endforeach
+               </select>
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
                 </div>
                 
         
                 <!-- Semester Field -->
                 <div class="col-md-4">
                     <label class="form-label mb-0 me-2">Semester <span class="text-danger">*</span></label>
+<<<<<<< HEAD
                     <select name="semester_id" id="semester_id" aria-controls="DataTables_Table_0" class="form-select">
                         <option value="">--Select--</option>
                         @foreach($semesters as $semester)
                         <option value="{{$semester->id}}" @if($semester->id==Request()->semester_id) selected @endif>{{$semester->name}}</option>
                         @endforeach
                     </select>
+=======
+                    <select  name="semester_id" style="border-color: #c0c0c0;" class="form-control semester_id" id="semester_id" onchange="this.form.submit()">
+                <option value="">--Select--</option>
+                @foreach($semesters as $semester)
+                <option value="{{$semester->id}}" {{ request('semester_id') == $semester->id ? 'selected' : '' }}>
+                {{$semester->name}}
+                </option>
+                @endforeach
+            </select>
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
                 </div>
             </div>
+
         </div>
     </form>
     
@@ -75,6 +121,7 @@
                                 <div class="card-header bg-primary text-white">
                                     Compulsory Papers
                                 </div>
+<<<<<<< HEAD
                                 <div class="card-body py-2" id="container1">
                                     <h5 class="card-title">Item List 1</h5>
                                     <ul class="list-group">
@@ -85,6 +132,17 @@
                                         @endforeach
                                     </ul>
                                 </div>
+=======
+                                <div id="container1" class="panel-body box-container">
+                    @foreach($subjects as $subject)
+                    @if($subject->type=='compulsory')
+                    <div style="text-wrap: wrap; text-align: left;" class="btn btn-default box-item">
+                        {{$subject->sub_code}} ({{substr($subject->name,0,30)}})
+                    </div>
+                    @endif
+                    @endforeach
+                </div>
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
                             </div>
                         </div>
 
@@ -94,6 +152,7 @@
                                 <div class="card-header bg-warning text-white">
                                     Optional Papers
                                 </div>
+<<<<<<< HEAD
                                 <div class="card-body py-2" id="container2"> 
                                     <h5 class="card-title">Item List 2</h5>
                                     <ul class="list-group">
@@ -104,6 +163,15 @@
                                         @endforeach
                                     </ul>
                                 </div>
+=======
+                                <div id="container2" class="panel-body box-container">
+                    @foreach($subjects as $subject)
+                    <div style="text-wrap: wrap; text-align: left;" class="btn btn-default box-item">
+                        {{$subject->sub_code}}  ({{$subject->name}})</div>
+                   
+                    @endforeach
+                </div>
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
                             </div>
                         </div>
 
@@ -114,6 +182,7 @@
 
                                     Optional Papers
                                 </div>
+<<<<<<< HEAD
                                 <div class="card-body py-2" id="container3">
                                     <h5 class="card-title">Item List 3</h5>
                                     <ul class="list-group">
@@ -124,17 +193,30 @@
                                         @endforeach
                                     </ul>
                                 </div>
+=======
+                                <div id="container3" class="panel-body box-container">
+                    @foreach($subjects as $subject)
+                    <div style="text-wrap: wrap; text-align: left;" class="btn btn-default box-item">
+                        {{$subject->sub_code}} ({{$subject->name }})</div>
+                    @endforeach
+                </div>
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
                             </div>
                         </div>
                     </div>
                 </div>
 
 
-
+                </form>
             </div>
         </div>
         <!-- END: Content-->
 
+<<<<<<< HEAD
+=======
+        
+      
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 
 
         <div class="modal fade" id="reallocate" tabindex="-1" aria-labelledby="shareProjectTitle"

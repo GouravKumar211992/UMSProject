@@ -140,6 +140,16 @@ class SemesterController extends AdminController
 
         ]);
     }
+    public function getCourseList(Request $request)
+    {
+		$html='<option value="">--Select Course--</option>';
+        $query = Course::Where(['category_id'=> $request->id,'campus_id'=>$request->university])->get();
+       foreach($query as $sc){
+			$html.='<option value="'.$sc->id.'">'.$sc->name.'</option>';
+		}
+		return $html;
+
+    }
 
     public function softDelete(Request $request,$slug) {
         

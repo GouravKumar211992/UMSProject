@@ -2,62 +2,7 @@
 @section("content")
 
 
-{{-- <!DOCTYPE html>
-<html class="loading" lang="en" data-textdirection="ltr">
-<!-- BEGIN: Head-->
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
-    
-    <title>Dsmnru</title>
-    <!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Bootstrap JS and Popper.js -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-
-    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../../../assets/css/favicon.png">
-     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600;700" rel="stylesheet">
-
-    <!-- BEGIN: Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/responsive.bootstrap5.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/buttons.bootstrap5.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/rowGroup.bootstrap5.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css">
-	<link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/forms/select/select2.min.css">
-    <!-- END: Vendor CSS-->
-
-    <!-- BEGIN: Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/dark-layout.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/bordered-layout.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/semi-dark-layout.css">
-
-    <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
-    <!-- END: Page CSS-->
-
-    <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
-    <link rel="stylesheet" type="text/css" href="../../../assets/css/iconsheet.css">
-    <!-- END: Custom CSS--> 
-
-</head>
-<!-- END: Head-->
- @include('header')
- @include('sidebar')
-<!-- BEGIN: Body-->
-
-<body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col=""> --}}
  
     <!-- BEGIN: Content-->
     <div class="app-content content ">
@@ -113,167 +58,33 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td class="fw-bolder text-dark">05-Sep-2024</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                    <!-- <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Shivangi</span></td> -->
-                                                    <td>Shivangi</td>
-                                                    <td>VMM Pvt Ltd</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item">
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a> 
-                                                                 <a class="dropdown-item" href="#">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span>Delete</span>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>                                                 
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td class="fw-bolder text-dark">05-Sep-2024</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                    <!-- <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Shivangi</span></td> -->
-                                                    <td>Shivangi</td>
-                                                    <td>VMM Pvt Ltd</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item">
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a> 
-                                                                 <a class="dropdown-item" href="#">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span>Delete</span>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>
-                                                </tr>
-                                                  <tr>
-                                                    <td>3</td>
-                                                    <td class="fw-bolder text-dark">05-Sep-2024</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                    <!-- <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Shivangi</span></td> -->
-                                                    <td>Shivangi</td>
-                                                    <td>VMM Pvt Ltd</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item">
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a> 
-                                                                 <a class="dropdown-item" href="#">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span>Delete</span>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>
-                                                </tr>
-                                                 <tr>
-                                                    <td>4</td>
-                                                    <td class="fw-bolder text-dark">05-Sep-2024</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                    <!-- <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Shivangi</span></td> -->
-                                                    <td>Shivangi</td>
-                                                    <td>VMM Pvt Ltd</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item">
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a> 
-                                                                 <a class="dropdown-item" href="#">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span>Delete</span>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td class="fw-bolder text-dark">05-Sep-2024</td>
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Sarah Burley</span></td>
-                                                    <!-- <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">Shivangi</span></td> -->
-                                                    <td>Shivangi</td>
-                                                    <td>VMM Pvt Ltd</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td class="tableactionnew">  
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item">
-                                                                    <i data-feather="edit" class="me-50"></i>
-                                                                    <span>Edit</span>
-                                                                </a> 
-                                                                 <a class="dropdown-item" href="#">
-                                                                    <i data-feather="trash-2" class="me-50"></i>
-                                                                    <span>Delete</span>
-                                                                </a>
-                                                            </div>
-                                                        </div> 
-                                                    </td> 
-                                                    
-                                                </tr>
+                                            @if(count($scrutinies) > 0)
+                                @foreach($scrutinies as $key=>$scrutiny)
+                                <tbody>
+									<tr> 
+										<td>#{{$key+1}}</td> 
+										<td>#{{$scrutiny->id}}</td>
+										<td>{{$scrutiny->enrollment_no}}</td>
+										<td>{{$scrutiny->roll_no}}</td>
+										<td>{{($scrutiny->course)?$scrutiny->course->name:'-'}}</td>
+										<td>{{$scrutiny->batch}}</td>
+										<td>{{$scrutiny->semester?$scrutiny->semester->name:'-'}}</td>
+                                        <td>{{$scrutiny->sub_code}}</td>
+                                        <td>{{date('d-m-Y',strtotime($scrutiny->created_at))}}</td>
+                                        <td>{{$scrutiny->challan_number}}</td>
+                                        <td>{{$scrutiny->amount}}</td>
+										<td>{{($scrutiny->fee_status==1 )?'Active':'Inactive'}}</td>
+                                         <td>
+											<a href="{{route('view_challenge_form',$scrutiny->id)}}" target="_blank" class="btn-md btn-add"><i class="iconly-boldCheck"></i> View &nbsp;</a>
+										 <br/>
+										 <br/>
+											<a href="{{route('delete_challenge_form',$scrutiny->id)}}" onclick="return confirm('Are you sure?');" class="btn-md btn-success"><i class="iconly-boldCheck"></i>Delete</a>
+
+										 </td>
+			
+									</tr>
+								</tbody>
+                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

@@ -81,12 +81,21 @@
                                                     <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown" aria-expanded="false">                                                          <i data-feather="more-vertical"></i>
                                                       </button>
                                                       <div class="dropdown-menu dropdown-menu-end">
+<<<<<<< HEAD
                                                           <button class="dropdown-item" onclick="editadmitcard('{{$examData->id}}')">
                                                               <i data-feather="edit" class="me-50"></i>
                                                               <span>Edit</span>
                                                           </button> 
                                                           @if($examData->admitcard)
                                                            <a class="dropdown-item" onclick="if(window.confirm('Are you sure you want to delete this data?')) { deleteadmit('{{$examData->id}}'); }">
+=======
+                                                          <a class="dropdown-item" onclick="editadmitcard('{{$examData->id}}')">
+                                                              <i data-feather="edit" class="me-50"></i>
+                                                              <span>Edit</span>
+                                                          </a> 
+                                                          @if($examData->admitcard)
+                                                           <a class="dropdown-item" onclick="if(window.confirm('Are you sure you want to delete this data?')) { deleteCourse('{{$examData->id}}'); }">
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
                                                               <i data-feather="trash-2" class="me-50"></i>
                                                               <span>Delete</span>
                                                           </a>
@@ -217,8 +226,13 @@
            var url = "{{url('admit_card_list_edit')}}"+"/"+slug;
            window.location.href = url;
        }
+<<<<<<< HEAD
        function deleteadmit(slug) {
            var url = "{{url('admit_card_delete')}}"+"/"+slug;
+=======
+       function deleteCourse(slug) {
+           var url = "{{url('admit-card_delete')}}"+"/"+slug;
+>>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
            window.location.href = url;
        }
     </script>

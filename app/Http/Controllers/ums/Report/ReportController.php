@@ -219,6 +219,24 @@ class ReportController extends Controller
     ));
   }
 
+  function batchArray(){
+    return [
+      '2023-2024AUG',
+      '2023-2024JUL',
+      '2023-2024',
+      '2022-2023',
+      '2021-2022',
+      '2020-2021',
+      '2019-2020',
+      '2018-2019',
+      '2017-2018',
+      '2016-2017',
+      '2015-2016',
+      '2014-2015',
+    ];
+  
+  }
+
   public function marksheetPositionUpdate(Request $request)
   {
     $batch = '-';
@@ -226,6 +244,7 @@ class ReportController extends Controller
       $batch = substr($request->batch, 2, 2);
     }
     $campuses = Campuse::orderBy('name')->get();
+    // $batch = AcademicSession::all();
     $courses = Course::where('campus_id', $request->campus_id)->orderBy('name')->get();
     $semesters = Semester::where('course_id', $request->course_id)->orderBy('id', 'asc')->get();
     $results = Result::select('subject_code', 'subject_name')
@@ -240,8 +259,10 @@ class ReportController extends Controller
       'courses',
       'semesters',
       'results',
+      // 'batch'
     ));
   }
+  
 
   public function filledMarkDetails(Request $request)
   {
@@ -475,7 +496,7 @@ class ReportController extends Controller
       ->orderBy('roll_no', 'ASC')
       ->get();
 
-      $sessions = ['2020-2021', '2021-2022', '2022-2023', '2023-2024' ,'2024-2025']; //added for sessions //
+      $sessions = AcademicSession::all(); //added for sessions //
       // custome data
 
 
@@ -549,8 +570,9 @@ class ReportController extends Controller
       return $pdf->download('Tabular-Chat-'.$course_name.'-'.$campus_name.'-batch: '.$request->batch.'.pdf');
     }
   
-    return view('report.tabulation-chart', $data);
+    return view('ums.reports.tabulation-chart', $data);
   }
+
   public function digilockerList(Request $request)
   {
     $sessions = Result::select('exam_session')->distinct('exam_session')->orderByDesc('exam_session')->get();
@@ -863,7 +885,7 @@ class ReportController extends Controller
       // ->limit(5)
       ->get();
     $academic_session = $request->academic_session;
-    return view('report.nirf-report', compact(
+    return view('ums.reports.nirf_report', compact(
       'academic_session',
       'campuses',
       'courses',
@@ -942,7 +964,7 @@ class ReportController extends Controller
       // $batchPrefixByBatch = batchPrefixByBatch($request->batch);
       $students = Enrollment::where('course_id', $request->course_id)
       // ->where('roll_number','LIKE', $batchPrefixByBatch.'%')
-      ->limit(50)->get();
+      ->get();
     }
     // dd($students);
     return view('ums.reports.Enrollment_report', [

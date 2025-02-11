@@ -2,9 +2,11 @@
 
 namespace App\models\ums;
 
+use App\Models\ums\Course;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Mockery\Matcher\Subset;
+
 use Spatie\MediaLibrary\HasMedia;  // Keep this
 use Spatie\MediaLibrary\InteractsWithMedia;
 use DB;
@@ -93,7 +95,8 @@ class ExamFee extends Model implements HasMedia
         ->where('semester_id',$this->semester)
         ->where('type',$this->form_type)
         ->get();
-        dd($data);
+        // dd($data);
+        
         return $data;
 	}
 
