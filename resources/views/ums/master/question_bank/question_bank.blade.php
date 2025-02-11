@@ -71,7 +71,7 @@
                                             @foreach ($quesBankData as $key => $internal)
                                                 <tbody>
                                                     <tr>
-                                                <td>#{{ $i++ }}</td>
+                                                <td>#{{ $key+1 }}</td>
                                                 <td>{{ optional($internal->Campuse)->name ?? 'N/A' }}</td>
                                                 <td>{{ optional($internal->Category)->name ?? 'N/A' }}</td>
                                                 <td>{{ optional($internal->Course)->name ?? 'N/A' }}</td>

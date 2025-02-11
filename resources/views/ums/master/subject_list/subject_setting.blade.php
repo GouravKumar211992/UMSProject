@@ -10,126 +10,56 @@
     <div class="app-content content ">
         <h4>Subject Bulk Data</h4>
 
-        <!-- options section -->
-        {{-- <div class="col-md-12">
-        <div class="row align-items-center mb-1">
-            <div class="col-md-4 text-center">
-                <label class="form-label ">Base Rate % <span class="text-danger">*</span></label>
-                <input type="number" value="5" class="form-control ">
-            </div>
-            <div class="col-md-4 text-center">
-                <label class="form-label">Effective from <span class="text-danger">*</span></label>
-                <input type="date" class="form-control">
-            </div>
-            <div class="col-md-4 text-center">
-                <label class="form-label">Additional Input <span class="text-danger">*</span></label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-    </div> --}}
-
         <div class="submitss text-end me-3">
 
 
-            <button class="btn btn-primary btn-sm mb-50 mb-sm-0r " type="reset">
+            <button type="submit" form="form_data" class="btn btn-primary btn-sm mb-50 mb-sm-0r " type="reset">
                 <i data-feather="check-circle"></i> Submit
             </button>
         </div>
 
 <div class="content-body bg-white p-4 shadow">
-        {{-- <div class="col-md-12  ">
-            <div class="row align-items-center mb-1">
-                <div class="col-md-4 d-flex align-items-center">
-                    <div class="row">
-                    <label class="form-label mb-0 me-2 col-3">Compus <span class="text-danger ">*</span></label>
-                    <select name="DataTables_Table_0_length col-9" aria-controls="DataTables_Table_0" class="form-select">
-                        <option value="7">--Select--</option>
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="75">75</option>
-                        <option value="100">100</option>
-                    </select>
-                    </div>
-                </div>
-
-                <div class="col-md-4 align-items-center">
-                    <div class="row">
-                    <label class="form-label mb-0 me-2 col-3">Course <span class="text-danger">*</span></label>
-                    <select name="DataTables_Table_0_length col-9 " aria-controls="DataTables_Table_0" class="form-select">
-                        <option value="7">All</option>
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="75">75</option>
-                        <option value="100">100</option>
-                    </select>
-                    </div>
-                </div>
-
-                <div class="col-md-4 d-flex align-items-center">
-                    <label class="form-label mb-0 me-2 col-3">Semester <span class="text-danger">*</span></label>
-                    <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                        <option value="7">All</option>
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="75">75</option>
-                        <option value="100">100</option>
-                    </select>
-                </div>
-            </div>
-        </div> --}}
+       <form method="GET" id="form_data" action="">
         <div class="col-md-12">
             <div class="row align-items-center mb-1">
                 <!-- Campus Field -->
                 <div class="col-md-4">
                     <label class="form-label mb-0 me-2">Campus <span class="text-danger">*</span></label>
-                    <select name="campus" aria-controls="DataTables_Table_0" class="form-select">
+                    <select name="campus_id" aria-controls="DataTables_Table_0" class="form-select" id="campus_id" required onchange="getCourseList()">
                         <option value="">--Select--</option>
-                        <option value="7">Campus 1</option>
-                        <option value="10">Campus 2</option>
-                        <option value="25">Campus 3</option>
-                        <option value="50">Campus 4</option>
-                        <option value="75">Campus 5</option>
-                        <option value="100">Campus 6</option>
+                        @foreach($campuses as $campus)
+                        <option value="{{ $campus->id }}" @if($campus->id == Request()->campus_id) selected @endif>{{ $campus->name }}</option>
+                        @endforeach
                     </select>
                 </div>
-        
+                
                 <!-- Course Field -->
                 <div class="col-md-4">
                     <label class="form-label mb-0 me-2">Course <span class="text-danger">*</span></label>
-                    <select name="course" aria-controls="DataTables_Table_0" class="form-select">
+                    <select name="course_id" aria-controls="DataTables_Table_0" class="form-select" id="course_id" onchange="getSemesterList()" required>
                         <option value="">--Select--</option>
-                        <option value="7">Course 1</option>
-                        <option value="10">Course 2</option>
-                        <option value="25">Course 3</option>
-                        <option value="50">Course 4</option>
-                        <option value="75">Course 5</option>
-                        <option value="100">Course 6</option>
+                        <!-- Courses will be dynamically loaded here -->
                     </select>
                 </div>
+                
         
                 <!-- Semester Field -->
                 <div class="col-md-4">
                     <label class="form-label mb-0 me-2">Semester <span class="text-danger">*</span></label>
-                    <select name="semester" aria-controls="DataTables_Table_0" class="form-select">
+                    <select name="semester_id" id="semester_id" aria-controls="DataTables_Table_0" class="form-select">
                         <option value="">--Select--</option>
-                        <option value="7">Semester 1</option>
-                        <option value="10">Semester 2</option>
-                        <option value="25">Semester 3</option>
-                        <option value="50">Semester 4</option>
-                        <option value="75">Semester 5</option>
-                        <option value="100">Semester 6</option>
+                        @foreach($semesters as $semester)
+                        <option value="{{$semester->id}}" @if($semester->id==Request()->semester_id) selected @endif>{{$semester->name}}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
         </div>
-        
+    </form>
     
 
 
-
+</div>
 
 
 
@@ -145,12 +75,14 @@
                                 <div class="card-header bg-primary text-white">
                                     Compulsory Papers
                                 </div>
-                                <div class="card-body py-2">
+                                <div class="card-body py-2" id="container1">
                                     <h5 class="card-title">Item List 1</h5>
                                     <ul class="list-group">
-                                        <li class="list-group-item">Item 1A</li>
-                                        <li class="list-group-item">Item 1B</li>
-                                        <li class="list-group-item">Item 1C</li>
+                                        @foreach($subjects as $subject)
+                                        @if($subject->type=='compulsory')
+                                        <li style="text-wrap: wrap; text-align: left;" itemid="itm-{{$subject->id}}" subid="{{$subject->id}}" class="btn btn-default box-item">{{$subject->sub_code}} ({{substr($subject->name,0,30)}})</li>
+                                        @endif
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
@@ -162,12 +94,14 @@
                                 <div class="card-header bg-warning text-white">
                                     Optional Papers
                                 </div>
-                                <div class="card-body py-2">
+                                <div class="card-body py-2" id="container2"> 
                                     <h5 class="card-title">Item List 2</h5>
                                     <ul class="list-group">
-                                        <li class="list-group-item">Item 2A</li>
-                                        <li class="list-group-item">Item 2B</li>
-                                        <li class="list-group-item">Item 2C</li>
+                                        @foreach($subjects as $subject)
+                                        @if($subject->type!='compulsory')
+                                        <li style="text-wrap: wrap; text-align: left;" itemid="itm-{{$subject->id}}" subid="{{$subject->id}}" class="btn btn-default box-item">{{$subject->sub_code}} ({{$subject->name}})</li>
+                                        @endif
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
@@ -180,12 +114,14 @@
 
                                     Optional Papers
                                 </div>
-                                <div class="card-body py-2">
+                                <div class="card-body py-2" id="container3">
                                     <h5 class="card-title">Item List 3</h5>
                                     <ul class="list-group">
-                                        <li class="list-group-item">Item 3A</li>
-                                        <li class="list-group-item">Item 3B</li>
-                                        <li class="list-group-item">Item 3C</li>
+                                        @foreach($subjects as $subject)
+                                        @if($subject->type!='compulsory')
+                                        <li style="text-wrap: wrap; text-align: left;" itemid="itm-{{$subject->id}}" subid="{{$subject->id}}" class="btn btn-default box-item">{{$subject->sub_code}} ({{$subject->name}})</li>
+                                        @endif
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
@@ -198,20 +134,6 @@
             </div>
         </div>
         <!-- END: Content-->
-
-        <div class="sidenav-overlay"></div>
-        <div class="drag-target"></div>
-
-        <!-- BEGIN: Footer-->
-        <footer class="footer footer-static footer-light">
-            <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">Copyright &copy; 2024
-                    <a class="ml-25" href="#" target="_blank">Presence 360</a><span
-                        class="d-none d-sm-inline-block">, All rights Reserved</span></span></p>
-
-            <div class="footerplogo"><img src="../../../assets/css/p-logo.png" /></div>
-        </footer>
-        <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
-        <!-- END: Footer-->
 
 
 
@@ -323,5 +245,154 @@
                 </form>
             </div>
         </div>
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script>
+$(document).ready(function() {
+
+$('.box-item').draggable({
+  cursor: 'move',
+  helper: "clone"
+});
+
+$("#container1").droppable({
+  drop: function(event, ui) {
+    var itemid = $(event.originalEvent.toElement).attr("itemid");
+    var subject_id = $(event.originalEvent.toElement).attr("subid");
+    $('.box-item').each(function() {
+      if ($(this).attr("itemid") === itemid) {
+        $(this).appendTo("#container1");
+        subject_type_update(subject_id,'compulsory');
+      }
+    });
+  }
+});
+
+$("#container2").droppable({
+  drop: function(event, ui) {
+    var itemid = $(event.originalEvent.toElement).attr("itemid");
+    var subject_id = $(event.originalEvent.toElement).attr("subid");
+    $('.box-item').each(function() {
+      if ($(this).attr("itemid") === itemid) {
+        $(this).appendTo("#container2");
+        subject_type_update(subject_id,'optional');
+      }
+    });
+  }
+});
+
+$("#container3").droppable({
+  drop: function(event, ui) {
+    var itemid = $(event.originalEvent.toElement).attr("itemid");
+    var subject_id = $(event.originalEvent.toElement).attr("subid");
+    $('.box-item').each(function() {
+      if ($(this).attr("itemid") === itemid) {
+        $(this).appendTo("#container3");
+        subject_type_update(subject_id,'optional');
+      }
+    });
+  }
+});
+
+});
+
+function subject_type_update(subject_id,type){
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': '<?php echo csrf_token() ?>'
+        }
+    });
+    $.ajax({
+        type:'POST',
+        dataType: 'json',
+        url:"{{route('subject-type-update')}}",
+        data: {
+            'subject_id' : subject_id,
+            'type' : type
+        },
+        success:function(data) {
+            $("#msg").html(data.msg);
+        }
+    });
+}
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+<script>
+    $(document).ready(function(){
+        // Fetch courses based on selected campus
+        $('#campus_id').change(function() {
+            var university = $('#campus_id').val();  // Get campus value
+
+            // Clear the course dropdown
+            $("#course_id").find('option').remove().end();
+            $('#course_id').append('<option value="">Please select</option>');  // Add default placeholder
+
+            if (university) {
+                // Make an AJAX request to get the course list based on campus
+                $.ajax({
+                    url: "{{ route('get-course-list') }}",  // Correct route URL for courses
+                    type: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",       // CSRF token for security
+                        "university": university             // Pass campus ID
+                    },
+                    success: function(data) {
+                        // Check if data is returned
+                        if (data) {
+                            // Append the new course options to the dropdown
+                            $('#course_id').append(data);
+                        } else {
+                            // Handle case when no courses are found
+                            $('#course_id').append('<option value="">No courses available</option>');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error (optional)
+                        console.error("Error fetching course list:", error);
+                    }
+                });
+            }
+        });
+
+        // Fetch semesters based on selected course
+        $('#course_id').change(function() {
+            var course = $('#course_id').val();  // Get selected course value
+
+            // Clear the semester dropdown
+            $("#semester_id").find('option').remove().end();
+            $('#semester_id').append('<option value="">Please select</option>');  // Add default placeholder
+
+            if (course) {
+                // Make an AJAX request to get the semester list based on selected course
+                $.ajax({
+                    url: "{{ route('get-semesters') }}",  // Correct route URL for semesters
+                    type: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",       // CSRF token for security
+                        "course_id": course                  // Pass course ID
+                    },
+                    success: function(data) {
+                        // Check if data is returned
+                        if (data) {
+                            // Append the new semester options to the dropdown
+                            $('#semester_id').append(data);
+                        } else {
+                            // Handle case when no semesters are found
+                            $('#semester_id').append('<option value="">No semesters available</option>');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error (optional)
+                        console.error("Error fetching semester list:", error);
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+
 
         @endsection

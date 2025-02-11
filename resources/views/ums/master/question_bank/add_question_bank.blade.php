@@ -16,6 +16,8 @@
                             <h2 class="content-header-title float-start mb-0">Question Bank</h2>
                             <div class="breadcrumb-wrapper">
                                 <ol class="breadcrumb">
+                                    <form id="cat_form" method="POST" action="{{route('question-bank-save')}}"  enctype="multipart/form-data">
+
                                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>  
                                     <li class="breadcrumb-item active"> Add Question Bank</li>
                                 </ol>
@@ -25,15 +27,14 @@
                 </div>
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
-                        <button onclick="javascript: history.go(-1)" class=" btn btn-primary btn-sm mb-50 mb-sm-0 waves-effect waves-float waves-light "><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Create </button>
+                        <button type="submit" form="cat_form" class=" btn btn-primary btn-sm mb-50 mb-sm-0 waves-effect waves-float waves-light "><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Create </button>
                         <button class="btn btn-warning btn-sm mb-50 mb-sm-0" onclick="window.location.reload();" ><i data-feather="refresh-cw"></i>
                             Reset</button> 
 
                     </div>
                 </div>
             </div>
-            <form id="cat_form" method="POST" action="{{route('question-bank-save')}}" onsubmit='disableButton()' enctype="multipart/form-data">
-                @csrf
+
             <div class="content-body bg-white p-4 shadow">
 
                                  
@@ -41,44 +42,50 @@
         <div class="row align-items-center mb-1">
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3"> Campus Name<span class="text-danger ">*</span></label>
-                <input type="text" class="form-control"> 
+                <select class="form-control selectpicker-back campus_id" id="campus_id" name="campus_id" required>
+                    <option value="">--Select Campus--</option>
+                    @foreach($campuses as $campuse)
+                    <option value="{{$campuse->id}}" {{(old('campus_id')=="$campuse->id")? 'selected': ''}} >{{$campuse->name}}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('campus_id'))
+                    <span class="text-danger">{{ $errors->first('campus_id') }}</span>
+                @endif
                     </div>
 
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Program Name <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">2024-2025</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
+                <select class="form-control selectpicker" id="program_id" name="program_id" required>
+                    <option value="">Select Program</option>
+                    @foreach($programs as $program)
+                     <option value="{{$program->id}}" {{(old('program')=="$program->id")? 'selected': ''}}>{{$program->name}}</option>
+                    @endforeach
                 </select>
+                @if($errors->has('program_id'))
+                    <span class="text-danger">{{ $errors->first('program_id') }}</span>
+                @endif
                 </div>
                 
 
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Course Name <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">2024-2025</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
+                <select class="form-control selectpicker-back" id="course_id" name="course_id" required>
+                    <option value="">Select Course</option>
                 </select>
+                @if($errors->has('course_id'))
+                    <span class="text-danger">{{ $errors->first('course_id') }}</span>
+                @endif
               </div>
 
+             
               <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Php Title <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">1</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
+                <label class="form-label mb-0 me-2 col-3">Branch <span class="text-danger">*</span></label>
+                <select class="form-control selectpicker-back" id="branch_id" name="branch_id" required>
+                    <option value="">Select Branch</option>
                 </select>
+                @if($errors->has('branch_id'))
+                    <span class="text-danger">{{ $errors->first('branch_id') }}</span>
+                @endif
               </div>
         </div>
     </div>
@@ -87,100 +94,97 @@
         <div class="row align-items-center mb-1">
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3"> Semester Name<span class="text-danger ">*</span></label>
-                <input type="text" class="form-control"> 
+                <select class="form-control selectpicker-back" id="semester_id" name="semester_id" required>
+                    <option value="">Select Semester</option>
+                </select>
+                @if($errors->has('semester_id'))
+                    <span class="text-danger">{{ $errors->first('semester_id') }}</span>
+                @endif 
                     </div>
 
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Paper Name <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">2024-2025</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
+                <label class="form-label mb-0 me-2 col-3">Subject Code <span class="text-danger">*</span></label>
+                <select class="form-control selectpicker-back" id="sub_code" name="sub_code" required>
+                    <option value="">Select Subject Code</option>
                 </select>
+                @if($errors->has('sub_code'))
+                    <span class="text-danger">{{ $errors->first('sub_code') }}</span>
+                @endif
                 </div>
                 
 
             <div class="col-md-3 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Session <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">2024-2025</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
+                <select class="form-control selectpicker-back" id="session" name="session" required>
+                    <option value="">Select Session</option>
+                    @foreach($sessions as $session)
+                    
+                    <option value="{{$session->academic_session}}" {{(old('session')=="$session->id")? 'selected': ''}} >{{$session->academic_session}}</option>
+                    @endforeach
                 </select>
+                @if($errors->has('session'))
+                    <span class="text-danger">{{ $errors->first('session') }}</span>
+                @endif
               </div>
-
+              <div class="col-md-3 d-flex align-items-center" hidden>
+                <label hidden class="form-label mb-0 me-2 col-3"> Title/Topic <span class="text-danger" hidden>*</span></label>
+                <input  hidden type="text" name="phd_title" class="form-control">
+                @if($errors->has('phd_title'))
+                    <span class="text-danger">{{ $errors->first('phd_title') }}</span>
+                @endif
+              </div>
               <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Question Bank <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">300</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
-              </div>
+                <label class="form-label mb-0 me-2 col-3 mt-2"> File<span class="text-danger ">*</span></label>
+                <input type="file" class="form-control selectpicker-back mt-2" name="question_bank_file" accept="application/pdf" required>
+                @if($errors->has('session'))
+                    <span class="text-danger">{{ $errors->first('session') }}</span>
+                @endif
+                 </div>
+             
         </div>
+       
     </div>
 
         <div class="col-md-12">
         <div class="row align-items-center mb-1">
-            <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3"> Synopsis<span class="text-danger ">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">500</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
+            <div class="col-md-3 d-flex align-items-center" hidden>
+                <label hidden class="form-label mb-0 me-2 col-3"> Synopsis<span class="text-danger ">*</span></label>
+                <input type="file" class="form-control selectpicker-back" name="synopsis_file" accept="application/pdf" hidden>
+                @if($errors->has('synopsis_file'))
+                    <span class="text-danger">{{ $errors->first('synopsis_file') }}</span>
+                @endif
                  </div>
 
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Thesis<span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">1000</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
+                <label hidden class="form-label mb-0 me-2 col-3">Thysis<span class="text-danger">*</span></label>
+                <input type="file" class="form-control selectpicker-back" name="thysis_file" accept="application/pdf" hidden>
+                @if($errors->has('thysis_file'))
+                    <span class="text-danger">{{ $errors->first('thysis_file') }}</span>
+                @endif
                 </div>
                 
 
             <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3">Journal Paper <span class="text-danger">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">2000</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
+                <label hidden class="form-label mb-0 me-2 col-3">Journal Paper <span class="text-danger">*</span></label>
+                <input type="file" class="form-control selectpicker-back" name="journal_paper_file" accept="application/pdf" hidden>
+										@if($errors->has('journal_paper_file'))
+											<span class="text-danger">{{ $errors->first('journal_paper_file') }}</span>
+										@endif
               </div>
 
               <div class="col-md-3 d-flex align-items-center">
-                <label class="form-label mb-0 me-2 col-3"> Seminar<span class="text-danger ">*</span></label>
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-                    <option value="7">500</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
+                <label hidden class="form-label mb-0 me-2 col-3"> Seminar<span class="text-danger ">*</span></label>
+                <input type="file" class="form-control selectpicker-back" name="seminar_file" accept="application/pdf" hidden>
+                @if($errors->has('seminar_file'))
+                    <span class="text-danger">{{ $errors->first('seminar_file') }}</span>
+                @endif
                  </div>
         </div>
+
+      
     </div>
+    </div>
+</form>
 
             </div>		
 				<section id="basic-datatable">
@@ -294,6 +298,110 @@
 			</form>
 		</div>
 	</div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+        
+    <script>
+        function submitCourse(form) {
+    
+            document.getElementById('cat_form').submit();
+        }
+         function disableButton() {
+            var btn = document.getElementById('btn');
+            btn.disabled = true;
+            btn.innerText = 'Posting...'
+        }
+        $(document).ready(function(){
+         $("#phd_title_show").hide();
+         $("#synopsis_show").hide();
+         $("#thysis_show").hide();
+         $("#journal_paper").hide();
+         $("#seminar_show").hide();
+    
+            $('.faculty').select2();
+    $('#program_id').change(function() {
+            var course_type = $('#program_id').val();
+            var campus_id = $('#campus_id').val();
+        //	$("#course").find('option').remove().end();
+            var formData = {
+                program: course_type,
+                campuse_id: campus_id,
+                "_token": "{{ csrf_token() }}"
+            }; //Array 
+            $.ajax({
+                url: "{{route('get-courses')}}",
+                type: "POST",
+                data: formData,
+                success: function(data, textStatus, jqXHR) {
+                    $('#course_id').html(data);
+                    console.log(data);
+                },
+            });
+        });
+    $('#course_id').change(function() {
+        var program_id=$('#program_id').val();
+        var course_id=$('#course_id').val();
+        if(course_id == '94'){
+            $("#phd_title_show").show(); 
+            $("#synopsis_show").show(); 
+            $("#thysis_show").show(); 
+            $("#journal_paper").show(); 
+            $("#seminar_show").show(); 
+        }else{
+            $("#phd_title_show").hide(); 
+            $("#synopsis_show").hide();
+            $("#thysis_show").hide();
+            $("#journal_paper").hide();
+            $("#seminar_show").hide();
+        }
+        $("#semester_id").find('option').remove().end();
+        $("#branch_id").find('option').remove().end();
+        var formData = {program_id:program_id,course_id:course_id,"_token": "{{ csrf_token() }}"}; //Array 
+        $.ajax({
+            url : "{{route('get-questionbank-semester')}}",
+            type: "POST",
+            dataType: "json",
+            data : formData,
+            success: function(data, textStatus, jqXHR){
+                $('#branch_id').append(data.branch);
+                $('#semester_id').append(data.semester);
+            },
+        });
+    });
+    
+    $('#semester_id').change(function() {
+        var program_id=$('#program_id').val();
+        var course_id=$('#course_id').val();
+        var semester_id=$('#semester_id').val();
+        $("#sub_code").find('option').remove().end();
+        var formData = {program_id:program_id,course_id:course_id,semester_id:semester_id,"_token": "{{ csrf_token() }}"}; //Array 
+        $.ajax({
+            url : "{{route('get-questionbank-subject')}}",
+            type: "POST",
+            data : formData,
+            success: function(data, textStatus, jqXHR){
+                $('#sub_code').html(data);
+                        console.log(data);
+                
+            },
+        });
+    });
+    
+    });
+    
+        var expanded = false;
+    
+        function showCheckboxes() {
+          var checkboxes = document.getElementById("checkboxes");
+          if (!expanded) {
+            checkboxes.style.display = "block";
+            expanded = true;
+          } else {
+            checkboxes.style.display = "none";
+            expanded = false;
+          }
+        }
+    </script>
 
    {{-- </body> --}}
    @endsection

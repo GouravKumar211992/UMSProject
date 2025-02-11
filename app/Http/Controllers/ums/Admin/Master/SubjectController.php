@@ -25,6 +25,23 @@ class SubjectController extends AdminController
         parent::__construct();
     }
 
+    function batchArray(){
+        return [
+          '2023-2024AUG',
+          '2023-2024JUL',
+          '2023-2024',
+          '2022-2023',
+          '2021-2022',
+          '2020-2021',
+          '2019-2020',
+          '2018-2019',
+          '2017-2018',
+          '2016-2017',
+          '2015-2016',
+          '2014-2015',
+        ];
+      
+      }
     public function index(Request $request)
     {   
         $subjects = Subject::with(['course', 'category', 'semester'])->orderBy('id', 'DESC');
@@ -78,10 +95,11 @@ class SubjectController extends AdminController
          $program = Category::all();
          $course = Course::all();
 		 $campuse = Campuse::all();
-        return view('admin.master.subject.addsubject', [
+        return view('ums.master.subject_list.subject_add', [
             'page_title' => "Add New",
             'sub_title' => "Subject",
 			'campuselist' => $campuse,
+            'batchList'=>$this->batchArray(),
 			'programs'=>$program
 			]);
     }
@@ -109,7 +127,7 @@ class SubjectController extends AdminController
 		//dd($data);
         $subject = $this->create($data);
 		if($subject==true){
-        return redirect('admin/master/subject/')->with('message','Subject Added Succesfully');
+        return redirect('subject_list')->with('message','Subject Added Succesfully');
 		}
     }
 
@@ -156,12 +174,12 @@ class SubjectController extends AdminController
 		'type' => $request->type,
 		'credit' => $request->credit,
 		'maximum_mark' => $request->maximum_mark,
-		'maximum_mark' => $request->maximum_mark,
+		// 'maximum_mark' => $request->maximum_mark,
 		'internal_maximum_mark' => $request->internal_maximum_mark,
 		'batch' => $request->batch,
 		'status' => $status, 
 		'updated_by' => 1]);
-        return redirect('admin/master/subject/')->with('success','Updated Successfully');
+        return redirect('subject_list')->with('success','Updated Successfully');
     }
 
     public function subjectSequenceUpdate(Request $request)
@@ -230,9 +248,10 @@ class SubjectController extends AdminController
         $course = Course::where('campus_id',$selectedSubject->course->campus_id)->get();
         $semester = Semester::where('course_id',$selectedSubject->course_id)->get();
         $streams = Stream::where('course_id',$selectedSubject->course_id)->get();
-        return view('admin.master.subject.editsubject', [
+        return view('ums.master.subject_list.subject_list_edit', [
             'page_title' => 'Edit Subject',
          	'courseList'        => $course,
+            'batcharray'=>$this->batchArray(),
        	    'semesterlist'        => $semester,
        	    'streams'        => $streams,
             'sub_title' => "Edit Information",
@@ -320,7 +339,7 @@ class SubjectController extends AdminController
         ->where('semester_id',$request->semester_id)
         ->orderBy('position')
         ->get();
-        return view('admin.master.subject.subject-bulk',compact('campuses','courses','semesters','subjects'));
+        return view('ums.master.subject_list.subject_bulk_upload',compact('campuses','courses','semesters','subjects'));
     }
 
     public function subjectBulkSave(Request $request)
@@ -342,7 +361,7 @@ class SubjectController extends AdminController
         ->where('semester_id',$request->semester_id)
         ->orderBy('position')
         ->get();
-        return view('admin.master.subject.subject_settings',compact('campuses','courses','semesters','subjects'));
+        return view('ums.master.subject_list.subject_setting',compact('campuses','courses','semesters','subjects'));
     }
 
     public function subject_settingsSave(Request $request)

@@ -5,6 +5,7 @@
 <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
+        @include('ums.admin.notifications')
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
              <div class="content-header row">
@@ -80,14 +81,20 @@
                                                     <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown" aria-expanded="false">                                                          <i data-feather="more-vertical"></i>
                                                       </button>
                                                       <div class="dropdown-menu dropdown-menu-end">
-                                                          <a class="dropdown-item" onclick="editCourse('{{$examData->id}}')">
+                                                          <button class="dropdown-item" onclick="editadmitcard('{{$examData->id}}')">
                                                               <i data-feather="edit" class="me-50"></i>
                                                               <span>Edit</span>
-                                                          </a> 
-                                                           {{-- <a class="dropdown-item" onclick="deleteCourse('{{$examData->id}}')">
+                                                          </button> 
+                                                          @if($examData->admitcard)
+                                                           <a class="dropdown-item" onclick="if(window.confirm('Are you sure you want to delete this data?')) { deleteadmit('{{$examData->id}}'); }">
                                                               <i data-feather="trash-2" class="me-50"></i>
                                                               <span>Delete</span>
-                                                          </a> --}}
+                                                          </a>
+                                                          <a class="dropdown-item" href="{{route('download-admit-card',['id'=>$examData->id])}}">
+                                                            <i data-feather="trash-2" class="me-50"></i>
+                                                            <span>Views</span>
+                                                        </a>
+                                                        @endif
                                                       </div>
                                                   </div> 
                                               </td>
@@ -177,12 +184,24 @@
 			</form>
 		</div>
 	</div>
-
-@endsection
-
-{{-- <script>
-    function exportdata() {
-       var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
+    {{-- <script>
+        function exportdata() {
+           var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
+                var fullUrl = "{{url()->full()}}";
+                if(fullUrl_count>1){
+                    fullUrl = fullUrl.split('?')[1];
+                    fullUrl = fullUrl.replace(/&amp;/g, '&');
+                    fullUrl = '?'+fullUrl;
+               }else{
+                   fullUrl = '';
+               }
+                var url = "{{url('admin/master/admitcard/admitcard-export')}}"+fullUrl;
+               window.location.href = url;
+           }
+       </script> --}}
+      <script>
+        function exportdata() {
+           var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
             var fullUrl = "{{url()->full()}}";
             if(fullUrl_count>1){
                 fullUrl = fullUrl.split('?')[1];
@@ -191,30 +210,17 @@
            }else{
                fullUrl = '';
            }
-            var url = "{{url('admin/master/admitcard/admitcard-export')}}"+fullUrl;
+           var url = "{{url('admin/master/course/course-export')}}"+fullUrl;
            window.location.href = url;
        }
-   </script> --}}
-  <script>
-    function exportdata() {
-       var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
-        var fullUrl = "{{url()->full()}}";
-        if(fullUrl_count>1){
-            fullUrl = fullUrl.split('?')[1];
-            fullUrl = fullUrl.replace(/&amp;/g, '&');
-            fullUrl = '?'+fullUrl;
-       }else{
-           fullUrl = '';
+       function editadmitcard(slug) {
+           var url = "{{url('admit_card_list_edit')}}"+"/"+slug;
+           window.location.href = url;
        }
-       var url = "{{url('admin/master/course/course-export')}}"+fullUrl;
-       window.location.href = url;
-   }
-   function editCourse(slug) {
-       var url = "{{url('admit-card_edit')}}"+"/"+slug;
-       window.location.href = url;
-   }
-//    function deleteCourse(slug) {
-//        var url = "{{url('admit-card_delete')}}"+"/"+slug;
-//        window.location.href = url;
-//    }
-</script>
+       function deleteadmit(slug) {
+           var url = "{{url('admit_card_delete')}}"+"/"+slug;
+           window.location.href = url;
+       }
+    </script>
+@endsection
+

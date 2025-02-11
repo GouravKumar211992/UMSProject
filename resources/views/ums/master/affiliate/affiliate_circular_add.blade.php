@@ -22,11 +22,7 @@
             </div>
             <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                 <div class="form-group breadcrumb-right">
-<<<<<<< HEAD
                     <button form="add-affiliate-form" type="submit" class=" btn btn-primary btn-sm mb-50 mb-sm-0 waves-effect waves-float waves-light "><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-=======
-                    <button form="add-affiliate-form" class=" btn btn-primary btn-sm mb-50 mb-sm-0 waves-effect waves-float waves-light "><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
                          Submit</button>
                     <button class="btn btn-warning btn-sm mb-50 mb-sm-0" onclick="window.location.reload();" ><i data-feather="refresh-cw"></i>
                         Reset</button> 
@@ -43,20 +39,12 @@
         <div class="row align-items-center mb-1">
             <div class="col-md-6 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3"> Affiliate Circular Description <span class="text-danger ">*</span></label>
-<<<<<<< HEAD
                 <input type="text" id="circular_description" name="circular_description" class="form-control"> 
-=======
-                <input type="text" name="circular_description" class="form-control"> 
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
                     </div>
                     
                 <div class="col-md-6 d-flex align-items-center">
                         <label class="form-label mb-0 me-2 col-3">Circular Date <span class="text-danger">*</span></label>
-<<<<<<< HEAD
                         <input type="date" id="circular_date" name="circular_date"  class="form-control">
-=======
-                        <input type="date" name="circular_date" class="form-control">
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
                      </div>     
         </div>
     </div>
@@ -65,11 +53,7 @@
         <div class="row align-items-center mb-1">  
             <div class="col-md-6 d-flex align-items-center">
                 <label class="form-label mb-0 me-2 col-3">Circular Details <span class="text-danger">*</span></label>
-<<<<<<< HEAD
                 <input type="file" id="circular_file" name="circular_file" class="form-control">
-=======
-                <input type="file" name="circular_file" class="form-control">
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
                 </div>
         </div>
     </div>

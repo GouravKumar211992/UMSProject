@@ -67,7 +67,6 @@
                                                     <td>{{ $index + 1 }}</td>
                                                     <td>{{$item->campus_code}}</td>
                                                     <td class="fw-bolder text-dark">{{$item->name}}</td>
-<<<<<<< HEAD
                                                     <td>
                                                         <span class="badge rounded-pill badge-light-secondary badgeborder-radius">
                                                             @if ($item->is_affiliated == 0)
@@ -78,9 +77,6 @@
                                                         </span>
                                                     </td>
                                                     
-=======
-                                                    <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">{{$item->is_affiliated}}</span></td>
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
                                                     <td><span class="badge rounded-pill badge-light-secondary badgeborder-radius">{{$item->short_name}}</span></td>
                                                     <td>{{$item->email}}</td>
                                                     <td>{{$item->contact}}</td> 
@@ -217,6 +213,7 @@
       
     
     
+    @include('ums.admin.search-model', ['searchTitle' => 'Campus List Search'])
 
     <div class="modal modal-slide-in fade filterpopuplabel" id="filter">
 		<div class="modal-dialog sidebar-sm">
@@ -255,23 +252,7 @@
 
     @endsection
     <script>
-<<<<<<< HEAD
        
-=======
-        // function exportdata() {
-        //      var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
-        //      var fullUrl = "{{url()->full()}}";
-        //      if(fullUrl_count>1){
-        //          fullUrl = fullUrl.split('?')[1];
-        //          fullUrl = fullUrl.replace(/&amp;/g, '&');
-        //          fullUrl = '?'+fullUrl;
-        //     }else{
-        //         fullUrl = '';
-        //     }
-        //     var url = "{{url('admin/master/campus/campus-export')}}"+fullUrl;
-        //     window.location.href = url;
-        // }
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
         function editCourse(slug) {
             var url = "{{url('campus_list_edit')}}"+"/"+slug;
             window.location.href = url;

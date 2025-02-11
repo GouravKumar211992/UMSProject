@@ -4,6 +4,7 @@
 
     <div class="app-content content ">
         <div class="content-overlay"></div>
+        @include('ums.admin.notifications')
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
              <div class="content-header row">
@@ -17,26 +18,42 @@
                         </div>
                     </div>
                 </div> 
-				 <div class="content-header-right text-sm-end col-md-6 mb-50 mb-sm-0">
-                    <div class="form-group breadcrumb-right"> 
-                        <td><a href="#"><img src="resume.png" /></a>Click here to download!</td>                           
-                        <div class="upload-btn">
-                            <label for="course_switching_file" class="btn btn-primary btn-sm">
-                            Upload File
-                            </label>
-                            <input type="file" name="course_switching_file" id="course_switching_file" 
-                                   class="custom-file-input" 
-                                   accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-                          </div>
-                            
-                    </div>
-                </div>
+				
             
                   
                 
             </div>
             <div class="content-body dasboardnewbody">
-                 
+                <div class="row">
+                    <form method="POST" action="" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row" style="margin-top:-30px">
+                            <div class="content-header-right text-sm-end col-md-12 mb-50 mb-sm-0">
+                                <div class="form-group breadcrumb-right">
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        <i data-feather="check-circle"></i> Add file
+                                    </button>
+                                    {{-- <span class="text-danger">{{ $errors->first('subject') }}</span> --}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-1" style="margin-top: 30px">
+                            
+                            
+                            <div class="col-md-2 ms-4">
+                                <label class="form-label">Upload File Here<span class="text-danger m-0">*</span></label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="file" name="councelling_file" class="form-control" required accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                {{-- <span class="text-danger">{{ $errors->first('semester') }}</span> --}}
+                            </div>
+                        </div>
+                        <div class="col-md-2 ms-4 mb-2"><a class="btn btn-info" target="_blank" href="{{asset('bulk-uploading/CouncellingDataFormat.xlsx')}}">Download</a></div>
+                        
+                    </form> 
+                    </div>
+
+
                 <!-- ChartJS section start -->
                 <section id="chartjs-chart">
                     <div class="row">
@@ -46,7 +63,7 @@
 						<div class="col-md-12 col-12">
                             <div class="card  new-cardbox"> 
 								 <div class="table-responsive">
-                                    <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
+                                    <table class="datatables-basic table myrequesttablecbox loanapplicationlist" id="dataTableStyle">
                                         <thead>
                                         <tr>
 					<th>SN#</th>
@@ -109,6 +126,21 @@
             </div>
         </div>
     </div>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
+    {{-- <script>
+    $('#dataTableStyle').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        } );
+    </script> --}}
 
 @endsection

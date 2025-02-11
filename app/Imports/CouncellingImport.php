@@ -1,8 +1,8 @@
 <?php
 namespace App\Imports;
 
-use App\Models\BulkCouncelling;
-use App\Models\Application;
+use App\Models\ums\BulkCouncelling;
+use App\Models\ums\Application;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\ToCollection;

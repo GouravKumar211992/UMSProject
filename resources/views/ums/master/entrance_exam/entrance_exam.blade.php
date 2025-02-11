@@ -14,6 +14,7 @@
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
+        @include('ums.admin.notifications')
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
             <div class="content-header row">
@@ -90,7 +91,7 @@
                                                                      </button>
                                                                      <div class="dropdown-menu dropdown-menu-end">
                                                                           
-                                                                      <a class="dropdown-item" href="#">
+                                                                      <a class="dropdown-item"  onclick="return confirm_delete()" href="delete-entrance-exam/{{$data->id}}">
                                                                              <i data-feather="trash-2" class="me-50"></i>
                                                                              <span>Delete</span>
                                                                          </a>
@@ -209,57 +210,95 @@
     
       
     
-	 
+    @include('ums.admin.search-model', ['searchTitle' => 'Campus List Search'])
+
     <div class="modal modal-slide-in fade filterpopuplabel" id="filter">
 		<div class="modal-dialog sidebar-sm">
-			<form class="add-new-record modal-content pt-0"> 
+			<form class="add-new-record modal-content pt-0" id="approveds-form" method="GET" action="{{route('get-entrance-exam')}}"> 
 				<div class="modal-header mb-1">
 					<h5 class="modal-title" id="exampleModalLabel">Apply Filter</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
 				</div>
 				<div class="modal-body flex-grow-1">
 					<div class="mb-1">
-						  <label class="form-label" for="fp-range">Select Date Range</label>
-						  <input type="text" id="fp-range" class="form-control flatpickr-range" placeholder="YYYY-MM-DD to YYYY-MM-DD" />
+						  <label class="form-label" for="fp-range">Name</label>
+						  <input type="text" name="name"  value="{{Request::get('name')}}" class="form-control " placeholder="search here" />
 					</div>
 					
 					<div class="mb-1">
-						<label class="form-label">Select Incident No.</label>
-						<select class="form-select select2">
-							<option>Select</option>
+						<label class="form-label">campus</label>
+						<select class="form-select select2" id="campus" name="campus">
+							<option value="">Select</option>
+                                    @foreach($campuselist as $campus)
+                                    
+                                    <option value="{{$campus->id}}" {{ (Request::get('campus') == $campus->id) ? 'selected':'' }}>{{$campus->name}}</option>
+                                    @endforeach
 						</select>
 					</div> 
                     
                     <div class="mb-1">
-						<label class="form-label">Select Customer</label>
-						<select class="form-select select2">
-							<option>Select</option>
+						<label class="form-label">Program Type</label>
+						<select class="form-select select2" id="courseType" name="category_id">
+                            <option value="">Select</option>
+                            @foreach($categories as $category)
+                            
+                            <option value="{{$category->id}}" {{ (Request::get('category_id') == $category->id) ? 'selected':'' }}>{{$category->name}}</option>
+                            @endforeach
 						</select>
 					</div> 
                     
                     <div class="mb-1">
-						<label class="form-label">Assigned To</label>
-						<select class="form-select select2">
-							<option>Select</option>
+						<label class="form-label">Name of Programme</label>
+						<select class="form-select select2"  id="course_id" name="course_id">
+                            <option value="">Select</option>
+                            @foreach($courses as $course)
+                            
+                            <option value="{{$course->id}}" {{ (Request::get('course_id') == $course->id) ? 'selected':'' }}>{{$course->name}}</option>
+                            @endforeach
 						</select>
 					</div> 
                     
-                    <div class="mb-1">
-						<label class="form-label">Status</label>
-						<select class="form-select">
-							<option>Select</option> 
-							<option>Open</option>
-							<option>Close</option>
-							<option>Re-Allocatted</option>
-						</select>
-					</div> 
+                   
 					 
 				</div>
 				<div class="modal-footer justify-content-start">
-					<button type="button" class="btn btn-primary data-submit mr-1">Apply</button>
+					<button type="submit" class="btn btn-primary data-submit mr-1">Apply</button>
 					<button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
 				</div>
 			</form>
 		</div>
 	</div>
   @endsection
+  <script>
+
+    function confirm_delete()
+  {
+    var v=confirm('Do you really want to delete this entrance exam schedule');
+    if(v==true)
+     return true;
+    else
+     return false;
+    
+  }
+   function exportdata() {
+        var fullUrl_count = "{{count(explode('?',urldecode(url()->full())))}}";
+        var fullUrl = "{{url()->full()}}";
+        if(fullUrl_count>1){
+            fullUrl = fullUrl.split('?')[1];
+            fullUrl = fullUrl.replace(/&amp;/g, '&');
+            fullUrl = '?'+fullUrl;
+       }else{
+           fullUrl = '';
+       }
+       var url = "{{url('admin/master/entranceexamschedule/entranceexamschedule-export')}}"+fullUrl;
+       window.location.href = url;
+   }
+   function editFee(slug) {
+       var url = "{{url('admin/master/fee/edit-fee')}}"+"/"+slug;
+       window.location.href = url;
+   }
+   function deleteFee(slug) {
+       var url = "{{url('delete-entrance-exam')}}"+"/"+slug;
+       window.location.href = url;
+   }
+</script>

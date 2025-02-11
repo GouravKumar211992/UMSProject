@@ -39,7 +39,7 @@ class AdmitCardController extends AdminController
         $AdmitCard = AdmitCard::where('exam_fees_id', $examfee->id)->first();
         $subjects = $examfee->getAdmitCardSubjects();
         $examCenters = ExamCenter::all();
-        return view('ums.exam.addadmitcard', [
+        return view('ums.admitcard.admit_card_edit', [
             'page_title' => "Admit Card",
             'sub_title' => "records",
             'examfee' => $examfee,
@@ -304,24 +304,18 @@ class AdmitCardController extends AdminController
     public function bulk_approve(Request $request)
     {
         $campuses = Campuse::all();
+        $courses = [];
+
+        // Fetch courses only if campus_id is selected
         if ($request->campus_id) {
             $courses = Course::where('campus_id', $request->campus_id)->get();
-        } else {
-            $courses = Course::all();
         }
-        if ($request->course) {
-            $semesters = Semester::where('course_id', $request->course)
-                ->orderBy('id', 'asc')
-                ->get();
-        } else {
-            $semesters = [];
-        }
-        $sessions = AcademicSession::orderBy('id', 'asc')->get();
+
+        $semesters = Semester::all();
+        $sessions = AcademicSession::all();
         $centers = ExamCenter::all();
-        if ($request->paper_type && $request->course && $request->semester && $request->session && $request->center && $request->month && $request->year && $request->save_admit_card) {
-            $this->bulk_approve_post($request);
-        }
-        return view('ums.admitcard.Bulk_Admit_Card_Approval', ['campuses' => $campuses, 'courses' => $courses, 'semesters' => $semesters, 'sessions' => $sessions, 'centers' => $centers]);
+
+        return view('ums.admitcard.Bulk_Admit_Card_Approval', compact('campuses', 'courses', 'semesters', 'sessions', 'centers'));
     }
     public function bulk_approve_post(Request $request)
     {

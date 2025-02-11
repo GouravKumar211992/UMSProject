@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Student;
+namespace App\Http\Controllers\ums\Student;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Campuse;
-use App\Models\ExamFee;
-use App\Models\ExamForm;
-use App\Models\ExamCenter;
-use App\Models\Subject;
-use App\Models\AdmitCard;
-use App\Models\Examschedule;
-use App\Models\Student;
-use App\Models\BacklogAdmitcard;
-use App\Models\PhdApplication;
-use App\Models\ScribeDetail;
-use App\Models\PhdScribeDetail;
-use App\Models\MbbsExamForm;
-use App\Models\EntranceExam;
-use App\Models\EntranceExamResult;
+use App\Models\ums\Campuse;
+use App\Models\ums\ExamFee;
+use App\Models\ums\ExamForm;
+use App\Models\ums\ExamCenter;
+use App\Models\ums\Subject;
+use App\Models\ums\AdmitCard;
+use App\Models\ums\Examschedule;
+use App\Models\ums\Student;
+use App\Models\ums\BacklogAdmitcard;
+use App\Models\ums\PhdApplication;
+use App\Models\ums\ScribeDetail;
+use App\Models\ums\PhdScribeDetail;
+use App\Models\ums\MbbsExamForm;
+use App\Models\ums\EntranceExam;
+use App\Models\ums\EntranceExamResult;
 
 use Auth;
 use DB;
@@ -60,7 +60,7 @@ class AdmitCardController extends Controller
 		if($examfee->course_id==49 || $examfee->course_id==64 || $examfee->course_id==95 || $examfee->course_id==96){
 			return view('student.admitcard.mbbs-admitcard-page', compact('page_title','sub_title','examfee','subjects','AdmitCard','student_details','sessionName'));
 		}else{
-			return view('student.admitcard.admitcardview', compact('page_title','sub_title','examfee','subjects','AdmitCard','student_details','sessionName','examData_photo'));
+			return view('ums.admitcard.admitcardview', compact('page_title','sub_title','examfee','subjects','AdmitCard','student_details','sessionName','examData_photo'));
 		}
     }
 

@@ -1,7 +1,6 @@
 @extends('ums.admin.admin-meta')
-@section('content')
-@section('title') AdmitCard Approval :: @parent @stop 
 
+@section('content')
 @section('styles')
 <style type="text/css">
     .viewapplication-form p {
@@ -50,150 +49,40 @@
     }
 </style>
 @endsection
-
-
-
-        <section class="content mb-3 viewapplication-form">
-            <form method="POST" action="">
-                @csrf
-                <div class="container-fluid">
-                    <div class="row mt-3 align-items-center">
-                        <div class="col-12">
-                            <h5 class="font-weight-bold">Admin Card Form</h5>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="border-bottom mt-3 mb-2 border-innerdashed"></div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label class="form-label">Enrollment Number</label>
-                                <p>{{$examfee->students->enrollment_no}}</p>
-                                <input type="hidden" name="enrollment_no" value="{{$examfee->students->enrollment_no}}">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label class="form-label">Roll Number</label>
-                                <p>{{$examfee->students->roll_number}}</p>
-                                <input type="hidden" name="roll_no" value="{{$examfee->students->roll_number}}">
-                                <input type="hidden" name="exam_fees_id" value="{{$examfee->id}}">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label class="form-label">Student Name</label>
-                                <p>{{$examfee->students->full_name}}</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label class="form-label">Gender</label>
-                                <p>{{$examfee->students->gender}}</p>
-                            </div>
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    @include('ums.admin.notifications')
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+            <div class="content-header-left col-md-5 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">Category</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/">Home</a></li>  
+                                <li class="breadcrumb-item active">Showing 1 to 10 of 2 category</li>
+                            </ol>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label class="form-label">Mobile Number</label>
-                                <p>{{$examfee->students->mobile}}</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label class="form-label">Email</label>
-                                <p>{{$examfee->students->email}}</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label class="form-label">Father's Name</label>
-                                <p>{{$examfee->students->father_name}}</p>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="form-label">Address</label>
-                                <p>{{$examfee->students->address}}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <section class="col-md-6 connectedSortable">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Candidate Photograph</label>
-                                    <img src="{{ $examfee->enrollment->application->photo_url ?? $examfee->photo ?? 'path/to/default-image.jpg' }}" class="img-preview" />
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Candidate's Signature</label>
-                                    <img src="{{ $examfee->enrollment->application->signature_url ?? $examfee->signature ?? 'path/to/default-signature.jpg' }}" class="img-preview" />
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </section>
-
-                    <section class="col-md-12 connectedSortable">
-                        <div class="form-group">
-                            <label class="form-label">Exam Center Address</label>
-                            @if($AdmitCard && $AdmitCard->center)
-                                <p>{{$AdmitCard->center->center_name}}</p>
-                            @else
-                                <select class="form-control" name="center_code" required>
-                                    <option value="">Please Select Exam Center</option>
-                                    @foreach($examCenters as $examCenter)
-                                        <option value="{{$examCenter->center_code}}">{{$examCenter->center_code}} - {{$examCenter->center_name}}</option>
-                                    @endforeach
-                                </select>
-                            @endif
-                        </div>
-                    </section>
-
-                    <section class="col-md-12 connectedSortable">
-                        <hr />
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Subject Code</th>
-                                    <th>Subject Name</th>
-                                    <th>Subject Type</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($subjects as $subject)
-                                <tr>
-                                    <td>{{$subject->sub_code}}</td>
-                                    <td>{{$subject->name}}</td>
-                                    <td>{{ucwords($subject->subject_type)}}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </section>
                 </div>
+            </div>
+            <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
+                <div class="form-group breadcrumb-right"> 
+                        <a class="btn btn-dark btn-sm mb-50 mb-sm-0" href="{{ url('category_list_add') }}"><i data-feather="file-text"></i> Add Category </a> 
+                        <button class="btn btn-primary btn-sm mb-50 mb-sm-0" data-bs-target="#filter" data-bs-toggle="modal"><i data-feather="filter"></i> Filter</button> 
 
-                <div class="text-center mt-3">
-                    @if($AdmitCard)
-                        <button type="button" class="btn btn-success btn-custom">
-                            <i class="fa fa-send" aria-hidden="true"></i> Admit Card Already Generated
-                        </button>
-                    @else
-                        <button type="submit" class="btn btn-warning btn-custom">
-                            <i class="fa fa-send" aria-hidden="true"></i> Generate Admit Card
-                        </button>
-                    @endif
+                        <button class="btn btn-warning box-shadow-2 btn-sm  mb-sm-0 mb-50" onClick="window.location.reload()"><i data-feather="refresh-cw"></i>Reset</button>
+
+                        <!-- <button class="btn btn-success btn-sm mb-50 mb-sm-0" data-bs-target="#approved" data-bs-toggle="modal"><i data-feather="check-circle" ></i> Assign Team</button> -->
+                         
                 </div>
-            </form>
-        </section>
+            </div>
+        </div>
+@include('ums.admin.notifications')
+
+       
     </div>
 </div>
 @endsection

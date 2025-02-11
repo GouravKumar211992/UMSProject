@@ -60,15 +60,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-<<<<<<< HEAD
                                                @foreach($items as $index=>$item)
                                                 <tr>
                                                     <td>{{ $index+1}}</td>
-=======
-                                               @foreach($items as $item)
-                                                <tr>
-                                                    <td>{{ $item->id}}</td>
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
                                                     
                                                     <td class="fw-bolder text-dark">{{ $item->faculty}}</td>
                                                     <td>{{ $item->name}}</td>
