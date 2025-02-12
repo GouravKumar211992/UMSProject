@@ -26,7 +26,7 @@
                      </div>
                  </div>
                  <div class="content-header-right col-md-6 col-8">
-                    <div class="row d-flex flex-column align-items-center text-center">
+                    {{-- <div class="row d-flex flex-column align-items-center text-center">
                         <form method="get" name="faculty_data">
                         <div class="col-md-5 ms-auto"> 
                             <div class="form-group row mb-3 align-item-center">
@@ -41,11 +41,24 @@
                         </div>
                         <input type="submit" class="btn btn-primary  show_data" >
                     </form>
+                    </div> --}}
+                    <div class="row d-flex flex-column align-items-center text-center">
+                        <form method="get" name="faculty_data">
+                            <div class="col-md-5 ms-auto"> 
+                                <div class="form-group row mb-3 align-item-center">
+                                    <label for="sessionSelect" class="form-label flex-nowrap col-md-6 mt-1">Select Session</label>
+                                    <select class="form-control" name="session" id="session" onChange="submitForm()">
+                                        <option value="">--Select Session--</option>
+                                        @foreach($sessions as $session)
+                                        <option value="{{$session->academic_session}}" @if(Request()->session == $session->academic_session) selected @endif>{{$session->academic_session}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                        </form>
                     </div>
-                  
-                       
-                       
-                 
+                
              </div>
              <div class="col-sm-6 textM-right">
                 <p>Showing results till <strong>{{date('d-m-Y')}}</strong> </p>
@@ -103,6 +116,7 @@
             
          </div>
      </div>
+     </div>
      
      
      <div class="modal modal-slide-in fade filterpopuplabel" id="filter">
@@ -140,3 +154,9 @@
      </div>
        
      @endsection
+     <script>
+        function submitForm() {
+            // Submit the form when a session is selected
+            $('form[name="faculty_data"]').submit();
+        }
+    </script>

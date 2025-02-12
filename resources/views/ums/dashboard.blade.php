@@ -25,9 +25,18 @@
                     </div>
                 </div>
                 <div class="content-header-right text-end col-md-6 col-8">
-                    {{-- <div class="form-group breadcrumb-right">  
-							<button class="btn btn-primary box-shadow-2" data-bs-toggle="modal" data-bs-target="#filter"><i data-feather="filter"></i> Filter</button>  
-                    </div> --}}
+                    <div class="form-group breadcrumb-right">  
+                        <div class="col-md-3 form-group">
+                            <form action="" id="setSession">
+                                <select name="session" class="form-control" onchange="$('#setSession').submit();">
+                                    <option value="2024-2025" @if($session=='2024-2025') selected @endif>2024-2025</option>
+                                    <option value="2023-2024" @if($session=='2023-2024') selected @endif>2023-2024</option>
+                                    <option value="2022-2023" @if($session=='2022-2023') selected @endif>2022-2023</option>
+                                </select>
+                            </form>
+                        </div>   
+                    </div>
+                  
                 </div>
             </div>
              
@@ -41,18 +50,18 @@
                             <div class="holiday-box p-4" style=" border-left: 10px solid #A0BC8B;">
                                 <div><span style="background: rgba(160, 188, 139, 0.2); color: #A0BC8B;">Applications</span></div>
                                 <div>
-                                    <h3 class="fw-lighter">4631</h3>
+                                    <h3 class="fw-lighter">{{$all_application_data->sum('total_applications')}}</h3>
                                     <h5>Total</h5>
                                 </div>
                             </div>
                         </div>
                         
                         
-                        <div class="col-md-4 col-12  cursor-pointer" data-bs-toggle="modal" data-bs-target="#myModal">
+                        <div class="col-md-4 col-12  cursor-pointer" data-bs-toggle="modal" data-bs-target="#myModal_phd">
                             <div class="holiday-box p-4" style="border-left: 10px solid #62C3C0;">
                                 <div><span style="background: rgba(110, 230, 226, 0.2); color: #62C3C0;">P.hD Applications</span></div>
                                 <div>
-                                    <h3 class="fw-lighter">1</h3>
+                                    <h3 class="fw-lighter">{{$all_application_data_phd->sum('total_applications')}}</h3>
                                     <h5>Total</h5>
                                 </div>
                             </div>
@@ -61,7 +70,7 @@
                             <div class="holiday-box p-4">
                                 <div><span style="background: rgba(168, 139, 151, 0.2); color: #A88B97;">Enrolled Students</span></div>
                                 <div>
-                                    <h3 class="fw-lighter">100</h3>
+                                    <h3 class="fw-lighter">{{$enrollment_count}}</h3>
                                     <h5>Total</h5>
                                 </div>
                             </div>
@@ -70,8 +79,10 @@
                             <div class="holiday-box p-4" style="border-left: 10px solid #E3C852;">
                                 <div><span style="background: rgba(227, 200, 82, 0.2); color: #E3C852;">Total Students</span></div>
                                 <div>
-                                    <h3 class="fw-lighter">2408</h3>
+                                    <h3 class="fw-lighter">{{$total_exam_count}}</h3>
                                     <h5>Total</h5>
+                                   
+                                   
                                 </div>
                             </div>
                         </div>
@@ -80,7 +91,7 @@
                                 <div><span style="background: rgba(190, 136, 55, 0.2); color: #eb6623;" >Pending
                                     Applications</span></div>
                                 <div>
-                                    <h3 class="fw-lighter">0</h3>
+                                    <h3 class="fw-lighter">{{count($pending)}}</h3>
                                     <h5>Total</h5>
                                 </div>
                             </div>
@@ -151,53 +162,90 @@
                                               <th>Total Applications</th>
                                             </tr>
                                           </thead>
-                                          <tbody>
+                                          <tbody class="data-hide" id="datahide">
+                                            @foreach($all_application_data as $index=>$application_data)
                                             <tr>
-                                              <td>11</td>
-                                              <td>Dr. Shakuntala Misra National Rehabilitation University</td>
-                                              <td>MCA</td>
-                                              <td>2</td>
-                                              <td>13</td>
-                                              <td>56</td>
-                                              <td>71</td>
+                                                <td>{{++$index}}</td>
+                                                <td>{{$application_data->campus->name}}</td>
+                                                <td>{{$application_data->course->name}}</td>
+                                                <td>{{$application_data->payment_failed}}</td>
+                                                <td>{{$application_data->payment_pending}}</td>
+                                                <td>{{$application_data->payment_paid}}</td>
+                                                <td>{{$application_data->total_applications}}</td>
                                             </tr>
+                                            @endforeach
                                             <tr>
-                                              <td>12</td>
-                                              <td>Dr. Shakuntala Misra National Rehabilitation University</td>
-                                              <td>M.A. (English)</td>
-                                              <td>0</td>
-                                              <td>5</td>
-                                              <td>45</td>
-                                              <td>50</td>
+                                                <th>{{++$index}}</th>
+                                                <th></th>
+                                                <th>Total</th>
+                                                <th>{{$all_application_data->sum('payment_failed')}}</th>
+                                                <th>{{$all_application_data->sum('payment_pending')}}</th>
+                                                <th>{{$all_application_data->sum('payment_paid')}}</th>
+                                                <th>{{$all_application_data->sum('total_applications')}}</th>
                                             </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal_phd" tabindex="-1" aria-labelledby="shiftModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="shiftModalLabel">Total Applications (2024-2025)</h3>
+                <button type="button" class="btn-close m-1" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Table for DataTables -->
+                <section id="basic-datatable p-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="table-responsive">
+                                    <table class="table table-striped datatables-basic" id="myTable">
+                                        <thead>
                                             <tr>
-                                              <td>13</td>
-                                              <td>Dr. Shakuntala Misra National Rehabilitation University</td>
-                                              <td>M.A. (Sociology)</td>
-                                              <td>0</td>
-                                              <td>1</td>
-                                              <td>111</td>
-                                              <td>112</td>
+                                                <th>SN#</th>
+                                                <th>Campuses Name</th>
+                                                <th>Courses Name</th>
+                                                <th>Application's Payments Failed</th>
+                                                <th>Application's Payments Pending</th>
+                                                <th>Application's Payments Paid</th>
+                                                <th>Total Applications</th>
                                             </tr>
+                                          </thead>
+                                          <tbody class="data-hide" id="datahide">
+                                            @foreach($all_application_data_phd as $index=>$application_data)
                                             <tr>
-                                              <td>14</td>
-                                              <td>Dr. Shakuntala Misra National Rehabilitation University</td>
-                                              <td>M.A. (Economics)</td>
-                                              <td>1</td>
-                                              <td>4</td>
-                                              <td>31</td>
-                                              <td>36</td>
+                                                <td>{{++$index}}</td>
+                                                <td>{{$application_data->campus->name}}</td>
+                                                <td>{{$application_data->course->name}}</td>
+                                                <td>{{$application_data->payment_failed}}</td>
+                                                <td>{{$application_data->payment_pending}}</td>
+                                                <td>{{$application_data->payment_paid}}</td>
+                                                <td>{{$application_data->total_applications}}</td>
                                             </tr>
+                                            @endforeach
                                             <tr>
-                                              <td>15</td>
-                                              <td>Dr. Shakuntala Misra National Rehabilitation University</td>
-                                              <td>M.A. (Political Science)</td>
-                                              <td>0</td>
-                                              <td>4</td>
-                                              <td>82</td>
-                                              <td>86</td>
+                                                <th>{{++$index}}</th>
+                                                <th></th>
+                                                <th>Total</th>
+                                                <th>{{$all_application_data_phd->sum('payment_failed')}}</th>
+                                                <th>{{$all_application_data_phd->sum('payment_pending')}}</th>
+                                                <th>{{$all_application_data_phd->sum('payment_paid')}}</th>
+                                                <th>{{$all_application_data_phd->sum('total_applications')}}</th>
                                             </tr>
-                                          </tbody>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -218,5 +266,133 @@
 <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
 @endsection
 
+<script>
+  
+    Highcharts.chart('salechart', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: ' '
+        },
+        subtitle: {
+            text: ' '
+        },
+        xAxis: {
+            categories: [
+                'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+            ],
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Total Applications'
+            }
+        },
+        credits: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            },
+            series: {
+                borderRadius: 8,
+                pointPadding: .3
+            },
+        },
+
+        series: [{
+            name: 'Rejected',
+            data: [
+                @foreach($month_pending ?? [] as $month)
+                    {{ count($month_pending[$month]) }},
+                @endforeach
+            ],
+            color: '#C9D1D8'
+        }, {
+            name: 'Approved',
+            data: [
+                @foreach($month_approve ?? [] as $month) 
+                    {{ count($month_approve[$month]) }},
+                @endforeach
+            ],
+            color: '#63C276'
+        }, {
+            name: 'Received',
+            data: [
+                @foreach($month_enrolled ?? [] as $month) 
+                    {{ count($month_enrolled[$month]) }},
+                @endforeach
+            ],
+            color: '#25DAE6'
+        }]
+    });
+
+    Highcharts.chart('donatchart', {
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: false,
+                alpha: 0
+            },
+
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: ''
+        },
+        exporting: {
+            enabled: false
+        },
+        colors: ['#1ea0a1', '#f4a335'],
+        plotOptions: {
+            pie: {
+                innerSize: 160,
+                depth: 5,
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true
+            }
+        },
+        credits: {
+            enabled: false
+        },
+        legend: {
+            enabled: true,
+            verticalAlign: 'bottom',
+            align: 'center',
+            y: 10
+        },
+
+        series: [{
+            name: 'Applications',
+            data: [
+                ['Received', {{ $application_count ?? 0 }}],
+                ['Converted', {{ $enrollment_count ?? 0 }}]
+            ]
+        }]
+    });
+</script>
+
+</script>
 {{-- @include('footer') --}}
 

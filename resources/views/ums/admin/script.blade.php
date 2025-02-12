@@ -32,6 +32,7 @@
 <!-- END: Page JS -->
 {{-- rekha --}}
 <script src="../../../app-assets/js/scripts/forms/form-select2.js"></script>
+
 <!-- Initialize DataTable -->
 <script>
     $(document).ready(function() {
@@ -223,6 +224,7 @@
     var dt_basic = dt_basic_table.DataTable({
       
       order: [[0, 'asc']],
+      searching: true,
       dom: 
         '<"d-flex justify-content-between align-items-center mx-2 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-3 withoutheadbuttin dt-action-buttons text-end"B><"col-sm-12 col-md-3"f>>t<"d-flex justify-content-between mx-2 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
       displayLength: 7,
@@ -299,7 +301,9 @@
         }
       }
     });
+    
 }
+
 
 
   // Flat Date picker
@@ -349,44 +353,44 @@
 	
 
      // Initialize the charts once the DOM is fully loaded
-     $(document).ready(function () {
-         // Line Chart
-         var ctx1 = document.getElementById('leavebar-chart').getContext('2d');
-         var leaveChart = new Chart(ctx1, {
-             type: 'line',
-             data: {
-                 labels: ['January', 'February', 'March', 'April', 'May', 'June'], // Change labels as needed
-                 datasets: [{
-                     label: 'Applications Submitted',
-                     data: [65, 59, 80, 81, 56, 55], // Example data
-                     borderColor: 'rgba(75, 192, 192, 1)',
-                     fill: false
-                 }]
-             },
-             options: {
-                 responsive: true,
-                 maintainAspectRatio: false
-             }
-         });
+    //  $(document).ready(function () {
+    //      // Line Chart
+    //      var ctx1 = document.getElementById('leavebar-chart').getContext('2d');
+    //      var leaveChart = new Chart(ctx1, {
+    //          type: 'line',
+    //          data: {
+    //              labels: ['January', 'February', 'March', 'April', 'May', 'June'], // Change labels as needed
+    //              datasets: [{
+    //                  label: 'Applications Submitted',
+    //                  data: [65, 59, 80, 81, 56, 55], // Example data
+    //                  borderColor: 'rgba(75, 192, 192, 1)',
+    //                  fill: false
+    //              }]
+    //          },
+    //          options: {
+    //              responsive: true,
+    //              maintainAspectRatio: false
+    //          }
+    //      });
  
-         // Donut Chart
-         var ctx2 = document.getElementById('donut-opentask').getContext('2d');
-         var donutChart = new Chart(ctx2, {
-             type: 'doughnut',
-             data: {
-                 labels: ['Completed', 'Pending', 'Failed'],
-                 datasets: [{
-                     label: 'Tasks',
-                     data: [300, 50, 100], // Example data
-                     backgroundColor: ['#36a2eb', '#ff6384', '#ffcd56']
-                 }]
-             },
-             options: {
-                 responsive: true,
-                 maintainAspectRatio: false
-             }
-         });
-     });		
+    //      // Donut Chart
+    //      var ctx2 = document.getElementById('donut-opentask').getContext('2d');
+    //      var donutChart = new Chart(ctx2, {
+    //          type: 'doughnut',
+    //          data: {
+    //              labels: ['Completed', 'Pending', 'Failed'],
+    //              datasets: [{
+    //                  label: 'Tasks',
+    //                  data: [300, 50, 100], // Example data
+    //                  backgroundColor: ['#36a2eb', '#ff6384', '#ffcd56']
+    //              }]
+    //          },
+    //          options: {
+    //              responsive: true,
+    //              maintainAspectRatio: false
+    //          }
+    //      });
+    //  });		
 		
     </script>
 {{-- </body>

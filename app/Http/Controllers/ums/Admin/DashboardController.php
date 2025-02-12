@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\ums\Admin;
 
 use Illuminate\Http\Request;
-use View;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
+
+
 use App\User;
 
 use App\Helpers\ConstantHelper;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ums\AdminController;
 use App\Models\Address;
-use App\Models\Application;
-use App\Models\Enrollment;
-use App\Models\Course;
-use App\Models\Faculty;
-use App\Models\Admin;
+use App\Models\ums\Application;
+use App\Models\ums\Enrollment;
+use App\Models\ums\Course;
+use App\Models\ums\Faculty;
+use App\Models\ums\Admin;
 use App\Models\InternalMarksMapping;
 use DB;
 
@@ -99,10 +101,11 @@ class DashboardController extends AdminController
             $application_data->payment_failed = $payment_failed_clone->where('payment_status' , 2)->count();
         }
 
-        $facultyDetails = Faculty::where('email',Auth::guard('admin')->user()->email)->first();
+        // $facultyDetails = Faculty::where('email',Auth::guard('admin')->user()->email)->first();
         $hodCounts = Admin::where('role',2)->count();
         $pending = array();
-        return view('admin.dashboard.index',compact('application_count','enrollment_count','courses','pending','month_enrolled','month_approve','month_pending','pending_application','paid_application','failed_application','total_application','all_application_data','all_application_data_phd','total_exam_count','total_latest_exam_count','total_old_exam_count','session'));
+       
+        return view('ums.dashboard',compact('application_count','enrollment_count','courses','pending','month_enrolled','month_approve','month_pending','pending_application','paid_application','failed_application','total_application','all_application_data','all_application_data_phd','total_exam_count','total_latest_exam_count','total_old_exam_count','session'));
     }
 
     public function list()

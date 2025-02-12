@@ -184,6 +184,8 @@ use App\Http\Controllers\PurchaseBillController;
 use App\Http\Controllers\DiscountMasterController;
 use App\Http\Controllers\ExpenseMasterController;
 use App\Http\Controllers\PurchaseReturnController;
+use App\Http\Controllers\ums\Admin\DashboardController as AdminDashboardController;
+
 
 
 
@@ -195,9 +197,10 @@ use App\Http\Controllers\PurchaseReturnController;
 
 
 Route::post('login', [UmsHomeController::class,'enquery_login'])->name('enquery-login');
-Route::get('/dashboard', function () {
-    return view('ums.dashboard');
-})->name('admin-dashboard');
+// Route::get('/dashboard', function () {
+//     return view('ums.dashboard');
+// })->name('admin-dashboard');
+Route::get('/dashboard', [AdminDashboardController::class,'index'])->name('admin-dashboard');
 Route::get('/profile', function () {
     return view('ums.profile');
 });
@@ -296,9 +299,7 @@ Route::get('/stu-profile', [StudentDashboardController::class,'profile'])->name(
 Route::get('/stu-dashboard', [StudentDashboardController::class,'index'])->name('student-dashboard');
 Route::post('update-photo-signature',[UserHomeController::class,'savePhotoSignateure'])->name('update-photo-signature');
 
-Route::get('/dashboard', function () {
-    return view('ums.dashboard');
-});
+
 Route::get('/user-password-change/{id}', [UserController::class,'userPasswordChange'])->name('user-password-change');
 Route::get('/admin-get', [UserController::class, 'admins'])->name('usermanagement.admin');
 // Admin Edit Routes
@@ -1492,6 +1493,8 @@ Route::middleware(['user.auth'])->group(function () {
 
     Route::prefix('land')->group(function () {
         // Land Dashboard
+
+        
         Route::get('/dashboard', [LandController::class, 'dashboard'])->name('land.dashboard');
         Route::get('/dashboard/revenue-report', [LandController::class, 'getDashboardRevenueReport'])->name('land.getDashboardRevenueReport');
         // Land Report
@@ -2929,14 +2932,14 @@ Route::get('external_marks', [ExternalMarksController::class, 'external']);
 // Route::post('external_marks', [ExternalMarksController::class, 'externalMarksShow']);
 
 //ajax route for dashboard
-Route::post('/getsemester',  [InternalMarksController::class, 'get_semester']);
-Route::post('/getsubject', [InternalMarksController::class,'get_subject']);
+
 Route::post('/get_month_year', [InternalMarksController::class,'get_month_year']);
 
 Route::get('/internal-marks-list', [InternalMarksController::class,'index'])->name('internal-marks-list');
 
-Route::get('internal_marks', [InternalMarksController::class, 'internal']);
-
+Route::get('internal-marks', [InternalMarksController::class, 'internal']);
+Route::get('getsemester/{id}', [InternalMarksController::class,'get_semester'])->name('getsemester');
+Route::get('getsubject', [InternalMarksController::class, 'get_subject']);
 // Route::get('/practical_marks_filling', function () {
 //     return view('ums.master.faculty.practical_marks');
 // });
