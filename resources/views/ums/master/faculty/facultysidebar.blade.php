@@ -25,7 +25,7 @@
                     <span class="menu-title text-truncate">Internal Marks Filling</span>
                 </a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="{{ url('/internal_marks') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Internal Marks List</span></a></li>
+                    <li><a class="d-flex align-items-center" href="{{ url('internal-marks-list') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Internal Marks List</span></a></li>
                 </ul>
             </li>
 

@@ -167,10 +167,81 @@ class PracticalMarksController extends Controller
         $data['date_of_practical_exam']=$request->date_of_practical_exam;
         
         $data['practical_maximum']=$request->practical_maximum;
-        dd($data['mapped_Subjects']);
-        return view('ums.master.faculty.practical_marks',$data);
+        // dd($data['mapped_Subjects']);
+        return view('ums.master.faculty.add_practical_marks',$data);
     }
     
+// public function practical(Request $request)
+// {
+//     // Default values for data
+//     $data = [
+//         'streams' => Stream::whereIn('id', [50, 3, 4, 5])->orderBy('name', 'ASC')->get(),
+//         'examTypes' => StudentSubject::distinct('type')->pluck('type')->toArray(),
+//         'sub_code' => null,
+//         'sub_name' => null,
+//         'date_of_practical_exam' => null,
+//         'assign_maximum' => null,
+//         'mapped_Semesters' => null,
+//         'mapped_faculty' => null,
+//         'mapped_Subjects' => null,
+//         'sub_code_name' => null
+//     ];
+
+//     // Default faculty_id to 46 if not provided in the request
+//     $faculty_id = $request->get('faculty_id', 46);
+//     $user = Faculty::find($faculty_id);
+
+//     // Query mapped subjects
+//     $mapped_Subjects_query = Subject::select('subjects.name', 'subjects.sub_code', 'subjects.semester_id', 'subjects.subject_type')
+//         ->join('internal_marks_mappings', function ($join) {
+//             $join->on('subjects.sub_code', 'internal_marks_mappings.sub_code')
+//                 ->on('subjects.semester_id', 'internal_marks_mappings.semester_id');
+//         })
+//         ->distinct()
+//         ->orderBy('sub_code')
+//         ->where('faculty_id', $user->id)
+//         ->where('subjects.subject_type', 'Practical');
+
+//     if ($request->semester) {
+//         $mapped_Subjects_query->where('subjects.semester_id', $request->semester);
+//     }
+
+//     $data['mapped_Subjects'] = $mapped_Subjects_query->get();
+
+//     // Fetch courses and mapped semesters
+//     $data['mapped_Courses'] = InternalMarksMapping::select('courses.name', 'courses.id', 'internal_marks_mappings.course_id')
+//         ->join('courses', 'courses.id', '=', 'internal_marks_mappings.course_id')
+//         ->distinct()
+//         ->where('faculty_id', $user->id)
+//         ->get();
+
+//     $data['sessions'] = AcademicSession::all();
+
+//     if ($request->course) {
+//         $data['mapped_Semesters'] = InternalMarksMapping::select('semesters.name', 'semesters.id', 'internal_marks_mappings.semester_id')
+//             ->join('semesters', 'semesters.id', '=', 'internal_marks_mappings.semester_id')
+//             ->distinct()
+//             ->where('faculty_id', $user->id)
+//             ->where('internal_marks_mappings.course_id', $request->course)
+//             ->orderBy('semesters.semester_number')
+//             ->get();
+//     }
+
+//     // Fetch subject name based on sub_code
+//     $sub_name = Subject::where('sub_code', $request->sub_code)->first();
+//     $data['sub_name'] = $sub_name;
+//     $data['sub_code'] = $request->sub_code;
+//     $data['date_of_practical_exam'] = $request->date_of_practical_exam;
+//     $data['practical_maximum'] = $request->practical_maximum;
+   
+
+//     // Return the view with the data
+//     return view('ums.master.faculty.add_practical_marks', $data);
+// }
+
+
+
+
     public function post_practical(Request $request){
 		
         $AwardSheetFile = new AwardSheetFile;

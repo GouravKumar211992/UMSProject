@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Master;
+namespace App\Http\Controllers\ums\Admin\Master;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Faculty;
-use App\Models\Campuse;
+use App\Models\ums\Faculty;
+use App\Models\ums\Campuse;
 use Validator;
 use App\Exports\FacultyExport;
 use App\Models\AcademicSession;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Models\InternalMarksMapping;
-use App\Models\ExternalMark;
-use App\Models\InternalMark;
-use App\Models\PracticalMark;
-use App\Models\StudentSubject;
+use App\Models\ums\InternalMarksMapping;
+use App\Models\ums\ExternalMark;
+use App\Models\ums\InternalMark;
+use App\Models\ums\PracticalMark;
+use App\Models\ums\StudentSubject;
 use Hash;
 
 
@@ -37,7 +37,7 @@ class FacultyController extends Controller
         }
     
     $data=$data->paginate(10);
-    return view('admin.master.faculty.show',['items'=>$data]);
+    return view('ums.master.faculty',['items'=>$data]);
   }
 
   public function add_faculty(Request $request){

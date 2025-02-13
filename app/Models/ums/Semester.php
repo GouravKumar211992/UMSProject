@@ -8,6 +8,7 @@ use App\Models\ums\Result;
 class Semester extends Model
 {
    use SoftDeletes;
+   protected $table = 'semesters';
 protected $fillable = [
 		'program_id',
 		'course_id',

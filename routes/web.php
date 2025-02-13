@@ -104,6 +104,7 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\LegalController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\BudgetController;
+use App\Http\Controllers\ums\Admin\Master\FacultyController;
 use App\Http\Controllers\ErpBinController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\CountryController;
@@ -128,6 +129,7 @@ use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\IssueTypeController;
 use App\Http\Controllers\AmendementController;
 use App\Http\Controllers\ProfitLossController;
+use App\Http\Controllers\ums\Faculty\LoginController as FacultyLoginController;
 use App\Http\Controllers\PaymentTermController;
 use App\Http\Controllers\AutocompleteController;
 use App\Http\Controllers\BalanceSheetController;
@@ -204,32 +206,27 @@ Route::get('/admin-meta', function () {
     return view('ums.admin.admin-meta');
 });
 
-
+// Route::post('faculty/getsemester', [InternalMarksController::class,'get_semester']);
+Route::get('/semester/{id}', [InternalMarksController::class,'get_semester'])->name('semester');
 //faculty 
-Route::get('/faculty_dashboard', function () {
-    return view('ums.master.faculty.faculty_dashboard');
-});
+Route::get('faculty-dashboard', [FacultyDashboardController::class, 'index']);
+Route::get('internal-marks',[InternalMarksController::class,'internal'])->name('internal-marks');
+Route::post('internal-marks', [InternalMarksController::class,'post_internal']);
 Route::get('/faculty_edit', function () {
-    return view('ums.master.faculty.faculty_edit');
-});
+    return view('ums.master.faculty.faculty_edit');});
+    Route::get('/internal-marks-list', [InternalMarksController::class,'index'])->name('internal-marks-list');
+Route::get('secret-login/{id}', [FacultyLoginController::class,'secretLogin'])->name('secret-login');
 Route::get('/faculty_add', function () {
     return view('ums.master.faculty.faculty_add');
 });
-<<<<<<< HEAD
+Route::get('/faculty',[FacultyController::class,'index'])->name('faculty');
 Route::get('/facultynotification', [NotificationController::class, 'index2']);
-=======
-Route::get('/facultynotification', [FacultyNotificationController::class, 'index2']);
-// Route::get('/Holiday', function () {
-//     return view('ums.master.faculty.holiday_calender');
-// });
-// Route::get('/Holiday', [HolidayCalenderController::class, 'holidayCalender']);
->>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 Route::get('/Holiday', [HolidayCalenderController::class, 'holidayCalenderForStudent']);
 Route::get('/time_table', [TimetableController::class, 'index']);
 Route::post('/time_table_add', [TimetableController::class, 'addtimetable'])->name('get-timetables');
 Route::get('/time_table_add', [TimetableController::class, 'add']);
 Route::get('/time_table_edit/{id}', [TimetableController::class, 'edittimetables'])->name('time_table_edit');
-Route::post('/time_table', [TimetableController::class, 'editTimetable'])->name('get-timetables');
+Route::post('/time_table', [TimetasbleController::class, 'editTimetable'])->name('get-timetables');
 Route::get('/attendance', [AttendenceController::class, 'index']);
 Route::get('/show_Attendance', [AttendenceController::class, 'searchAttendence']);
 Route::get('/lecture_schedule', function () {
@@ -240,16 +237,20 @@ Route::get('external_marks', [ExternalMarksController::class, 'external']);
 Route::post('external_marks', [ExternalMarksController::class, 'externalMarksShow']);
 
 
-Route::get('internal_marks', [InternalMarksController::class, 'internal']);
+// Route::get('internal_marks', [InternalMarksController::class, 'internal']);
 
-Route::get('practical_marks_filling', [PracticalMarksController::class, 'practicalMarksShow']);
 
+//practical-marks route
+Route::get('/practical-marks-filling',[PracticalMarksController::class,'index'])->name('practical-marks-list');
+	Route::get('/practical-marks', [PracticalMarksController::class,'practical'])->name('practical-marks');
+	Route::post('/practical-marks', [PracticalMarksController::class,'post_practical']);
+	Route::get('/practical-marks-show', [PracticalMarksController::class,'practicalMarksShow'])->name('practical-marks-show');
 
 
 
 
 //usermanagement
-Route::get('secret-login/{id}', [LoginController::class,'secretLogin'])->name('student-secret-login');
+Route::get('student-secret-login/{id}', [LoginController::class,'secretLogin'])->name('student-secret-login');
 
 Route::get('view-icard/{id}', [StudentIcardsController::class,'singleIcard'])->name('view-icard');
 		Route::get('icard-form/{type}', [StudentIcardsController::class,'icardForm'])->name('icard-form');
@@ -387,7 +388,6 @@ Route::get('/department_delete/{id}', [DepartmentController::class, 'delete']);
 Route::get('/department_export', [DepartmentController::class, 'departmentExport']);
 
 Route::get('/subject_list',[SubjectController::class,'index'])->name('subject_list');
-<<<<<<< HEAD
 Route::get('/subject_setting',[SubjectController::class,'subject_settings'])->name('subject_setting');
 Route::post('subject-type-update',[SubjectController::class,'subject_type_update'])->name('subject-type-update');
 Route::get('/master/subject/edit-subject/{slug}', [SubjectController::class,'editsubjects'])->name('edit-subject-form');
@@ -411,21 +411,6 @@ Route ::post('/get-semesters',[SubjectController::class,'get_Semester'])->name('
 Route ::post('/get-streams',[SubjectController::class,'get_stream'])->name('get-streams');
 
 
-=======
-// Route::get('/subject_list/edit/{id}', [SubjectController::class, 'editsubjects'])->name('edit-subject');
-// Route::post('/subject_list/update/{id}', [SubjectController::class, 'editSubject'])->name('update-subject');
-Route::get('/subject_list_edit', function () {
-    return view('ums.master.subject_list.subject_list_edit');
-});
-Route::get('/subject_add', function () {
-    return view('ums.master.subject_list.subject_add');
-});
-Route::get('/subject_bulk_upload', function () {
-    return view('ums.master.subject_list.subject_bulk_upload');
-});
-Route::get('subject_setting',[SubjectController::class,'subject_settings']);
-Route::post('subject_setting',[SubjectController::class,'subject_settingsSave']);
->>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 
 Route::get('/phd_entrance_add', function () {
     return view('ums.master.entrance_exam.phd_entrance_add');
@@ -452,7 +437,6 @@ Route::get('/shift_delete/{id}',[ShiftController::class,'softDelete'])->name('de
 Route::get('/shift_add', function () {
     return view('ums.master.shift.shift_add');
 });
-<<<<<<< HEAD
 Route::get('/notification', [NotificationController::class, 'index'])->name('notification');
 Route::post('/notification_post', [NotificationController::class, 'add'])->name('notification_post');
 Route::get('/notification_edit/{id}', [NotificationController::class, 'edit'])->name('notification_edit');
@@ -463,15 +447,6 @@ Route::get('/notification_add', function () {
     return view('ums.master.notification.notification_add');
 });
 
-=======
-
-
-
-// Route::get('/notification', function () {
-//     return view('ums.master.notification.notification');
-// });
-
->>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 
 Route::get('/semester_list', [SemesterController::class, 'index'])->name('semester_list');
 Route::post('/semester_list_add', [SemesterController::class, 'addSemester'])->name('semester_list_add');
@@ -496,9 +471,7 @@ Route::get('/course_list_edit/{id}', [CourseController::class, 'editcourses'])->
 Route::get('/course_list_delete/{id}', [CourseController::class, 'softDelete'])->name('course_list_delete');
 
 
-Route::get('/faculty', function () {
-    return view('ums.master.faculty');
-});
+
 Route::get('/affiliate_circular',[AffiliateCircularController::class,'index']);
 Route::get('/affiliate_circular_add',[AffiliateCircularController::class,'addView']);
 Route::post('/affiliate_circular_add',[AffiliateCircularController::class,'add']);
@@ -518,7 +491,6 @@ Route::get('question_bank',[QuestionBankController::class,'index'])->name('quest
 Route::get('/add_question_bank', function () {
     return view('ums.master.question_bank.add_question_bank');
 });
-<<<<<<< HEAD
 Route::get('add_question_bank', [QuestionBankController::class, 'add'])->name('question-bank-add');
 Route::post('add_question_bank', [QuestionBankController::class, 'addQuestionBank'])->name('question-bank-save');
 
@@ -530,10 +502,6 @@ Route ::post('/get-course',[SubjectController::class , 'get_programm'])->name('g
 Route::POST('ums/master/stream/get-course-list',[StreamController::class,'getCourseList'])->name('get-course-list');
 // Route::POST('ums/master/stream/get-course-list',[StreamController::class,'getCourseList2']);
 
-=======
-Route::get('question_bank_add', [QuestionBankController::class, 'add'])->name('question-bank-add');
-Route::post('question_bank_add', [QuestionBankController::class, 'addQuestionBank'])->name('question-bank-add');
->>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 
 Route::get('/holiday_calender', [HolidayCalenderController::class, 'holidayCalender'])->name('holiday_calender');
 
@@ -801,18 +769,12 @@ Route::get('/challengeform_edit', function () {
 //     return view('ums.admitcard.admit_card_list');
 // });
 Route::get('/admit_card_list', [AdmitCardController::class, 'cardList'])->name('admit-card');
-<<<<<<< HEAD
 Route::get('/admit_card_list_edit/{id}', [AdmitCardController::class, 'index'])->name('admit_card_list_edit');
 Route::post('/admit_card_list_edit/{id}', [AdmitCardController::class, 'adminCardApproval'])->name('admit_card_update');
 
 Route::get('admitcard-download',[AdmitCardControllerView::class,'index'])->name('download-admit-card');
 Route::get('admit_card_delete/{id}',[AdmitCardController::class,'deleteAdmitCard'])->name('admit_card_delete');
 
-=======
-Route::get('/admit_card_list_edit/{id}', [AdmitCardController::class, 'cardList'])->name('admit-card_edit');
-Route::put('/admit_card_list', [AdmitCardController::class, 'cardList'])->name('admit-card_update');
-Route::get('admit_card_delete/{id}',[AdmitCardController::class,'deleteAdmitCard'])->name('admit_card_delete');
->>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 
 
 Route::get('/Bulk_Admit_Card_Approval', [AdmitCardController::class, 'bulk_approve'])->name('Bulk_Admit_Card_Approval');
@@ -2681,9 +2643,7 @@ Route::put('/course_list_update', [CourseController::class, 'editCourse'])->name
 Route::get('/course_list_delete/{id}', [CourseController::class, 'softDelete'])->name('course_list_delete');
 
 
-Route::get('/faculty', function () {
-    return view('ums.master.faculty');
-});
+
 Route::get('/affiliate_circular',[AffiliateCircularController::class,'index']);
 Route::get('/affiliate_circular_add',[AffiliateCircularController::class,'addView']);
 Route::post('/affiliate_circular_add',[AffiliateCircularController::class,'add']);
@@ -2868,9 +2828,7 @@ Route::get('/regular_exam_form_report',[ReportController::class , 'regularPaperR
 //dhan and manish
 
 //danish
-Route::get('/faculty_dashboard', function () {
-    return view('ums.master.faculty.faculty_dashboard');
-});
+
 // Route::get('/faculty_dashboard', [FacultyController::class,'index']);
 
 Route::get('/faculty_edit', function () {
@@ -2908,18 +2866,24 @@ Route::get('external_marks', [ExternalMarksController::class, 'external']);
 // Route::post('external_marks', [ExternalMarksController::class, 'externalMarksShow']);
 
 //ajax route for dashboard
-Route::post('/getsemester',  [InternalMarksController::class, 'get_semester']);
-Route::post('/getsubject', [InternalMarksController::class,'get_subject']);
-Route::post('/get_month_year', [InternalMarksController::class,'get_month_year']);
-
 Route::get('/internal-marks-list', [InternalMarksController::class,'index'])->name('internal-marks-list');
 
-Route::get('internal_marks', [InternalMarksController::class, 'internal']);
+Route::get('internal-marks', [InternalMarksController::class, 'internal']);
+Route::post('/faculty-getsemester',  [InternalMarksController::class, 'get_semester']);
+Route::post('/getsubject', [InternalMarksController::class, 'get_subject'])->name('getSubjects');
+Route::post('/get_month_year', [InternalMarksController::class,'get_month_year']);
+
+Route::get('internal-marks-list', [InternalMarksController::class,'index'])->name('internal-marks-list');
+Route::get('get_number_in_works/{numbers}',[InternalMarksController::class,'get_number_in_works'])->name('get_number_in_works');
+Route::get('/internal-marks/internal-marks-export', [InternalMarksController::class,'internalMarksExport'])->name('internalMarksExport');
+// Route::get('internal_marks', [InternalMarksController::class, 'internal']);
 
 // Route::get('/practical_marks_filling', function () {
 //     return view('ums.master.faculty.practical_marks');
 // });
 Route::get('practical_marks_filling', [PracticalMarksController::class, 'practicalMarksShow']);
+Route::get('/practical-marks',[PracticalMarksController::class,'practical'])->name('practical-marks');
+Route::post('/practical-marks', [PracticalMarksController::class,'post_practical']);
 //danish
 
 //setting

@@ -122,7 +122,7 @@ class InternalMarksController extends AdminController
 		$data['assign_maximum']=$request->assign_maximum;
 		if($request->course==49){
 
-		return view('faculty.internal.add-mbbs',$data);
+		return view('ums.master.faculty.internal_marks_filling',$data);
 			}
 		}
 		//dd($students);
@@ -322,21 +322,23 @@ class InternalMarksController extends AdminController
 		return redirect('faculty/internal-marks-show/?session='.$request->session.'&sub_code='.$request->sub_code)->with('Success','Data Submitted Succesfully');
 	}
 
-	public function get_semester (Request $request)
-	{
-		$html='<option value="">--Select Semester--</option>';
-		$mapped_Semester=InternalMarksMapping::select('semesters.name','semesters.id','internal_marks_mappings.semester_id')
-		->join('semesters','semesters.id','internal_marks_mappings.semester_id')
-		->distinct()
-		->where('internal_marks_mappings.course_id',$request->course)
-		->get();
-		
-		foreach($mapped_Semester as $sc){
-			$html.='<option value="'.$sc->id.'">'.$sc->name.'</option>';
-		}
-		return $html;
-		//dd($mapped_Semester);
-	}
+	public function get_semester(Request $request)
+{
+    $html = '<option value="">--Select Semester--</option>';
+    
+    $mapped_Semester = InternalMarksMapping::select('semesters.name', 'semesters.id', 'internal_marks_mappings.semester_id')
+        ->join('semesters', 'semesters.id', '=', 'internal_marks_mappings.semester_id')
+        ->distinct()
+        ->where('internal_marks_mappings.course_id', $request->course)
+        ->get();
+
+    foreach ($mapped_Semester as $sc) {
+        $html .= '<option value="' . $sc->id . '">' . $sc->name . '</option>';
+    }
+
+    return $html;
+}
+
 	public function get_subject(Request $request)
 	{
 		//dd($request->all());

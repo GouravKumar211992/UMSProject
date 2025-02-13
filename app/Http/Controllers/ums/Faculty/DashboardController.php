@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\ums\Faculty;
 
-use View;
-use Auth;
-use App\User;
+use App\models\ums\User;
+use Illuminate\Support\Facades\View;
+
+
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Helpers\ConstantHelper;
 use App\Http\Controllers\ums\AdminController;
@@ -60,7 +63,7 @@ class DashboardController extends AdminController
 		$data['internal_marks_filled']=count($internal_marks_filled);
 		$pending = $student->whereNotIn('roll_number',$duplicate_roll_no);
 		$data['pending']=count($pending->get());
-        return view('faculty.dashboard.index',$data);
+        return view('ums.master.faculty.faculty_dashboard',$data);
 		}
 		$mapped_papers=InternalMarksMapping::where('faculty_id',$user)
 							->orderBy('id', 'DESC')->get();
@@ -86,7 +89,8 @@ class DashboardController extends AdminController
 		$data['internal_marks_filled']=count($internal_marks_filled);
 		$pending = $student->whereNotIn('roll_number',$duplicate_roll_no);
 		$data['pending']=count($pending->get());
-        return view('faculty.dashboard.index',$data);
+		// dd($data);
+        return view('ums.master.faculty.faculty_dashboard',$data);
     }
 
     public function profile()
