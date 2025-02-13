@@ -33,7 +33,7 @@ use App\Http\Controllers\ums\Admin\BackPaperController;
 
 use App\Http\Controllers\ums\Admin\Master\FeeController;
 use App\Http\Controllers\ums\Admin\OldGradeController;
-use App\Http\Controllers\ums\Admin\Master\SemesterController;
+// use App\Http\Controllers\ums\Admin\Master\SemesterController;
 use App\Http\Controllers\ums\Admin\Master\StreamController;
 use App\Http\Controllers\ums\Admin\TimetableController;
 use App\Http\Controllers\ums\Admin\GrievanceController;
@@ -69,8 +69,8 @@ use App\Http\Controllers\ums\Faculty\DashboardController as FacultyDashboardCont
 use App\Http\Controllers\ums\HomeController as UmsHomeController;
 use App\Http\Controllers\ums\User\HomeController as UserHomeController;
 use App\Http\Controllers\ums\Admin\Master\NotificationController as MasterNotificationController;
-// use App\Http\Controllers\ums\Admin\Master\SemesterController
-use App\Http\Controllers\ums\Student\SemesterFeeController;
+use App\Http\Controllers\ums\Admin\Master\SemesterFeeController as MasterSemesterFeeController;
+// use App\Http\Controllers\ums\Student\SemesterFeeController;
 use App\Http\Controllers\ums\Student\SemesterFeeController as studentformsemesterFeeController;
 use App\Http\Controllers\LoanProgress\SanctionLetterController;
 use App\Http\Controllers\ServiceController;
@@ -684,16 +684,17 @@ Route::get('/semester_fee', function () {
     return view('ums.studentfees.semester_fee');
 });
 // Route definition example:
-Route::get('semester-fee', [SemesterFeeController::class, 'index'])->name('semester-fee-index');
-Route::get('semester', [studentformsemesterFeeController::class,'addfee'])->name('student-semesterfee');
-Route::post('semester', [studentformsemesterFeeController::class,'addsemesterFee']);
-Route::get('/add_semesterfee', function () {
-    return view('ums.studentfees.add_semesterfee');
-});
+Route::get('/master/fee/delete-model-trim/{slug}', 'Master\FeeController@softDelete')->name('delete-fee');
 
-Route::get('/edit_semesterfee', function () {
-    return view('ums.studentfees.edit_semesterfee');
-});
+Route::get('semester-fee', [MasterSemesterFeeController::class, 'index'])->name('semester-fee-index');
+Route::get('add_semesterfee', [MasterSemesterFeeController::class,'add']);
+
+
+Route::post('semester', [studentformsemesterFeeController::class,'addsemesterFee'])->name('student-semesterfee');
+Route::get('/master/semesterfee/submit-semesterfee-form', [MasterSemesterFeeController::class,'addSemesterFee'])->name('add-semesterfee');
+Route::post('/master/semesterfee/student-data', [MasterSemesterFeeController::class,'student_data'])->name('get-student-data');
+Route::post('/master/semesterfee/course-data', [MasterSemesterFeeController::class,'course_data'])->name('get-course-data');
+
 
 
 //result
@@ -781,6 +782,25 @@ Route::get('admitcard-download/{id}', [AdmitCardController::class,'adminCardView
 Route::get('/master/examfee/delete-regular-exam-form/{slug}', [MasterExamFeeAllController::class,'deleteRegularExamForm'])->name('delete-regular-exam-form');
 Route::get('/master/examfee/view/{slug}', [MasterExamFeeAllController::class,'view_exam_form'])->name('view_exam_form');
 Route::get('admitcard-download', [StudentAdmitCardController::class,'index'])->name('download-admit-card');
+Route::get('scribe-admitcard', [StudentAdmitCardController::class,'scribe'])->name('scribe-admitcard');
+Route::get('phd-entrance-admitcard', [StudentAdmitCardController::class,'phd_admitcard'])->name('phd-entrance-admitcard');
+
+Route::post('phd-entrance-admitcard-2023', 'Student\AdmitCardController@phdEntranceAdmitcard2023')->name('phdEntranceAdmitcard2023');
+Route::get('entrance-admitcard', 'Student\AdmitCardController@entrance_admitcard')->name('entrance-admitcard');
+Route::get('admitcard-view-result/{id}', 'Student\AdmitCardController@admitcard_view_result')->name('admitcard-view-result');
+Route::get('answer-key/{slug}', 'Student\AdmitCardController@answer_key')->name('answer-key');
+Route::get('phd-scribe-form/{id}', 'Student\AdmitCardController@phdScribeForm')->name('phd-scribe-form');
+Route::post('phd-scribe-form/{id}	', 'Student\AdmitCardController@phdScribeFormSave');
+Route::get('phd-scribe-admitcard/{id}', 'Student\AdmitCardController@phdScribeForm')->name('phd-scribe-admitcard');
+// Ph .D Admit Card
+Route::get('phd-portal', 'Phd\PhdController@admitcardportal')->name('phd-portal');
+Route::post('phd-admitcard-portal', 'Phd\PhdController@phdadmitcard_login');
+Route::get('phd-admitcard-view-result/{id}', 'Phd\PhdController@phdViewResult')->name('phd-admitcard-view-result');
+
+
+
+
+
 Route::get('/master/exam-edit-back/{slug}', [MasterExamFeeAllController::class,'edit_exam_back_form'])->name('edit-back-exam-form');
 Route::get('/master/exam-edit-back-single/{slug}', [MasterExamFeeAllController::class,'edit_exam_back_form_single'])->name('edit_exam_back_form_single');
 Route::post('/master/exam-edit-back/{slug}', [MasterExamFeeAllController::class,'edit_exam_back_form_post']);

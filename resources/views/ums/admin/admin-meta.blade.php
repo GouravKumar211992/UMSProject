@@ -31,12 +31,10 @@ data-menu="vertical-menu-modern" data-col="">
 
 
 <!-- BEGIN: Body-->
-
 @include('ums.admin.navbar')
 <!-- BEGIN: Main Menu-->
 @include('ums.admin.sidebar')
-<!-- END: Main Menu-->
-{{-- @include('ums.admin.header') --}}
+
 
 @yield('content')
 

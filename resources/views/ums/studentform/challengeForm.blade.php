@@ -282,7 +282,7 @@
 	<script src="../../../app-assets/js/scripts/forms/form-select2.js"></script>
     <!-- END: Page JS--> --}}
 
-    <script>
+    {{-- <script>
         $(window).on('load', function() {
             if (feather) {
                 feather.replace({
@@ -420,12 +420,9 @@
 });
 		
 		 
-		
+		 --}}
 		
     </script>
-{{-- </body>
-<!-- END: Body-->
 
-</html> --}}
 
 @endsection

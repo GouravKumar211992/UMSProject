@@ -25,9 +25,9 @@ class StudentController extends AdminController
 
     public function index(Request $request)
     {
+        
         $students = array();
         $students = Student::orderBy('id', 'DESC');
-  
         if ($request->search) {
             $keyword = $request->search;
     
@@ -53,25 +53,27 @@ class StudentController extends AdminController
     // public function index(Request $request)
     // {   
        
+    //     $students = array();
     //     $students = Student::orderBy('id', 'DESC');
     //     if($request->search) {
     //         $keyword = $request->search;
             
     //         $students->where(function($q) use ($keyword){
-
+                
     //             $q->where('first_Name', 'LIKE', '%'.$keyword.'%')
-    //                 ->orWhere('email', 'LIKE', '%'.$keyword.'%')
-    //                 ->orWhere('mobile', 'LIKE', '%'.$keyword.'%')
-    //                 ->orWhere('roll_number', 'LIKE', '%'.$keyword.'%');
+    //             ->orWhere('email', 'LIKE', '%'.$keyword.'%')
+    //             ->orWhere('mobile', 'LIKE', '%'.$keyword.'%')
+    //             ->orWhere('roll_number', 'LIKE', '%'.$keyword.'%');
     //         });
     //         $students = $students->get();
-    //         dd($students);
+    //         // dd($students);
     //     }
         
-    //     return view('ums.usermanagement.student_list.index', [
+    //     return view('ums.usermanagement.student.index', [
     //         'students' => $students
     //     ]);
     // }
+
 
     public function icard(Request $request, $id)
     {

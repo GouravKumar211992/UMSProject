@@ -70,11 +70,7 @@ class AdmitCardController extends Controller
 				if($examfee->course_id==49 || $examfee->course_id==64 || $examfee->course_id==95 || $examfee->course_id==96){
 					
 					// dd($AdmitCard);
-<<<<<<< HEAD
 					// dd($examfee->id);
-=======
-					dd($examfee->id);
->>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 			return view('ums.exam.mbbs-admitcard-page', compact('page_title','sub_title','examfee','subjects','AdmitCard','student_details','sessionName'));
 		}else{
 			return view('ums.exam.admitcardview', compact('page_title','sub_title','examfee','subjects','AdmitCard','student_details','sessionName','examData_photo'));
@@ -172,7 +168,7 @@ class AdmitCardController extends Controller
 		 if($examfee){
            $subjects = $examfee->getAdmitCardSubjects();
         }
-		return view('student.admitcard.scribeadmitcard', [
+		return view('ums.exam.scribeadmitcard', [
             'page_title' => "Scribe Admit Card",
             'sub_title' => "records",
 			'subjects' => $subjects,

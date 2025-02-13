@@ -22,8 +22,8 @@
                     <li><a class="d-flex align-items-center" href="{{ url('/admin-get') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Admin List</span></a></li>
                     <li><a class="d-flex align-items-center" href="{{ url('/users') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">User List</span></a></li>
                     <li><a class="d-flex align-items-center" href="{{ url('/students') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Student List</span></a></li>
-                    <li><a class="d-flex align-items-center" href="{{ url('/student-hindi-name') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Student Name (Hindi/English)</span></a></li>
-                    <li><a class="d-flex align-items-center" href="{{ url('#') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Enrollment List</span></a></li>
+                    {{-- <li><a class="d-flex align-items-center" href="{{ url('/student-hindi-name') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Student Name (Hindi/English)</span></a></li> --}}
+                    {{-- <li><a class="d-flex align-items-center" href="{{ url('#') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Enrollment List</span></a></li> --}}
                     <li><a class="d-flex align-items-center" href="{{ url('/email-template') }}"><i data-feather="circle"></i><span class="menu-item text-truncate">Email Template</span></a></li>
                 </ul>
             </li>
@@ -297,7 +297,7 @@
      {{-- icard end  --}}
 
      {{-- student fees start  --}}
-     <li class="nav-item"><a class="d-flex align-items-center" href="{{ url('/studentfees') }}"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+     {{-- <li class="nav-item"><a class="d-flex align-items-center" href="{{ url('/studentfees') }}"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
         <span class="menu-title text-truncate" >Student Fee
          </span></a>
  <ul class="menu-content">
@@ -306,7 +306,7 @@
      </li>
     
 </ul>
-     </li>
+     </li> --}}
      {{-- student fees end  --}}
 
      {{-- student form start  --}}

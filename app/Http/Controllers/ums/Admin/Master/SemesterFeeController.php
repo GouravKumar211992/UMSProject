@@ -47,7 +47,7 @@ class SemesterFeeController extends AdminController
         $semesterfees = StudentSemesterFee::with('course', 'semester')->paginate(10);
 
        $course = Course::all();
-       $semesterfees = $semesterfees->paginate(10);
+      
 
             return view('ums.studentfees.semester_fee', [
             'page_title' => "SemesterFeeFee",
@@ -60,7 +60,7 @@ class SemesterFeeController extends AdminController
     public function add(Request $request)
     {
         
-        return view('admin.master.semesterfee.addfee', [
+        return view('ums.studentfees.add_semesterfee', [
             'page_title' => "Add New",
             'sub_title' => "Fee"
         ]);
