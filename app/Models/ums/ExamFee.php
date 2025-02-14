@@ -1,8 +1,12 @@
 <?php
 
-namespace App\models\ums;
+namespace App\Models\ums;
+
+use App\Models\ums\Student;
 
 use App\Models\ums\Course;
+
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Mockery\Matcher\Subset;

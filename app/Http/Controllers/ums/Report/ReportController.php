@@ -15,7 +15,7 @@ use App\Models\ums\ExamForm;
 use App\Models\ums\Campuse;
 
 use App\Models\ums\Semester;
-use App\Scrutiny;
+use App\Models\ums\Scrutiny;
 use App\Models\ums\Course;
 use App\Models\ums\Result;
 use App\Models\ums\Category;
@@ -247,7 +247,7 @@ class ReportController extends Controller
     // $batch = AcademicSession::all();
     $courses = Course::where('campus_id', $request->campus_id)->orderBy('name')->get();
     $semesters = Semester::where('course_id', $request->course_id)->orderBy('id', 'asc')->get();
-    $results = Result::select('subject_code', 'subject_name')
+    $results = Result::select('subject_code', 'subject_name', 'subject_position')
       ->where('course_id', $request->course_id)
       ->where('semester', $request->semester_id)
       ->where('roll_no', 'LIKE', $batch . '%')
@@ -335,7 +335,7 @@ class ReportController extends Controller
       $back_status_text = null;
     }
     
-    $results = Result::select('results.course_id', 'results.semester', 'exam_session', 'status', 'back_status_text')
+    $results = Result::select('results.course_id', 'results.semester', 'results.exam_session', 'results.status', 'results.back_status_text' , 'results.semester_number')
       ->join('student_subjects', function ($query) use ($request) {
         $query->on('student_subjects.roll_number', 'results.roll_no')
           ->on('student_subjects.course_id', 'results.course_id')
@@ -346,13 +346,13 @@ class ReportController extends Controller
 
     //   ->groupBy('course_id', 'semester', 'status')      //  updated line//
 
-    ->groupBy('results.course_id', 'results.semester', 'results.status', 'results.exam_session', 'results.back_status_text')  
+    ->groupBy('results.course_id', 'results.semester', 'results.status', 'results.exam_session', 'results.back_status_text' , 'results.semester_number')  
     ->where('result_type', 'new')
     ->where('exam_session', $request->exam_session)
     ->where('back_status_text', $back_status_text)
-    ->orderBy('course_id')
-    ->orderBy('semester_number')
-    ->orderBy('status')
+    ->orderBy('results.course_id')
+    ->orderBy('results.semester_number')
+    ->orderBy('results.status')
     ->get();                       
 
     return view('ums.reports.tr_summary', compact('results'));

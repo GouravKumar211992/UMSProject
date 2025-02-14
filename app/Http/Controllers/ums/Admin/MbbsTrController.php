@@ -37,199 +37,414 @@ class MbbsTrController extends  AdminController
 	}
 	
 	// This function returns an array of batch values.
-// public function batchArray()
-// {
-//     // Example static array, replace this with dynamic data if necessary
-//     return ['2019-2020', '2020-2021', '2021-2022', '2021-2022']; 
+public function batchArray()
+{
+    // Example static array, replace this with dynamic data if necessary
+    return ['2019-2020', '2020-2021', '2021-2022', '2021-2022']; 
 
-//     // Alternatively, if batches are fetched from a database:
-//     // return Batch::pluck('name')->toArray();
-// }
+    // Alternatively, if batches are fetched from a database:
+    // return Batch::pluck('name')->toArray();
+}
 
 	// s
 	
-	 public function index(Request $request)
-	 {
-		 $data['courses'] = Course::where('id',49)->get();
-		 $data['semesters'] = Semester::where('course_id',49)->orderBy('id','asc')->get();
-		 $data['sessions'] = AcademicSession::get();
-		 $data['batchArray'] = $this->batchArray();
-		 $session = $request->session;
-		 $course_id = $request->course;
-		 $semester_id = $request->semester;
-		 $batch = $request->batch;
-		 $batchPrefix = $this->batchPrefixByBatch($request->batch); // This is an array
-		 $data['course_id'] = $course_id;
-		 $data['semester_id'] = $semester_id;
+	//  public function index(Request $request)
+	//  {
+	// 	 $data['courses'] = Course::where('id',49)->get();
+	// 	 $data['semesters'] = Semester::where('course_id',49)->orderBy('id','asc')->get();
+	// 	 $data['sessions'] = AcademicSession::get();
+	// 	 $data['batchArray'] = $this->batchArray();
+	// 	 $session = $request->session;
+	// 	 $course_id = $request->course;
+	// 	 $semester_id = $request->semester;
+	// 	 $batch = $request->batch;
+	// 	 $batchPrefix = $this->batchPrefixByBatch($request->batch); // This is an array
+	// 	 $data['course_id'] = $course_id;
+	// 	 $data['semester_id'] = $semester_id;
 	 
-		 $subjects_group_all = Subject::select('combined_subject_name', DB::raw('count(1) as combined_count'))
-			 ->where(['course_id' => $course_id, 'semester_id' => $semester_id])
-			 ->whereNotNull('combined_subject_name')
-			 ->where('batch', $batch)
-			 ->groupBy('combined_subject_name')
-			 ->orderBy('sub_code', 'asc')
-			 ->get();
+	// 	 $subjects_group_all = Subject::select('combined_subject_name', DB::raw('count(1) as combined_count'))
+	// 		 ->where(['course_id' => $course_id, 'semester_id' => $semester_id])
+	// 		 ->whereNotNull('combined_subject_name')
+	// 		 ->where('batch', $batch)
+	// 		 ->groupBy('combined_subject_name')
+	// 		 ->orderBy('sub_code', 'asc')
+	// 		 ->get();
 	 
-		 $subject_total = Subject::where('course_id', $course_id)
-			 ->whereNotNull('combined_subject_name')
-			 ->where('semester_id', $semester_id)
-			 ->where('batch', $batch)
-			 ->get();
-		 $data['subject_total'] = $subject_total->sum('maximum_mark');
+	// 	 $subject_total = Subject::where('course_id', $course_id)
+	// 		 ->whereNotNull('combined_subject_name')
+	// 		 ->where('semester_id', $semester_id)
+	// 		 ->where('batch', $batch)
+	// 		 ->get();
+	// 	 $data['subject_total'] = $subject_total->sum('maximum_mark');
 	 
-		 $subjects_group_all->each(function ($item_group, $key_group) use ($course_id, $semester_id, $batch, $batchPrefix) {
-			 $subjects = Subject::where('course_id', $course_id)
-				 ->where('semester_id', $semester_id)
-				 ->whereNotNull('combined_subject_name')
-				 ->where('batch', $batch)
-				 ->where('combined_subject_name', $item_group->combined_subject_name)
-				 ->get();
+	// 	 $subjects_group_all->each(function ($item_group, $key_group) use ($course_id, $semester_id, $batch, $batchPrefix) {
+	// 		 $subjects = Subject::where('course_id', $course_id)
+	// 			 ->where('semester_id', $semester_id)
+	// 			 ->whereNotNull('combined_subject_name')
+	// 			 ->where('batch', $batch)
+	// 			 ->where('combined_subject_name', $item_group->combined_subject_name)
+	// 			 ->get();
 	 
-			 $sub_theory_external = Subject::where('course_id', $course_id)
-				 ->where('semester_id', $semester_id)
-				 ->where('batch', $batch)
-				 ->where('combined_subject_name', $item_group->combined_subject_name)
-				 ->where('subject_type', 'Theory')
-				 ->get();
-			 $item_group['sub_theory_external'] = $sub_theory_external->sum('maximum_mark');
+	// 		 $sub_theory_external = Subject::where('course_id', $course_id)
+	// 			 ->where('semester_id', $semester_id)
+	// 			 ->where('batch', $batch)
+	// 			 ->where('combined_subject_name', $item_group->combined_subject_name)
+	// 			 ->where('subject_type', 'Theory')
+	// 			 ->get();
+	// 		 $item_group['sub_theory_external'] = $sub_theory_external->sum('maximum_mark');
 	 
-			 $sub_theory_internal = Subject::where('course_id', $course_id)
-				 ->where('semester_id', $semester_id)
-				 ->where('batch', $batch)
-				 ->where('combined_subject_name', $item_group->combined_subject_name)
-				 ->where('subject_type', 'Theory')
-				 ->get();
-			 $item_group['sub_theory_internal'] = $sub_theory_internal->sum('internal_maximum_mark');
+	// 		 $sub_theory_internal = Subject::where('course_id', $course_id)
+	// 			 ->where('semester_id', $semester_id)
+	// 			 ->where('batch', $batch)
+	// 			 ->where('combined_subject_name', $item_group->combined_subject_name)
+	// 			 ->where('subject_type', 'Theory')
+	// 			 ->get();
+	// 		 $item_group['sub_theory_internal'] = $sub_theory_internal->sum('internal_maximum_mark');
 	 
-			 $sub_practical_internal = Subject::where('course_id', $course_id)
-				 ->where('semester_id', $semester_id)
-				 ->where('batch', $batch)
-				 ->where('combined_subject_name', $item_group->combined_subject_name)
-				 ->where('subject_type', 'Practical')
-				 ->get();
-			 $item_group['sub_practical_internal'] = $sub_practical_internal->sum('internal_maximum_mark');
+	// 		 $sub_practical_internal = Subject::where('course_id', $course_id)
+	// 			 ->where('semester_id', $semester_id)
+	// 			 ->where('batch', $batch)
+	// 			 ->where('combined_subject_name', $item_group->combined_subject_name)
+	// 			 ->where('subject_type', 'Practical')
+	// 			 ->get();
+	// 		 $item_group['sub_practical_internal'] = $sub_practical_internal->sum('internal_maximum_mark');
 	 
-			 $item_group['sub_theory_practical_internal'] = ($item_group['sub_theory_internal'] + $item_group['sub_practical_internal']);
-			 $item_group['subjects_total'] = ($subjects->sum('maximum_mark'));
-			 $item_group['subjects'] = $subjects;
-		 });
+	// 		 $item_group['sub_theory_practical_internal'] = ($item_group['sub_theory_internal'] + $item_group['sub_practical_internal']);
+	// 		 $item_group['subjects_total'] = ($subjects->sum('maximum_mark'));
+	// 		 $item_group['subjects'] = $subjects;
+	// 	 });
 	 
-		 $data['subjects_group_all'] = $subjects_group_all;
+	// 	 $data['subjects_group_all'] = $subjects_group_all;
 	 
-		 $scrutiny_data = Result::where('scrutiny', 1)->pluck('roll_no')->toArray();
+	// 	 $scrutiny_data = Result::where('scrutiny', 1)->pluck('roll_no')->toArray();
 	 
-		 if ($request->form_type == 'compartment') {
-			 $mbbs_exam_forms = ExamFee::withTrashed()
-				 ->where('course_id', $request->course)
-				 ->where('semester', $request->semester)
-				 ->where('form_type', 'compartment')
-				 ->where('academic_session', $session)
-				 ->where(function ($query) use ($batchPrefix) {
-					 foreach ($batchPrefix as $batch) {
-						 $query->orWhere('roll_no', 'LIKE', $batch . '%');
-					 }
-				 })
-				 ->distinct()
-				 ->pluck('roll_no')
-				 ->toArray();
-			 $students_query = Result::select('roll_no', 'enrollment_no', 'course_id', 'semester')
-				 ->where(['course_id' => $request->course, 'semester' => $request->semester])
-				 ->where('exam_session', $session)
-				 ->where(function ($query) use ($batchPrefix) {
-					 foreach ($batchPrefix as $batch) {
-						 $query->orWhere('roll_no', 'LIKE', $batch . '%');
-					 }
-				 })
-				 ->whereIn('roll_no', $mbbs_exam_forms);
-		 } else {
-			 $mbbs_exam_forms = ExamFee::withTrashed()
-				 ->where('course_id', $request->course)
-				 ->where('academic_session', $session)
-				 ->where('semester', $request->semester)
-				 ->where('form_type', 'regular')
-				 ->where(function ($query) use ($batchPrefix) {
-					 foreach ($batchPrefix as $batch) {
-						 $query->orWhere('roll_no', 'LIKE', $batch . '%');
-					 }
-				 })
-				 ->distinct()
-				 ->pluck('roll_no')
-				 ->toArray();
-			 $students_query = Result::select('roll_no', 'course_id', 'semester')
-				 ->where(['course_id' => $request->course, 'semester' => $request->semester])
-				 ->where('exam_session', $session)
-				 ->where(function ($query) use ($batchPrefix) {
-					 foreach ($batchPrefix as $batch) {
-						 $query->orWhere('roll_no', 'LIKE', $batch . '%');
-					 }
-				 })
-				 ->whereIn('roll_no', $mbbs_exam_forms);
-		 }
+	// 	 if ($request->form_type == 'compartment') {
+	// 		 $mbbs_exam_forms = ExamFee::withTrashed()
+	// 			 ->where('course_id', $request->course)
+	// 			 ->where('semester', $request->semester)
+	// 			 ->where('form_type', 'compartment')
+	// 			 ->where('academic_session', $session)
+	// 			 ->where(function ($query) use ($batchPrefix) {
+	// 				 foreach ($batchPrefix as $batch) {
+	// 					 $query->orWhere('roll_no', 'LIKE', $batch . '%');
+	// 				 }
+	// 			 })
+	// 			 ->distinct()
+	// 			 ->pluck('roll_no')
+	// 			 ->toArray();
+	// 		 $students_query = Result::select('roll_no', 'enrollment_no', 'course_id', 'semester')
+	// 			 ->where(['course_id' => $request->course, 'semester' => $request->semester])
+	// 			 ->where('exam_session', $session)
+	// 			 ->where(function ($query) use ($batchPrefix) {
+	// 				 foreach ($batchPrefix as $batch) {
+	// 					 $query->orWhere('roll_no', 'LIKE', $batch . '%');
+	// 				 }
+	// 			 })
+	// 			 ->whereIn('roll_no', $mbbs_exam_forms);
+	// 	 } else {
+	// 		 $mbbs_exam_forms = ExamFee::withTrashed()
+	// 			 ->where('course_id', $request->course)
+	// 			 ->where('academic_session', $session)
+	// 			 ->where('semester', $request->semester)
+	// 			 ->where('form_type', 'regular')
+	// 			 ->where(function ($query) use ($batchPrefix) {
+	// 				 foreach ($batchPrefix as $batch) {
+	// 					 $query->orWhere('roll_no', 'LIKE', $batch . '%');
+	// 				 }
+	// 			 })
+	// 			 ->distinct()
+	// 			 ->pluck('roll_no')
+	// 			 ->toArray();
+	// 		 $students_query = Result::select('roll_no', 'course_id', 'semester')
+	// 			 ->where(['course_id' => $request->course, 'semester' => $request->semester])
+	// 			 ->where('exam_session', $session)
+	// 			 ->where(function ($query) use ($batchPrefix) {
+	// 				 foreach ($batchPrefix as $batch) {
+	// 					 $query->orWhere('roll_no', 'LIKE', $batch . '%');
+	// 				 }
+	// 			 })
+	// 			 ->whereIn('roll_no', $mbbs_exam_forms);
+	// 	 }
 	 
-		 if ($request->form_type == 'scrutiny') {
-			 $students = $students_query->whereIn('roll_no', $scrutiny_data)->distinct()->get();
-		 } else {
-			 $students = $students_query->distinct()->get();
-		 }
+	// 	 if ($request->form_type == 'scrutiny') {
+	// 		 $students = $students_query->whereIn('roll_no', $scrutiny_data)->distinct()->get();
+	// 	 } else {
+	// 		 $students = $students_query->distinct()->get();
+	// 	 }
 	 
-		 $students->each(function ($item_student, $key_student) use ($course_id, $semester_id, $session, $request, $batch, $batchPrefix) {
-			 $grand_total = Result::where('roll_no', $item_student->roll_no)
-				 ->where('course_id', $course_id)
-				 ->where('semester', $semester_id)
-				 ->where('exam_session', $session)
-				 ->where(function ($query) use ($batchPrefix) {
-					 foreach ($batchPrefix as $batch) {
-						 $query->orWhere('roll_no', 'LIKE', $batch . '%');
-					 }
-				 })
-				 ->get();
-			 $item_student['grand_total'] = $grand_total->sum('external_marks');
+	// 	 $students->each(function ($item_student, $key_student) use ($course_id, $semester_id, $session, $request, $batch, $batchPrefix) {
+	// 		 $grand_total = Result::where('roll_no', $item_student->roll_no)
+	// 			 ->where('course_id', $course_id)
+	// 			 ->where('semester', $semester_id)
+	// 			 ->where('exam_session', $session)
+	// 			 ->where(function ($query) use ($batchPrefix) {
+	// 				 foreach ($batchPrefix as $batch) {
+	// 					 $query->orWhere('roll_no', 'LIKE', $batch . '%');
+	// 				 }
+	// 			 })
+	// 			 ->get();
+	// 		 $item_student['grand_total'] = $grand_total->sum('external_marks');
 	 
-			 $subjects_group_all = Subject::select('combined_subject_name', DB::raw('count(1) as combined_count'))
-				 ->whereNotNull('combined_subject_name')
-				 ->where('batch', $batch)
-				 ->where(['course_id' => $course_id, 'semester_id' => $semester_id])
-				 ->groupBy('combined_subject_name')
-				 ->orderBy('sub_code', 'asc')
-				 ->get();
+	// 		 $subjects_group_all = Subject::select('combined_subject_name', DB::raw('count(1) as combined_count'))
+	// 			 ->whereNotNull('combined_subject_name')
+	// 			 ->where('batch', $batch)
+	// 			 ->where(['course_id' => $course_id, 'semester_id' => $semester_id])
+	// 			 ->groupBy('combined_subject_name')
+	// 			 ->orderBy('sub_code', 'asc')
+	// 			 ->get();
 	 
-			 $item_student['subjects_group_all'] = $subjects_group_all->each(function ($item_group, $key_group) use ($course_id, $semester_id, $item_student, $session, $request, $batch, $batchPrefix) {
-				 $subjects = Subject::where('course_id', $course_id)
-					 ->whereNotNull('combined_subject_name')
-					 ->where('semester_id', $semester_id)
-					 ->where('batch', $batch)
-					 ->where('combined_subject_name', $item_group->combined_subject_name)
-					 ->distinct()
-					 ->orderBy('sub_code', 'asc')
-					 ->get();
+	// 		 $item_student['subjects_group_all'] = $subjects_group_all->each(function ($item_group, $key_group) use ($course_id, $semester_id, $item_student, $session, $request, $batch, $batchPrefix) {
+	// 			 $subjects = Subject::where('course_id', $course_id)
+	// 				 ->whereNotNull('combined_subject_name')
+	// 				 ->where('semester_id', $semester_id)
+	// 				 ->where('batch', $batch)
+	// 				 ->where('combined_subject_name', $item_group->combined_subject_name)
+	// 				 ->distinct()
+	// 				 ->orderBy('sub_code', 'asc')
+	// 				 ->get();
 	 
-				 $subject_result = Result::join('subjects', 'subjects.sub_code', 'results.subject_code')
-					 ->where('combined_subject_name', $item_group->combined_subject_name)
-					 ->where('roll_no', $item_student->roll_no)
-					 ->where('results.course_id', $course_id)
-					 ->where('semester', $semester_id)
-					 ->where('exam_session', $session)
-					 ->where('batch', $batch)
-					 ->get();
+	// 			 $subject_result = Result::join('subjects', 'subjects.sub_code', 'results.subject_code')
+	// 				 ->where('combined_subject_name', $item_group->combined_subject_name)
+	// 				 ->where('roll_no', $item_student->roll_no)
+	// 				 ->where('results.course_id', $course_id)
+	// 				 ->where('semester', $semester_id)
+	// 				 ->where('exam_session', $session)
+	// 				 ->where('batch', $batch)
+	// 				 ->get();
 	 
-				 $student_total = ($subject_result->sum('external_marks'));
-				 $subjects_total = ($subjects->sum('maximum_mark'));
-				 $item_group['student_total'] = $student_total;
-				 $item_group['subjects_total'] = $subjects_total;
-				 $item_group['subjects'] = $subjects;
-			 });
+	// 			 $student_total = ($subject_result->sum('external_marks'));
+	// 			 $subjects_total = ($subjects->sum('maximum_mark'));
+	// 			 $item_group['student_total'] = $student_total;
+	// 			 $item_group['subjects_total'] = $subjects_total;
+	// 			 $item_group['subjects'] = $subjects;
+	// 		 });
 	 
-			 $result_final_text = $item_student->final_result($item_student);
-			 $item_student['final_result'] = $result_final_text;
-			 $this->updateTrResult($item_student, $result_final_text);
-		 });
+	// 		 $result_final_text = $item_student->final_result($item_student);
+	// 		 $item_student['final_result'] = $result_final_text;
+	// 		 $this->updateTrResult($item_student, $result_final_text);
+	// 	 });
 	 
 		
-		 $data['students'] = $students;
+	// 	 $data['students'] = $students;
 	 
-		 return view('ums.mbbsparanursing.mbbs_tr', $data);
-	 }
+	// 	 return view('ums.mbbsparanursing.mbbs_tr', $data);
+	//  }
 	 
+
+
+	public function index(Request $request)
+	{
+		$data['courses'] = Course::where('id',49)->get();
+		$data['semesters'] = Semester::where('course_id',49)->orderBy('id','asc')->get();
+		$data['sessions'] = AcademicSession::get();
+		$data['batchArray'] = $this->batchArray();
+		$session = $request->session;
+		$course_id = $request->course;
+		$semester_id = $request->semester;
+		$batch = $request->batch;
+		$batchPrefix = $this->batchPrefixByBatch($request->batch); // This is an array
+		$data['course_id'] = $course_id;
+		$data['semester_id'] = $semester_id;
+	
+		$subjects_group_all = Subject::select('combined_subject_name', DB::raw('count(1) as combined_count'))
+			->where(['course_id' => $course_id, 'semester_id' => $semester_id])
+			->whereNotNull('combined_subject_name')
+			->where('batch', $batch)
+			->groupBy('combined_subject_name',  'sub_code')
+			->orderBy('sub_code', 'asc')
+			->get();
+	
+		$subject_total = Subject::where('course_id', $course_id)
+			->whereNotNull('combined_subject_name')
+			->where('semester_id', $semester_id)
+			->where('batch', $batch)
+			->get();
+		$data['subject_total'] = $subject_total->sum('maximum_mark');
+	
+		$subjects_group_all->each(function ($item_group, $key_group) use ($course_id, $semester_id, $batch, $batchPrefix) {
+			$subjects = Subject::where('course_id', $course_id)
+				->where('semester_id', $semester_id)
+				->whereNotNull('combined_subject_name')
+				->where('batch', $batch)
+				->where('combined_subject_name', $item_group->combined_subject_name)
+				->get();
+	
+			$sub_theory_external = Subject::where('course_id', $course_id)
+				->where('semester_id', $semester_id)
+				->where('batch', $batch)
+				->where('combined_subject_name', $item_group->combined_subject_name)
+				->where('subject_type', 'Theory')
+				->get();
+			$item_group['sub_theory_external'] = $sub_theory_external->sum('maximum_mark');
+	
+			$sub_theory_internal = Subject::where('course_id', $course_id)
+				->where('semester_id', $semester_id)
+				->where('batch', $batch)
+				->where('combined_subject_name', $item_group->combined_subject_name)
+				->where('subject_type', 'Theory')
+				->get();
+			$item_group['sub_theory_internal'] = $sub_theory_internal->sum('internal_maximum_mark');
+	
+			$sub_practical_internal = Subject::where('course_id', $course_id)
+				->where('semester_id', $semester_id)
+				->where('batch', $batch)
+				->where('combined_subject_name', $item_group->combined_subject_name)
+				->where('subject_type', 'Practical')
+				->get();
+			$item_group['sub_practical_internal'] = $sub_practical_internal->sum('internal_maximum_mark');
+	
+			$item_group['sub_theory_practical_internal'] = ($item_group['sub_theory_internal'] + $item_group['sub_practical_internal']);
+			$item_group['subjects_total'] = ($subjects->sum('maximum_mark'));
+			$item_group['subjects'] = $subjects;
+		});
+	
+		$data['subjects_group_all'] = $subjects_group_all;
+	
+		$scrutiny_data = Result::where('scrutiny', 1)->pluck('roll_no')->toArray();
+	
+		if ($request->form_type == 'compartment') {
+			$mbbs_exam_forms = ExamFee::withTrashed()
+				->where('course_id', $request->course)
+				->where('semester', $request->semester)
+				->where('form_type', 'compartment')
+				->where('academic_session', $session)
+				->where(function ($query) use ($batchPrefix) {
+					foreach ($batchPrefix as $batch) {
+						$query->orWhere('roll_no', 'LIKE', $batch . '%');
+					}
+				})
+				->distinct()
+				->pluck('roll_no')
+				->toArray();
+			$students_query = Result::select('roll_no', 'enrollment_no', 'course_id', 'semester')
+				->where(['course_id' => $request->course, 'semester' => $request->semester])
+				->where('exam_session', $session)
+				->where(function ($query) use ($batchPrefix) {
+					foreach ($batchPrefix as $batch) {
+						$query->orWhere('roll_no', 'LIKE', $batch . '%');
+					}
+				})
+				->whereIn('roll_no', $mbbs_exam_forms);
+		} else {
+			$mbbs_exam_forms = ExamFee::withTrashed()
+				->where('course_id', $request->course)
+				->where('academic_session', $session)
+				->where('semester', $request->semester)
+				->where('form_type', 'regular')
+				->where(function ($query) use ($batchPrefix) {
+				   if (!is_array($batchPrefix)) {
+					   $batchPrefix = [$batchPrefix]; // Ensure it's an array
+				   }
+				   foreach ($batchPrefix as $batch) {
+					   $query->orWhere('roll_no', 'LIKE', $batch . '%');
+				   }
+			   })
+				//  ->where(function ($query) use ($batchPrefix) {
+			   // 	 foreach ($batchPrefix as $batch) {
+			   // 		 $query->orWhere('roll_no', 'LIKE', $batch . '%');
+			   // 	 }
+			   //  })
+				->distinct()
+				->pluck('roll_no')
+				->toArray();
+			$students_query = Result::select('roll_no', 'course_id', 'semester')
+				->where(['course_id' => $request->course, 'semester' => $request->semester])
+				->where('exam_session', $session)
+			   //  ->where(function ($query) use ($batchPrefix) {
+			   // 	 foreach ($batchPrefix as $batch) {
+			   // 		 $query->orWhere('roll_no', 'LIKE', $batch . '%');
+			   // 	 }
+			   //  })
+
+			   ->where(function ($query) use ($batchPrefix) {
+				   if (!is_array($batchPrefix)) {
+					   $batchPrefix = [$batchPrefix]; // Ensure it's an array
+				   }
+				   foreach ($batchPrefix as $batch) {
+					   $query->orWhere('roll_no', 'LIKE', $batch . '%');
+				   }
+			   })
+
+				->whereIn('roll_no', $mbbs_exam_forms);
+		}
+	
+		if ($request->form_type == 'scrutiny') {
+			$students = $students_query->whereIn('roll_no', $scrutiny_data)->distinct()->get();
+		} else {
+			$students = $students_query->distinct()->get();
+		}
+	
+		$students->each(function ($item_student, $key_student) use ($course_id, $semester_id, $session, $request, $batch, $batchPrefix) {
+			$grand_total = Result::where('roll_no', $item_student->roll_no)
+				->where('course_id', $course_id)
+				->where('semester', $semester_id)
+				->where('exam_session', $session)
+			   //  ->where(function ($query) use ($batchPrefix) {
+			   // 	 foreach ($batchPrefix as $batch) {
+			   // 		 $query->orWhere('roll_no', 'LIKE', $batch . '%');
+			   // 	 }
+			   //  })
+
+
+			   ->where(function ($query) use ($batchPrefix) {
+				   if (!is_array($batchPrefix)) {
+					   $batchPrefix = [$batchPrefix]; // Ensure it's an array
+				   }
+				   foreach ($batchPrefix as $batch) {
+					   $query->orWhere('roll_no', 'LIKE', $batch . '%');
+				   }
+			   })
+
+
+				->get();
+			$item_student['grand_total'] = $grand_total->sum('external_marks');
+	
+			$subjects_group_all = Subject::select('combined_subject_name', DB::raw('count(1) as combined_count'))
+				->whereNotNull('combined_subject_name')
+				->where('batch', $batch)
+				->where(['course_id' => $course_id, 'semester_id' => $semester_id])
+				->groupBy('combined_subject_name' , 'sub_code')
+				->orderBy('sub_code', 'asc')
+				->get();
+	
+			$item_student['subjects_group_all'] = $subjects_group_all->each(function ($item_group, $key_group) use ($course_id, $semester_id, $item_student, $session, $request, $batch, $batchPrefix) {
+				$subjects = Subject::where('course_id', $course_id)
+					->whereNotNull('combined_subject_name')
+					->where('semester_id', $semester_id)
+					->where('batch', $batch)
+					->where('combined_subject_name', $item_group->combined_subject_name)
+					->distinct()
+					->orderBy('sub_code', 'asc')
+					->get();
+	
+				$subject_result = Result::join('subjects', 'subjects.sub_code', 'results.subject_code')
+					->where('combined_subject_name', $item_group->combined_subject_name)
+					->where('roll_no', $item_student->roll_no)
+					->where('results.course_id', $course_id)
+					->where('semester', $semester_id)
+					->where('exam_session', $session)
+					->where('batch', $batch)
+					->get();
+	
+				$student_total = ($subject_result->sum('external_marks'));
+				$subjects_total = ($subjects->sum('maximum_mark'));
+				$item_group['student_total'] = $student_total;
+				$item_group['subjects_total'] = $subjects_total;
+				$item_group['subjects'] = $subjects;
+			});
+	
+			$result_final_text = $item_student->final_result($item_student);
+			$item_student['final_result'] = $result_final_text;
+			$this->updateTrResult($item_student, $result_final_text);
+		});
+	
+	   
+		$data['students'] = $students;
+	
+		return view('ums.mbbsparanursing.mbbs_tr', $data);
+	}
+	
+	
 
 	 public function index_2019_2020And2020_2021(Request $request)
 	 {
@@ -249,7 +464,7 @@ class MbbsTrController extends  AdminController
 		 ->where(['course_id'=>$course_id,'semester_id'=>$semester_id])
 		 ->whereNotNull('combined_subject_name')
 		 ->where('batch',$batch)
-		 ->groupBy('combined_subject_name')
+		 ->groupBy('combined_subject_name', 'sub_code')
 		 ->orderBy('sub_code','asc')
 		 ->get();
  
@@ -352,7 +567,7 @@ class MbbsTrController extends  AdminController
 			 ->whereNotNull('combined_subject_name')
 			 ->where('batch',$batch)
 			 ->where(['course_id'=>$course_id,'semester_id'=>$semester_id])
-			 ->groupBy('combined_subject_name')
+			 ->groupBy('combined_subject_name','sub_code')
 			 ->orderBy('sub_code','asc')
 			 ->get();
 			 $item_student['subjects_group_all'] = $subjects_group_all->each(function ($item_group, $key_group) use ($course_id,$semester_id,$item_student,$session,$request,$batch,$batchPrefix){
@@ -469,7 +684,7 @@ class MbbsTrController extends  AdminController
 		->where(['course_id'=>$course_id,'semester_id'=>$semester_id])
 		->whereNotNull('combined_subject_name')
 		->where('batch',$batch)
-		->groupBy('combined_subject_name')
+		->groupBy('combined_subject_name' )
 		->orderBy('sub_code','asc')
 		->get();
 
@@ -575,7 +790,7 @@ class MbbsTrController extends  AdminController
 			->whereNotNull('combined_subject_name')
 			->where(['course_id'=>$course_id,'semester_id'=>$semester_id])
 			->where('batch',$batch)
-			->groupBy('combined_subject_name')
+			->groupBy('combined_subject_name' )
 			->orderBy('sub_code','asc')
 			->get();
 			$item_student['subjects_group_all'] = $subjects_group_all->each(function ($item_group, $key_group) use ($course_id,$semester_id,$item_student,$session,$batch,$batchPrefix){
@@ -702,7 +917,7 @@ class MbbsTrController extends  AdminController
 		$subjects_group_all = Subject::select('combined_subject_name',DB::raw('count(1) as combined_count'))
 		->where(['course_id'=>$course_id,'semester_id'=>$semester_id])
 		->whereNotNull('combined_subject_name')
-		->groupBy('combined_subject_name')
+		->groupBy('combined_subject_name' )
 		->orderBy('sub_code','asc')
 		->get();
 		$subject_total = Subject::where('course_id',$course_id)
@@ -801,7 +1016,7 @@ class MbbsTrController extends  AdminController
 			$subjects_group_all = Subject::select('combined_subject_name',DB::raw('count(1) as combined_count'))
 			->whereNotNull('combined_subject_name')
 			->where(['course_id'=>$course_id,'semester_id'=>$semester_id])
-			->groupBy('combined_subject_name')
+			->groupBy('combined_subject_name' )
 			->orderBy('sub_code','asc')
 			->get();
 			$item_student['subjects_group_all'] = $subjects_group_all->each(function ($item_group, $key_group) use ($course_id,$semester_id,$item_student,$session,$examType){
@@ -1152,7 +1367,7 @@ class MbbsTrController extends  AdminController
 		$subjects_group_all = Subject::select('combined_subject_name',DB::raw('count(1) as combined_count'))
 		->where(['course_id'=>$course_id,'semester_id'=>$semester_id])
 		->whereNotNull('combined_subject_name')
-		->groupBy('combined_subject_name')
+		->groupBy('combined_subject_name' )
 		->orderBy('sub_code','asc')
 		->get();
 		$subject_total = Subject::where('course_id',$course_id)
@@ -1243,7 +1458,7 @@ class MbbsTrController extends  AdminController
 			$subjects_group_all = Subject::select('combined_subject_name',DB::raw('count(1) as combined_count'))
 			->whereNotNull('combined_subject_name')
 			->where(['course_id'=>$course_id,'semester_id'=>$semester_id])
-			->groupBy('combined_subject_name')
+			->groupBy('combined_subject_name' )
 			->orderBy('sub_code','asc')
 			->get();
 			$item_student['subjects_group_all'] = $subjects_group_all->each(function ($item_group, $key_group) use ($course_id,$semester_id,$item_student,$session){

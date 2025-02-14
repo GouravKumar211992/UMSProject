@@ -1,6 +1,6 @@
 <?php
 
-namespace App\models\ums;
+namespace App\Models\ums;
 
 use App\Models\Semester;
 use Illuminate\Database\Eloquent\Model;
@@ -728,7 +728,10 @@ class Result extends Model implements HasMedia
 
 
 	public function final_result($item_student){
-		$grace_mark_status = $item_student->subjects_group_all->pluck('grace_mark')->toArray();
+		$grace_mark_status = $item_student->subjects_group_all->pluck('grace_mark')
+		->filter(fn($value) => is_string($value) || is_int($value)) // Keep only valid values
+        ->toArray();
+
 		$results = array_count_values($grace_mark_status);
 
 		if(isset($results['#']) && $results['#'] > 0){

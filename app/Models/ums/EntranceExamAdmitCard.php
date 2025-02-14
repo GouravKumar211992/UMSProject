@@ -3,6 +3,8 @@
 namespace App\models\ums;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ums\Application;
+use App\Models\ums\ExamCenter;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EntranceExamAdmitCard extends Model
