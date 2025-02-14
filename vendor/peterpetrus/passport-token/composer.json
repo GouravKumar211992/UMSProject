@@ -1,0 +1,14 @@
+{
+  "name": "peterpetrus/passport-token",
+  "description": "Decoder for Laravel Passport (Bearer) Access Token",
+  "license": "MIT",
+  "require": {
+    "php": "^5.3.3 || ^7.0 || ^8.0",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "classmap": [
+      "src/"
+    ]
+  }
+}

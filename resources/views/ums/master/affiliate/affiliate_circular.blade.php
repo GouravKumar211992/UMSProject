@@ -3,7 +3,17 @@
 @section('content')
     
 
-
+{{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col=""> --}}
+  
+  <!-- BEGIN: Header-->
+  
+  {{-- @include('header')  --}}
+  
+  <!-- END: Header-->
+  
+{{-- @include('sidebar') --}}
+   
+    <!-- END: Main Menu-->
     
     <!-- BEGIN: Content-->
     <div class="app-content content ">

@@ -46,6 +46,7 @@ class Subject extends Model
 		return $this->hasOne(Stream::class, 'id','stream_id')->withTrashed();
 	}
 	
+	
 	public function schedule() {
         return $this->hasOne(ExamSchedule::class,'paper_code','sub_code')->where('courses_id',$this->course_id);
     }

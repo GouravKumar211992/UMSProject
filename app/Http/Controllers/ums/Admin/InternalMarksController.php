@@ -43,7 +43,7 @@ class InternalMarksController extends AdminController
 		$internal_marks = InternalMark::select('internal_marks.roll_number','internal_marks.enrollment_number','internal_marks.mid_semester_marks','internal_marks.assignment_marks','internal_marks.total_marks','internal_marks.student_name','internal_marks.total_marks_words',)->join('internal_marks_mappings','internal_marks_mappings.sub_code','internal_marks.sub_code')->where('internal_marks.faculty_id',$faculty_id)->orderBy('internal_marks.id','DESC')->distinct()->paginate(10);
         //dd($internal_marks);
 
-		return view('faculty.internal.index', [
+		return view('ums.master.faculty.internal_marks_filling', [
             'internal_marks' => $internal_marks
         ]);
     } 
@@ -122,7 +122,7 @@ class InternalMarksController extends AdminController
 		$data['assign_maximum']=$request->assign_maximum;
 		if($request->course==49){
 
-		return view('ums.master.faculty.internal_marks_filling',$data);
+		return view('faculty.internal.add-mbbs',$data);
 			}
 		}
 		//dd($students);
@@ -146,7 +146,139 @@ class InternalMarksController extends AdminController
         return view('faculty.internal.add',$data);
     }
     
-
+	// public function internal(Request $request)
+	// {
+	// 	$data['sub_code'] = $data['sub_name'] = $data['date_of_semester'] = $data['date_of_assign'] = $data['assign_maximum'] = $data['mapped_faculty'] = $mapped_faculty = $data['mapped_Semesters'] = $data['mapped_Subjects'] = null;
+	// 	$data['sub_code_name'] = '';
+		
+	// 	// Default faculty_id for testing (replace with actual logic if needed)
+	// 	$faculty_id = $request->get('faculty_id', 19); // Default to 19 if 'faculty_id' is not provided in the request
+	// 	$user = Faculty::find($faculty_id);
+	
+	// 	// Get mapped subjects for the faculty
+	// 	$mapped_Subjects_query = InternalMarksMapping::select(
+	// 		'subjects.name', 'subjects.sub_code', 'subjects.back_fees', 'subjects.scrutiny_fee', 'subjects.challenge_fee', 'subjects.status', 
+	// 		'subjects.subject_type', 'subjects.type', 'subjects.internal_maximum_mark', 'subjects.maximum_mark', 'subjects.minimum_mark', 
+	// 		'subjects.credit', 'subjects.internal_marking_type', 'subjects.combined_subject_name')
+	// 		->join('subjects', function($join) {
+	// 			$join->on('subjects.sub_code', '=', 'internal_marks_mappings.sub_code')
+	// 				->on('subjects.semester_id', '=', 'internal_marks_mappings.semester_id');
+	// 		})
+	// 		->distinct()
+	// 		->orderBy('sub_code')
+	// 		->whereNull('subjects.deleted_at')
+	// 		->where('faculty_id', $user->id);
+	
+	// 	if ($request->semester) {
+	// 		$mapped_Subjects_query->where('subjects.semester_id', $request->semester);
+	// 	}
+		
+	// 	$data['mapped_Subjects'] = $mapped_Subjects_query->get();
+	
+	// 	// Get mapped courses for the faculty
+	// 	$data['mapped_Courses'] = InternalMarksMapping::select(
+	// 		'courses.name', 'courses.id', 'internal_marks_mappings.course_id', 'campuses.name as campus_name')
+	// 		->join('courses', 'courses.id', '=', 'internal_marks_mappings.course_id')
+	// 		->join('campuses', 'campuses.id', '=', 'courses.campus_id')
+	// 		->distinct()
+	// 		->where('faculty_id', $user->id)
+	// 		->get();
+	
+	// 	// Get streams for the faculty
+	// 	$data['streams'] = Stream::whereIn('id', [50, 3, 4, 5])->orderBy('name', 'ASC')->get();
+	
+	// 	// Get mapped semesters for the faculty and course
+	// 	$data['mapped_Semesters'] = InternalMarksMapping::select(
+	// 		'semesters.name', 'semesters.id', 'internal_marks_mappings.semester_id')
+	// 		->join('semesters', 'semesters.id', '=', 'internal_marks_mappings.semester_id')
+	// 		->distinct()
+	// 		->where('internal_marks_mappings.faculty_id', $user->id)
+	// 		->where('internal_marks_mappings.course_id', $request->course)
+	// 		->get();
+	
+	// 	// Get academic sessions
+	// 	$data['sessions'] = AcademicSession::orderBy('id', 'asc')->get();
+	
+	// 	// Get exam types
+	// 	$data['examTypes'] = StudentSubject::distinct('type')->pluck('type')->toArray();
+	
+	// 	// Get students for the given subject, course, semester, and type
+	// 	$students = [];
+	// 	if ($request->sub_code != null) {
+	// 		$duplicate_roll_no = InternalMark::where('session', $request->session)
+	// 			->where('sub_code', $request->sub_code)
+	// 			->where('course_id', $request->course)
+	// 			->where('semester_id', $request->semester)
+	// 			->where('type', $request->type)
+	// 			->where('roll_number', 'LIKE', $request->batch . '%')
+	// 			->pluck('roll_number')
+	// 			->toArray();
+			
+	// 		if ($request->type != 'regular' && $request->type != 'compartment') {
+	// 			$backPaperRollNos = BackPaper::join('exam_fees', 'exam_fees.id', '=', 'special_back_table_details.exam_fee_id')
+	// 				->where('exam_fees.academic_session', $request->session)
+	// 				->where('sub_code', $request->sub_code)
+	// 				->where('special_back_table_details.course_id', $request->course)
+	// 				->where('special_back_table_details.semester_id', $request->semester)
+	// 				->where('exam_fees.form_type', $request->type)
+	// 				->where('mid', 1)
+	// 				->where('roll_number', 'LIKE', $request->batch . '%')
+	// 				->distinct('roll_number')
+	// 				->pluck('roll_number')
+	// 				->toArray();
+	// 		}
+	
+	// 		// Query for students
+	// 		$students_query = StudentSubject::has('student')
+	// 			->join('enrollments', 'enrollments.roll_number', '=', 'student_subjects.roll_number')
+	// 			->select(
+	// 				'student_subjects.enrollment_number', 'student_subjects.roll_number', 'student_subjects.session',
+	// 				'student_subjects.program_id', 'student_subjects.course_id', 'student_subjects.semester_id',
+	// 				'student_subjects.sub_code', 'student_subjects.sub_name')
+	// 			->where('student_subjects.sub_code', $request->sub_code)
+	// 			->where('student_subjects.roll_number', 'LIKE', $request->batch . '%')
+	// 			->whereNotIn('student_subjects.roll_number', $duplicate_roll_no);
+	
+	// 		if ($request->type != 'regular' && $request->type != 'compartment') {
+	// 			$students_query->whereIn('student_subjects.roll_number', $backPaperRollNos);
+	// 		}
+	
+	// 		$students = $students_query->where('student_subjects.session', $request->session)
+	// 			->where('student_subjects.course_id', $request->course)
+	// 			->where('student_subjects.semester_id', $request->semester)
+	// 			->where('student_subjects.type', $request->type)
+	// 			->distinct('student_subjects.enrollment_number', 'student_subjects.roll_number', 'student_subjects.session')
+	// 			->orderBy('student_subjects.roll_number', 'asc')
+	// 			->paginate(40);
+	
+	// 		// If no students found, you can add a fallback query for another data source
+	// 	}
+	
+	// 	// Get the mapped faculty data
+	// 	$mapped_faculty = InternalMarksMapping::where('faculty_id', $user->id)
+	// 		->where('sub_code', $request->sub_code)
+	// 		->where('course_id', $request->course)
+	// 		->where('semester_id', $request->semester)
+	// 		->first();
+	
+	// 	// Passing the data to the view
+	// 	$data['msg'] = null;  // Message if needed
+	// 	$data['mapped_faculty'] = $mapped_faculty;
+	// 	$data['students'] = $students;
+	// 	$sub_name = Subject::where('sub_code', $request->sub_code)->first();
+	// 	$data['sub_name'] = $sub_name;
+	// 	$data['sub_code'] = $request->sub_code;
+	// 	$data['date_of_semester'] = $request->date_of_semester;
+	// 	$data['date_of_assign'] = $request->date_of_semester;
+	// 	$data['internal_maximum'] = $request->internal_maximum;
+	// 	$data['assign_maximum'] = $request->assign_maximum;
+	
+	// 	// For debugging: Check the data of mapped semesters
+	// 	// dd('mapped_semesters', $data);
+	
+	// 	// Render the view
+	// 	return view('ums.master.faculty.add_internal_marks_filling', $data);
+	// }
 
 	public function internalMarksShow(Request $request)
     {
@@ -322,23 +454,21 @@ class InternalMarksController extends AdminController
 		return redirect('faculty/internal-marks-show/?session='.$request->session.'&sub_code='.$request->sub_code)->with('Success','Data Submitted Succesfully');
 	}
 
-	public function get_semester(Request $request)
-{
-    $html = '<option value="">--Select Semester--</option>';
-    
-    $mapped_Semester = InternalMarksMapping::select('semesters.name', 'semesters.id', 'internal_marks_mappings.semester_id')
-        ->join('semesters', 'semesters.id', '=', 'internal_marks_mappings.semester_id')
-        ->distinct()
-        ->where('internal_marks_mappings.course_id', $request->course)
-        ->get();
-
-    foreach ($mapped_Semester as $sc) {
-        $html .= '<option value="' . $sc->id . '">' . $sc->name . '</option>';
-    }
-
-    return $html;
-}
-
+	public function get_semester (Request $request)
+	{
+		$html='<option value="">--Select Semester--</option>';
+		$mapped_Semester=InternalMarksMapping::select('semesters.name','semesters.id','internal_marks_mappings.semester_id')
+		->join('semesters','semesters.id','internal_marks_mappings.semester_id')
+		->distinct()
+		->where('internal_marks_mappings.course_id',$request->course)
+		->get();
+		
+		foreach($mapped_Semester as $sc){
+			$html.='<option value="'.$sc->id.'">'.$sc->name.'</option>';
+		}
+		return $html;
+		//dd($mapped_Semester);
+	}
 	public function get_subject(Request $request)
 	{
 		//dd($request->all());

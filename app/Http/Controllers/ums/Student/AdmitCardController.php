@@ -1,12 +1,5 @@
 <?php
 
-<<<<<<< HEAD
-namespace App\Http\Controllers\ums\Student;
-
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\ums\Campuse;
-=======
 
 namespace App\Http\Controllers\ums\Student;
 
@@ -16,16 +9,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Campuse;
 use App\Models\ums\Course;
->>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 use App\Models\ums\ExamFee;
 use App\Models\ums\ExamForm;
 use App\Models\ums\ExamCenter;
 use App\Models\ums\Subject;
 use App\Models\ums\AdmitCard;
-<<<<<<< HEAD
-=======
 use App\models\ums\Application as UmsApplication;
->>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 use App\Models\ums\Examschedule;
 use App\Models\ums\Student;
 use App\Models\ums\BacklogAdmitcard;
@@ -34,9 +23,6 @@ use App\Models\ums\ScribeDetail;
 use App\Models\ums\PhdScribeDetail;
 use App\Models\ums\MbbsExamForm;
 use App\Models\ums\EntranceExam;
-<<<<<<< HEAD
-use App\Models\ums\EntranceExamResult;
-=======
 use Illuminate\Support\Facades\DB;
 
 
@@ -44,7 +30,6 @@ use App\Models\ums\EntranceExamResult;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
->>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 
 use App\Models\Application;
 use Illuminate\Support\Facades\Redirect;
@@ -88,12 +73,8 @@ class AdmitCardController extends Controller
 					dd($examfee->id);
 			return view('ums.exam.mbbs-admitcard-page', compact('page_title','sub_title','examfee','subjects','AdmitCard','student_details','sessionName'));
 		}else{
-<<<<<<< HEAD
-			return view('ums.admitcard.admitcardview', compact('page_title','sub_title','examfee','subjects','AdmitCard','student_details','sessionName','examData_photo'));
-=======
 			return view('ums.exam.admitcardview', compact('page_title','sub_title','examfee','subjects','AdmitCard','student_details','sessionName','examData_photo'));
 
->>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 		}
     }
 

@@ -75,9 +75,10 @@
                                 </div>
                                 <div class="col-md-9">
                                     <select id="course" name="course" class="form-control">
-                                        <option value="">--Select Course--</option>
-                                        @foreach($mapped_Courses as $mapped_Course)
-                                            <option value="{{$mapped_Course->id}}" @if(Request()->course==$mapped_Course->id) selected @endif>{{$mapped_Course->name}} ({{$mapped_Course->Course->campuse->campus_code}})</option>
+                                        @foreach($mapped_Courses as $index=>$mapped_Course)
+                                        <option value="{{$mapped_Course->id}}" @if(Request()->course==$mapped_Course->id)
+                                            selected @endif>{{$mapped_Course->name}}
+                                            ({{$mapped_Course->Course->campuse->campus_code}})</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -88,12 +89,13 @@
                                 </div>
                                 <div class="col-md-9">
                                     <select id="semester" name="semester" class="form-control">
-                                        <option value="">--Select Sem--</option>
-                                        @if($mapped_Semesters)
-                                            @foreach($mapped_Semesters as $mapped_Semester)
-                                                <option value="{{$mapped_Semester->id}}" @if(Request()->semester==$mapped_Semester->id) selected @endif>{{$mapped_Semester->name}}</option>
-                                            @endforeach
+                                        <option value="">--Select Semester--</option>@if($mapped_Semesters)
+                                        @foreach($mapped_Semesters as $index=>$mapped_Semester)
+                                        <option value="{{$mapped_Semester->id}}" @if(Request()->semester==$mapped_Semester->id)
+                                            selected @endif>{{$mapped_Semester->name}}</option>
+                                        @endforeach
                                         @endif
+                                       
                                     </select>
                                 </div>
                             </div>
@@ -116,9 +118,10 @@
                                 </div>
                                 <div class="col-md-9">
                                     <select id="type" name="type" class="form-control">
-                                        @foreach($examTypes as $examType)
-                                            <option value="{{$examType}}" @if(Request()->type==$examType) selected @endif>{{$examType}}</option>
-                                        @endforeach
+                                        @foreach($examTypes as $index=>$examType)
+								<option value="{{$examType}}" @if(Request()->type==$examType) selected
+									@endif>{{$examType}}</option>
+								@endforeach
                                     </select>
                                 </div>
                             </div>
@@ -133,7 +136,9 @@
                                     <select id="session" name="session" class="form-control">
                                         <option value="">--Select Session--</option>
                                         @foreach($sessions as $session)
-                                            <option value="{{$session->academic_session}}" @if($session->academic_session==Request()->session) selected @endif>{{$session->academic_session}}</option>
+                                        <option value="{{$session->academic_session}}" @if($session->
+                                            academic_session==Request()->session) selected @endif>{{$session->academic_session}}
+                                        </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -144,7 +149,7 @@
                                     <label class="form-label">Institution Code:<span class="text-danger m-0">*</span></label>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="text" placeholder="Enter here" value="{{($mapped_faculty)?$mapped_faculty->campus->campus_code:''}}" class="form-control">
+                                    <input type="text" placeholder="Enter here" value="{{($mapped_faculty)?$mapped_faculty->Course->Campuse->campus_code:''}}"  class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -158,8 +163,9 @@
                                     <select name="batch" id="batch" required class="form-control">
                                         <option value="">--Select--</option>
                                         @foreach(batchArray() as $batch)
-                                            @php $batch_prefix = substr($batch, 2, 2); @endphp
-                                            <option value="{{$batch_prefix}}" @if(Request()->batch == $batch_prefix) selected @endif>{{$batch}}</option>
+                                        @php $batch_prefix = substr($batch,2,2); @endphp
+                                        <option value="{{$batch_prefix}}" @if(Request()->batch == $batch_prefix) selected @endif
+                                            >{{$batch}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -170,7 +176,7 @@
                                     <label class="form-label">Institution Name:<span class="text-danger m-0">*</span></label>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="text" placeholder="Enter here" value="{{($mapped_faculty)?$mapped_faculty->campus->name:''}}" class="form-control">
+                                    <input type="text" placeholder="Enter here" value="{{($mapped_faculty)?$mapped_faculty->Course->Campuse->name:''}}" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -180,28 +186,58 @@
                             <label class="form-label">Paper Code<span class="text-danger m-0">*</span></label>
                         </div>
                         <div class="col-md-9">
-                            <select name="sub_code" id="sub_code">
-                                <option value="">Select Subject</option>
-                                @foreach($mapped_Subjects as $subject)
-                                    <option value="{{ $subject->sub_code }}" @if($subject->sub_code == $sub_code) selected @endif>
-                                        {{ $subject->sub_code }} - {{ $subject->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            
-                            <input type="text" name="sub_name" value="{{ $sub_name ? $sub_name->name : '' }}" readonly>
+                            <select id="sub_code" name="sub_code" class="form-control"  required>
+								<option value="">--Select Subject--</option>
+								@foreach($mapped_Subjects as $index=>$mapped_Subject)
+								@if(!Request()->sub_code==$mapped_Subject->sub_code)
+								@php $sub_code_name =''; @endphp
+								@endif
+								@if(Request()->sub_code==$mapped_Subject->sub_code)
+								@php $sub_code_name = $mapped_Subject->name; @endphp
+								@endif
+								@if($mapped_Subject->internal_marking_type==1)
+								@if($index ==0)
+								<option value="{{$mapped_Subject->sub_code}}" @if(Request()->
+									sub_code==$mapped_Subject->sub_code) selected
+									@endif>{{$mapped_Subject->combined_subject_name}} ({{$mapped_Subject->name}})
+								</option>
+
+								@endif
+								@else
+
+								<option value="{{$mapped_Subject->sub_code}}" @if(Request()->
+									sub_code==$mapped_Subject->sub_code) selected @endif>{{$mapped_Subject->sub_code}}
+									({{$mapped_Subject->name}})</option>
+								@endif
+								@endforeach
+
+							</select>
+                            {{-- <input type="text" name="sub_name" value="{{ $sub_name ? $sub_name->name : '' }}" readonly> --}}
                             
 							<span class="text-danger">{{ $errors->first('sub_code') }}</span>
                         </div>
                         </div>
                         </div>
                         <div class="col-md-6">
+                        <div class="row align-items-center mb-1">
+                            <div class="col-md-3">
+                                <label class="form-label">Paper Name:<span class="text-danger m-0">*</span></label>
+                            </div>
+                            <div class="col-md-9">
+                                <input input id="sub_name" name="sub_name" class="form-control"
+								value="{{$sub_code_name}}" readonly  >
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                        <div class="col-md-6">
                             <div class="row align-items-center mb-1">
                                 <div class="col-md-3">
                                     <label class="form-label">Date Of Practical Exam:<span class="text-danger">*</span></label>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="date" class="form-control" type="date" name="date_of_practical_exam" value="{{$date_of_practical_exam}}" required required>
+                                    <input type="date"name="date_of_practical_exam" class="form-control"
+                                    value="{{$date_of_practical_exam}}" required>
                                 </div>
                             </div>
                         </div>
@@ -209,50 +245,34 @@
                         <div class="col-md-6">
                             <div class="row align-items-center mb-1">
                                 <div class="col-md-3">
-                                    <label class="form-label">Maximum Marks(Mid Term/ UT):<span class="text-danger m-0">*</span></label>
+                                    <label class="form-label">Maximum Marks(practical):<span class="text-danger m-0">*</span></label>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="text" placeholder="Enter here" class="form-control"  id="practical_maximum" name="practical_maximum" value="{{$practical_maximum}}" required>
+                                    {{-- <input type="text" id="practical_maximum" name="practical_maximum"
+                                    class="form-control" value="{{$practical_maximum}}" required> --}}
                                 </div>
                             </div>
 
-                            <div class="row align-items-center mb-1">
+                            {{-- <div class="row align-items-center mb-1">
                                 <div class="col-md-3">
                                     <label class="form-label">Maximum Marks(Assignment/Presentation/Practical):<span class="text-danger">*</span></label>
                                 </div>
                                 <div class="col-md-9">
                                     <input type="number" class="form-control" placeholder="Enter here" id="assign_maximum" name="assign_maximum" value="{{$assign_maximum}}" required>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
             </form>
 
             
-               
+            @if(!empty($students) && count($students) > 0)
                 <form method="post" id="main_form" enctype="multipart/form-data">
                     @csrf
-                    @if($mapped_faculty) <!-- Check if $mapped_faculty is not null -->
-                        <input type="hidden" name="campus_id" value="{{$mapped_faculty->Course->Campuse->id}}">
-                        <input type="hidden" name="campus_name" value="{{$mapped_faculty->Course->Campuse->name}}">
-                        <input type="hidden" name="program_id" value="{{$mapped_faculty->program_id}}">
-                        <input type="hidden" name="program_name" value="{{$mapped_faculty->Category->name}}">
-                        <input type="hidden" name="course_id" value="{{$mapped_faculty->course_id}}">
-                        <input type="hidden" name="course_name" value="{{$mapped_faculty->Course->name}}">
-                        <input type="hidden" name="semester_id" value="{{$mapped_faculty->semester_id}}">
-                        <input type="hidden" name="semester_name" value="{{$mapped_faculty->Semester->name}}">
-                        <input type="hidden" name="session" value="{{Request()->session}}">
-                        <input type="hidden" name="faculty_id" value="{{$mapped_faculty->faculty_id}}">
-                        <input type="hidden" name="subject_code" value="{{$sub_code}}">
-                        <input type="hidden" name="subject_name" value="{{$sub_name->name}}">
-                        <input type="hidden" name="semester_date" value="{{$date_of_semester}}">
-                        <input type="hidden" name="assign_date" value="{{$date_of_semester}}">
-                        <input type="hidden" name="maximum_internal" value="{{$internal_maximum}}">
-                        <input type="hidden" name="maximum_assign" value="{{$assign_maximum}}">
-                
-                        <!-- Table data -->
-                        <div class="content-body">
+                     <!-- Check if $mapped_faculty is not null -->
+<!-- Table data -->
+                         <div class="content-body">
                             <section id="basic-datatable">
                                 <div class="row">
                                     <div class="col-12">
@@ -261,17 +281,18 @@
                                                 <table class="datatables-basic table myrequesttablecbox loanapplicationlist">
                                                     <thead>
                                                         <tr>
-                                                            <td rowspan="2">Sr. No.</td>
-                                                            <td rowspan="2">Name Of Student</td>
-                                                            <td rowspan="2">Enrollment No.</td>
-                                                            <td rowspan="2">Roll No.</td>
-                                                            <td rowspan="2">Absent Status</td>
-                                                            <td rowspan="2">Mid-Semester<br>/Theory Marks</td>
-                                                            <td rowspan="2">Assignment<br>/Presentation<br>/Practical Marks</td>
+                                                            <td rowspan="2"> Sr. No.</td>
+                                                            <td rowspan="2"> Name Of Student</td>
+                                                            <td rowspan="2"> Enrollment No.</td>
+                                                            <td rowspan="2"> Roll No.</td>
+                                                            <td rowspan="2"> Absent Status</td>
+                                                            <td rowspan="2"> Practical Marks</td>
                                                             <td rowspan="2" class="comment-heading" style="width: 150px;">Comments</td>
-                                                            <td colspan="2">Total Marks</td>
+                                                            <td colspan="2"> Total Marks </td>
+                                    
+                                    
                                                         </tr>
-                                                        <tr class="text-center">
+                                                        <tr>
                                                             <td>In Figure</td>
                                                             <td>In Words</td>
                                                         </tr>
@@ -281,7 +302,8 @@
                                                         <tr>
                                                             <td>{{$key+1}}</td>
                                                             <input type="text" name="campus_id[]" value="{{$mapped_faculty->Course->Campuse->id}}" hidden>
-                                                            <input type="text" name="campus_name[]" value="{{$mapped_faculty->Course->Campuse->name}}" hidden>
+                                                            <input type="text" name="campus_name[]" value="{{$mapped_faculty->Course->Campuse->name}}"
+                                                                hidden>
                                                             <input type="text" name="program_id[]" value="{{$mapped_faculty->program_id}}" hidden>
                                                             <input type="text" name="program_name[]" value="{{$mapped_faculty->Category->name}}" hidden>
                                                             <input type="text" name="course_id[]" value="{{Request()->course}}" hidden>
@@ -313,7 +335,7 @@
                                                             <td><input type="text" class="form-control numbersOnly fillable obtain-practical-marks"
                                                                     name="practical_mark[]" value="{{old('$practical_mark[]')}}"
                                                                     oninput="handlecomment($(this))"></td>
-                
+                                    
                                                             <td class="comment-row">
                                                                 <textarea class="col-sm-12 result_values" style="width:130px;display: none" rows="3"
                                                                     name="comment[]"></textarea>
@@ -324,7 +346,9 @@
                                                                 <span class="total_marks_words_text"></span>
                                                                 <input type="text" class="form-control fillable total_marks_words"
                                                                     name="total_marks_words[]" value="" readonly hidden>
-                                                            </td>
+                                                                </td>
+                                    
+                                    
                                                         </tr>
                                                         @endforeach
                                                     </tbody>
@@ -335,17 +359,24 @@
                                 </div>
                             </section>
                         </div>
-                    @else
-                        <p>No faculty mapping found. Please check the data or contact the administrator.</p>
-                    @endif
+                 
                 </form>
-                
+         @elseif(empty($students))
+    <table style="border:solid" class="table1" width="100%">
+        <thead class="head2">
+            <tr>
+                <td rowspan="14">No Students Found</td>
+            </tr>
+        </thead>
+    </table>
+@endif
            
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
    
+    
         <script>
             $(document).ready(function(){
                 
@@ -463,7 +494,7 @@
     };
 
     $.ajax({
-    url: "{{url('/getsubject')}}",
+    url: "{{url('getsubject')}}",
     type: "POST",
     data: formData,
     success: function(data) {
@@ -535,7 +566,6 @@
                 }
             });
         </script>
-        
 </body>
 
 @endsection

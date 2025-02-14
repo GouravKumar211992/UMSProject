@@ -115,7 +115,7 @@
                                                 
                                             </tbody> --}}
                                             <tbody>
-                                                @if (count($items) > 0)
+                                                
                                                     @foreach ($items as $key => $item)
                                                         <tr>
                 
@@ -152,12 +152,7 @@
                                                             </td>
                                                         </tr>
                                                     @endforeach
-                                                @else
-                                                    <tr>
-                                                        <td colspan=15 align="center">No Data Found </td>
-                                                    </tr>
-                                                @endif
-                
+                                               
                                             </tbody>
                                         </table>
                                     </div>

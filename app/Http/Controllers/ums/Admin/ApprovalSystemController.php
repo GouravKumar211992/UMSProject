@@ -36,7 +36,7 @@ class ApprovalSystemController extends Controller
         ->where('semester_id',$request->semester_id)
         ->orderBy('position','ASC')
         ->get();
-        return view('ums.exam.Exam_paper_approvel_system',compact('sessions','allData','backTypes','couse_id','semesters','subjects'));
+        return view('ums.exam.Exam_paper_Approvel_system',compact('sessions','allData','backTypes','couse_id','semesters','subjects'));
     }
 
     /**

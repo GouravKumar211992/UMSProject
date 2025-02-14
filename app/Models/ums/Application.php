@@ -1,10 +1,13 @@
 <?php
 
-namespace App\models\ums;
+namespace App\Models\ums;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\ums\ApplicationEducation;
+use App\Models\ums\ApplicationAddress;
+use App\Models\ums\ApplicationPayment;
 use Spatie\MediaLibrary\HasMedia;  // Keep this
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Auth;

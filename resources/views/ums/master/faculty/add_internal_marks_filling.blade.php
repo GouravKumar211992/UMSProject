@@ -143,7 +143,7 @@
                                     <label class="form-label">Institution Code:<span class="text-danger m-0">*</span></label>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="text" placeholder="Enter here" value="{{($mapped_faculty)?$mapped_faculty->campus->campus_code:''}}" class="form-control">
+                                    <input type="text" disabled placeholder="Enter here" value="{{($mapped_faculty)?$mapped_faculty->campus->campus_code:''}}" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -169,7 +169,7 @@
                                     <label class="form-label">Institution Name:<span class="text-danger m-0">*</span></label>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="text" placeholder="Enter here" value="{{($mapped_faculty)?$mapped_faculty->campus->name:''}}" class="form-control">
+                                    <input type="text" placeholder="Enter here" disabled value="{{($mapped_faculty)?$mapped_faculty->campus->name:''}}" class="form-control">
                                 </div>
                             </div>
                         </div>

@@ -173,22 +173,6 @@ class StreamController extends AdminController
 		return $html;
 
     }
-    
-    // public function getCourseList(Request $request)
-    // {
-    //     $html = '<option value="">--Select Course--</option>';
-        
-    //     // Remove category_id and filter based on campus_id only
-    //     $query = Course::where('campus_id', $request->university)->get();
-    
-    //     foreach ($query as $course) {
-    //         $html .= '<option value="' . $course->id . '">' . $course->name . '</option>';
-    //     }
-        
-    //     return response()->json($html);  // Return the HTML for course dropdown
-    // }
-    
-    
     public function getStreamList(Request $request)
     {
 		$html='<option value="">--Select Course--</option>';

@@ -47,7 +47,7 @@ class AffiliateCircularController extends Controller
 
     $data->save();
 
-    return redirect('affiliate_circular')->with('success', 'Added Successfully.');
+    return back()->with('success', 'Added Successfully.');
 }
 
     public function edit($id)

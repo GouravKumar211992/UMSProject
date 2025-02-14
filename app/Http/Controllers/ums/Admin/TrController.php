@@ -272,7 +272,7 @@ class TrController extends  AdminController
             return $pdf->download('Regular TR Report For Course '.$semester_details->course->name.' ( '.$semester_details->name.' ) and Academic Session '.$request->academic_session.'.pdf');
         }
 
-		return view('ums.result.regular_tr_view', $data);
+		return view('ums.result.Regular_TR_View', $data);
 	}
 
 
@@ -771,7 +771,7 @@ class TrController extends  AdminController
 		}
 		$data['full_retult'] = $full_retult;
 		$data['download'] = '';
-		return view('admin.tr.final-back-tr-generate', $data);
+		return view('ums.result.final_back_tr_generate', $data);
 	}
 
 	public function finalBackUniversityTrView(Request $request)
@@ -864,7 +864,7 @@ class TrController extends  AdminController
             return $pdf->download($request->form_type.'_Report.pdf');
         }
 
-		return view('admin.tr.final-back-tr-view', $data);
+		return view('ums.result.final_back_tr_view', $data);
 	}
 
 

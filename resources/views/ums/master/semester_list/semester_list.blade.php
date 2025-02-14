@@ -203,8 +203,10 @@
 				</div>
 				<div class="modal-body flex-grow-1">
 					<div class="mb-1">
-						  <label class="form-label" for="fp-range">Select Date Range</label>
-						  <input type="text" id="fp-range" class="form-control " placeholder="YYYY-MM-DD to YYYY-MM-DD" />
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Name</label>
+                            <input type="text" name="name" class="form-control" value="{{Request::get('name')}}">
+                        </div>
 					</div>
 					
 					<div class="mb-1">

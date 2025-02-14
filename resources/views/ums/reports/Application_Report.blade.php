@@ -634,11 +634,7 @@ $preferance_courses = [114,113,123,118,119,117,120];
                         "_token": "{{ csrf_token() }}"
                     }; //Array 
                     $.ajax({
-<<<<<<< HEAD
-                        url: "{{route('course_list')}}",
-=======
                         url: "{{route('get-courses')}}",
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
                         type: "POST",
                         data: formData,
                         success: function(data, textStatus, jqXHR) {
@@ -659,11 +655,7 @@ $preferance_courses = [114,113,123,118,119,117,120];
                         "_token": "{{ csrf_token() }}"
                     }; //Array 
                     $.ajax({
-<<<<<<< HEAD
-                        url: "{{route('course_list')}}",
-=======
                         url: "{{route('get-courses')}}",
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
                         type: "POST",
                         data: formData,
                         success: function(data, textStatus, jqXHR) {

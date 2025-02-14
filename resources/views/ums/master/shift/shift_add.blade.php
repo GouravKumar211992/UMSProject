@@ -27,29 +27,12 @@
                         </div>
                     </div>
                 </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
                 
-=======
-                <form id="cat_form" method="POST" action="{{route('add_shift')}}">
-                    @csrf
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
-=======
-                
->>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
                 <div class="content-header-right text-sm-end col-md-7 mb-50 mb-sm-0">
                     <div class="form-group breadcrumb-right">
                         <button class="btn btn-dark btn-sm mb-50 mb-sm-0" onclick="location.href='{{url('/shift_list')}}'"> <i data-feather="x"></i> Cancel
                             </button>
-<<<<<<< HEAD
-<<<<<<< HEAD
                         <button type="submit" form="cat_form" class="btn btn-primary btn-sm mb-50 mb-sm-0" > <i data-feather="check-circle" style="font-size: 40px;"></i>
-=======
-                        <button type="submit" class="btn btn-primary btn-sm mb-50 mb-sm-0" > <i data-feather="check-circle" style="font-size: 40px;"></i>
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
-=======
-                        <button type="submit" form="cat_form" class="btn btn-primary btn-sm mb-50 mb-sm-0" > <i data-feather="check-circle" style="font-size: 40px;"></i>
->>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
                             Submit</button>
 
 
@@ -99,15 +82,7 @@
             </div>
         </form>
             </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
         
-=======
-        </form>
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
-=======
-        
->>>>>>> 91bb0d65e1d166ca92c32f6a1e6b35c4f00d5d88
 
 
                
