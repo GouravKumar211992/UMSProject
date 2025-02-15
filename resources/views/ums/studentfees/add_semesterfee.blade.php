@@ -1,13 +1,8 @@
 @extends('ums.admin.admin-meta')
 @section('content')
 
-
-    
-{{-- <body class="vertical-layout vertical-menu-modern navbar-floating footer-static menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col=""> --}}
-
 <!-- BEGIN: Content-->
 <div class="app-content content ">
-
 
     <div class="content-header row">
         <div class="content-header-left col-md-5 mb-2">
@@ -41,34 +36,30 @@
                 <!-- Student ID Input -->
                 <div class="col-md-4">
                     <div class="form-group position-relative custom-form-group inner-formnew">
-                        <span class="form-label main-page">Student ID</span>
-                        <input id="student_id" name="student_id" type="text" value="DSMNRU/" class="form-control" placeholder="Enter Student ID here"> 
-                        
-                        <span class="text-danger">{{ $errors->first('student_id') }}</span>
-                        
+                        <label for="student_id" class="form-label main-page">Student ID</label>
+                        <input id="student_id" name="student_id" type="text" value="DSMNRU/" class="form-control" placeholder="Enter Student ID here">
+                        <span class="text-danger"></span>
                     </div>
                 </div>
 
                 <!-- Course Code Input -->
                 <div class="col-md-4">
                     <div class="form-group position-relative custom-form-group inner-formnew">
-                        <span class="form-label main-page">Course Code</span>
-                        <input id="course_code" name="course_code" type="text" value="{{old('course_code')}}" class="form-control " placeholder="Enter Course Code here"> 
-                        <span class="text-danger">{{ $errors->first('course_code') }}</span>
-                        
+                        <label for="course_code" class="form-label main-page">Course Code</label>
+                        <input id="course_code" name="course_code" type="text" value="" class="form-control" placeholder="Enter Course Code here">
+                        <span class="text-danger"></span>
                     </div>
                 </div>
 
                 <!-- Semester Dropdown -->
                 <div class="col-md-4">
                     <div class="form-group position-relative custom-form-group inner-formnew">
-                        <span class="form-label main-page">Semester</span>
-                        <select id ="semester" name="semester" class="form-control ">
-                        <option>--select semester--
-                        </option>
+                        <label for="semester" class="form-label main-page">Semester</label>
+                        <select id="semester" name="semester" class="form-control">
+                            <option value="">-- Select Semester --</option>
+                            <!-- Add semester options dynamically -->
                         </select>
-                        <span class="text-danger">{{ $errors->first('semester') }}</span>
-                        
+                        <span class="text-danger"></span>
                     </div>
                 </div>
             </div>
@@ -79,30 +70,27 @@
                 <!-- Semester Fee Input -->
                 <div class="col-md-4">
                     <div class="form-group position-relative custom-form-group inner-formnew">
-                        <span class="form-label main-page">Semester Fee</span>
-                        <input id="semester_fee" name="semester_fee" type="text" value="{{old('semester_fee')}}" class="form-control" placeholder="Enter Semester Fee here"> 
-                        <span class="text-danger">{{ $errors->first('semester_fee') }}</span>
-                        
+                        <label for="semester_fee" class="form-label main-page">Semester Fee</label>
+                        <input id="semester_fee" name="semester_fee" type="text" value="" class="form-control" placeholder="Enter Semester Fee here">
+                        <span class="text-danger"></span>
                     </div>
                 </div>
 
                 <!-- Receipt Date Input -->
                 <div class="col-md-4">
                     <div class="form-group position-relative custom-form-group inner-formnew">
-                        <span class="form-label main-page">Receipt Date</span>
-                        <input id="receipt_date" name="receipt_date" type="date" value="{{old('receipt_date')}}" class="form-control" placeholder="Enter Semester Fee here"> 
-                        <span class="text-danger">{{ $errors->first('receipt_date') }}</span>
-                        
+                        <label for="receipt_date" class="form-label main-page">Receipt Date</label>
+                        <input id="receipt_date" name="receipt_date" type="date" value="" class="form-control">
+                        <span class="text-danger"></span>
                     </div>
                 </div>
 
                 <!-- Receipt Number Input -->
                 <div class="col-md-4">
                     <div class="form-group position-relative custom-form-group inner-formnew">
-                        <span class="form-label main-page">Receipt Number</span>
-                        <input id="receipt_number" name="receipt_number" type="text" value="{{old('receipt_number')}}" class="form-control" placeholder="Enter Semester Fee here"> 
-                        <span class="text-danger">{{ $errors->first('receipt_number') }}</span>
-                        
+                        <label for="receipt_number" class="form-label main-page">Receipt Number</label>
+                        <input id="receipt_number" name="receipt_number" type="text" value="" class="form-control" placeholder="Enter Receipt Number here">
+                        <span class="text-danger"></span>
                     </div>
                 </div>
             </div>
@@ -118,41 +106,3 @@
 <!-- END: Content-->
 
 @endsection
-<script>
-	function submitFee(form) {
-		document.getElementById('semesterfee_form').submit();
-	}
-	$(document).ready(function(){
-		$('#student_id').on('change',function(){
-			var student_id=$('#student_id').val();
-	
-	var formData = {student_id:student_id,"_token": "{{ csrf_token() }}"}; //Array 
-	$.ajax({
-		url : "{{route('get-student-data')}}",
-		type: "POST",
-		data : formData,
-		success: function(data, textStatus, jqXHR){
-			$('#course_code').val(data);
-		},
-	});
-			
-		});
-		
-		$('#course_code').keypress(function(){
-			
-			var course_id=$('#course_code').val();
-			var student_id=$('#student_id').val();
-	$("#semester").find('option').remove().end();
-	var formData = {student_id:student_id,course_id:course_id,"_token": "{{ csrf_token() }}"}; //Array 
-	$.ajax({
-		url : "{{route('get-course-data')}}",
-		type: "POST",
-		data : formData,
-		success: function(data, textStatus, jqXHR){
-			$('#semester').append(data);
-		},
-	});
-			
-		});
-	});
-</script>

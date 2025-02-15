@@ -1,10 +1,5 @@
-<<<<<<< HEAD
- @extends('ums.admin.admin-meta')
-<!-- END: Head-->
-=======
 @extends('ums.admin.admin-meta')
 
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 @section('content')
 
 <!-- Page Title and Navigation -->

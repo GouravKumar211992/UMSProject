@@ -1,5 +1,4 @@
 @extends("ums.admin.admin-meta")
-
 @section("content")
 
     <!-- BEGIN: Content-->
@@ -155,8 +154,38 @@
                                             <td>
                                                 <input type="text" name="subject_name[]" class="subject_name position_style form-control text-left" style="width: 100%;" value="{{$result->subject_name}}">
                                                 <hr>
-                                               <!-- Button to trigger modal -->
-<span class="text-info fa fa-eye" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#myModal{{$serial_no}}"> Suggestions</span>
+                                                {{-- <span class="text-info fa fa-eye" style="cursor: pointer;" data-toggle="modal" data-target="#myModal{{$serial_no}}"> Suggetions</span>
+                                                        <!-- Modal -->
+                                                        <div id="myModal{{$serial_no}}" class="modal fade" role="dialog">
+                                                        <div class="modal-dialog">
+                                
+                                                            <!-- Modal content-->
+                                                            <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Subject Suggetions</h4>
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <table class="table table-hover">
+                                                                    @foreach($subjectSuggetions as $subjectSuggetion)
+                                                                    <tr>
+                                                                        <td>{{$result->subject_code}}</td>
+                                                                        <td>{{$subjectSuggetion}}</td>
+                                                                        <td><input type="button" data-subject="{{$subjectSuggetion}}" onclick="setSubjectSuggetion($(this))" value="User This" class="btn btn-sm btn-success"  data-dismiss="modal"></td>
+                                                                    </tr>
+                                                                    @endforeach
+                                                                </table>
+                                                            </div>
+                                                            <!-- <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div> -->
+                                                            </div>
+                                
+                                                        </div>
+                                                        </div> --}}
+
+
+                                                        <span class="text-info fa fa-eye" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#myModal{{$serial_no}}"> Suggestions</span>
 
 <!-- Modal -->
 <div id="myModal{{$serial_no}}" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel{{$serial_no}}" aria-hidden="true">
@@ -180,8 +209,7 @@
     </div>
   </div>
 </div>
-
-
+                                                        
                                             </td>
                                             <td>
                                                 <button type="button" class="brn btn-sm btn-info" onclick="marksheetSubjectNameUpdate($(this))">Update Subject Name Batch Wise</button>
@@ -256,9 +284,8 @@
     </div>
     <!-- END: Content-->
 
-   
-    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
-    <!-- END: Footer-->
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
 
 
     <div class="modal modal-slide-in fade filterpopuplabel" id="filter">
@@ -403,13 +430,11 @@
 
          }
 
-        </script> --}}
-        <script>
-        function setSubjectSuggetion($this){
-           var subject = $this.data('subject');
-           $this.closest('tr.main-tr').find('.subject_name').val(subject);
-           // alert($this.closest('tr.main-tr').find('.subject_name').val());
-        }
-    </script>
+         function setSubjectSuggetion($this){
+            var subject = $this.data('subject');
+            $this.closest('tr.main-tr').find('.subject_name').val(subject);
+            // alert($this.closest('tr.main-tr').find('.subject_name').val());
+         }
+    </script> --}}
 
 @endsection

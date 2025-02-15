@@ -131,7 +131,7 @@ class ExaminationController extends Controller
 		}
 		$sessions = AcademicSession::orderBy('academic_session','DESC')->get();
 		
-		return view('ums.student.Exam_form',[
+		return view('ums.student.exam-form',[
       'page_title' => "Exam Form",
       'sub_title' => "Exam Form",
 			'student'=>$student,

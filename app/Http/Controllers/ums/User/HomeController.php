@@ -22,7 +22,9 @@ use App\Models\ums\City;
 use App\Models\ums\Course;
 use App\Models\ums\CourseFee;
 use App\Models\ums\State;
-use Hash;
+use Illuminate\Support\Facades\Hash;
+
+
 use App\Models\ums\Icard;
 use App\Models\ums\Result;
 
@@ -1092,6 +1094,7 @@ class HomeController extends Controller
 		$user = Auth::user();
 		$application = Application::where(['user_id'=>$user->id,'id'=>$request->application_id])->first();
 		$data['program'] = Category::find($application->category_id);
+		// dd($data['program']);
 		$data['course'] = Course::find($application->course_id);
 		$data['castCategorys'] = CastCategory::all();
 		$data['application'] = $application;

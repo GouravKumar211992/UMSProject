@@ -1,8 +1,4 @@
-<<<<<<< HEAD
- @extends('ums.admin.admin-meta')
-=======
 @extends('ums.admin.admin-meta')
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 <!-- BEGIN: Body-->
  @section('content')

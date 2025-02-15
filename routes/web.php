@@ -1,7 +1,6 @@
 <?php
 
 use App\Helpers\Helper;
-use App\Http\Controllers\ums\Admin\Master\FacultyController;
 use App\Http\Controllers\DPRTemplateController;
 use App\Http\Controllers\DocumentDriveController;
 use App\Http\Controllers\ErpDprMasterController;
@@ -11,6 +10,7 @@ use App\Http\Controllers\LoanProgress\ApprovalController;
 use App\Http\Controllers\LoanProgress\AssessmentController;
 use App\Http\Controllers\LoanProgress\LegalDocumentationController;
 use App\Http\Controllers\LoanProgress\ProcessingFeeController;
+use App\Http\Controllers\ums\Admin\Master\FacultyController;
 use App\Http\Controllers\UserSignatureController;
 
 use Illuminate\Support\Facades\Broadcast;
@@ -20,6 +20,7 @@ use App\Http\Controllers\ums\faculty\ExternalMarksController;
 use App\Http\Controllers\ums\faculty\InternalMarksController;
 use App\Http\Controllers\ums\faculty\PracticalMarksController;
 use App\Http\Controllers\ums\faculty\LectureScheduleController;
+
 use App\Http\Controllers\ums\Admin\UserController;
 use App\Http\Controllers\ums\Admin\Master\ExamFeeAllController as MasterExamFeeAllController;
 use App\Http\Controllers\ums\Admin\Master\ExamFeeAllController as challengeExamFeeAllController;
@@ -33,7 +34,7 @@ use App\Http\Controllers\ums\Admin\BackPaperController;
 
 use App\Http\Controllers\ums\Admin\Master\FeeController;
 use App\Http\Controllers\ums\Admin\OldGradeController;
-// use App\Http\Controllers\ums\Admin\Master\SemesterController;
+use App\Http\Controllers\ums\Admin\Master\SemesterController;
 use App\Http\Controllers\ums\Admin\Master\StreamController;
 use App\Http\Controllers\ums\Admin\TimetableController;
 use App\Http\Controllers\ums\Admin\GrievanceController;
@@ -50,7 +51,7 @@ use App\Http\Controllers\ums\Admin\Master\EntranceExamScheduleController;
 use App\Http\Controllers\ums\Admin\Master\ExamCenterController;
 use App\Http\Controllers\ums\Admin\ApprovalSystemController;
 use App\Http\Controllers\ums\Admin\Master\ExamScheduleController;
-use App\Http\Controllers\ums\Admin\Master\NotificationController as FacultyNotificationController;
+use App\Http\Controllers\ums\Admin\Master\faculty\NotificationController;
 use App\Http\Controllers\ums\Report\BackReportController;
 use App\Http\Controllers\ums\Report\RegularMarkFillingController;
 use App\Http\Controllers\ums\Admin\MbbsTrController;
@@ -69,8 +70,8 @@ use App\Http\Controllers\ums\Faculty\DashboardController as FacultyDashboardCont
 use App\Http\Controllers\ums\HomeController as UmsHomeController;
 use App\Http\Controllers\ums\User\HomeController as UserHomeController;
 use App\Http\Controllers\ums\Admin\Master\NotificationController as MasterNotificationController;
-use App\Http\Controllers\ums\Admin\Master\SemesterFeeController as MasterSemesterFeeController;
-// use App\Http\Controllers\ums\Student\SemesterFeeController;
+// use App\Http\Controllers\ums\Admin\Master\SemesterController
+use App\Http\Controllers\ums\Student\SemesterFeeController;
 use App\Http\Controllers\ums\Student\SemesterFeeController as studentformsemesterFeeController;
 use App\Http\Controllers\LoanProgress\SanctionLetterController;
 use App\Http\Controllers\ServiceController;
@@ -87,7 +88,6 @@ use App\Http\Controllers\FixedAsset\IssueTransferController;
 use App\Http\Controllers\FixedAsset\InsuranceController;
 use App\Http\Controllers\FixedAsset\MaintenanceController;
 use App\Http\Controllers\ums\Student\LoginController;
-use App\Http\Controllers\ums\Faculty\LoginController as FacultyLoginController;
 use App\Http\Controllers\ums\Student\DashboardController as StudentDashboardController;
 use App\Http\Controllers\ums\Student\IcardsController as StudentIcardsController;
 
@@ -184,11 +184,12 @@ use App\Http\Controllers\PurchaseBillController;
 use App\Http\Controllers\DiscountMasterController;
 use App\Http\Controllers\ExpenseMasterController;
 use App\Http\Controllers\PurchaseReturnController;
+use App\Http\Controllers\ums\Faculty\LoginController as FacultyLoginController;
 use App\Http\Controllers\ums\Admin\DashboardController as AdminDashboardController;
-
-
-
-
+use App\Http\Controllers\ums\Student\NotificationController as StudentNotificationController;
+use App\Http\Controllers\ums\Admin\Master\QuestionBankController as StudentQuestionBankController;
+use App\Http\Controllers\ums\Student\SemesterController as StudentSemesterController;
+use App\Http\Controllers\ums\Student\ExaminationController as StudentExaminationController;
 
 
 
@@ -197,10 +198,8 @@ use App\Http\Controllers\ums\Admin\DashboardController as AdminDashboardControll
 
 
 Route::post('login', [UmsHomeController::class,'enquery_login'])->name('enquery-login');
-// Route::get('/dashboard', function () {
-//     return view('ums.dashboard');
-// })->name('admin-dashboard');
 Route::get('/dashboard', [AdminDashboardController::class,'index'])->name('admin-dashboard');
+
 Route::get('/profile', function () {
     return view('ums.profile');
 });
@@ -211,17 +210,13 @@ Route::get('/admin-meta', function () {
     return view('ums.admin.admin-meta');
 });
 
-Route ::post('/get-state',[UserHomeController::class,'get_state']);
-Route ::post('/get-district',[UserHomeController::class,'get_district']);
-Route ::post('/application-course-list',[UserHomeController::class,'applicationCourseList']);
-Route::get('/education-single-row', [UserHomeController::class,'education_single_row'])->name('education-single-row');
-Route::get('entrance-admit-card/{id}', [UserHomeController::class,'entranceAdmitCard']);
-
 
 //faculty 
-// Route::get('faculty-dashboard', function () {
+// Route::get('/faculty_dashboard', function () {
 //     return view('ums.master.faculty.faculty_dashboard');
 // });
+Route::get('/faculty-dashboard', [FacultyDashboardController::class, 'index']);
+
 Route::get('/faculty_edit', function () {
     return view('ums.master.faculty.faculty_edit');
 });
@@ -273,14 +268,8 @@ Route::post('external_marks', [ExternalMarksController::class, 'externalMarksSho
 // Route::get('/internal_marks', function () {
 //     return view('ums.master.faculty.internal_marks_filling');
 // });
-Route::get('/internal-marks-list', [InternalMarksController::class,'index'])->name('internal-marks-list');
-
-Route::get('internal-marks', [InternalMarksController::class, 'internal']);
+Route::get('internal_marks', [InternalMarksController::class, 'internal']);
 // Route::get('internal_marks', [InternalMarksController::class, 'internal']);
-
-Route::get('/internal-marks-show', 'InternalMarksController@internalMarksShow')->name('internal-marks-show');
-Route::post('/internal-marks-show', 'InternalMarksController@internal_submit');
-Route::get('/internal-marks/internal-marks-export', 'InternalMarksController@internalMarksExport')->name('internalMarksExport');
 
 // Route::get('/practical_marks_filling', function () {
 //     return view('ums.master.faculty.practical_marks');
@@ -288,6 +277,7 @@ Route::get('/internal-marks/internal-marks-export', 'InternalMarksController@int
 Route::get('practical_marks_filling', [PracticalMarksController::class, 'practicalMarksShow']);
 
 //usermanagement
+Route::get('student-secret-login/{id}', [LoginController::class,'secretLogin'])->name('student-secret-login');
 Route::get('secret-login/{id}', [FacultyLoginController::class,'secretLogin'])->name('secret-login');
 
 Route::get('view-icard/{id}', [StudentIcardsController::class,'singleIcard'])->name('view-icard');
@@ -297,8 +287,15 @@ Route::get('view-icard/{id}', [StudentIcardsController::class,'singleIcard'])->n
 
 Route::get('/stu-profile', [StudentDashboardController::class,'profile'])->name('student-profile');
 Route::get('/stu-dashboard', [StudentDashboardController::class,'index'])->name('student-dashboard');
-Route::post('update-photo-signature',[UserHomeController::class,'savePhotoSignateure'])->name('update-photo-signature');
+Route::get('stu-notification', [StudentNotificationController::class, 'showNotification'])->name('studentNotification');
+Route::get('calender', [StudentDashboardController::class, 'holidayCalenderForStudent'])->name('calender');
+Route::get('questionbankdownload',[ StudentQuestionBankController::class, 'index'])->name('questionbankdownload');
 
+Route::get('/question-bank/delete/{slug}', [QuestionBankController::class , 'softDelete'])->name('delete-question-bank');
+Route::get('/question-bank/edit/{slug}', [QuestionBankController::Class , 'editShow'])->name('edit-question-bank');
+Route::get('question-bank-list',[QuestionBankController::class,'index'])->name('question-bank-list');
+Route::get('semester-form',[StudentSemesterController::class, 'index'])->name('semester-form');
+Route::get('exam-form',[StudentExaminationController::class, 'index'])->name('exam-form');
 
 Route::get('/user-password-change/{id}', [UserController::class,'userPasswordChange'])->name('user-password-change');
 Route::get('/admin-get', [UserController::class, 'admins'])->name('usermanagement.admin');
@@ -347,6 +344,8 @@ Route::get('user-dashboard', [UserHomeController::class, 'userDashboardAndProfil
 Route::get('user-application-form', [UserHomeController::class,'application_form'])->name('user-application-form');
 Route::get('view-application-form', [UserHomeController::class,'view_application_form'])->name('view-application-form');
 Route::get('pay-success', [PaymentController::class,'paymentSuccess'])->name('pay-success');
+Route::get('entrance-admit-card/{id}', [UserHomeController::class,'entranceAdmitCard']);
+Route::post('update-photo-signature',[UserHomeController::class,'savePhotoSignateure'])->name('update-photo-signature');
 
 Route::post('application-form', [UserHomeController::class,'applicationSave']);
 Route::get('education-single-row', [UserHomeController::class,'education_single_row'])->name('education-single-row');
@@ -519,12 +518,9 @@ Route::get('/course_list_delete/{id}', [CourseController::class, 'softDelete'])-
 //     return view('ums.master.course.course_edit');
 // });
 
-// Route::get('/faculty', function () {
-//     return view('ums.master.faculty');
-// });
-Route::get('/faculty',[FacultyController::class,'index'])->name('faculty');
-
-
+Route::get('/faculty', function () {
+    return view('ums.master.faculty');
+});
 Route::get('/affiliate_circular',[AffiliateCircularController::class,'index']);
 Route::get('/affiliate_circular_add',[AffiliateCircularController::class,'addView']);
 Route::post('/affiliate_circular_add',[AffiliateCircularController::class,'add']);
@@ -684,17 +680,16 @@ Route::get('/semester_fee', function () {
     return view('ums.studentfees.semester_fee');
 });
 // Route definition example:
-Route::get('/master/fee/delete-model-trim/{slug}', 'Master\FeeController@softDelete')->name('delete-fee');
+Route::get('semester-fee', [SemesterFeeController::class, 'index'])->name('semester-fee-index');
+Route::get('semester', [studentformsemesterFeeController::class,'addfee'])->name('student-semesterfee');
+Route::post('semester', [studentformsemesterFeeController::class,'addsemesterFee']);
+Route::get('/add_semesterfee', function () {
+    return view('ums.studentfees.add_semesterfee');
+});
 
-Route::get('semester-fee', [MasterSemesterFeeController::class, 'index'])->name('semester-fee-index');
-Route::get('add_semesterfee', [MasterSemesterFeeController::class,'add']);
-
-
-Route::post('semester', [studentformsemesterFeeController::class,'addsemesterFee'])->name('student-semesterfee');
-Route::get('/master/semesterfee/submit-semesterfee-form', [MasterSemesterFeeController::class,'addSemesterFee'])->name('add-semesterfee');
-Route::post('/master/semesterfee/student-data', [MasterSemesterFeeController::class,'student_data'])->name('get-student-data');
-Route::post('/master/semesterfee/course-data', [MasterSemesterFeeController::class,'course_data'])->name('get-course-data');
-
+Route::get('/edit_semesterfee', function () {
+    return view('ums.studentfees.edit_semesterfee');
+});
 
 
 //result
@@ -767,12 +762,6 @@ Route::get('back-paper-report',[BackReportController::class,'index'])->name('bac
 Route::get('/regular_mark_filling', function () {
     return view('ums.exam.regular_mark_filling');
 });
-
-// new 
-Route::get('exam-fee',[ExaminationController::class,'exam_fee'])->name('examination-fee');
-		Route::post('exam-fee',[ExaminationController::class,'exam_fee_submit'])->name('examination-fee');;
-// end 
-
 Route::post('exam-schedule-bulk-uploading',[ExamScheduleController::class,'schedule_bulk_uploading'])->name('exam-schedule-bulk-uploading');
 Route::get('regular-mark-filling',[RegularMarkFillingController::class,'regularMarkFilling'])->name('regularMarkFilling');
 Route::get('/Exam-list',[MasterExamFeeAllController::class,'index'])->name('get-examfees');
@@ -784,22 +773,7 @@ Route::get('/master/examfee/view/{slug}', [MasterExamFeeAllController::class,'vi
 Route::get('admitcard-download', [StudentAdmitCardController::class,'index'])->name('download-admit-card');
 Route::get('scribe-admitcard', [StudentAdmitCardController::class,'scribe'])->name('scribe-admitcard');
 Route::get('phd-entrance-admitcard', [StudentAdmitCardController::class,'phd_admitcard'])->name('phd-entrance-admitcard');
-
-Route::post('phd-entrance-admitcard-2023', 'Student\AdmitCardController@phdEntranceAdmitcard2023')->name('phdEntranceAdmitcard2023');
-Route::get('entrance-admitcard', 'Student\AdmitCardController@entrance_admitcard')->name('entrance-admitcard');
-Route::get('admitcard-view-result/{id}', 'Student\AdmitCardController@admitcard_view_result')->name('admitcard-view-result');
-Route::get('answer-key/{slug}', 'Student\AdmitCardController@answer_key')->name('answer-key');
-Route::get('phd-scribe-form/{id}', 'Student\AdmitCardController@phdScribeForm')->name('phd-scribe-form');
-Route::post('phd-scribe-form/{id}	', 'Student\AdmitCardController@phdScribeFormSave');
-Route::get('phd-scribe-admitcard/{id}', 'Student\AdmitCardController@phdScribeForm')->name('phd-scribe-admitcard');
-// Ph .D Admit Card
-Route::get('phd-portal', 'Phd\PhdController@admitcardportal')->name('phd-portal');
-Route::post('phd-admitcard-portal', 'Phd\PhdController@phdadmitcard_login');
-Route::get('phd-admitcard-view-result/{id}', 'Phd\PhdController@phdViewResult')->name('phd-admitcard-view-result');
-
-
-
-
+Route::get('admitcard-download-list', [StudentAdmitCardController::class,'admitcardDownloadList']);
 
 Route::get('/master/exam-edit-back/{slug}', [MasterExamFeeAllController::class,'edit_exam_back_form'])->name('edit-back-exam-form');
 Route::get('/master/exam-edit-back-single/{slug}', [MasterExamFeeAllController::class,'edit_exam_back_form_single'])->name('edit_exam_back_form_single');
@@ -1513,8 +1487,6 @@ Route::middleware(['user.auth'])->group(function () {
 
     Route::prefix('land')->group(function () {
         // Land Dashboard
-
-        
         Route::get('/dashboard', [LandController::class, 'dashboard'])->name('land.dashboard');
         Route::get('/dashboard/revenue-report', [LandController::class, 'getDashboardRevenueReport'])->name('land.getDashboardRevenueReport');
         // Land Report
@@ -2725,6 +2697,7 @@ Route::put('/course_list_update', [CourseController::class, 'editCourse'])->name
 Route::get('/course_list_delete/{id}', [CourseController::class, 'softDelete'])->name('course_list_delete');
 
 
+Route::get('/faculty',[FacultyController::class,'index'])->name('faculty');
 
 Route::get('/affiliate_circular',[AffiliateCircularController::class,'index']);
 Route::get('/affiliate_circular_add',[AffiliateCircularController::class,'addView']);
@@ -2910,12 +2883,10 @@ Route::get('/regular_exam_form_report',[ReportController::class , 'regularPaperR
 //dhan and manish
 
 //danish
-// Route::get('/faculty_dashboard', function () {
-//     return view('ums.master.faculty.faculty_dashboard');
-// });
+Route::get('/faculty_dashboard', function () {
+    return view('ums.master.faculty.faculty_dashboard');
+});
 // Route::get('/faculty_dashboard', [FacultyController::class,'index']);
-Route::get('student-secret-login/{id}', [LoginController::class,'secretLogin'])->name('student-secret-login');
-
 
 Route::get('/faculty_edit', function () {
     return view('ums.master.faculty.faculty_edit');
@@ -2923,10 +2894,10 @@ Route::get('/faculty_edit', function () {
 Route::get('/faculty_add', function () {
     return view('ums.master.faculty.faculty_add');
 });
-// Route::get('/facultynotification', [NotificationController::class, 'index2']);
+Route::get('/facultynotification', [NotificationController::class, 'index2']);
 
 Route::get('/Holiday', [FacultyDashboardController::class, 'holidayCalenderForFaculty']);
-Route::get('/faculty-dashboard', [FacultyDashboardController::class, 'index']);
+// Route::get('/faculty', [FacultyDashboardController::class, 'index']);
 
 Route::get('/time_table', [TimetableController::class, 'index']);
 
@@ -2952,14 +2923,14 @@ Route::get('external_marks', [ExternalMarksController::class, 'external']);
 // Route::post('external_marks', [ExternalMarksController::class, 'externalMarksShow']);
 
 //ajax route for dashboard
-
+Route::post('/getsemester',  [InternalMarksController::class, 'get_semester']);
+Route::post('/getsubject', [InternalMarksController::class,'get_subject']);
 Route::post('/get_month_year', [InternalMarksController::class,'get_month_year']);
 
 Route::get('/internal-marks-list', [InternalMarksController::class,'index'])->name('internal-marks-list');
 
-Route::get('internal-marks', [InternalMarksController::class, 'internal']);
-Route::get('getsemester/{id}', [InternalMarksController::class,'get_semester'])->name('getsemester');
-Route::get('getsubject', [InternalMarksController::class, 'get_subject']);
+Route::get('internal_marks', [InternalMarksController::class, 'internal']);
+
 // Route::get('/practical_marks_filling', function () {
 //     return view('ums.master.faculty.practical_marks');
 // });

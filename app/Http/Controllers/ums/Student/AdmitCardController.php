@@ -94,7 +94,7 @@ class AdmitCardController extends Controller
 		})
 		->orderBy('exam_fees.id','DESC')
 		->get();
-		return view('student.admitcard.admitCardList', compact('examData'));
+		return view('ums.student.admitCardList', compact('examData'));
 	}
 
 	public function application_data_edit(Request $request){

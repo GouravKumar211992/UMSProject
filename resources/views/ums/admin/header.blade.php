@@ -59,8 +59,6 @@
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="../../../assets/css/iconsheet.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <!-- END: Custom CSS-->
     <style>
         /* Set custom width for the modal */

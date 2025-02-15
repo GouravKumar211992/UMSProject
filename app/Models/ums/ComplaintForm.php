@@ -1,13 +1,9 @@
 <?php
 
-namespace App\models\ums;
-
-use App\Models\ums\Enrollment;
-use App\Models\ums\Student;
+namespace App\Models\ums;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
-
 // use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\InteractsWithMedia;
 class ComplaintForm extends Model implements HasMedia

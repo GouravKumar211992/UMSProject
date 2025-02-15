@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
 
-use App\User;
+use App\Models\User;
 
 use App\Helpers\ConstantHelper;
 use App\Http\Controllers\ums\AdminController;
@@ -18,7 +18,9 @@ use App\Models\ums\Course;
 use App\Models\ums\Faculty;
 use App\Models\ums\Admin;
 use App\Models\InternalMarksMapping;
-use DB;
+use Illuminate\Support\Facades\DB;
+
+
 
 
 class DashboardController extends AdminController

@@ -1,9 +1,5 @@
 @extends("ums.admin.admin-meta")
 @section("content")
-
-
-
- 
     <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
@@ -60,7 +56,7 @@
                                             <tbody>
                                             @if(count($scrutinies) > 0)
                                 @foreach($scrutinies as $key=>$scrutiny)
-                                <tbody>
+                               
 									<tr> 
 										<td>#{{$key+1}}</td> 
 										<td>#{{$scrutiny->id}}</td>
@@ -74,17 +70,17 @@
                                         <td>{{$scrutiny->challan_number}}</td>
                                         <td>{{$scrutiny->amount}}</td>
 										<td>{{($scrutiny->fee_status==1 )?'Active':'Inactive'}}</td>
-                                         <td>
-											<a href="{{route('view_challenge_form',$scrutiny->id)}}" target="_blank" class="btn-md btn-add"><i class="iconly-boldCheck"></i> View &nbsp;</a>
+                                         <td>Action
+											{{-- <a href="{{route('view_challenge_form',$scrutiny->id)}}" target="_blank" class="btn-md btn-add"><i class="iconly-boldCheck"></i> View &nbsp;</a>
 										 <br/>
 										 <br/>
-											<a href="{{route('delete_challenge_form',$scrutiny->id)}}" onclick="return confirm('Are you sure?');" class="btn-md btn-success"><i class="iconly-boldCheck"></i>Delete</a>
-
+											<a href="{{route('delete_challenge_form',$scrutiny->id)}}" onclick="return confirm('Are you sure?');" class="btn-md btn-success"><i class="iconly-boldCheck"></i>Delete</a> --}}
 										 </td>
 			
 									</tr>
-								</tbody>
+							
                                 @endforeach
+                                @endif
                                             </tbody>
                                         </table>
                                     </div>
@@ -282,7 +278,7 @@
 	<script src="../../../app-assets/js/scripts/forms/form-select2.js"></script>
     <!-- END: Page JS--> --}}
 
-    {{-- <script>
+    <script>
         $(window).on('load', function() {
             if (feather) {
                 feather.replace({
@@ -420,9 +416,12 @@
 });
 		
 		 
-		 --}}
+		
 		
     </script>
+{{-- </body>
+<!-- END: Body-->
 
+</html> --}}
 
 @endsection

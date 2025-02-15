@@ -1,5 +1,5 @@
 <?php
-namespace App\models\ums;
+namespace App\Models\ums;
 use Illuminate\Database\Eloquent\Model;
 
 class ChallengeAllowed extends Model

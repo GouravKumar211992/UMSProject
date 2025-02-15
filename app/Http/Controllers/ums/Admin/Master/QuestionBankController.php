@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use App\Exports\QuestionBanksExport;
-use PDF;
+use App\models\ums\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 
-use App\User;
-use App\Models\Application;
+use App\Models\ums\Application;
 use App\Models\ums\Course;
 use App\Models\ums\CourseFee;
 use App\Models\ums\Category;
@@ -20,9 +20,10 @@ use App\Models\ums\Subject;
 use App\Models\ums\Semester;
 use App\Models\ums\Stream;
 use App\Models\ums\QuestionBank;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
-use Validator;
-use Auth;
+
 
 
 class QuestionBankController extends Controller
@@ -64,10 +65,10 @@ class QuestionBankController extends Controller
         $campuses = Campuse::all();
         $sessions=AcademicSession::all();
         $semester = Semester::select('name')->distinct()->get();
-        // Auth::guard('student')->check()
-        if(true){
+        
+        if(Auth::guard('student')->check()){
             $data['quesBankData'] = $quesBankData;
-            return view('ums.master.question_bank.question_bank',$data);
+            return view('ums.student.questionbankdownload',$data);
         }
 
         return view('admin.master.question-bank.index', [

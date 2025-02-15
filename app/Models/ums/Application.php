@@ -1,21 +1,18 @@
 <?php
 
-namespace App\models\ums;
+namespace App\Models\ums;
 
-use App\Models\ums\User;
-use Illuminate\Support\Facades\Auth;
-
-
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\ums\ApplicationEducation;
+use App\Models\ums\ApplicationAddress;
+use App\Models\ums\ApplicationPayment;
 use Spatie\MediaLibrary\HasMedia;  // Keep this
 use Spatie\MediaLibrary\InteractsWithMedia;
-
-use Illuminate\Support\Facades\DB;
-
-use Illuminate\Support\Facades\Storage;
-
-
+use Auth;
+use DB;
+use Storage;
 
 class Application extends Model implements HasMedia
 {
@@ -171,7 +168,7 @@ class Application extends Model implements HasMedia
         }else{
             $disability_type = 1;
         }
-        $fees = \App\Models\ums\ApplicationFees::where('category_id',$this->category_id)->where('type',$disability_type)->first()->fees;
+        $fees = \App\Models\ApplicationFees::where('category_id',$this->category_id)->where('type',$disability_type)->first()->fees;
 		if($this->course_id==94){
             $late_fees = 500;
 			if($this->category=='SC' || $this->category=='ST' || $this->disability=='yes'){
@@ -433,7 +430,7 @@ class Application extends Model implements HasMedia
         return $this->hasOne(ApplicationAddress::class, 'application_id','id');
     }
 
-   public function registerMediaCollections():void
+   public function registerMediaCollections(): void
 {
     // Personal Information
     $this->addMediaCollection('photo')->singleFile();

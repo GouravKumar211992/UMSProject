@@ -27,7 +27,7 @@ class SemesterController extends AdminController
     }
 	
     public function index(Request $request){
-        return view('student.exam.student-exam.semester-form-fill');
+        return view('ums.student.semester-form');
     
 }
 	

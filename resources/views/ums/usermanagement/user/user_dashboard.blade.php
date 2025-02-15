@@ -203,12 +203,10 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($notifications as $notification)
-                                            <tr>
-                                                   
-                                                {{-- {{dd($notification_description)}} --}}
-                                                    <td>{{ $notification->notification_description }}</td> <!-- Display Notification Description -->
-                                                    <td>{{ $notification->notification_start }}</td> <!-- Display Notification Start Date -->
-                                                    <td>{{ $notification->notification_end}}</td> <!-- Display Notification End Date -->
+                                                <tr>
+                                                    <td>{{ $notification->description }}</td> <!-- Display Notification Description -->
+                                                    <td>{{ $notification->start_date }}</td> <!-- Display Notification Start Date -->
+                                                    <td>{{ $notification->end_date }}</td> <!-- Display Notification End Date -->
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -216,7 +214,7 @@
                                 </div>
                             </div>
     
-                            <div class="col-md-12 mt py-1">
+                            <div class="col-md-12 mt-2 py-1">
                                 <div class="row udb py-1 shadow bg-white">
                                     <div class="udb-sec udb-cour-stat text-center">
                                         <h1 class="text-center">My-Dashboard</h1>
@@ -265,7 +263,7 @@
                                                                             class="btn btn-info">View and Print Admit Card</a>
                                                                     @endif
                                                                     @if (admission_open_couse_wise($application->course_id, 2, $application->academic_session))
-                                                                        
+                                                                        <br>
                                                                         <a href="{{ route('view-application-form', ['application_id' => $application->id, 'edit' => 'true']) }}"
                                                                             class="btn-sm btn-primary">Edit Application</a>
                                                                     @endif

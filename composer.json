@@ -46,7 +46,8 @@
         "files": [
 
             "app/Helpers/Helper.php",
-            "app/Helpers/CustomHelper.php"
+            "app/Helpers/CustomHelper.php",
+            "app/Helpers/PaymentHelper.php"
 
           
         ]

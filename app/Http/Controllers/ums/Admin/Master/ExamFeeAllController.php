@@ -22,7 +22,6 @@ use App\Models\ums\MbbsExamForm;
 use App\Models\ums\ExamPayment;
 use App\Models\ums\AdmitCard;
 use App\Models\ums\ExamForm;
-
 use App\Models\ums\AcademicSession;
 use App\Models\ums\ExamFormAllow;
 use App\Models\ums\Scrutiny;
@@ -244,7 +243,7 @@ class ExamFeeAllController extends AdminController
         if(!$exam){
             return back()->with('error','Invalid Exam ID');
         }
-        ExamFee::where('id',$slug)->update(['fee_amount' => '', 'fee_status' => '', 'is_agree' =>0, 'bank_name' =>'', 'order_id' =>'', 'bank_IFSC_code' =>'', 'receipt_number' =>'', 'receipt_date' =>'']);
+        ExamFee::where('id',$slug)->update(['fee_amount' => '', 'fee_status' => '', 'is_agree' =>'', 'bank_name' =>'', 'order_id' =>'', 'bank_IFSC_code' =>'', 'receipt_number' =>'', 'receipt_date' =>'']);
         ExamPayment::where('exam_fee_id',$slug)->delete();
         Audit::insert([
             'user_type' => $exam->roll_no,

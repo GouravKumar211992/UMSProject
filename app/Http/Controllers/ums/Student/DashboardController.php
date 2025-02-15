@@ -142,8 +142,8 @@ class DashboardController extends AdminController
     }
 
     public function holidayCalenderForStudent()
-   {
-       $holidayCalendor = HolidayCalenderModel::all();
-       return view('student.dashboard.calender',['holidayCalendor'=>$holidayCalendor]);
-   }
+    {
+        $holidayCalendor = HolidayCalenderModel::all();
+        return view('ums.student.calender', ['holidayCalendor' => $holidayCalendor]);
+    }
 }

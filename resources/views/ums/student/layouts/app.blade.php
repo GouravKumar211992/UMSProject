@@ -26,8 +26,8 @@
     <div class="wrapper">
     @php
                                 $student=Auth::guard('student')->user()->enrollment_no;
-                                $en=\App\Models\Enrollment::where('enrollment_no',$student)->first();
-                                $application=\App\Models\Application::where('id',$en->application_id)->first();
+                                $en=\App\Models\ums\Enrollment::where('enrollment_no',$student)->first();
+                                $application=\App\Models\ums\Application::where('id',$en->application_id)->first();
                                 @endphp
 
 
@@ -53,7 +53,7 @@
                             </a> -->
 
                             <!--ul class="nav nav-treeview">
-                                <li class="nav-item"><a class="nav-link" href="{{route('student-semesterfee')}}">
+                                {{-- <li class="nav-item"><a class="nav-link" href="{{route('student-semesterfee')}}"> --}}
                                         <p>Semester Fee Form</p>
                                     </a>
                                 </li>
@@ -61,7 +61,7 @@
                                         <p>Exam Form</p>
                                     </a>
                                 </li>--}}
-								<li class="nav-item"><a target="_blank" class="nav-link" href="{{route('result-list')}}">
+								{{-- <li class="nav-item"><a target="_blank" class="nav-link" href="{{route('result-list')}}"> --}}
                                         <p>Semester Results</p>
                                     </a>
                                 </li>
@@ -80,15 +80,15 @@
 						<p>Admit Card<i class="fa fa-angle-left right"></i></p>
                             </a>
 						    <ul class="nav nav-treeview">
-                                <li class="nav-item"><a class="nav-link" target="_blank" href="{{route('view-admit')}}">
+                                {{-- <li class="nav-item"><a class="nav-link" target="_blank" href="{{route('view-admit')}}">
                                         <p>View Admit Card</p>
                                     </a>
                                 </li>
-                                <li class="nav-item"><a class="nav-link" target="_blank"href="{{route('download-admit-card',['id'=>Auth::guard('student')->user()->enrollment_no])}}">
+                                <li class="nav-item"><a class="nav-link" target="_blank"href="{{route('download-admit-card',['id'=>Auth::guard('student')->user()->enrollment_no])}}"> --}}
                                         <p>Download Admit Card</p>
                                     </a>
                                 </li>
-                            </ul>
+                            {{-- </ul>
                         </li> -->
                         <li class="nav-item"><a href="{{url('student/exam-form')}}" class="nav-link"><i class="iconly-card"></i>
                             <p>Exam Forms<i class="fa fa-angle-left right"></i></p>
@@ -141,7 +141,7 @@
                                     </a>
                                 </li>
                             </ul>
-                            </li>-->
+                            </li>--> --}}
 
                              <!--li class="nav-item"><a href="#" class="nav-link"><i class="iconly-card"></i>
                         <p>Attendances<i class="fa fa-angle-left right"></i></p>
@@ -174,7 +174,7 @@
                                     </a>
                                 </li>
                             </ul> -->
-                            <li class="nav-item"><a href="{{route('calender')}}" class="nav-link"><i class="iconly-card"></i>
+                            {{-- <li class="nav-item"><a href="{{route('calender')}}" class="nav-link"><i class="iconly-card"></i>
                         <p>Holiday Calender<i class="fa fa-angle-left right"></i></p>
                             </a>
                             <li class="nav-item"><a href="{{route('studentNotification')}}" class="nav-link" target="_blank"><i class="iconly-card"></i>
@@ -250,7 +250,7 @@
                         {{--  <div class="float-right notificationbar mt-4">
                             <a href="#" class="position-relative"><img src="/assets/admin/img/notification.svg"
                                     class="float-none" /><span class="top-notification">05</span></a>
-                        </div>  --}}
+                        </div> 
                         <div class="float-right dropdown userData">
                             <a data-toggle="dropdown" href="#" aria-expanded="true">
                                 <p>{{Auth::guard('student')->user()->name}}</p>
@@ -270,11 +270,11 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div> --}}
 
-                </div>
+                </div> --}}
 
-
+{{-- 
                 <div class="modal fade rightModal" id="forgetpassword" tabindex="-1" role="dialog"
                     aria-labelledby="loginpopupTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-slideout" role="document">
@@ -381,7 +381,7 @@
 
         </div>
     </div>
-
+{{--  --}}
     <div class="modal fade" id="adddesignation" tabindex="-1" role="dialog" aria-labelledby="loginpopupTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
 
@@ -468,7 +468,7 @@
             </div>
 
         </div>
-    </div>
+    </div> --}}
 
     <script src="/assets/admin/js/jquery.min.js"></script>
     <script src="/assets/admin/js/jquery-ui.min.js"></script>

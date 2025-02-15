@@ -135,20 +135,25 @@
                                                             <td>{{ $item->ifsc_code }}</td>
                                                             <td>{{ $item->research_paper_type }}</td>
                                                             <td>{{ $item->number_of_research_paper }}</td>
-                                                            <td>
-                                                                <div style="width: 200px;">
-                                                                    <a href="{{ route('secret-login', $item->id) }}" target="_blank"
-                                                                        title="Admin Login" class="btn-sm btn-dark"> <i
-                                                                            class="fa fa-home"></i> </a></a>
-                                                                    <a href="edit/{{ $item->id }}"
-                                                                        class="btn-sm btn-success fa fa-edit" title="Edit Record"></a>
-                                                                    <!-- <a onclick="return confirm_delete()" href="delete/{{ $item->id }}" class="btn-sm btn-danger fa fa-minus" title="Delete Record"></a> -->
-                                                                    <br>
-                                                                    <br>
-                                                                    {{-- <a href="{{ route('set-default-password-faculty', [$item->id]) }}"
-                                                                        class="btn-sm btn-dark"
-                                                                        onclick="return confirm('Are you sure?');">Set Default Password</a> --}}
-                                                                </div>
+                                                         
+                                                            <td class="tableactionnew">  
+                                                                <div class="dropdown">
+                                                                    <button type="button" class="btn btn-sm dropdown-toggle hide-arrow p-0 " data-bs-toggle="dropdown">
+                                                                        <i data-feather="more-vertical"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                                        <a class="dropdown-item" href="{{route('secret-login', $item->id) }}">
+                                                                            <i data-feather="home" class="me-50"></i>
+                                                                            <span>Dashboard</span>
+                                                                        </a> 
+                                                                       
+                                                                        <a class="dropdown-item" href="{{url('faculty_edit')}}">
+                                                                            <i data-feather="edit" class="me-50"></i>
+                                                                            <span>Edit</span>
+                                                                        </a> 
+                                                                       
+                                                                    </div>
+                                                                </div> 
                                                             </td>
                                                         </tr>
                                                     @endforeach

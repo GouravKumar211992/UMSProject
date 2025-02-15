@@ -1,27 +1,10 @@
 <?php
 
-namespace App\models\ums;
+namespace App\Models\ums;
 
-use App\Models\ums\AcademicSession;
-use App\Models\ums\Course;
-use App\Models\ums\Subject;
 use App\Models\ums\Student;
-use App\Models\ums\Enrollment;
-use App\Models\ums\Semester;
-use App\Models\ums\Icard;
-use App\Models\ums\AdmitCard;
-use App\Models\ums\ExamPayment;
-use App\Models\ums\ExamType;
-use App\Models\ums\StudentSubject;
 
-
-
-
-
-
-
-
-
+use App\Models\ums\Course;
 
 
 use Illuminate\Database\Eloquent\Model;

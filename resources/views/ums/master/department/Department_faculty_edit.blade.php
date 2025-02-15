@@ -1,12 +1,5 @@
-<<<<<<< HEAD
- @extends('ums.admin.admin-meta')
-<!-- BEGIN: Body-->
-   @section('name')
-       
-=======
 @extends('ums.admin.admin-meta')
 @section('content')
->>>>>>> 102b6cb77da26819a1831c7b3f50e8457416cce7
 
 <div class="app-content content">
     <div class="content-overlay"></div>

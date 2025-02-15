@@ -21,10 +21,9 @@ use App\Models\ums\CourseFee;
 use App\Models\ums\ExamFee;
 use App\Models\ums\Result;
 use App\Models\ums\StudentSubject;
-use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Validator;
-
+use Auth;
 
 
 class SemesterFeeController extends AdminController
@@ -101,14 +100,14 @@ class SemesterFeeController extends AdminController
 			return redirect()->route('student-dashboard')->with('message','Your  Semester Form already filled at university end . Please Fill Your Exam Form');
 		}
 		$result=Result::where(['enrollment_no'=>$exam->enrollment_no,'exam_session'=>$exam->academic_session,'semester'=>$exam->semester])->first();
-		dd($exam);
+		//dd($exam);
 		//dd($exam->semester,$semesterfee->semester_id);
 		if($exam->semester==$semesterfee->semester_id){ 
 			if(!$result){
 				return redirect()->route('student-dashboard')->with('message','Please Wait For Result To Be Declared To Fill Your Semester Form');
 			}
 			
-		return view('ums..studentfees.add_semesterfee', [
+		return view('student.semester.addfee', [
             'page_title' => "Fill Semester Form",
             'sub_title' => "Semester Form",
 			'student'=>$student,
